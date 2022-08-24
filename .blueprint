@@ -1,0 +1,40 @@
+created:
+    - app/Http/Controllers/UserController.php
+    - app/Http/Controllers/ProfileController.php
+    - app/Http/Controllers/ServiceStationController.php
+    - database/factories/UserFactory.php
+    - database/factories/ProfileFactory.php
+    - database/factories/ServiceStationFactory.php
+    - database/migrations/2022_08_24_025654_create_users_table.php
+    - database/migrations/2022_08_24_025655_create_profiles_table.php
+    - database/migrations/2022_08_24_025656_create_service_stations_table.php
+    - app/Models/User.php
+    - app/Models/Profile.php
+    - app/Models/ServiceStation.php
+    - tests/Feature/Http/Controllers/UserControllerTest.php
+    - tests/Feature/Http/Controllers/ProfileControllerTest.php
+    - tests/Feature/Http/Controllers/ServiceStationControllerTest.php
+    - app/Http/Requests/UserStoreRequest.php
+    - app/Http/Requests/UserUpdateRequest.php
+    - app/Http/Requests/ProfileStoreRequest.php
+    - app/Http/Requests/ProfileUpdateRequest.php
+    - app/Http/Requests/ServiceStationStoreRequest.php
+    - app/Http/Requests/ServiceStationUpdateRequest.php
+    - resources/views/user/index.blade.php
+    - resources/views/user/create.blade.php
+    - resources/views/user/show.blade.php
+    - resources/views/user/edit.blade.php
+    - resources/views/profile/index.blade.php
+    - resources/views/profile/create.blade.php
+    - resources/views/profile/show.blade.php
+    - resources/views/profile/edit.blade.php
+    - resources/views/serviceStation/index.blade.php
+    - resources/views/serviceStation/create.blade.php
+    - resources/views/serviceStation/show.blade.php
+    - resources/views/serviceStation/edit.blade.php
+updated:
+    - routes/web.php
+models:
+    User: { cpf: 'string:100', name: 'string:100', zip_code: 'nullable string:100', address: 'nullable string:100', type_street: 'nullable integer', number: 'string:20', complement: 'nullable string:100', district: 'nullable string:30', uf: 'nullable string:5', activate_date_time: 'nullable timestamp', status: boolean, cell: 'string:15', mail: 'string:50', user_name: 'nullable string:30', password: 'nullable string:30', profile_id: 'nullable intenger', timestamps: timestamps, relationships: { belongsTo: Profile } }
+    Profile: { name_profil: 'string:100', status: boolean, days_to_access_inspiration: integer, days_to_activity_lock: integer, timestamps: timestamps }
+    ServiceStation: { service_station_name: 'string:50', acronym_post: 'string:15', type_of_post: integer, status: boolean, cep: 'string:30', type_of_street: integer, address: 'string:50', number: 'string:20', complement: 'string:50', district: 'string:50', uf: 'string:30', timestamps: timestamps }

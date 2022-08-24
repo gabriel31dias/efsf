@@ -17,3 +17,76 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
+
+
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+
+Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);

@@ -24,3 +24,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::resource('users', App\Http\Controllers\UserController::class)->only('index', 'create', 'store');
+
+
+Route::resource('users', App\Http\Controllers\UserController::class)->only('index', 'store', 'update');
+
+
+Route::resource('users', App\Http\Controllers\UserController::class);
+
+Route::resource('profile', App\Http\Controllers\ProfileController::class);
+
+Route::resource('service-station', App\Http\Controllers\ServiceStationController::class);

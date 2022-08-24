@@ -4,39 +4,41 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\User;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = User::class;
+
+    /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'cpf' => $this->faker->regexify('[A-Za-z0-9]{100}'),
+            'name' => $this->faker->name,
+            'zip_code' => $this->faker->regexify('[A-Za-z0-9]{100}'),
+            'address' => $this->faker->regexify('[A-Za-z0-9]{100}'),
+            'type_street' => $this->faker->numberBetween(-10000, 10000),
+            'number' => $this->faker->regexify('[A-Za-z0-9]{20}'),
+            'complement' => $this->faker->regexify('[A-Za-z0-9]{100}'),
+            'district' => $this->faker->regexify('[A-Za-z0-9]{30}'),
+            'uf' => $this->faker->regexify('[A-Za-z0-9]{5}'),
+            'activate_date_time' => $this->faker->dateTime(),
+            'status' => $this->faker->boolean,
+            'cell' => $this->faker->regexify('[A-Za-z0-9]{15}'),
+            'mail' => $this->faker->regexify('[A-Za-z0-9]{50}'),
+            'user_name' => $this->faker->userName,
+            'password' => $this->faker->password,
+            'profile_id' => $this->faker->word,
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return static
-     */
-    public function unverified()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
     }
 }
