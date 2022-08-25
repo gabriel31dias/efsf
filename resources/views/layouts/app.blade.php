@@ -14,13 +14,20 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
       <title>Dashboard - Tabler - Premium and Open Source dashboard template with responsive and high quality UI.</title>
       <!-- CSS files -->
-      <link href="./dist/css/tabler.min.css" rel="stylesheet"/>
+      <link href="{{ asset('dist/css/tabler.min.css') }}" rel="stylesheet"/>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
-      <link href="./dist/css/tabler-flags.min.css" rel="stylesheet"/>
-      <link href="./dist/css/tabler-payments.min.css" rel="stylesheet"/>
+
       <link href="./dist/css/tabler-vendors.min.css" rel="stylesheet"/>
       <link href="./dist/css/demo.min.css" rel="stylesheet"/>
       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+      <link href="{{ asset('dist/css/tabler-flags.min.css') }}" rel="stylesheet">
+      <link href="{{ asset('dist/css/tabler-payments.min.css') }}" rel="stylesheet">
+      <link href="{{ asset('dist/css/tabler-vendors.min.css') }}" rel="stylesheet">
+      <link href="{{ asset('dist/css/demo.min.css') }}" rel="stylesheet">
+
+
+
+      <script defer src="{{ asset('js/app.js') }}"></script>
    </head>
    <body >
       <div class="page">
@@ -116,7 +123,7 @@
                                              justify-content:between ⇒ justify-content:space-between (#29734)
                                           </div>
                                        </div>
-                                       <div class="col-auto">
+                                       Perfis        <div class="col-auto">
                                           <a href="#" class="list-group-item-actions show">
                                              <!-- Download SVG icon from http://tabler-icons.io/i/star -->
                                              <svg xmlns="http://www.w3.org/2000/svg" class="icon text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -126,7 +133,7 @@
                                           </a>
                                        </div>
                                     </div>
-                                 </div>
+                                 </div>u
                                  <div class="list-group-item">
                                     <div class="row align-items-center">
                                        <div class="col-auto"><span class="status-dot d-block"></span></div>
@@ -204,13 +211,24 @@
                         </a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="./form-elements.html" >
+                        <a class="nav-link"   href='{{ route('users.index') }}'>
                            <span class="nav-link-icon d-md-none d-lg-inline-block">
                               <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                               <i class="ti ti-user-circle"></i>
                            </span>
                            <span class="nav-link-title">
-                           Usuários
+                           Cadastro de servidores
+                           </span>
+                        </a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href='{{ route('profile.index') }}' >
+                           <span class="nav-link-icon d-md-none d-lg-inline-block">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                              <i class="ti ti-user-circle"></i>
+                           </span>
+                           <span class="nav-link-title">
+                           Cadastro de perfis
                            </span>
                         </a>
                      </li>

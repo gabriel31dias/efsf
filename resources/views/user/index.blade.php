@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="page-wrapper">
-<div class="container-xl">
+<div class="container-fluid">
    <!-- Page title -->
    <div class="page-header d-print-none">
       <div class="row g-2 align-items-center">
@@ -22,7 +22,7 @@
                Filtrar
                </a>
                </span>
-               <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+               <a href='{{ route('users.create') }}' class="btn btn-primary d-none d-sm-inline-block">
                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -45,12 +45,20 @@
    </div>
 </div>
 <div class="page-body">
-   <div class="container">
+   <div class="container-fluid">
       <table  id="table">
          <tr>
-            <th>Company</th>
-            <th>Contact</th>
-            <th>Country</th>
+            <th>Nome Completo</th>
+            <th>Cpf</th>
+            <th>Cep</th>
+            <th>Tipo de Logradouro</th>
+            <th>Endereço</th>
+            <th>Número</th>
+            <th>Complemento</th>
+            <th>Bairro</th>
+            <th>Uf</th>
+            <th>Celular</th>
+            <th>Email</th>
          </tr>
          <tr>
             <td>Alfreds Futterkiste</td>
