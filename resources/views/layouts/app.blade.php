@@ -16,7 +16,7 @@
       <!-- CSS files -->
       <link href="{{ asset('dist/css/tabler.min.css') }}" rel="stylesheet"/>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
-
+      @livewireStyles
       <link href="./dist/css/tabler-vendors.min.css" rel="stylesheet"/>
       <link href="./dist/css/demo.min.css" rel="stylesheet"/>
       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -25,20 +25,27 @@
       <link href="{{ asset('dist/css/tabler-vendors.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dist/css/demo.min.css') }}" rel="stylesheet">
 
+      <script type="module">
+            import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
+      </script>
 
-
+<script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
       <script defer src="{{ asset('js/app.js') }}"></script>
    </head>
    <body >
+      @livewireScripts
       <div class="page">
+
+
          <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
             <div class="container-fluid">
                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                <span class="navbar-toggler-icon"></span>
                </button>
-               <h1 style="text-align:center;background-color:white;  border-bottom-left-radius: 25px;" >
+               <h1 style="text-align:center;background-color:#206bc4;  border-bottom-left-radius: 25px;" >
                   <a href=".">
-                  <img style="padding:10px" src="https://www.msbtec.com.br/msb_manutencao_arquivos/s.png" width="70" height="60" alt="Tabler" >
+                  <img style="padding:10px" src="https://www.msbtec.com.br/msb_manutencao_arquivos/s.png" width="70" height="60" alt="Sic" >
+
                   </a>
                </h1>
                <div class="navbar-nav flex-row d-lg-none">
