@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Users;
 use App\Models\TypeStreet;
 use Livewire\Component;
 
-class Typestreetsselect extends Component
+class TypestreetsSelect extends Component
 {
     public $query;
     public $type_streets;
@@ -70,6 +70,7 @@ class Typestreetsselect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
+        $this->emitUp('selectedTypeStreat', $id);
     }
 
     public function render()

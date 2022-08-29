@@ -68,20 +68,22 @@
                   </thead>
                   <tbody class="table-tbody">
                     @foreach ($users as $user)
-                     <tr>
+                     <tr  wire:click="clickUpdate({{$user->id}})">
                         <td class="sort-name">{{$user->name}}</td>
                         <td class="sort-city">{{$user->cpf}}</td>
                         <td class="sort-type">{{$user->cell}}</td>
                         <td class="sort-score">{{$user->address}}</td>
                         <td class="sort-date" data-date="1628122643">{{$user->cep}}</td>
                         <td class="sort-quantity">{{$user->district}}</td>
-                        <td class="sort-quantity">{{$user->district}}</td>
+                        <td class="sort-quantity">{{$user->city}}</td>
                        </tr>
                     @endforeach
 
                   </tbody>
                </table>
+
             </div>
+            {{ $users->links() }}
          </div>
       </div>
    </div>

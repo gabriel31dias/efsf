@@ -36,3 +36,18 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+
+.error_tag{
+    color: red;
+    margin-top: 1%;
+}
+
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+tr:hover {background-color: #206bc4; color:white}

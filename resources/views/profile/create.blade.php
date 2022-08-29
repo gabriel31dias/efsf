@@ -1,7 +1,6 @@
-{{--
+
     @extends('layouts.app')
 
     @section('content')
-        profile.create template
+        <livewire:profiles.profile-form :action="'create'" />
     @endsection
---}}

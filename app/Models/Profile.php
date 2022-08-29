@@ -15,7 +15,7 @@ class Profile extends Model
      * @var array
      */
     protected $fillable = [
-        'name_profil',
+        'name_profile',
         'status',
         'days_to_access_inspiration',
         'days_to_activity_lock',

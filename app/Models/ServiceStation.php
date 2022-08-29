@@ -14,27 +14,7 @@ class ServiceStation extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'service_station_name',
-        'acronym_post',
-        'type_of_post',
-        'status',
-        'cep',
-        'type_of_street',
-        'address',
-        'number',
-        'complement',
-        'district',
-        'uf',
-    ];
+    protected $guarded = [
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-        'status' => 'boolean',
     ];
 }

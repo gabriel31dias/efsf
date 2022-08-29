@@ -5,18 +5,26 @@ namespace App\Http\Livewire\Users;
 use App\Models\Profile;
 use Livewire\Component;
 
-class Profileselect extends Component
+class ProfileSelect extends Component
 {
     public $query;
+    public $perfil_name;
     public $profiles;
     public $selectedId;
     public $closed = false;
     public $highlightIndex;
     public $selectedValue;
 
+    protected $listeners = ['curretProfile'];
+
+    public function curretProfile(){
+        $this->query = $this->perfil_name;
+    }
+
     public function mount()
     {
         $this->reset1();
+        $this->curretProfile();
     }
 
     public function reset1()
@@ -70,6 +78,7 @@ class Profileselect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
+        $this->emitUp('selectedProfile', $id);
     }
 
     public function render()

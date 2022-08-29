@@ -31,6 +31,7 @@ class User extends Model
         'user_name',
         'password',
         'profile_id',
+        'city'
     ];
 
     /**
@@ -56,5 +57,10 @@ class User extends Model
     public function profile()
     {
         return $this->belongsTo(Profile::class);
+    }
+
+    public function userStations()
+    {
+        return $this->hasMany(UserServiceStation::class);
     }
 }

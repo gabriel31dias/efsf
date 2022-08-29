@@ -2,6 +2,6 @@
     @extends('layouts.app')
 
     @section('content')
-        user.edit template
+    <livewire:users.user-form :action="'update'" :user="$user"/>
     @endsection
 
