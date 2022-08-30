@@ -210,11 +210,13 @@ class UserForm extends Component
                 'type'=> 'success',
                 'message'=> "Usuário criado com sucesso."
             ]);
+            $this->emit('success_created', true);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'success',
                 'message'=> "Usuário foi atualizado com sucesso."
             ]);
+            $this->emit('success_updated');
         }
     }
 
