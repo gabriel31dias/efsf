@@ -9,10 +9,15 @@ class TypestreetsSelect extends Component
 {
     public $query;
     public $type_streets;
+    public $typestreet;
     public $selectedId;
     public $closed = false;
     public $highlightIndex;
     public $selectedValue;
+
+    public function curretTypeStreeat(){
+        $this->query = $this->typestreet;
+    }
 
     public function mount()
     {
@@ -22,7 +27,7 @@ class TypestreetsSelect extends Component
     public function reset1()
     {
         $this->query = '';
-
+        $this->curretTypeStreeat();
         $this->selectedId = '';
         $this->type_streets = [];
         $this->highlightIndex = 0;

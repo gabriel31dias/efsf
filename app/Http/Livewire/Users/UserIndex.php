@@ -7,12 +7,26 @@ use App\Models\User;
 class UserIndex extends Component
 {
 
+    public $searchTerm = null;
+
     public function render()
     {
+
+        if($this->searchTerm){
+            $searchTerm = '%'. $this->searchTerm .'%';
+            $users = User::where('name','ilike', '%'. $searchTerm .'%' )->paginate(15);
+        }else{
+            $users = User::orderBy('id','desc')->paginate(15);
+        }
+
         return view('livewire.users.userindex',
         [
-            'users' => User::orderBy('id','desc')->paginate(15)
+            'users' => $users
         ]);
+    }
+
+    public function openFilters(){
+        $this->dispatchBrowserEvent('openFilters', []);
     }
 
     public function addUser()

@@ -51,3 +51,22 @@ th, td {
   }
 
 tr:hover {background-color: #206bc4; color:white}
+
+ps-0 {
+    padding-left: 1%;
+}
+
+
+.ms-auto {
+    margin-left: auto !important;
+    margin: 10px;
+      margin-left: 10px;
+  }
+
+
+  .nav-link-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 10px;
+    opacity: .7;
+  }

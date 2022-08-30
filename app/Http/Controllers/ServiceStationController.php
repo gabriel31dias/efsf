@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class ServiceStationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index(Request $request)
     {

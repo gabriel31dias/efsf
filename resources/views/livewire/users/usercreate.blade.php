@@ -54,7 +54,7 @@
                      <div class="mb-3">
                         <label class="form-label">Nome Completo <span class="error_tag">*</span></label>
                         <div class="input-group input-group-flat">
-                           <input wire:model="fields.nome" maxlength="70" type="text" class="form-control ps-0"  autocomplete="off" required>
+                           <input wire:model="fields.nome" maxlength="70" type="text" class="form-control"  autocomplete="off" required>
                         </div>
                         @if (in_array("nome", $errorsKeys))
                             <div  class="error_tag" role="alert">
@@ -67,7 +67,7 @@
                      <div class="mb-3">
                         <label class="form-label">Cpf <span class="error_tag">*</span></label>
                         <div class="input-group input-group-flat">
-                           <input maxlength="11" wire:model="fields.cpf"  type="text" class="form-control ps-0"  autocomplete="off" required>
+                           <input maxlength="11" wire:model="fields.cpf"  type="text" class="form-control"  autocomplete="off" required>
                         </div>
                         @if (in_array("cpf", $errorsKeys))
                             <div  class="error_tag" role="alert">
@@ -80,7 +80,7 @@
                     <div class="mb-3">
                        <label class="form-label">Cep</label>
                        <div class="input-group input-group-flat">
-                          <input   wire:model="fields.cep" type="text" class="form-control ps-0"  autocomplete="off">
+                          <input   wire:model="fields.cep" type="text" class="form-control"  autocomplete="off">
                        </div>
                     </div>
                  </div>
@@ -90,14 +90,14 @@
                <div class="col-lg-4">
                   <div class="mb-3">
                      <label class="form-label">Tipo de Logradouro</label>
-                        <livewire:users.typestreets-select />
+                        <livewire:users.typestreets-select :typestreet="$type_street" />
                   </div>
                </div>
                <div class="col-lg-6">
                 <div class="mb-3">
                    <label class="form-label">Endereço</label>
                    <div class="input-group input-group-flat">
-                      <input wire:model="fields.endereco" type="text" class="form-control ps-0" autocomplete="off">
+                      <input wire:model="fields.endereco" type="text" class="form-control" autocomplete="off">
                    </div>
                    @if (in_array("endereco", $errorsKeys))
                      <div  class="error_tag" role="alert">
@@ -110,7 +110,7 @@
                 <div class="mb-3">
                    <label class="form-label">Nº</label>
                    <div class="input-group input-group-flat">
-                      <input  wire:model="fields.numero" type="text" class="form-control ps-0"  autocomplete="off">
+                      <input  wire:model="fields.numero" type="text" class="form-control"  autocomplete="off">
                    </div>
                 </div>
              </div>
@@ -122,7 +122,7 @@
                 <div class="mb-3">
                    <label class="form-label">Bairro</label>
                    <div class="input-group input-group-flat">
-                      <input  wire:model="fields.bairro" type="text" class="form-control ps-0"  autocomplete="off">
+                      <input  wire:model="fields.bairro" type="text" class="form-control"  autocomplete="off">
                    </div>
                 </div>
              </div>
@@ -130,7 +130,7 @@
                <div class="mb-3">
                   <label class="form-label">Complemento</label>
                   <div class="input-group input-group-flat">
-                     <input  wire:model="fields.complemento" type="text" class="form-control ps-0"  autocomplete="off">
+                     <input  wire:model="fields.complemento" type="text" class="form-control"  autocomplete="off">
                   </div>
                </div>
             </div>
@@ -138,7 +138,7 @@
                 <div class="mb-3">
                    <label class="form-label">Cidade</label>
                    <div class="input-group input-group-flat">
-                      <input  wire:model="fields.cidade" type="text" class="form-control ps-0"  autocomplete="off">
+                      <input  wire:model="fields.cidade" type="text" class="form-control"  autocomplete="off">
                    </div>
                 </div>
              </div>
@@ -148,7 +148,7 @@
                <div class="mb-3">
                   <label class="form-label">UF</label>
                   <div class="input-group input-group-flat">
-                     <input maxlength="4"  wire:model="fields.uf" type="text" class="form-control ps-0"  autocomplete="off">
+                     <input maxlength="4"type_streat  wire:model="fields.uf" type="text" class="form-control"  autocomplete="off">
                   </div>
                </div>
             </div>
@@ -156,7 +156,7 @@
                <div class="mb-3">
                   <label class="form-label">Celular <span style="color: red">*</span></label>
                   <div class="input-group input-group-flat">
-                     <input  wire:model="fields.celular" type="text" class="form-control ps-0" autocomplete="off">
+                     <input id="phone" wire:model="fields.celular" type="text" class="form-control" autocomplete="off">
                   </div>
                </div>
             </div>
@@ -164,7 +164,7 @@
                 <div class="mb-3">
                    <label class="form-label">Email <span style="color: red">*</span></label>
                    <div class="input-group input-group-flat">
-                      <input  maxlength="50" wire:model="fields.email" type="text" class="form-control ps-0"  autocomplete="off">
+                      <input  maxlength="50" wire:model="fields.email" type="email" class="form-control"  autocomplete="off">
                    </div>
                 </div>
              </div>
@@ -176,7 +176,7 @@
                <div class="mb-3">
                   <label class="form-label">Confirmação de email <span style="color: red">*</span></label>
                   <div class="input-group input-group-flat">
-                     <input  maxlength="50" wire:model="fields.email_confirm" type="text" class="form-control ps-0"  autocomplete="off">
+                     <input  maxlength="50" wire:model="fields.email_confirm" type="text" class="form-control "  autocomplete="off">
                   </div>
                   @if ($fields['email_confirm'] != $fields['email'])
                     <div  class="error_tag" role="alert">
@@ -189,7 +189,7 @@
                 <div class="mb-3">
                    <label class="form-label">Login <span style="color: red">*</span></label>
                    <div class="input-group input-group-flat">
-                      <input  wire:model="fields.login" type="text" class="form-control ps-0"  autocomplete="off">
+                      <input  wire:model="fields.login" type="text" class="form-control"  autocomplete="off">
                    </div>
                    @if (in_array("login", $errorsKeys))
                      <div  class="error_tag" role="alert">
@@ -202,8 +202,16 @@
                 <div class="mb-3">
                    <label class="form-label">Senha<span style="color: red">*</span></label>
                    <div class="input-group input-group-flat">
-                      <input   wire:model="fields.senha" minlength="8" maxlength="10" type="text" class="form-control ps-0"  autocomplete="off">
+                    @if($action == "update")
+                         <a wire:click="createUser" class="btn btn-info d-none d-sm-inline-block">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                            Alterar senha
+                         </a>
+                    @else
+                        <input  wire:model="fields.senha" minlength="8" maxlength="10" type="text" class="form-control"  autocomplete="off">
+                    @endif
                    </div>
+
                     @if (in_array("login", $errorsKeys))
                      <div  class="error_tag" role="alert">
                          Este campo é obrigatório

@@ -1,7 +1,7 @@
 <div>
    <div class="relative">
       <input
-      class="form-control ps-0"
+      class="form-control"
          type="text"
          class="form-input"
          placeholder="Search Tipo logradouro..."
@@ -27,7 +27,7 @@
             >{{ $type_street['name_type_street'] }}</a>
          @endforeach
          @else
-         <div class="list-item">No results!</div>
+
          @endif
       </div>
       @endif

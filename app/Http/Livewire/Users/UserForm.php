@@ -4,17 +4,24 @@ namespace App\Http\Livewire\Users;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use App\Models\User;
+use App\Models\TypeStreet;
 use App\Models\UserServiceStation;
 use App\Models\Profile;
 use App\Models\ServiceStation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use App\Http\Repositories\UserRepository;
+
 
 
 class UserForm extends Component
 {
     public $user;
+    private $userRepository;
     public $perfil_namex;
+    public $type_street;
     public $action ;
     public $profiles = [];
     public $errorsKeys = [];
@@ -35,7 +42,7 @@ class UserForm extends Component
         "login" => "",
         "senha" => "",
         "cidade" => "",
-        "type_streat" => "",
+        "type_street" => "",
         "profile_id" => ""
     ];
 
@@ -61,7 +68,7 @@ class UserForm extends Component
 
     public function selectedTypeStreat($idTypeStreat)
     {
-        $this->fields['type_streat'] = $idTypeStreat;
+        $this->fields['type_street'] = $idTypeStreat;
     }
 
     public function selectedProfile($profileId)
@@ -81,11 +88,13 @@ class UserForm extends Component
 
     public function mount()
     {
+        $this->userRepository = new UserRepository();
         $this->servicesPoints = new Collection();
         if($this->user){
             $profile = Profile::where('id', $this->user->profile_id)->first();
+            $type_street = TypeStreet::where('id', $this->user->type_street)->first();
 
-
+            $this->type_street = $type_street->name_type_street;
             $this->perfil_namex = $profile->name_profile;
 
             $this->fields = [
@@ -104,7 +113,7 @@ class UserForm extends Component
                 "login" => $this->user->user_name,
                 "senha" => $this->user->password,
                 "cidade" => $this->user->city,
-                "type_streat" => $this->user->type_streat,
+                "type_street" => $this->user->type_street,
                 "profile_id" => $this->user->profile_id
             ];
             $this->servicesPoints = ServiceStation::whereIn('id', UserServiceStation::where('user_id', $this->user->id)->get('service_station_id'))->get();
@@ -113,6 +122,7 @@ class UserForm extends Component
 
     public function render()
     {
+
         return view('livewire.users.usercreate');
     }
 
@@ -139,6 +149,7 @@ class UserForm extends Component
         }
 
         $user = User::where('email', '=', $fields['email'])->first();
+
         if (isset($user->id) && $this->action != "update") {
             array_push($errors, [
                 "message" => "Este email já esta cadastrado por outro usuário",
@@ -165,12 +176,12 @@ class UserForm extends Component
             return false;
         }
 
-        $user = User::updateOrCreate(['id' => $this->user->id ?? 0],[
+        $user = (new UserRepository())->createOrUpdateUser($this->user->id ?? 0, [
             'cpf' => $this->fields["cpf"],
             'name' => $this->fields["nome"],
             'zip_code' => $this->fields["cep"],
             'address' => $this->fields["endereco"],
-            'type_street' => 1,
+            'type_street' => $this->fields["type_street"],
             'number' => $this->fields["numero"],
             'complement' => $this->fields["complemento"],
             'district' => $this->fields["bairro"],
@@ -179,17 +190,11 @@ class UserForm extends Component
             'cell' => $this->fields["celular"],
             'email' => $this->fields["email"],
             'user_name' => $this->fields["login"],
-            'password' => $this->fields["senha"],
+            'password' => Hash::make($this->fields["senha"]),
             'city' => $this->fields["cidade"],
-            'profile_id' => $this->fields["profile_id"]
+            'profile_id' => $this->fields["profile_id"],
+            'services_points' => $this->servicesPoints
         ]);
-
-
-        foreach ($this->servicesPoints as $value) {
-            $user->userStations()->firstOrCreate([
-                "service_station_id" => $value['id'],
-            ]);
-        }
 
         $this->messageSuccess();
 

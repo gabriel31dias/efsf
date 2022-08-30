@@ -14,8 +14,8 @@
 <div class="col-12 col-md-auto ms-auto d-print-none">
    <div class="btn-list">
       <span class="d-none d-sm-inline">
-      <a href="#" class="btn btn-white">
-      New view
+      <a wire:click="openFilters" href="#" class="btn btn-white">
+      Filtros
       </a>
       </span>
       <a  wire:click="addUser" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
@@ -48,7 +48,7 @@
                <line x1="21" y1="21" x2="15" y2="15"></line>
             </svg>
          </span>
-         <input type="text" value="" class="form-control" placeholder="Search…" aria-label="Search in website">
+         <input wire:model="searchTerm" type="text" value="" class="form-control" placeholder="Pesquisar…" >
       </div>
       <br>
       <div class="card">

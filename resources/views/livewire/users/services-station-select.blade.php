@@ -1,9 +1,9 @@
 <div style="width:80%">
        <input
-       class="form-control ps-0"
+       class="form-control"
           type="text"
           class="form-input"
-          placeholder="Search Profiles..."
+          placeholder="Pesquisar Perfis de acesso..."
           wire:model="query"
           wire:keydown.escape="reset"
           wire:keydown.tab="reset"
@@ -25,7 +25,7 @@
              >{{ $station['service_station_name'] }}</a>
           @endforeach
           @else
-          <div class="list-item">No results!</div>
+
           @endif
        </div>
        @endif

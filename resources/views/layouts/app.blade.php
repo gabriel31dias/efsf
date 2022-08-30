@@ -35,8 +35,7 @@
 
       @livewireScripts
       <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.js" integrity="sha512-P3/SDm/poyPMRBbZ4chns8St8nky2t8aeG09fRjunEaKMNEDKjK3BuAstmLKqM7f6L1j0JBYcIRL4h2G6K6Lew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
+      <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
       <script defer src="{{ asset('js/app.js') }}"></script>
       <script defer src="{{ asset('css/app.css') }}"></script>
    </head>
@@ -44,7 +43,7 @@
 
       <div class="page">
 
-
+        @if(Auth::check())
          <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
             <div class="container-fluid">
                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
@@ -52,8 +51,7 @@
                </button>
                <h1 style="text-align:center;background-color:#206bc4;  border-bottom-left-radius: 25px;" >
                   <a href=".">
-                  <img style="padding:10px" src="https://www.msbtec.com.br/msb_manutencao_arquivos/s.png" width="70" height="60" alt="Sic" >
-
+                    <h2 style="color: white">Sic</h2>
                   </a>
                </h1>
                <div class="navbar-nav flex-row d-lg-none">
@@ -240,7 +238,9 @@
                         <a class="nav-link" href='{{ route('profile.index') }}' >
                            <span class="nav-link-icon d-md-none d-lg-inline-block">
                               <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                              <i class="ti ti-user-circle"></i>
+                              <i class="ti ti-user"></i>
+
+
                            </span>
                            <span class="nav-link-title">
                            Cadastro de perfis
@@ -250,13 +250,14 @@
                   </ul>
                </div>
             </div>
+
+            @endif
          </aside>
          @yield('content')
       </div>
       <!-- Libs JS -->
 
 <script >
-
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -282,6 +283,11 @@
         })
     })
 
+    window.addEventListener('openFilters',({})=>{
+        alert("dw")
+        goFilters()
+    })
+
     window.addEventListener('redirect',({detail:{url, delay}})=>{
         setTimeout(() => {
             Turbolinks.visit(url)
@@ -291,6 +297,37 @@
     document.addEventListener('turbolinks:load', () =>
         window.livewire.start()
     );
+
+
+    if(document.getElementById('phone')){
+        document.getElementById('phone').addEventListener('keypress', function (e) {
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{2})(\d{5})(\d{3})/);
+            e.target.value = '(' + x[1] + ') ' + x[2] + '-' + x[3];
+        });
+    }
+
+
+
+
+    function goFilters (){
+        Swal.fire({
+        title: '<strong>HTML <u>example</u></strong>',
+        icon: 'info',
+        html:
+        'You can use <b>bold text</b>, ' +
+        '<a href="//sweetalert2.github.io">links</a> ' +
+        'and other HTML tags',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText:
+        '<i class="fa fa-thumbs-up"></i> Great!',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+        cancelButtonText:
+        '<i class="fa fa-thumbs-down"></i>',
+        cancelButtonAriaLabel: 'Thumbs down'
+    })
+}
 </script>
 
    </body>
