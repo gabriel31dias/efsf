@@ -23,7 +23,7 @@ class ProfileFactory extends Factory
     public function definition()
     {
         return [
-            'name_profil' => $this->faker->regexify('[A-Za-z0-9]{100}'),
+            'name_profile' => $this->faker->regexify('[A-Za-z0-9]{100}'),
             'status' => $this->faker->boolean,
             'days_to_access_inspiration' => $this->faker->numberBetween(-10000, 10000),
             'days_to_activity_lock' => $this->faker->numberBetween(-10000, 10000),

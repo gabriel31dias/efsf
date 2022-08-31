@@ -23,7 +23,6 @@ class LoginController extends Controller
 
         $user = User::where('user_name', $req->user_name)->first();
 
-
         if(isset($user->id) && Hash::check($req->password, $user->password)){
             Auth::login($user);
             return redirect()->route('home');
