@@ -14,14 +14,12 @@ use Livewire\Livewire;
 
 it('you can display a login page that is not authenticated', function () {
     // Prepare
-    $response = $this->get(route('home'));
+    $response = $this->get(route('profile.index'));
     $response->assertRedirect('/login');
 });
 
 
 it('if all parameters are correct', function () {
-
-
     $user = $user = User::factory()->make();
     Auth::login($user);
 
@@ -34,10 +32,7 @@ it('if all parameters are correct', function () {
 
     $response = $this->withSession($profile)->post(route('profile.store'),$profile);
 
-
-    $response->assertStatus(201);
-
-    $this->assertDatabaseHas('users', ['name' => $profile['name_profile']]);
+    $this->assertDatabaseHas('profiles', ['name_profile' => $profile['name_profile']]);
 });
 
 

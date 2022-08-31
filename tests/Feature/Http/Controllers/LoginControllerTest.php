@@ -20,10 +20,12 @@ it('the index page should be working correctly', function () {
 
 
 
-it('you can display a login page that is not authenticated', function () {
-    // Prepare
+it('should direct to male if already authenticated', function () {
+    $user = $user = User::factory()->make();
+    Auth::login($user);
+
     $response = $this->get(route('login'));
-    $response->assertOk();
+    $response->assertRedirect('/');
 });
 
 
