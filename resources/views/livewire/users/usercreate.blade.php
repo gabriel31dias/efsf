@@ -80,7 +80,7 @@
                     <div class="mb-3">
                        <label class="form-label">Cep</label>
                        <div class="input-group input-group-flat">
-                          <input   wire:model="fields.cep" type="text" class="form-control"  autocomplete="off">
+                          <input id="cep"  onblur="pesquisacep(this.value);" wire:model="fields.cep" type="text" class="form-control"  autocomplete="off">
                        </div>
                     </div>
                  </div>
@@ -97,7 +97,7 @@
                 <div class="mb-3">
                    <label class="form-label">Endereço</label>
                    <div class="input-group input-group-flat">
-                      <input wire:model="fields.endereco" type="text" class="form-control" autocomplete="off">
+                      <input id="rua" wire:model="fields.endereco" type="text" class="form-control" autocomplete="off">
                    </div>
                    @if (in_array("endereco", $errorsKeys))
                      <div  class="error_tag" role="alert">
@@ -122,7 +122,7 @@
                 <div class="mb-3">
                    <label class="form-label">Bairro</label>
                    <div class="input-group input-group-flat">
-                      <input  wire:model="fields.bairro" type="text" class="form-control"  autocomplete="off">
+                      <input id="bairro" wire:model="fields.bairro" type="text" class="form-control"  autocomplete="off">
                    </div>
                 </div>
              </div>
@@ -130,7 +130,7 @@
                <div class="mb-3">
                   <label class="form-label">Complemento</label>
                   <div class="input-group input-group-flat">
-                     <input  wire:model="fields.complemento" type="text" class="form-control"  autocomplete="off">
+                     <input  id="bairro" wire:model="fields.complemento" type="text" class="form-control"  autocomplete="off">
                   </div>
                </div>
             </div>
@@ -138,7 +138,7 @@
                 <div class="mb-3">
                    <label class="form-label">Cidade</label>
                    <div class="input-group input-group-flat">
-                      <input  wire:model="fields.cidade" type="text" class="form-control"  autocomplete="off">
+                      <input id="cidade" wire:model="fields.cidade" type="text" class="form-control"  autocomplete="off">
                    </div>
                 </div>
              </div>
@@ -148,7 +148,7 @@
                <div class="mb-3">
                   <label class="form-label">UF</label>
                   <div class="input-group input-group-flat">
-                     <input maxlength="4"type_streat  wire:model="fields.uf" type="text" class="form-control"  autocomplete="off">
+                     <input id="uf" maxlength="4"type_streat  wire:model="fields.uf" type="text" class="form-control"  autocomplete="off">
                   </div>
                </div>
             </div>
@@ -156,7 +156,7 @@
                <div class="mb-3">
                   <label class="form-label">Celular <span style="color: red">*</span></label>
                   <div class="input-group input-group-flat">
-                     <input id="phone" wire:model="fields.celular" type="text" class="form-control" autocomplete="off">
+                     <input id="phone"  wire:model="fields.celular" type="text" class="form-control phone" autocomplete="off">
                   </div>
                </div>
             </div>
@@ -203,7 +203,7 @@
                    <label class="form-label">Senha<span style="color: red">*</span></label>
                    <div class="input-group input-group-flat">
                     @if($action == "update")
-                         <a wire:click="createUser" class="btn btn-info d-none d-sm-inline-block">
+                         <a wire:click="openModalChangPassword" class="btn btn-info d-none d-sm-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             Alterar senha
                          </a>

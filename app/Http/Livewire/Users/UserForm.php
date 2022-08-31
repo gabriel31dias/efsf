@@ -22,6 +22,7 @@ class UserForm extends Component
     private $userRepository;
     public $perfil_namex;
     public $type_street;
+    public $user_id;
     public $action ;
     public $profiles = [];
     public $errorsKeys = [];
@@ -96,6 +97,7 @@ class UserForm extends Component
 
             $this->type_street = $type_street->name_type_street;
             $this->perfil_namex = $profile->name_profile;
+            $this->user_id = $this->user->id;
 
             $this->fields = [
                 "id" => $this->user->id,
@@ -218,6 +220,12 @@ class UserForm extends Component
             ]);
             $this->emit('success_updated');
         }
+    }
+
+    public function openModalChangPassword(){
+        $this->dispatchBrowserEvent('editPassword',[
+            'usuario'=> $this->user_id
+        ]);
     }
 
     public function addServicePoint(){

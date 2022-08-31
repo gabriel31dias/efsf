@@ -20,6 +20,10 @@
       <link href="./dist/css/tabler-vendors.min.css" rel="stylesheet"/>
       <link href="./dist/css/demo.min.css" rel="stylesheet"/>
       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+      <script type="text/javascript" src="{{ asset('dist/js/cep.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('dist/js/password_chang.js') }}"></script>
+
       <link href="{{ asset('dist/css/tabler-flags.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dist/css/tabler-payments.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dist/css/tabler-vendors.min.css') }}" rel="stylesheet">
@@ -30,6 +34,7 @@
       <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/js/jsvectormap.min.js" defer></script>
       <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/maps/world.js" defer></script>
       <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/maps/world-merc.js" defer></script>
+
 
       <meta name="turbolinks-visit-control" content="reload">
 
@@ -283,9 +288,8 @@
         })
     })
 
-    window.addEventListener('openFilters',({})=>{
-        alert("dw")
-        goFilters()
+    window.addEventListener('editPassword',(user)=>{
+        passwordChangModal()
     })
 
     window.addEventListener('redirect',({detail:{url, delay}})=>{
@@ -299,35 +303,7 @@
     );
 
 
-    if(document.getElementById('phone')){
-        document.getElementById('phone').addEventListener('keypress', function (e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{2})(\d{5})(\d{3})/);
-            e.target.value = '(' + x[1] + ') ' + x[2] + '-' + x[3];
-        });
-    }
 
-
-
-
-    function goFilters (){
-        Swal.fire({
-        title: '<strong>HTML <u>example</u></strong>',
-        icon: 'info',
-        html:
-        'You can use <b>bold text</b>, ' +
-        '<a href="//sweetalert2.github.io">links</a> ' +
-        'and other HTML tags',
-        showCloseButton: true,
-        showCancelButton: true,
-        focusConfirm: false,
-        confirmButtonText:
-        '<i class="fa fa-thumbs-up"></i> Great!',
-        confirmButtonAriaLabel: 'Thumbs up, great!',
-        cancelButtonText:
-        '<i class="fa fa-thumbs-down"></i>',
-        cancelButtonAriaLabel: 'Thumbs down'
-    })
-}
 </script>
 
    </body>
