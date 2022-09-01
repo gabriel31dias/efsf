@@ -38,4 +38,9 @@ class UserController extends Controller
         return view('user.edit', compact('user'));
     }
 
+    public function changPassword(Request $request){
+        $user = User::find($request->user_id);
+        return response()->json($user);
+    }
+
 }

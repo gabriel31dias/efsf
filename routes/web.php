@@ -23,6 +23,10 @@ Route::post('/login/auth', [App\Http\Controllers\Auth\LoginController::class, 'l
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('/users/chang_password', [App\Http\Controllers\UserController::class, 'changPassword'])->name('home');
+
+
+
 Route::resource('users', App\Http\Controllers\UserController::class);
 
 Route::resource('profile', App\Http\Controllers\ProfileController::class);

@@ -23,13 +23,13 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
       <script type="text/javascript" src="{{ asset('dist/js/cep.js') }}"></script>
       <script type="text/javascript" src="{{ asset('dist/js/password_chang.js') }}"></script>
-
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
       <link href="{{ asset('dist/css/tabler-flags.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dist/css/tabler-payments.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dist/css/tabler-vendors.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dist/css/demo.min.css') }}" rel="stylesheet">
       <script data-turbolinks-track="reload"  src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+      <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
       <script  data-turbolinks-track="reload" src="./dist/libs/apexcharts/dist/apexcharts.min.js" defer></script>
       <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/js/jsvectormap.min.js" defer></script>
       <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/maps/world.js" defer></script>
@@ -288,8 +288,8 @@
         })
     })
 
-    window.addEventListener('editPassword',(user)=>{
-        passwordChangModal()
+    window.addEventListener('editPassword',({detail:{user}})=>{
+        passwordChangModal(user)
     })
 
     window.addEventListener('redirect',({detail:{url, delay}})=>{

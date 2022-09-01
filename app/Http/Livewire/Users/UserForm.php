@@ -64,8 +64,18 @@ class UserForm extends Component
      * listeners de eventos disparados por outros componentes
      */
 
-    protected $listeners = ['selectedTypeStreat', 'selectedProfile', 'selectedServiceStation'];
+    protected $listeners = ['selectedTypeStreat', 'selectedProfile', 'selectedServiceStation', 'updatePassword'];
 
+    public function updatePassword($request){
+        $result = User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request['new_password'])
+        ]);
+
+        $this->dispatchBrowserEvent('alert',[
+            'type'=> 'success',
+            'message'=> "Senha do Usuário foi atualizada com sucesso."
+        ]);
+    }
 
     public function selectedTypeStreat($idTypeStreat)
     {
@@ -224,7 +234,7 @@ class UserForm extends Component
 
     public function openModalChangPassword(){
         $this->dispatchBrowserEvent('editPassword',[
-            'usuario'=> $this->user_id
+            'user'=> $this->user_id
         ]);
     }
 
