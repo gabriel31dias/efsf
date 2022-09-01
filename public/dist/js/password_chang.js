@@ -12,6 +12,8 @@
             autocorrect: 'off'
         }
         }).then((result) => {
+
+            alert(result['value'])
             if (result.isConfirmed) {
                 this.saveNewPassword(id_user, result['value'])
             } else if (result.isDenied) {

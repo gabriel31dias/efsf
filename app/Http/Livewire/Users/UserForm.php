@@ -67,7 +67,7 @@ class UserForm extends Component
     protected $listeners = ['selectedTypeStreat', 'selectedProfile', 'selectedServiceStation', 'updatePassword'];
 
     public function updatePassword($request){
-        $result = User::whereId(auth()->user()->id)->update([
+        $result = User::whereId($request['user_id'])->update([
             'password' => Hash::make($request['new_password'])
         ]);
 
