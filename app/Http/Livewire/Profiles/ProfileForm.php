@@ -8,6 +8,9 @@ class ProfileForm extends Component
 {
 
     public $errorsKeys = [];
+    public $perfilName;
+    public $daysToAccessInspiration;
+    public $daysToActivityLock;
     public $profile;
     public $action;
     public $fields = [

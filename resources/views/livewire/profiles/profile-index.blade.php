@@ -48,7 +48,6 @@
                    <line x1="21" y1="21" x2="15" y2="15"></line>
                 </svg>
              </span>
-             <input wire:model="searchTerm" type="text" value="" class="form-control" placeholder="Pesquisar.." aria-label="Search in website">
           </div>
           <br>
           <div class="card">
@@ -57,9 +56,17 @@
                    <table class="table">
                       <thead>
                          <tr>
-                            <th><button class="table-sort" data-sort="sort-name">Nome Perfil</button></th>
-                            <th><button class="table-sort" data-sort="sort-city">Prazo para expiração</button></th>
-                            <th><button class="table-sort" data-sort="sort-type">Prazo para expiração por inatividade</button></th>
+                            <th>
+                                <input style="width: 100%" wire:model="perfilName" placeholder="Nome" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
+                            </th>
+
+                            <th>
+                                <input style="width: 100%" wire:model="daysToAccessInspiration" placeholder="Cpf" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
+                            </th>
+
+                            <th>
+                                <input style="width: 100%" wire:model="daysToActivityLock" placeholder="Celular" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
+                           </th>
                          </tr>
                       </thead>
                       <tbody class="table-tbody">
