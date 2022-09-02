@@ -14,9 +14,15 @@
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
           <span class="d-none d-sm-inline">
-          <a wire:click="openFilters" class="btn btn-white">
-          Filtros
-          </a>
+            <div x-data="{ open: false }" class="dropdown">
+                <button @click="$('.dropdown-menu').toggleClass('show')" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     Filtrar status
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" ><input style="margin:1%" wire:model="filterActives" type="checkbox" name="" id="">Ativos</a>
+                    <a class="dropdown-item" ><input style="margin:1%" wire:model="filterInactives" type="checkbox" name="" id="">Inativos</a>
+                </div>
+            </div>
           </span>
           <a  wire:click="addUser" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->

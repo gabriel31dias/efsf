@@ -19,9 +19,32 @@
             <div class="col-12 col-md-auto ms-auto d-print-none">
                <div class="btn-list">
                   <span class="d-none d-sm-inline">
-                  <a href="#" class="btn btn-white">
-                  Filtrar
-                  </a>
+                  @if(isset($user->id))
+                    @if($user->status == false)
+                        <a wire:click="enableDisableRegister" class="btn btn-white">
+                            Habilitar
+                        </a>
+                    @else
+                        <a wire:click="enableDisableRegister" class="btn btn-white">
+                            Desabilitar
+                        </a>
+                    @endif
+                  @endif
+
+
+                 @if(isset($user->id))
+                    @if($user->blocked == false)
+                      <a wire:click="blockUnblockRegister" class="btn btn-danger">
+                        <i style="margin-left:3%"  class="ti ti-alert-circle"></i>  Bloquear
+                      </a>
+                    @else
+                      <a wire:click="blockUnblockRegister" class="btn btn-success">
+                        <i style="margin:1%" class="ti ti-alert-circle"></i>  Desbloquear
+                      </a>
+                    @endif
+                 @endif
+
+
                   </span>
                   <a wire:click="createUser" class="btn btn-primary d-none d-sm-inline-block">
                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -67,7 +90,11 @@
                      <div class="mb-3">
                         <label class="form-label">Cpf <span class="error_tag">*</span></label>
                         <div class="input-group input-group-flat">
-                           <input maxlength="15" wire:model="fields.cpf"  type="text" class="form-control cpf"  autocomplete="off" required>
+                            @if($action == "update")
+                                <input maxlength="15" disabled wire:model="fields.cpf" type="text" class="form-control cpf"  autocomplete="off">
+                            @else
+                                <input maxlength="15" wire:model="fields.cpf" type="text" class="form-control cpf"  autocomplete="off">
+                            @endif
                         </div>
                         @if (in_array("cpf", $errorsKeys))
                             <div  class="error_tag" role="alert">
@@ -189,7 +216,11 @@
                 <div class="mb-3">
                    <label class="form-label">Login <span style="color: red">*</span></label>
                    <div class="input-group input-group-flat">
-                      <input  wire:model="fields.login" type="text" class="form-control"  autocomplete="off">
+                    @if($action == "update")
+                        <input disabled wire:model="fields.login" type="text" class="form-control"  autocomplete="off">
+                    @else
+                        <input  wire:model="fields.login" type="text" class="form-control"  autocomplete="off">
+                    @endif
                    </div>
                    @if (in_array("login", $errorsKeys))
                      <div  class="error_tag" role="alert">

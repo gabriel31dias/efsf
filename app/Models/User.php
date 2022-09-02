@@ -35,7 +35,8 @@ class User extends Model implements Authenticatable
         'password',
         'profile_id',
         'city',
-        'type_street'
+        'type_street',
+        'blocked'
     ];
 
     /**

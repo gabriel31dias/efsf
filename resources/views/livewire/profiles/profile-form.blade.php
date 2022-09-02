@@ -19,9 +19,17 @@
             <div class="col-12 col-md-auto ms-auto d-print-none">
                <div class="btn-list">
                   <span class="d-none d-sm-inline">
-                  <a href="#" class="btn btn-white">
-                  Filtrar
-                  </a>
+                  @if(isset($profile->id))
+                    @if($profile->status == false)
+                        <a wire:click="enableDisableRegister" class="btn btn-white">
+                            Habilitar
+                        </a>
+                    @else
+                        <a wire:click="enableDisableRegister" class="btn btn-white">
+                            Desabilitar
+                        </a>
+                    @endif
+                  @endif
                   </span>
                   <a wire:click="saveProfile" class="btn btn-primary d-none d-sm-inline-block">
                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->

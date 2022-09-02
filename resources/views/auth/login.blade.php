@@ -12,11 +12,11 @@
                @csrf
                <label class="form-label">Usuário</label>
                <input id="user_name" type="user_name" class="form-control @error('email') is-invalid @enderror" name="user_name" value="{{ old('email') }}" required autocomplete="email" autofocus>
-               @error('email')
-               <span class="invalid-feedback" role="alert">
-               <strong>{{ $message }}</strong>
+               @if(session()->has('message'))
+               <span  role="alert">
+                <strong style="color: RED">{{ session()->get('message') }}</strong>
                </span>
-               @enderror
+               @endif
             </div>
             <div class="mb-2">
                <label class="form-label">

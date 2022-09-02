@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('cpf');
             $table->string('name');
             $table->string('city');
+            $table->boolean('blocked')->default(0);
             $table->string('zip_code')->nullable();
             $table->string('address')->nullable();
             $table->integer('type_street')->nullable();
@@ -28,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('district')->nullable();
             $table->string('uf', 5)->nullable();
             $table->timestamp('activate_date_time')->nullable();
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->string('cell');
             $table->string('user_name')->nullable();
             $table->string('profile_id')->nullable();

@@ -22,6 +22,7 @@ class UserForm extends Component
     private $userRepository;
     public $perfil_namex;
     public $type_street;
+
     public $user_id;
     public $action ;
     public $profiles = [];
@@ -105,8 +106,8 @@ class UserForm extends Component
             $profile = Profile::where('id', $this->user->profile_id)->first();
             $type_street = TypeStreet::where('id', $this->user->type_street)->first();
 
-            $this->type_street = $type_street->name_type_street;
-            $this->perfil_namex = $profile->name_profile;
+            $this->type_street = $type_street->name_type_street ?? null;
+            $this->perfil_namex = $profile->name_profile ?? null;
             $this->user_id = $this->user->id;
 
             $this->fields = [
@@ -126,7 +127,9 @@ class UserForm extends Component
                 "senha" => $this->user->password,
                 "cidade" => $this->user->city,
                 "type_street" => $this->user->type_street,
-                "profile_id" => $this->user->profile_id
+                "profile_id" => $this->user->profile_id,
+                "status" => $this->user->status,
+                "blocked" => $this->user->blocked
             ];
             $this->servicesPoints = ServiceStation::whereIn('id', UserServiceStation::where('user_id', $this->user->id)->get('service_station_id'))->get();
         }
@@ -267,6 +270,32 @@ class UserForm extends Component
         });
 
         return count($items) > 0 ;
+    }
+
+    public function enableDisableRegister(){
+        $result = (new UserRepository())->toggleStatus($this->user->id);
+
+        $this->user->status = ! $this->user->status;
+
+        if($result){
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'success',
+                'message'=> "Usuário desabilitado com sucesso."
+            ]);
+        }
+    }
+
+    public function blockUnblockRegister(){
+        $result = (new UserRepository())->toggleBlocked($this->user->id);
+
+        $this->user->blocked = ! $this->user->blocked;
+
+        if($result){
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'success',
+                'message'=> "Usuário bloqueado com sucesso."
+            ]);
+        }
     }
 
 }

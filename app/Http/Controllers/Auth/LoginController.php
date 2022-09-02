@@ -20,14 +20,15 @@ class LoginController extends Controller
     }
 
     public function login(Request $req){
-
         $user = User::where('user_name', $req->user_name)->first();
-
-        if(isset($user->id) && Hash::check($req->password, $user->password)){
+        if(!isset($user->id)){
+            return redirect()->route('login')->with('message', 'Usuário não encontrado.');
+        }
+        if(isset($user->id) && Hash::check($req->password, $user->password) && $user->status == true && $user->blocked == false){
             Auth::login($user);
             return redirect()->route('home');
         }else{
-            return redirect()->route('login');
+            return redirect()->route('login')->with('message', 'Um erro ocorreu ao fazer o login.');
         }
     }
 }

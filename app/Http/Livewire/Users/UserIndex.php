@@ -6,9 +6,12 @@ use Livewire\Component;
 use App\Models\User;
 class UserIndex extends Component
 {
-
     public $searchTerm = null;
     public $searchName;
+    public $filterUnlockeds;
+    public $filterActives;
+    public $filterInactives;
+    public $filterBlockeds;
     public $searchCep;
     public $searchCelular;
     public $searchEndereco;
@@ -19,51 +22,79 @@ class UserIndex extends Component
     public function render()
     {
 
-        $searchTerm = null;
+        $users = $this->filtersCall();
 
-        if($this->searchName){
-            $searchTerm = '%'. $this->searchName .'%';
-            $users = User::where('name','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }
+        if($this->filterUnlockeds || $this->filterBlockeds || $this->filterActives || $this->filterInactives){
+            $status = [];
+            $users->where(function($query) use($status){
+                if($this->filterUnlockeds){
+                    $query->orWhere(['blocked' => false]);
+                }
 
-        if($this->searchCelular){
-            $searchTerm = '%'. $this->searchCelular .'%';
-            $users = User::where('cell','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }
+                if($this->filterBlockeds){
+                    $query->orWhere(['blocked' => true]);
+                }
 
-        if($this->searchEndereco){
-            $searchTerm = '%'. $this->searchEndereco .'%';
-            $users = User::where('address','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }
+                if($this->filterActives){
+                    $query->orWhere(['status' => true]);
+                }
 
-        if($this->searchCpf){
-            $searchTerm = '%'. $this->searchCpf .'%';
-            $users = User::where('cpf','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }
-
-        if($this->searchCep){
-            $searchTerm = '%'. $this->searchCep .'%';
-            $users = User::where('zip_code','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }
-
-        if($this->searchDistrict){
-            $searchTerm = '%'. $this->searchDistrict .'%';
-            $users = User::where('district','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }
-
-        if($this->searchCity){
-            $searchTerm = '%'. $this->searchCity .'%';
-            $users = User::where('city','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }
-
-        if(!$searchTerm){
-            $users = User::orderBy('id','desc')->paginate(15);
+                if($this->filterInactives){
+                    $query->orWhere(['status' => false]);
+                }
+            });
         }
 
         return view('livewire.users.userindex',
         [
-            'users' => $users
+            'users' => $users->paginate(15)
         ]);
+    }
+
+    public function filtersCall(){
+        $searchTerm = null;
+
+        if($this->searchName){
+            $searchTerm = '%'. $this->searchName .'%';
+            $users = User::where('name','ilike', '%'. $searchTerm .'%' );
+        }
+
+        if($this->searchCelular){
+            $searchTerm = '%'. $this->searchCelular .'%';
+            $users = User::where('cell','ilike', '%'. $searchTerm .'%' );
+        }
+
+        if($this->searchEndereco){
+            $searchTerm = '%'. $this->searchEndereco .'%';
+            $users = User::where('address','ilike', '%'. $searchTerm .'%' );
+        }
+
+        if($this->searchCpf){
+            $searchTerm = '%'. $this->searchCpf .'%';
+            $users = User::where('cpf','ilike', '%'. $searchTerm .'%' );
+        }
+
+        if($this->searchCep){
+            $searchTerm = '%'. $this->searchCep .'%';
+            $users = User::where('zip_code','ilike', '%'. $searchTerm .'%' );
+        }
+
+        if($this->searchDistrict){
+            $searchTerm = '%'. $this->searchDistrict .'%';
+            $users = User::where('district','ilike', '%'. $searchTerm .'%' );
+        }
+
+        if($this->searchCity){
+            $searchTerm = '%'. $this->searchCity .'%';
+            $users = User::where('city','ilike', '%'. $searchTerm .'%' );
+        }
+
+
+        if(!$searchTerm){
+            $users = User::orderBy('id','desc');
+        }
+
+        return $users;
     }
 
     public function openFilters(){
@@ -81,5 +112,9 @@ class UserIndex extends Component
         $this->dispatchBrowserEvent('redirect',[
             'url'=> '/users/'.$id.'/edit',
         ]);
+    }
+
+    public function mount(){
+        $this->filterActives = true;
     }
 }

@@ -16,7 +16,7 @@ class CreateProfilesTable extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->string('name_profile', 100);
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->integer('days_to_access_inspiration');
             $table->integer('days_to_activity_lock');
             $table->timestamps();

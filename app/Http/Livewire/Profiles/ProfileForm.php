@@ -11,6 +11,11 @@ class ProfileForm extends Component
     public $perfilName;
     public $daysToAccessInspiration;
     public $daysToActivityLock;
+    public $mandatoryFields = [
+      "nome_perfil" => "",
+      "prazo_expiração" => "",
+      "prazo_expiração_inatividade" => ""
+    ];
     public $profile;
     public $action;
     public $fields = [
@@ -64,5 +69,22 @@ class ProfileForm extends Component
                 'message'=> "Perfil foi atualizado com sucesso."
             ]);
         }
+    }
+
+    public function validationForm(){
+
+    }
+
+    public function enableDisableRegister(){
+        $result = Profile::whereId($this->profile->id)->update([
+            'status' => ! $this->profile->status
+        ]);
+
+        $this->profile->status = ! $this->profile->status;
+
+        $this->dispatchBrowserEvent('alert',[
+            'type'=> 'success',
+            'message'=> "Perfil desabilitado com sucesso."
+        ]);
     }
 }

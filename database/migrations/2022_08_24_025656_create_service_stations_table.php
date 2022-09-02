@@ -18,7 +18,7 @@ class CreateServiceStationsTable extends Migration
             $table->string('service_station_name', 50);
             $table->string('acronym_post', 15);
             $table->integer('type_of_post');
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->string('city');
             $table->string('cep', 30);
             $table->integer('type_of_street');

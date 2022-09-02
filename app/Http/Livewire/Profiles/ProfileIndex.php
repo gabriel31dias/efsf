@@ -10,40 +10,58 @@ class ProfileIndex extends Component
     public $daysToAccessInspiration;
     public $daysToActivityLock;
     public $searchTerm = null;
+    public $filterActives;
+    public $filterInactives;
+
     public function render()
     {
+        $profiles = $this->filtersCall();
 
-        $searchTerm = "";
-        if($this->searchTerm){
-            $searchTerm = '%'. $this->searchTerm .'%';
-            $profiles = Profile::where('name_profile','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }else{
-            $profiles = Profile::orderBy('id','desc')->paginate(15);
-        }
+        if($this->filterActives || $this->filterInactives){
+            $profiles->where(function($query){
+                if($this->filterActives){
+                    $query->orWhere(['status' => true]);
+                }
 
-        if($this->perfilName){
-            $searchTerm = '%'. $this->perfilName .'%';
-            $profiles = Profile::where('name_profile','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }
-
-        if($this->daysToAccessInspiration){
-            $searchTerm = '%'. $this->daysToAccessInspiration .'%';
-            $profiles = Profile::where('name_profile','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }
-
-        if($this->daysToActivityLock){
-            $searchTerm = '%'. $this->daysToActivityLock .'%';
-            $profiles = Profile::where('name_profile','ilike', '%'. $searchTerm .'%' )->paginate(15);
-        }
-
-        if(!$searchTerm){
-            $profiles = Profile::orderBy('id','desc')->paginate(15);
+                if($this->filterInactives){
+                    $query->orWhere(['status' => false]);
+                }
+            });
         }
 
         return view('livewire.profiles.profile-index',
         [
-            'profiles' => $profiles
+            'profiles' => $profiles->paginate(15)
         ]);
+    }
+
+    public function filtersCall(){
+        $searchTerm = "";
+
+        if($this->perfilName){
+            $searchTerm = '%'. $this->perfilName .'%';
+            $profiles = Profile::where('name_profile','ilike', '%'. $searchTerm .'%' );
+        }
+
+        if($this->daysToAccessInspiration){
+            $searchTerm = '%'. $this->daysToAccessInspiration .'%';
+            $profiles = Profile::where('name_profile','ilike', '%'. $searchTerm .'%' );
+        }
+
+        if($this->daysToActivityLock){
+            $searchTerm = '%'. $this->daysToActivityLock .'%';
+            $profiles = Profile::where('name_profile','ilike', '%'. $searchTerm .'%' );
+        }
+
+        if(!$searchTerm){
+            $profiles = Profile::orderBy('id','desc');
+        }
+
+        return $profiles;
+    }
+
+    public function mount(){
+        $this->filterActives = true;
     }
 
     public function openFilters(){

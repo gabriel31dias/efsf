@@ -35,9 +35,10 @@
       <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/maps/world.js" defer></script>
       <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/maps/world-merc.js" defer></script>
       <script src="https://unpkg.com/imask"></script>
-
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
       <meta name="turbolinks-visit-control" content="reload">
-
+      <script src="//unpkg.com/alpinejs" defer></script>
       @livewireScripts
       <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.js" integrity="sha512-P3/SDm/poyPMRBbZ4chns8St8nky2t8aeG09fRjunEaKMNEDKjK3BuAstmLKqM7f6L1j0JBYcIRL4h2G6K6Lew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
@@ -218,7 +219,7 @@
                <div class="collapse navbar-collapse" id="navbar-menu">
                   <ul class="navbar-nav pt-lg-3">
                      <li class="nav-item">
-                        <a class="nav-link" href="./index.html" >
+                        <a class="nav-link" href="/" >
                            <span class="nav-link-icon d-md-none d-lg-inline-block">
                               <!-- Download SVG icon from http://tabler-icons.io/i/home -->
                               <i class="ti ti-home"></i>
