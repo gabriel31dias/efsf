@@ -20,7 +20,7 @@
       <link href="./dist/css/tabler-vendors.min.css" rel="stylesheet"/>
       <link href="./dist/css/demo.min.css" rel="stylesheet"/>
       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+      <script type="text/javascript" src="{{ asset('dist/js/mask.js') }}"></script>
       <script type="text/javascript" src="{{ asset('dist/js/cep.js') }}"></script>
       <script type="text/javascript" src="{{ asset('dist/js/password_chang.js') }}"></script>
       <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -34,7 +34,7 @@
       <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/js/jsvectormap.min.js" defer></script>
       <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/maps/world.js" defer></script>
       <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/maps/world-merc.js" defer></script>
-
+      <script src="https://unpkg.com/imask"></script>
 
       <meta name="turbolinks-visit-control" content="reload">
 
@@ -301,7 +301,6 @@
     document.addEventListener('turbolinks:load', () =>
         window.livewire.start()
     );
-
 
 
 </script>

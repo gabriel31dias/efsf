@@ -67,7 +67,7 @@
                      <div class="mb-3">
                         <label class="form-label">Cpf <span class="error_tag">*</span></label>
                         <div class="input-group input-group-flat">
-                           <input maxlength="11" wire:model="fields.cpf"  type="text" class="form-control"  autocomplete="off" required>
+                           <input maxlength="15" wire:model="fields.cpf"  type="text" class="form-control cpf"  autocomplete="off" required>
                         </div>
                         @if (in_array("cpf", $errorsKeys))
                             <div  class="error_tag" role="alert">
