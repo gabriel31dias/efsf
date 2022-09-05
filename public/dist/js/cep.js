@@ -9,13 +9,15 @@ if(document.getElementById('rua')){
 }
 }
 
-function meu_callback(conteudo) {
+function callback(conteudo) {
 if (!("erro" in conteudo)) {
     //Atualiza os campos com os valores.
-    document.getElementById('rua').value=(conteudo.logradouro);
-    document.getElementById('bairro').value=(conteudo.bairro);
-    document.getElementById('cidade').value=(conteudo.localidade);
-    document.getElementById('uf').value=(conteudo.uf);
+    Livewire.emit('updateInfoIbge',{
+        logradouro: conteudo.logradouro,
+        bairro: conteudo.bairro,
+        cidade: conteudo.localidade,
+        uf: conteudo.uf
+    })
 
 } //end if.
 else {
@@ -41,7 +43,7 @@ if (cep != "") {
 
         var script = document.createElement('script');
 
-        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=callback';
 
         document.body.appendChild(script);
 

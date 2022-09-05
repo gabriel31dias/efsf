@@ -21,6 +21,7 @@ class LoginController extends Controller
 
     public function login(Request $req){
         $user = User::where('user_name', $req->user_name)->first();
+
         if(!isset($user->id)){
             return redirect()->route('login')->with('message', 'Usuário não encontrado.');
         }

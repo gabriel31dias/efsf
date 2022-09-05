@@ -66,7 +66,7 @@
                         </div>
                         @if (in_array("nome_perfil", $errorsKeys))
                             <div  class="error_tag" role="alert">
-                                Este campo é obrigatório
+                                O campo Nome do perfil é obrigatório
                             </div>
                         @endif
                      </div>
@@ -77,6 +77,11 @@
                         <div class="input-group input-group-flat">
                            <input maxlength="11" wire:model="fields.prazo_expiração"  type="text" class="form-control ps-0"  autocomplete="off" required>
                         </div>
+                        @if (in_array("prazo_expiração", $errorsKeys))
+                            <div  class="error_tag" role="alert">
+                                O campo Prazo para expiração é obrigatório
+                            </div>
+                        @endif
                      </div>
                   </div>
                   <div class="col-lg-4">
@@ -85,6 +90,11 @@
                        <div class="input-group input-group-flat">
                           <input maxlength="11" wire:model="fields.prazo_expiração_inatividade"  type="text" class="form-control ps-0"  autocomplete="off" required>
                        </div>
+                        @if (in_array("prazo_expiração_inatividade", $errorsKeys))
+                            <div  class="error_tag" role="alert">
+                                O campo Prazo para expiração por inatividade é obrigatório
+                            </div>
+                        @endif
                     </div>
                  </div>
                </div>

@@ -31,7 +31,7 @@ class ProfileIndex extends Component
 
         return view('livewire.profiles.profile-index',
         [
-            'profiles' => $profiles->paginate(15)
+            'profiles' => $profiles->paginate(5)
         ]);
     }
 

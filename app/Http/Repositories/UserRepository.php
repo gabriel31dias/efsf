@@ -6,9 +6,13 @@ use App\Models\User;
 class UserRepository {
 
     public function createOrUpdateUser($id, $obj){
+
         $servicePoints = $obj['services_points'];
         if($obj['type_street'] == ""){
             unset($obj['type_street']);
+        }
+        if($obj['profile_id'] == ""){
+            unset($obj['profile_id']);
         }
         unset($obj['services_points']);
         $user = User::updateOrCreate(['id' => $id ?? 0], $obj);

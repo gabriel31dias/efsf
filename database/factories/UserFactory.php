@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserFactory extends Factory
 {
@@ -25,6 +26,7 @@ class UserFactory extends Factory
         return [
             'cpf' => $this->faker->regexify('[A-Za-z0-9]{100}'),
             'name' => $this->faker->name,
+            'city' => 'andradina',
             'zip_code' => $this->faker->regexify('[A-Za-z0-9]{100}'),
             'address' => $this->faker->regexify('[A-Za-z0-9]{100}'),
             'type_street' => $this->faker->numberBetween(-10000, 10000),
@@ -33,11 +35,12 @@ class UserFactory extends Factory
             'district' => $this->faker->regexify('[A-Za-z0-9]{30}'),
             'uf' => $this->faker->regexify('[A-Za-z0-9]{5}'),
             'activate_date_time' => $this->faker->dateTime(),
-            'status' => $this->faker->boolean,
+            'blocked' => false,
+            'status' => true,
             'cell' => $this->faker->regexify('[A-Za-z0-9]{15}'),
-            'mail' => $this->faker->regexify('[A-Za-z0-9]{50}'),
+            'email' => $this->faker->regexify('[A-Za-z0-9]{50}'),
             'user_name' => $this->faker->userName,
-            'password' => $this->faker->password,
+            'password' => Hash::make("00300111") ,
             'profile_id' => $this->faker->word,
         ];
     }

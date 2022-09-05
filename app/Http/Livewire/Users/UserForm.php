@@ -13,6 +13,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use App\Http\Repositories\UserRepository;
+use App\Http\Repositories\ProfileRepository;
+use App\Http\Repositories\TypeStreetRepository;
+use App\Http\Repositories\ServiceStationsRepository;
 
 
 
@@ -65,7 +68,14 @@ class UserForm extends Component
      * listeners de eventos disparados por outros componentes
      */
 
-    protected $listeners = ['selectedTypeStreat', 'selectedProfile', 'selectedServiceStation', 'updatePassword'];
+    protected $listeners = ['selectedTypeStreat', 'selectedProfile', 'selectedServiceStation', 'updatePassword', 'updateInfoIbge'];
+
+    public function updateInfoIbge($request){
+        $this->fields['endereco'] = $request['logradouro'];
+        $this->fields['bairro'] = $request['bairro'];
+        $this->fields['cidade'] = $request['cidade'];
+        $this->fields['uf'] = $request['uf'];
+    }
 
     public function updatePassword($request){
         $result = User::whereId($request['user_id'])->update([
@@ -100,44 +110,49 @@ class UserForm extends Component
 
     public function mount()
     {
+
+        if($this->user){
+            $this->getUser();
+        }
+    }
+
+    public function getUser(){
         $this->userRepository = new UserRepository();
         $this->servicesPoints = new Collection();
-        if($this->user){
-            $profile = Profile::where('id', $this->user->profile_id)->first();
-            $type_street = TypeStreet::where('id', $this->user->type_street)->first();
 
-            $this->type_street = $type_street->name_type_street ?? null;
-            $this->perfil_namex = $profile->name_profile ?? null;
-            $this->user_id = $this->user->id;
+        $profile = (new ProfileRepository())->findProfile($this->user->profile_id);
+        $type_street = (new TypeStreetRepository())->findTypeStreet($this->user->type_street);
 
-            $this->fields = [
-                "id" => $this->user->id,
-                "nome" => $this->user->name,
-                "cpf" => $this->user->cpf,
-                "cep" => $this->user->zip_code,
-                "endereco" => $this->user->address,
-                "numero" => $this->user->number,
-                "complemento" => $this->user->complement,
-                "bairro" => $this->user->district,
-                "uf" => $this->user->uf,
-                "celular" => $this->user->cell,
-                "email" => $this->user->email,
-                "email_confirm" => $this->user->email,
-                "login" => $this->user->user_name,
-                "senha" => $this->user->password,
-                "cidade" => $this->user->city,
-                "type_street" => $this->user->type_street,
-                "profile_id" => $this->user->profile_id,
-                "status" => $this->user->status,
-                "blocked" => $this->user->blocked
-            ];
-            $this->servicesPoints = ServiceStation::whereIn('id', UserServiceStation::where('user_id', $this->user->id)->get('service_station_id'))->get();
-        }
+        $this->type_street = $type_street->name_type_street ?? null;
+        $this->perfil_namex = $profile->name_profile ?? null;
+        $this->user_id = $this->user->id;
+
+        $this->fields = [
+            "id" => $this->user->id,
+            "nome" => $this->user->name,
+            "cpf" => $this->user->cpf,
+            "cep" => $this->user->zip_code,
+            "endereco" => $this->user->address,
+            "numero" => $this->user->number,
+            "complemento" => $this->user->complement,
+            "bairro" => $this->user->district,
+            "uf" => $this->user->uf,
+            "celular" => $this->user->cell,
+            "email" => $this->user->email,
+            "email_confirm" => $this->user->email,
+            "login" => $this->user->user_name,
+            "senha" => $this->user->password,
+            "cidade" => $this->user->city,
+            "type_street" => $this->user->type_street,
+            "profile_id" => $this->user->profile_id,
+            "status" => $this->user->status,
+            "blocked" => $this->user->blocked
+        ];
+        $this->servicesPoints = (new ServiceStationsRepository)->findServiceStations($this->user->id);
     }
 
     public function render()
     {
-
         return view('livewire.users.usercreate');
     }
 

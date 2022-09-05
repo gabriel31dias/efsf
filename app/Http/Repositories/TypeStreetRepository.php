@@ -2,6 +2,8 @@
 
 namespace App\Http\Repositories;
 use App\Models\User;
+use App\Models\TypeStreet;
+
 
 class TypeStreetRepository {
 
@@ -19,6 +21,17 @@ class TypeStreetRepository {
         }
 
         return $user;
+    }
+
+    public function findTypeStreet($idStreet){
+        if(!is_numeric($idStreet)){
+            return false;
+        }
+
+        if($idStreet == ""){
+            return false;
+        }
+        return TypeStreet::where('id', $idStreet)->first();
     }
 
 }

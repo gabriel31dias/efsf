@@ -7,20 +7,34 @@ namespace Tests\Feature;
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Profile;
 use App\Http\Livewire\Users\UserForm;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;
 
 
-it('you can display a login page that is not authenticated', function () {
-    // Prepare
+it('if the user is not authenticated, the login page should be displayed when accessing profile.index', function () {
     $response = $this->get(route('profile.index'));
     $response->assertRedirect('/login');
 });
 
 
+it('if the user is not authenticated, the login page should be displayed when accessing profile.edit', function () {
+    $profile = Profile::factory()->create();
+
+    $response = $this->get(route("profile.edit",["profile"=> $profile->id]));
+    $response->assertRedirect('/login');
+});
+
+it('if the user is not authenticated, the login page should be displayed when accessing profile.show', function () {
+    $profile = Profile::factory()->create();
+
+    $response = $this->get(route('profile.edit', ["profile"=> $profile->id]));
+    $response->assertRedirect('/login');
+});
+
 it('if all parameters are correct', function () {
-    $user = $user = User::factory()->make();
+    $user = User::factory()->make();
     Auth::login($user);
 
     $profile = [

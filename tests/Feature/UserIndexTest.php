@@ -41,7 +41,7 @@ test('must validate the fields', function () {
         "type_street" => "",
         "profile_id" => ""
     ])
-    ->call('createUser')->assertSee('Este campo é obrigatório');
+    ->call('createUser')->assertSee('é obrigatório');
 });
 
 test('if it is correct it should not show validation errors', function () {
@@ -65,7 +65,7 @@ test('if it is correct it should not show validation errors', function () {
          "profile_id" => "1"
      ])
      ->call('createUser')
-     ->assertDontSee('Este campo é obrigatório');
+     ->assertDontSee('é obrigatório');
  });
 
 

@@ -81,7 +81,7 @@
                         </div>
                         @if (in_array("nome", $errorsKeys))
                             <div  class="error_tag" role="alert">
-                                Este campo é obrigatório
+                               O campo Nome campo é obrigatório
                             </div>
                         @endif
                      </div>
@@ -98,7 +98,7 @@
                         </div>
                         @if (in_array("cpf", $errorsKeys))
                             <div  class="error_tag" role="alert">
-                                Este campo é obrigatório
+                                O campo Cpf é obrigatório
                             </div>
                         @endif
                      </div>
@@ -128,7 +128,7 @@
                    </div>
                    @if (in_array("endereco", $errorsKeys))
                      <div  class="error_tag" role="alert">
-                       Este campo é obrigatório
+                       O campo Endereço é obrigatório
                      </div>
                    @endif
                 </div>
@@ -224,7 +224,7 @@
                    </div>
                    @if (in_array("login", $errorsKeys))
                      <div  class="error_tag" role="alert">
-                       Este campo é obrigatório
+                       O campo Login é obrigatório
                      </div>
                    @endif
                 </div>
@@ -243,9 +243,9 @@
                     @endif
                    </div>
 
-                    @if (in_array("login", $errorsKeys))
+                    @if (in_array("senha", $errorsKeys))
                      <div  class="error_tag" role="alert">
-                         Este campo é obrigatório
+                        O campo Senha é obrigatório
                      </div>
                     @endif
                 </div>

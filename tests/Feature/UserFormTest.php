@@ -41,10 +41,83 @@ test('must validate the fields', function () {
         "type_street" => "",
         "profile_id" => ""
     ])
-    ->call('createUser')->assertSee('Este campo é obrigatório');
+    ->call('createUser')->assertSee('é obrigatório');
 });
 
-test('if it is correct it should not show validation errors', function () {
+ test('the name field must be mandatory', function () {
+    $res = Livewire::test(UserForm::class)
+     ->set('fields', [
+         "nome" => "",
+         "cpf" => "5257755775",
+         "cep" => "16903065",
+         "endereco" => "Teste rua",
+         "numero" => "4343",
+         "complemento" => "complemento",
+         "bairro" => "Bairro",
+         "uf" => "Sp",
+         "celular" => "189966396",
+         "email" => "dwd@daadw.com",
+         "email_confirm" => "dwd@daadw.com",
+         "login" => "teste",
+         "senha" => "teste",
+         "cidade" => "cidade",
+         "type_street" => "1",
+         "profile_id" => "1"
+     ])
+     ->call('createUser')
+     ->assertSee('O campo Nome campo é obrigatório');
+ });
+
+ test('the Cpf field must be mandatory', function () {
+    $res = Livewire::test(UserForm::class)
+     ->set('fields', [
+         "nome" => "Teste User",
+         "cpf" => "",
+         "cep" => "16903065",
+         "endereco" => "Teste rua",
+         "numero" => "4343",
+         "complemento" => "complemento",
+         "bairro" => "Bairro",
+         "uf" => "Sp",
+         "celular" => "189966396",
+         "email" => "dwd@daadw.com",
+         "email_confirm" => "dwd@daadw.com",
+         "login" => "teste",
+         "senha" => "teste",
+         "cidade" => "cidade",
+         "type_street" => "1",
+         "profile_id" => "1"
+     ])
+     ->call('createUser')
+     ->assertSee('O campo Cpf é obrigatório');
+ });
+
+ test('the Endereco field must be mandatory', function () {
+    $res = Livewire::test(UserForm::class)
+     ->set('fields', [
+         "nome" => "Teste User",
+         "cpf" => "321231231321",
+         "cep" => "16903065",
+         "endereco" => "",
+         "numero" => "4343",
+         "complemento" => "complemento",
+         "bairro" => "Bairro",
+         "uf" => "Sp",
+         "celular" => "189966396",
+         "email" => "dwd@daadw.com",
+         "email_confirm" => "dwd@daadw.com",
+         "login" => "teste",
+         "senha" => "teste",
+         "cidade" => "cidade",
+         "type_street" => "1",
+         "profile_id" => "1"
+     ])
+     ->call('createUser')
+     ->assertSee('O campo Endereço é obrigatório');
+ });
+
+
+ test('if it is correct it should not show validation errors', function () {
     $res = Livewire::test(UserForm::class)
      ->set('fields', [
          "nome" => "Teste User",
@@ -65,7 +138,7 @@ test('if it is correct it should not show validation errors', function () {
          "profile_id" => "1"
      ])
      ->call('createUser')
-     ->assertDontSee('Este campo é obrigatório');
+     ->assertDontSee('é obrigatório');
  });
 
 

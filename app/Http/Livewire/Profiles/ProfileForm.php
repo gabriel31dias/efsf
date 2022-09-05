@@ -4,17 +4,20 @@ namespace App\Http\Livewire\Profiles;
 
 use Livewire\Component;
 use App\Models\Profile;
+use App\Http\Repositories\ProfileRepository;
 class ProfileForm extends Component
 {
 
     public $errorsKeys = [];
+    public $errors = [];
+
     public $perfilName;
     public $daysToAccessInspiration;
     public $daysToActivityLock;
-    public $mandatoryFields = [
-      "nome_perfil" => "",
-      "prazo_expiração" => "",
-      "prazo_expiração_inatividade" => ""
+    public $obrigatory_filds = [
+      "nome_perfil",
+      "prazo_expiração",
+      "prazo_expiração_inatividade"
     ];
     public $profile;
     public $action;
@@ -40,6 +43,17 @@ class ProfileForm extends Component
     }
 
     public function saveProfile(){
+        $validation = $this->validation($this->fields);
+
+        if(count($validation) > 0){
+            $this->errors = $validation;
+
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> $validation[0]["message"]
+            ]);
+            return false;
+        }
 
         $profile = Profile::updateOrCreate(['id' => $this->profile->id ?? 0],[
             'name_profile' => $this->fields["nome_perfil"],
@@ -71,20 +85,37 @@ class ProfileForm extends Component
         }
     }
 
-    public function validationForm(){
+    private function validation($fields){
+        $errors = [];
+        $this->errorsKeys = [];
+        $this->errors = [];
+        foreach ($fields as $field => $value)
+        {
+            if($this->checkMandatory($field) && empty(trim($value))){
+                array_push($errors, [
+                    "message" => "O campo {$field} é obrigatorio",
+                    "valid" => false,
+                ]);
+                $this->errorsKeys[] = $field;
+            }
+        }
 
+        return $errors;
+    }
+
+    public function checkMandatory($field){
+        return in_array($field, $this->obrigatory_filds);
     }
 
     public function enableDisableRegister(){
-        $result = Profile::whereId($this->profile->id)->update([
-            'status' => ! $this->profile->status
-        ]);
+        $result = (new ProfileRepository)->toggleStatus($this->profile->id);
+        if($result){
+            $this->profile->status = ! $this->profile->status;
 
-        $this->profile->status = ! $this->profile->status;
-
-        $this->dispatchBrowserEvent('alert',[
-            'type'=> 'success',
-            'message'=> "Perfil desabilitado com sucesso."
-        ]);
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'success',
+                'message'=> "Perfil desabilitado com sucesso."
+            ]);
+        }
     }
 }
