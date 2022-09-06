@@ -7,7 +7,7 @@ use App\Models\TypeStreet;
 
 class TypeStreetRepository {
 
-    public function createOrUpdateUser($id, $obj){
+    public function createOrUpdateUser($id = 0, $obj){
         $servicePoints = $obj['services_points'];
         unset($obj['services_points']);
         $user = User::updateOrCreate(['id' => $id ?? 0], $obj);

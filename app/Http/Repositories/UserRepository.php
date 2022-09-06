@@ -3,9 +3,33 @@
 namespace App\Http\Repositories;
 use App\Models\User;
 
+
 class UserRepository {
 
+    public $mandatoryFilds = [
+        "name",
+        "cell",
+        "email",
+        "password"
+    ];
+
     public function createOrUpdateUser($id, $obj){
+
+        $erros = [];
+
+        foreach ($obj as $field => $value)
+        {
+            if($this->checkMandatory($field) && empty(trim($value))) {
+                array_push($erros, [
+                    "message" => "O campo {$field} é obrigatorio"
+                ] );
+            }
+        }
+
+
+        if(count($erros) > 0){
+            return $erros;
+        }
 
         $servicePoints = $obj['services_points'];
         if($obj['type_street'] == ""){
@@ -26,6 +50,10 @@ class UserRepository {
         }
 
         return $user;
+    }
+
+    public function checkMandatory($field){
+        return in_array($field, $this->mandatoryFilds);
     }
 
     public function toggleStatus($user_id){

@@ -223,7 +223,8 @@ class UserForm extends Component
             'password' => Hash::make($this->fields["senha"]),
             'city' => $this->fields["cidade"],
             'profile_id' => $this->fields["profile_id"],
-            'services_points' => $this->servicesPoints
+            'services_points' => $this->servicesPoints,
+            'activate_date_time' => now()
         ]);
 
         $this->messageSuccess();
