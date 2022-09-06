@@ -28,17 +28,17 @@ class LoginController extends Controller
         $this->checkExpiration($user);
 
         if($user->status == false){
-            return redirect()->route('login')->with('message', 'Usuario desativado.');
+            return redirect()->route('login')->with('message', 'Usuário desativado.');
         }
 
-        if($user->blocked == false){
-            return redirect()->route('login')->with('message', 'Usuario bloqueado.');
+        if($user->blocked == true){
+            return redirect()->route('login')->with('message', 'Usuário bloqueado.');
         }
 
         if(!isset($user->id)){
             return redirect()->route('login')->with('message', 'Usuário não encontrado.');
         }
-        if(isset($user->id) && Hash::check($req->password, $user->password) && $user->status == true && $user->blocked == false){
+        if(isset($user->id) && Hash::check($req->password, $user->password) && $user->status == true ){
             Auth::login($user);
             return redirect()->route('home');
         }else{
@@ -48,6 +48,7 @@ class LoginController extends Controller
 
     public function checkExpiration($user){
         $now = Carbon::now();
+
         $activate_date_time = Carbon::parse($user->activate_date_time);
 
         if($user->profile_id){
