@@ -25,9 +25,15 @@ class LoginController extends Controller
     public function login(Request $req){
         $user = User::where('user_name', $req->user_name)->first();
 
-        //$this->checkExpiration($user);
+        $this->checkExpiration($user);
 
+        if($user->status == false){
+            return redirect()->route('login')->with('message', 'Usuario desativado.');
+        }
 
+        if($user->blocked == false){
+            return redirect()->route('login')->with('message', 'Usuario bloqueado.');
+        }
 
         if(!isset($user->id)){
             return redirect()->route('login')->with('message', 'Usuário não encontrado.');
