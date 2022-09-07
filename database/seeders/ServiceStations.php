@@ -27,7 +27,10 @@ class ServiceStations extends Seeder
             'complement' => "2213213",
             'district' => "2213213",
             'uf' => "2213213",
-            'city' => "Andradina"
+            'city' => "Andradina",
+            'start_hour' => "08:00:00",
+            'end_hour' => "18:00:00"
+            
         ]);
 
         DB::table('service_stations')->insert([
@@ -42,7 +45,9 @@ class ServiceStations extends Seeder
             'complement' => "2213213",
             'district' => "2213213",
             'uf' => "2213213",
-            'city' => "São paulo"
+            'city' => "São paulo",
+            'start_hour' => "08:00:00",
+            'end_hour' => "18:00:00"
         ]);
 
         DB::table('service_stations')->insert([
@@ -57,7 +62,9 @@ class ServiceStations extends Seeder
             'complement' => "2213213",
             'district' => "2213213",
             'uf' => "2213213",
-            'city' => "São Paulo"
+            'city' => "São Paulo",
+            'start_hour' => "08:00:00",
+            'end_hour' => "18:00:00"
         ]);
 
         DB::table('service_stations')->insert([
@@ -72,7 +79,9 @@ class ServiceStations extends Seeder
             'complement' => "2213213",
             'district' => "2213213",
             'uf' => "2213213",
-            'city' => "São Paulo"
+            'city' => "São Paulo",
+            'start_hour' => "08:00:00",
+            'end_hour' => "18:00:00"
         ]);
     }
 }

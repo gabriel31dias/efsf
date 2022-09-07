@@ -27,6 +27,9 @@ class CreateServiceStationsTable extends Migration
             $table->string('complement', 50);
             $table->string('district', 50);
             $table->string('uf', 30);
+            $table->time('start_hour');
+            $table->time('end_hour');
+            $table->integer('delivery_post_id')->nullable();
             $table->timestamps();
         });
     }

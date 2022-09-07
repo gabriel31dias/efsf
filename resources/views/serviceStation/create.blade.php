@@ -1,7 +1,6 @@
-{{--
+
     @extends('layouts.app')
 
     @section('content')
-        serviceStation.create template
+        <livewire:service-station.service-station-form :action="'create'" />
     @endsection
---}}

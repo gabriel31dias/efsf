@@ -1,7 +1,4 @@
-{{--
-    @extends('layouts.app')
-
-    @section('content')
-        serviceStation.index template
-    @endsection
---}}
+@extends('layouts.app')
+@section('content')
+    <livewire:service-station.service-station-index />
+@endsection
