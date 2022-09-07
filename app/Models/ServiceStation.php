@@ -33,5 +33,10 @@ class ServiceStation extends Model
     {
         return $this->hasMany(ServiceStationEvent::class, 'service_station_id');
     }
+
+    public function getLatestEventAttribute()
+    {
+        return ServiceStationEvent::where('service_station_id', $this->id)->latest()->first();
+    }
     
 }
