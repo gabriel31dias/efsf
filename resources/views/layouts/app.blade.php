@@ -23,10 +23,14 @@
       <script type="text/javascript" src="{{ asset('dist/js/mask.js') }}"></script>
       <script type="text/javascript" src="{{ asset('dist/js/cep.js') }}"></script>
       <script type="text/javascript" src="{{ asset('dist/js/password_chang.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('dist/js/modal_chang_expired_pass.js') }}"></script>
+
       <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
       <link href="{{ asset('dist/css/tabler-flags.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dist/css/tabler-payments.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dist/css/tabler-vendors.min.css') }}" rel="stylesheet">
+
+
       <link href="{{ asset('dist/css/demo.min.css') }}" rel="stylesheet">
       <script data-turbolinks-track="reload"  src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
       <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
@@ -39,11 +43,16 @@
       <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
       <meta name="turbolinks-visit-control" content="reload">
       <script src="//unpkg.com/alpinejs" defer></script>
+
+
       @livewireScripts
       <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.js" integrity="sha512-P3/SDm/poyPMRBbZ4chns8St8nky2t8aeG09fRjunEaKMNEDKjK3BuAstmLKqM7f6L1j0JBYcIRL4h2G6K6Lew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
       <script defer src="{{ asset('js/app.js') }}"></script>
       <script defer src="{{ asset('css/app.css') }}"></script>
+
+
+
    </head>
    <body >
 

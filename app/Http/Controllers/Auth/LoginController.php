@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Profile;
+use Illuminate\Support\Facades\Session;
 
 
 class LoginController extends Controller
@@ -57,7 +58,8 @@ class LoginController extends Controller
         }
 
         if($activate_date_time < $now){
-            $this->setExpiredUser($user);
+            //$this->setExpiredUser($user);
+            Session::flash('updatePass', 'true');
         }
     }
 

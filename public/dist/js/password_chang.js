@@ -1,7 +1,7 @@
 
-     function passwordChangModal(id_user){
+    function passwordChangModal(id_user){
         const value =  Swal.fire({
-        title: 'Digite a nova senha',
+        title: 'Digite a nova senha.',
         input: 'password',
         confirmButtonText: 'Salvar',
         showCancelButton: true,
@@ -10,23 +10,50 @@
             maxlength: 10,
             autocapitalize: 'off',
             autocorrect: 'off'
+        },
+        inputValidator: (value) => {
+            if (!value) return 'A senha não pode fircar em branco.'
+
+            if (!value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#=-])[0-9a-zA-Z$*&@#=-]{8,}$/)) return 'A senha deve conter letras maiúsculas, minúsculas, número e símbolos'
+
         }
         }).then((result) => {
-
             if (result.isConfirmed) {
-                this.saveNewPassword(id_user, result['value'])
+                modalChang(result)
             } else if (result.isDenied) {
                 Swal.fire('Changes are not saved', '', 'info')
             }
         })
 
-        if (password) {
-            Swal.fire(
-                'Senha Alterado',
-                '',
-                'success'
-              )
-        }
+    }
+
+    function modalChang(newPassword){
+        alert(JSON.stringify(newPassword))
+        const value =  Swal.fire({
+            title: 'Confirme a nova senha',
+            input: 'password',
+            confirmButtonText: 'Salvar',
+            showCancelButton: true,
+            inputPlaceholder: '',
+            inputAttributes: {
+                maxlength: 10,
+                autocapitalize: 'off',
+                autocorrect: 'off'
+            },
+            inputValidator: (value) => {
+
+                if (value !== newPassword.value) return 'A senha não confirma.'
+
+            }
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    this.saveNewPassword(id_user, result['value'])
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
     }
 
     function  saveNewPassword(id_user, password){
@@ -34,6 +61,12 @@
             user_id: id_user,
             new_password: password
         })
+
+        Swal.fire(
+            'Senha Alterado',
+            '',
+            'success'
+          )
     }
 
 

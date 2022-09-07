@@ -110,7 +110,6 @@ class UserForm extends Component
 
     public function mount()
     {
-
         if($this->user){
             $this->getUser();
         }
@@ -153,7 +152,12 @@ class UserForm extends Component
 
     public function render()
     {
-        return view('livewire.users.usercreate');
+
+        $passwordIsValid = function ($password) {
+            return preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#=-])[0-9a-zA-Z$*&@#=-]{8,}$/', $password);
+        };
+
+        return view('livewire.users.usercreate', compact('passwordIsValid'));
     }
 
     private function validation($fields){
@@ -287,6 +291,8 @@ class UserForm extends Component
 
         return count($items) > 0 ;
     }
+
+
 
     public function enableDisableRegister(){
         $result = (new UserRepository())->toggleStatus($this->user->id);
