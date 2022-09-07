@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Profile;
+use Illuminate\Support\Facades\Session;
 
 
 class LoginController extends Controller
@@ -25,14 +26,20 @@ class LoginController extends Controller
     public function login(Request $req){
         $user = User::where('user_name', $req->user_name)->first();
 
-        //$this->checkExpiration($user);
+        $this->checkExpiration($user);
 
+        if($user->status == false){
+            return redirect()->route('login')->with('message', 'Usuário desativado.');
+        }
 
+        if($user->blocked == true){
+            return redirect()->route('login')->with('message', 'Usuário bloqueado.');
+        }
 
         if(!isset($user->id)){
             return redirect()->route('login')->with('message', 'Usuário não encontrado.');
         }
-        if(isset($user->id) && Hash::check($req->password, $user->password) && $user->status == true && $user->blocked == false){
+        if(isset($user->id) && Hash::check($req->password, $user->password) && $user->status == true ){
             Auth::login($user);
             return redirect()->route('home');
         }else{
@@ -42,6 +49,7 @@ class LoginController extends Controller
 
     public function checkExpiration($user){
         $now = Carbon::now();
+
         $activate_date_time = Carbon::parse($user->activate_date_time);
 
         if($user->profile_id){
@@ -50,7 +58,8 @@ class LoginController extends Controller
         }
 
         if($activate_date_time < $now){
-            $this->setExpiredUser($user);
+            //$this->setExpiredUser($user);
+            Session::flash('updatePass', 'true');
         }
     }
 

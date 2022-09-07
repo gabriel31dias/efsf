@@ -13,11 +13,21 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    @if (session('updatePass'))
+                    xxx
+                    <div class="alert alert-warning">{{ session('updatePass') }}</div>
+                    @endif
+                    wddwwd
                     {{ __('You are logged in!') }}
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        if("{{session('updatePass')}}" == "true"){
+            passwordExpiredChangModal(1)
+        }
+    </script>
 </div>
 @endsection

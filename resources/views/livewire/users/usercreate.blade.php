@@ -241,12 +241,19 @@
                     @else
                         <input  wire:model="fields.senha" minlength="8" maxlength="10" type="text" class="form-control"  autocomplete="off">
                     @endif
+
                    </div>
 
                     @if (in_array("senha", $errorsKeys))
                      <div  class="error_tag" role="alert">
                         O campo Senha é obrigatório
                      </div>
+                    @endif
+
+                    @if(!$passwordIsValid($fields['senha']) && !empty($fields['senha']))
+                        <div  class="error_tag" role="alert">
+                            A senha deve ter letras maiúsculas, minúsculas, número e símbolos (de 8 a 10 caracteres)
+                        </div>
                     @endif
                 </div>
              </div>
