@@ -88,7 +88,7 @@ class LoginController extends Controller
 
     public function setExpiredUser($user){
         $user->update(['blocked' => false ]);
-        Auth::logout();
+       /// Auth::logout();
     }
 
 
