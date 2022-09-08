@@ -19,7 +19,7 @@
         }
         }).then((result) => {
             if (result.isConfirmed) {
-                modalChang(result)
+                modalChang(result, id_user)
             } else if (result.isDenied) {
                 Swal.fire('Changes are not saved', '', 'info')
             }
@@ -27,8 +27,8 @@
 
     }
 
-    function modalChang(newPassword){
-        alert(JSON.stringify(newPassword))
+    function modalChang(newPassword, id_user){
+
         const value =  Swal.fire({
             title: 'Confirme a nova senha',
             input: 'password',
@@ -49,7 +49,7 @@
             }).then((result) => {
 
                 if (result.isConfirmed) {
-                    this.saveNewPassword(id_user, result['value'])
+                    saveNewPassword(id_user, result['value'])
                 } else if (result.isDenied) {
                     Swal.fire('Changes are not saved', '', 'info')
                 }
@@ -61,12 +61,6 @@
             user_id: id_user,
             new_password: password
         })
-
-        Swal.fire(
-            'Senha Alterado',
-            '',
-            'success'
-          )
     }
 
 

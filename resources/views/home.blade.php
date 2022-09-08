@@ -23,11 +23,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        if("{{session('updatePass')}}" == "true"){
-            passwordExpiredChangModal(1)
-        }
-    </script>
 </div>
 @endsection

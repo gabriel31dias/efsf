@@ -23,10 +23,27 @@ class LoginController extends Controller
         return view('auth.login', []);
     }
 
+    public function checkEqualPass(Request $req){
+        $user = User::where('id', $req->user_id)->first();
+        return \response()->json(["is_correct" => Hash::check($req->password, $user->password)]);
+    }
+
+    public function saveNewPassword(Request $req){
+        $user = User::where('id', $req->user_id)->first();
+        $result = $user->update(['password' => Hash::make($req->password), "first_acess" => 0]);
+        Session::put('updatePass', 'false');
+        Session::put('firstAccess', 'false');
+        return \response()->json(["result" => $result]);
+    }
+
     public function login(Request $req){
         $user = User::where('user_name', $req->user_name)->first();
 
         $this->checkExpiration($user);
+
+        if($user->first_acess == 1){
+            Session::put('firstAccess', 'true');
+        }
 
         if($user->status == false){
             return redirect()->route('login')->with('message', 'Usuário desativado.');
@@ -58,13 +75,19 @@ class LoginController extends Controller
         }
 
         if($activate_date_time < $now){
-            //$this->setExpiredUser($user);
-            Session::flash('updatePass', 'true');
+            Session::put('updatePass', 'true');
         }
+
+        $activate_date_time->addDays(1);
+
+        if($activate_date_time < $now){
+            $this->setExpiredUser($user);
+        }
+
     }
 
     public function setExpiredUser($user){
-        $user->update(['status' => false ]);
+        $user->update(['blocked' => false ]);
         Auth::logout();
     }
 

@@ -23,6 +23,11 @@ Route::post('/login/auth', [App\Http\Controllers\Auth\LoginController::class, 'l
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('/checkequalpassword', [App\Http\Controllers\Auth\LoginController::class, 'checkEqualPass'])->name('checkequalpass');
+Route::post('/savepassword', [App\Http\Controllers\Auth\LoginController::class, 'saveNewPassword'])->name('savepassword');
+
+
+
 
 Route::resource('users', App\Http\Controllers\UserController::class);
 
