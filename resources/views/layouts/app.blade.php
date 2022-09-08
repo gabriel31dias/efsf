@@ -242,10 +242,13 @@
       <!-- Libs JS -->
 
 <script >
+ @if(Auth::check())
 
     if("{{session('updatePass')}}" == "true" || "{{session('firstAccess')}}" == "true"){
         passwordExpiredChangModal('{{Auth::user()->id ?? ""}}')
     }
+
+  @endif
 
     const Toast = Swal.mixin({
         toast: true,
