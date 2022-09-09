@@ -28,6 +28,7 @@ Route::post('/savepassword', [App\Http\Controllers\Auth\LoginController::class, 
 
 
 
+Route::resource('citizen', App\Http\Controllers\CitizenController::class);
 
 Route::resource('users', App\Http\Controllers\UserController::class);
 
