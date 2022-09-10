@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             Profile::class,
             TypeStreet::class,
             User::class,
-            ServiceStations::class
+            ServiceStations::class,
+            Occupation::class,
         ]);
     }
 }
