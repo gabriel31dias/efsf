@@ -20,6 +20,11 @@ class DatabaseSeeder extends Seeder
             User::class,
             ServiceStations::class,
             Occupation::class,
+            MaritalStatusSeeder::class,
+            GenresSeeder::class,
+            CountrySeeder::class,
+            CountySeeder::class,
+            UfSeeder::class
         ]);
     }
 }

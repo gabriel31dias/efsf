@@ -15,11 +15,15 @@ function passwordExpiredChangModal(id_user){
         autocorrect: 'off'
     },
     allowOutsideClick: false,
-    inputValidator:  (value) => {
+    inputValidator:  async (value) => {
         if (!value) return 'A senha não pode fircar em branco.'
 
-        if (!value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#=-])[0-9a-zA-Z$*&@#=-]{8,}$/)) return 'A senha deve conter letras maiúsculas, minúsculas, número e símbolos'
+        let checkPassword =  await axios.post('/checkequalpassword',{
+            user_id: id_user,
+            password: value
+        });
 
+        if(checkPassword.data.is_correct == false)  return 'A senha atual esta errada.'
 
     }
     }).then((result) => {
@@ -56,12 +60,7 @@ function setNewPassword(id_user){
 
             if (!value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#=-])[0-9a-zA-Z$*&@#=-]{8,}$/)) return 'A senha deve conter letras maiúsculas, minúsculas, número e símbolos'
 
-            let checkPassword =  await axios.post('/checkequalpassword',{
-                user_id: id_user,
-                password: value
-            });
 
-            if(checkPassword.data.is_correct == false)  return 'A senha atual esta errada.'
         }
         }).then((result) => {
             if (result.isConfirmed) {

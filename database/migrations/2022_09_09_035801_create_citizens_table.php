@@ -18,6 +18,11 @@ return new class extends Migration
             $table->string('rg')->unique();
             $table->string('cpf')->nullable();
             $table->string('name')->nullable();
+            $table->string('filiation1')->nullable();
+            $table->string('filiation2')->nullable();
+            $table->string('filiation3')->nullable();
+            $table->integer('migration_situation')->nullable();
+            $table->json('other_filiations');
             $table->integer('affiliation_id')->nullable();
             $table->string('birth_date')->nullable();
             $table->string('genre_id')->nullable();
