@@ -21,7 +21,7 @@
           @if(!empty($ufs) && $closed == false)
           @foreach($ufs as $i => $item)
           <a
-             wire:click="selectItem({{$item['id']}}, '{{$item['name']}}')"
+             wire:click="selectItem({{$item['id']}}, '{{$item['acronym']}}')"
              class="list-item {{ $highlightIndex === $i ? 'highlight' : '' }}"
              >{{ $item['acronym'] }}</a>
           @endforeach

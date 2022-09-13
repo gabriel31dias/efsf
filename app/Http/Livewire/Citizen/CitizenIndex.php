@@ -21,7 +21,7 @@ class CitizenIndex extends Component
     public $searchCity;
 
     public $otherFiliations = [];
-    public $filiationCount = 4;
+    public $filiationCount = 2;
     public $imigration = false;
 
     public $fields = [
