@@ -20,9 +20,19 @@ class CitizenIndex extends Component
     public $searchDistrict;
     public $searchCity;
 
+    public $errorsKeys = [];
+    public $errors = [];
+
     public $otherFiliations = [];
     public $filiationCount = 2;
     public $imigration = false;
+
+    public $obrigatory_filds = [
+        "rg",
+        "cpf",
+        "name",
+        "celular"
+    ];
 
     public $fields = [
         "name" => "",
@@ -35,9 +45,12 @@ class CitizenIndex extends Component
         "birth_date" => "",
         "migration_situation" => "",
         "portaria_nr" => "",
+        "dou_nr" => "",
+        "data_dou" => "",
         "data" => "",
-        "secao_folha" => ""
-
+        "secao_folha" => "",
+        "social_indicator_id" => "",
+        "n_social" => ""
     ];
 
     public $naturalized = false;
@@ -68,6 +81,10 @@ class CitizenIndex extends Component
         }
     }
 
+    public function chagedIndicatorSocial(){
+        $this->dispatchBrowserEvent('changed_indicador_social', []);
+    }
+
     public function render()
     {
 
@@ -92,6 +109,28 @@ class CitizenIndex extends Component
         }
 
         return $citizens;
+    }
+
+    public function checkMandatory($field){
+        return in_array($field, $this->obrigatory_filds);
+    }
+
+    private function validation($fields){
+        $errors = [];
+        $this->errorsKeys = [];
+        $this->errors = [];
+        foreach ($fields as $field => $value)
+        {
+            if($this->checkMandatory($field) && empty(trim($value))){
+                array_push($errors, [
+                    "message" => "O campo {$field} é obrigatorio",
+                    "valid" => false,
+                ]);
+                $this->errorsKeys[] = $field;
+            }
+        }
+
+        return $errors;
     }
 
     public function createCitizen(){

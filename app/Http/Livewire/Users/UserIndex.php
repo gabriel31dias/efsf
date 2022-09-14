@@ -54,41 +54,10 @@ class UserIndex extends Component
     public function filtersCall(){
         $searchTerm = null;
 
-        if($this->searchName){
-            $searchTerm = '%'. $this->searchName .'%';
-            $users = User::where('name','ilike', '%'. $searchTerm .'%' );
+        if($this->searchTerm){
+            $searchTerm = '%'. $this->searchTerm .'%';
+            $users = User::where('name','ilike', '%'. $searchTerm .'%' )->orWhere('cpf','ilike', '%'. $searchTerm .'%');
         }
-
-        if($this->searchCelular){
-            $searchTerm = '%'. $this->searchCelular .'%';
-            $users = User::where('cell','ilike', '%'. $searchTerm .'%' );
-        }
-
-        if($this->searchEndereco){
-            $searchTerm = '%'. $this->searchEndereco .'%';
-            $users = User::where('address','ilike', '%'. $searchTerm .'%' );
-        }
-
-        if($this->searchCpf){
-            $searchTerm = '%'. $this->searchCpf .'%';
-            $users = User::where('cpf','ilike', '%'. $searchTerm .'%' );
-        }
-
-        if($this->searchCep){
-            $searchTerm = '%'. $this->searchCep .'%';
-            $users = User::where('zip_code','ilike', '%'. $searchTerm .'%' );
-        }
-
-        if($this->searchDistrict){
-            $searchTerm = '%'. $this->searchDistrict .'%';
-            $users = User::where('district','ilike', '%'. $searchTerm .'%' );
-        }
-
-        if($this->searchCity){
-            $searchTerm = '%'. $this->searchCity .'%';
-            $users = User::where('city','ilike', '%'. $searchTerm .'%' );
-        }
-
 
         if(!$searchTerm){
             $users = User::orderBy('id','desc');

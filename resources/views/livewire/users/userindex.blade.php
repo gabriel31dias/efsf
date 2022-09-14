@@ -57,7 +57,10 @@
                <line x1="21" y1="21" x2="15" y2="15"></line>
             </svg>
          </span>
+         <input wire:model="searchTerm" type="text" value="" class="form-control" placeholder="Pesquisar.."
+               >
       </div>
+
       <br>
       <div class="card">
          <div class="card-body">
@@ -66,31 +69,31 @@
                   <thead>
                      <tr>
                         <th>
-                            <input style="width: 100%" wire:model="searchName" placeholder="Nome" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
+                           Nome
                         </th>
 
                         <th>
-                            <input style="width: 100%" wire:model="searchCpf" placeholder="Cpf" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
-                       </th>
-
-                        <th>
-                            <input style="width: 100%" wire:model="searchCelular" placeholder="Celular" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
-                       </th>
-
-                        <th>
-                            <input style="width: 100%"  wire:model="searchEndereco" placeholder="Endereço" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
+                            Cpf
                         </th>
 
                         <th>
-                            <input style="width: 100%" wire:model="searchCep" placeholder="Cep" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
+                            Celular
                         </th>
 
                         <th>
-                            <input style="width: 100%" wire:model="searchDistrict" placeholder="Bairro" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
+                            Endereço
                         </th>
 
                         <th>
-                            <input style="width: 100%" wire:model="searchCity" placeholder="Cidade" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
+                            Cep
+                        </th>
+
+                        <th>
+                            Bairro
+                        </th>
+
+                        <th>
+                            Cidade
                         </th>
 
                      </tr>
@@ -102,7 +105,7 @@
                         <td class="sort-city">{{$user->cpf}}</td>
                         <td class="sort-type">{{$user->cell}}</td>
                         <td class="sort-score">{{$user->address}}</td>
-                        <td class="sort-date" data-date="1628122643">{{$user->cep}}</td>
+                        <td class="sort-date" data-date="1628122643">{{$user->zip_code}}</td>
                         <td class="sort-quantity">{{$user->district}}</td>
                         <td class="sort-quantity">{{$user->city}}</td>
                        </tr>

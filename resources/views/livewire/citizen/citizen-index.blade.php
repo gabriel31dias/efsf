@@ -96,11 +96,9 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-1">
-                                    <H3>Filiações</H3>
-                                 </div>
+
                               <div class="col-lg-6">
-                              <a wire:click="addNewFiliationField" class="btn btn-primary d-none d-sm-inline-block">
+                              <a style="margin-bottom:10px" wire:click="addNewFiliationField" class="btn btn-primary d-none d-sm-inline-block">
                                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -131,7 +129,7 @@
                          <div class="mb-3">
                             <label class="form-label">Data de Nascimento (dia/mês/ano)<span class="error_tag">*</span></label>
                             <div class="input-group input-group-flat">
-                               <input wire:model="fields.birth_date" maxlength="11"  type="text" class="form-control ps-0"  autocomplete="off" required>
+                               <input wire:model="fields.birth_date" maxlength="11"  type="text" class="form-control ps-0 date"  autocomplete="off" required>
                             </div>
                          </div>
                       </div>
@@ -168,7 +166,6 @@
                          </div>
                       @endif
                       @if($naturalized == true)
-
                          <div class="col-lg-4">
                             <div class="mb-3">
                                <label class="form-label">Portaria Nr<span class="error_tag">*</span></label>
@@ -205,11 +202,17 @@
                             <div class="mb-3">
                                <label class="form-label">Data DOU<span class="error_tag">*</span></label>
                                <div class="input-group input-group-flat">
-                                  <input maxlength="11" wire:model="fields.secao_folha"   type="text" class="form-control ps-0"  autocomplete="off" required>
+                                  <input maxlength="11" wire:model="fields.data_dou"   type="text" class="form-control ps-0"  autocomplete="off" required>
                                </div>
                             </div>
                          </div>
                       @endif
+                      <span class="row" x-data="{
+                        isOpen:1,
+                        select(value) {
+                           this.isOpen = value
+                        }
+                     }">
                       <div class="col-lg-1">
                          <div class="mb-3">
                             <label class="form-label">UF<span class="error_tag">*</span></label>
@@ -228,14 +231,32 @@
                             <livewire:occupations-select.occupation-select />
                          </div>
                       </div>
-                      <div class="col-lg-4">
-                         <div class="mb-3">
-                            <label class="form-label">Indicador Social<span class="error_tag">*</span></label>
-                            <div class="input-group input-group-flat">
-                               <input maxlength="11"  type="text" class="form-control ps-0"  autocomplete="off" required>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                               <label class="form-label">Indicador Social<span class="error_tag">*</span></label>
+                               <div class="input-group input-group-flat">
+                                    <select @change="select($event.target.options[$event.target.selectedIndex].value)
+                                    "  wire:model="fields.social_indicator_id"  class="form-control ps-0"  name="select">
+                                       <option value="1">PIS</option>
+                                       <option value="2">PASEP</option>
+                                       <option value="3">NIS</option>
+                                       <option value="4">NIT</option>
+                                    </select>
+                               </div>
                             </div>
                          </div>
-                      </div>
+                         <div class="col-lg-4">
+                           <div class="mb-3">
+                              <label class="form-label">Nº Social<span class="error_tag">*</span></label>
+                              <div class="input-group input-group-flat">
+                                       <input x-show="isOpen == 1 || isOpen == 2" id='1' wire:model="fields.n_social"   type="text" class="form-control pis_pasep"  autocomplete="off" required>
+                                       <input x-show="isOpen == 3 || isOpen == 4" id='2' wire:model="fields.n_social"   type="text" class="form-control nis"  autocomplete="off" required>
+                              </div>
+                           </div>
+                        </div>
+                      </span>
+
                    </div>
                 </div>
              </div>

@@ -303,6 +303,37 @@
     );
 
 
+    window.addEventListener('changed_indicador_social',({detail:{user}})=>{
+
+
+        if( document.querySelector('.pis_pasep')){
+
+            var cpfMask = IMask(
+                document.querySelector('.pis_pasep'), {
+                mask: '00000000000'
+            });
+        }
+
+        if( document.querySelector('.nis')){
+            var cpfMask = IMask(
+                document.querySelector('.nis'), {
+                mask: '00000000000-00'
+            });
+        }
+
+
+
+        if( document.querySelector('.nit')){
+            var cpfMask = IMask(
+                document.querySelector('.nit'), {
+                mask: '00000000000-00'
+            });
+        }
+    })
+
+
+
+
 </script>
 
    </body>
