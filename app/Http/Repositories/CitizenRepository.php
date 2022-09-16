@@ -1,16 +1,16 @@
 <?php
 
 namespace App\Http\Repositories;
-use App\Models\User;
+use App\Models\Citizen;
 
 
 class CitizenRepository {
 
     public $mandatoryFilds = [
         "name",
-        "cell",
-        "email",
-        "password"
+        "rg",
+        "cpf",
+        "celular"
     ];
 
     public function createOrUpdateCitizen($id, $obj){
@@ -26,20 +26,15 @@ class CitizenRepository {
             }
         }
 
-
         if(count($erros) > 0){
             return $erros;
         }
 
-        $servicePoints = $obj['services_points'];
-        if($obj['type_street'] == ""){
-            unset($obj['type_street']);
-        }
-        if($obj['profile_id'] == ""){
-            unset($obj['profile_id']);
-        }
-        unset($obj['services_points']);
-        $user = User::updateOrCreate(['id' => $id ?? 0], $obj);
+        $obj['migration_situation'] = $obj['migration_situation'] == "" ? null : $obj['migration_situation'];
+        $obj['social_indicator_id'] = $obj['social_indicator_id'] == "" ? null : $obj['social_indicator_id'];
+
+
+        $user = Citizen::updateOrCreate(['id' => $id ?? 0], $obj);
 
         if(isset($servicePoints) && count($servicePoints) > 0){
             foreach ($servicePoints as $value) {

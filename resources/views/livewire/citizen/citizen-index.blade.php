@@ -1,4 +1,9 @@
-<div class="page-wrapper">
+<div x-data="{
+    isOpen:1,
+    select(value) {
+       this.isOpen = value
+    }
+ }" class="page-wrapper">
     <form>
        <div class="container-fluid">
           <!-- Page title -->
@@ -52,6 +57,11 @@
                             <div class="input-group input-group-flat">
                                <input wire:model="fields.rg" maxlength="70" type="text" class="form-control ps-0"  autocomplete="off" required>
                             </div>
+                            @if (in_array("rg", $errorsKeys))
+                                <div  class="error_tag" role="alert">
+                                    O campo Rg é obrigatório
+                                </div>
+                            @endif
                          </div>
                       </div>
                       <div class="col-lg-3">
@@ -60,6 +70,11 @@
                             <div class="input-group input-group-flat">
                                <input wire:model="fields.cpf" maxlength="15"  type="text" class="form-control cpf"  autocomplete="off" required>
                             </div>
+                            @if (in_array("cpf", $errorsKeys))
+                                <div  class="error_tag" role="alert">
+                                    O campo Cpf é obrigatório
+                                </div>
+                            @endif
                          </div>
                       </div>
                       <div class="col-lg-7">
@@ -68,14 +83,15 @@
                             <div class="input-group input-group-flat">
                                <input wire:model="fields.name" maxlength="11"  type="text" class="form-control ps-0"  autocomplete="off" required>
                             </div>
+                            @if (in_array("name", $errorsKeys))
+                                <div  class="error_tag" role="alert">
+                                    O campo Nome é obrigatório
+                                </div>
+                             @endif
                          </div>
                       </div>
                       <div class="container-fluid ">
                          <div  style="margin-top: 1%; " class="row">
-
-                            <div class="col-lg-4">
-
-                            </div>
                          </div>
                          <div class="row">
                             <div class="col-lg-6">
@@ -98,7 +114,7 @@
                             <div class="row">
 
                               <div class="col-lg-6">
-                              <a style="margin-bottom:10px" wire:click="addNewFiliationField" class="btn btn-primary d-none d-sm-inline-block">
+                              <a style="margin-bottom:30px" wire:click="addNewFiliationField" class="btn btn-primary d-none d-sm-inline-block">
                                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -139,13 +155,24 @@
                             <livewire:genres-select.genres-select />
                          </div>
                       </div>
+                      @if($other_genre == true)
+                      <div class="col-lg-2">
+                        <label  class="form-label">Sexo Biológico<span class="error_tag">*</span></label>
+                        <div class="input-group input-group-flat">
+                           <select class="form-control ps-0"  name="select">
+                              <option value="1">Masculino</option>
+                              <option value="2">Feminino</option>
+                           </select>
+                        </div>
+                     </div>
+                     @endif
                       <div class="col-lg-2">
                          <div class="mb-3">
                             <label class="form-label">Estado Civil<span class="error_tag">*</span></label>
                             <livewire:marital-status-select.marital-status-select />
                          </div>
                       </div>
-                      <div class="col-lg-2">
+                      <div class="col-lg-6">
                          <div class="mb-3">
                             <label class="form-label">País<span class="error_tag">*</span></label>
                             <livewire:country-select.country-select />
@@ -153,7 +180,6 @@
                       </div>
                       @if($imigration == true)
                          <div class="col-lg-4">
-
                                <label  class="form-label">Situação Migração<span class="error_tag">*</span></label>
                                <div class="input-group input-group-flat">
                                   <select wire:change="checkNaturalized($event.target.value)" wire:model="fields.migration_situation"  class="form-control ps-0"  name="select">
@@ -162,7 +188,6 @@
                                      <option value="3">Direito de Igualdade</option>
                                   </select>
                                </div>
-
                          </div>
                       @endif
                       @if($naturalized == true)
@@ -207,12 +232,7 @@
                             </div>
                          </div>
                       @endif
-                      <span class="row" x-data="{
-                        isOpen:1,
-                        select(value) {
-                           this.isOpen = value
-                        }
-                     }">
+                      <span class="row" >
                       <div class="col-lg-1">
                          <div class="mb-3">
                             <label class="form-label">UF<span class="error_tag">*</span></label>
@@ -250,13 +270,51 @@
                            <div class="mb-3">
                               <label class="form-label">Nº Social<span class="error_tag">*</span></label>
                               <div class="input-group input-group-flat">
-                                       <input x-show="isOpen == 1 || isOpen == 2" id='1' wire:model="fields.n_social"   type="text" class="form-control pis_pasep"  autocomplete="off" required>
-                                       <input x-show="isOpen == 3 || isOpen == 4" id='2' wire:model="fields.n_social"   type="text" class="form-control nis"  autocomplete="off" required>
+                                    <input x-show="isOpen == 1 || isOpen == 2" id='1' wire:model="fields.n_social"   type="text" class="form-control pis_pasep"  autocomplete="off" required>
+                                    <input x-show="isOpen == 3 || isOpen == 4" id='2' wire:model="fields.n_social"   type="text" class="form-control nis"  autocomplete="off" required>
                               </div>
                            </div>
                         </div>
-                      </span>
 
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                               <label class="form-label">Posto de atendimento<span class="error_tag">*</span></label>
+                               <livewire:users.servicestation-select />
+                            </div>
+                         </div>
+
+                         <div class="col-lg-3">
+                            <div class="mb-3">
+                               <label class="form-label">Via do RG<span class="error_tag">*</span></label>
+                                <select  wire:model="fields.via_rg"  class="form-control ps-0"  name="select">
+                                    <option value="1">1a</option>
+                                    <option value="2">2a</option>
+                                    <option value="3">3a</option>
+                                    <option value="4">4a</option>
+                                    <option value="5">5a</option>
+                                    <option value="6">6a</option>
+                                    <option value="7">7a</option>
+                                    <option value="8">8a</option>
+                                </select>
+                            </div>
+                         </div>
+                         @if(isset($fields['updated_at']) && $fields['updated_at'])
+                         <div  class="col-lg-4">
+                            <div class="mb-3">
+                               <label class="form-label">Data da Atualização<span class="error_tag">*</span></label>
+                               <input  maxlength="11" wire:model="fields.updated_at" type="text" class="form-control ps-0"  autocomplete="off" disabled required>
+                            </div>
+                         </div>
+                         @endif
+
+                         <div  class="col-lg-4">
+                            <div class="mb-3">
+                               <label class="form-label">Data Cadastro<span class="error_tag">*</span></label>
+                               <input id="date" maxlength="11"  type="text" class="form-control ps-0"  autocomplete="off" disabled required>
+                            </div>
+                         </div>
+
+                      </span>
                    </div>
                 </div>
              </div>
@@ -265,6 +323,13 @@
     </form>
 
     <script>
+
+
+
+
+document.addEventListener('turbolinks:load', () => {
+    $('#date').val(new Date());
+})
 
 
 

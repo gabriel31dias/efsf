@@ -79,7 +79,7 @@ class OccupationSelect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
-        $this->emitUp('selectedServiceStation', $id);
+        $this->emitUp('selectedOccupation', $id);
     }
 
 

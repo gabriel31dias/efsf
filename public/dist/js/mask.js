@@ -19,12 +19,9 @@ document.addEventListener('turbolinks:load', () => {
 
 
     if( document.querySelector('.date')){
-
         var element = document.querySelector('.date');
         var momentMask = new IMask(element, {
-            mask: Date,
-            pattern: 'd`/m`/00000',
-            lazy: false,
+            mask: '00/00/0000'
         });
     }
 

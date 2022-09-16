@@ -1,4 +1,4 @@
-<div style="width:80%">
+<div style="width:90%">
        <input
        class="form-control"
           type="text"

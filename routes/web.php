@@ -30,6 +30,8 @@ Route::post('/savepassword', [App\Http\Controllers\Auth\LoginController::class, 
 
 Route::resource('citizen', App\Http\Controllers\CitizenController::class);
 
+Route::resource('genres', App\Http\Controllers\GenresController::class);
+
 Route::resource('users', App\Http\Controllers\UserController::class);
 
 Route::resource('profile', App\Http\Controllers\ProfileController::class);

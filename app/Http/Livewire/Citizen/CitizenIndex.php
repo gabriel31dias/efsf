@@ -11,6 +11,7 @@ class CitizenIndex extends Component
     public $searchName;
     public $filterUnlockeds;
     public $filterActives;
+    public $action;
     public $filterInactives;
     public $filterBlockeds;
     public $searchCep;
@@ -19,7 +20,7 @@ class CitizenIndex extends Component
     public $searchCpf;
     public $searchDistrict;
     public $searchCity;
-
+    public $other_genre;
     public $errorsKeys = [];
     public $errors = [];
 
@@ -31,8 +32,20 @@ class CitizenIndex extends Component
         "rg",
         "cpf",
         "name",
-        "celular"
+        "celular",
+        "birth_date",
+        "genre_id",
+        "marital_status_id",
+        "county_id",
+        "uf_id",
+        "county_id",
+        "service_station_id",
+        "via_rg"
     ];
+
+
+   ## RG, CPF, Nome do Cidadão, Data do Nascimento, Gênero, Estado Civil, País,
+    ## UF, Município, Posto Emissor, Via do RG, Isenção, Data da Atualização e Data do Cadastro
 
     public $fields = [
         "name" => "",
@@ -50,12 +63,50 @@ class CitizenIndex extends Component
         "data" => "",
         "secao_folha" => "",
         "social_indicator_id" => "",
-        "n_social" => ""
+        "n_social" => "",
+        "county_id" => "",
+        "occupation_id" => "",
+        "genre_id" => "",
+        "marital_status_id" => "",
+        "uf_id" => "",
+        "service_station_id" => "",
+        "via_rg" => ""
     ];
 
     public $naturalized = false;
 
-    public $listeners = ['selectedCountry', 'selectedCounty'];
+    public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus',
+        'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation'
+    ];
+
+    public function selectedServiceStation($id)
+    {
+        $this->fields['service_station_id'] = $id;
+    }
+
+    public function selectedOccupation($value){
+        $this->fields['occupation_id'] = $value;
+    }
+    public function selectedCounty($value){
+        $this->fields['county_id'] = $value;
+    }
+
+    public function selectedUf($value){
+        $this->fields['uf_id'] = $value;
+    }
+    public function selectedMaritalStatus($value){
+        $this->fields['marital_status_id'] = $value;
+    }
+
+    public function selectedGenre($value){
+        $this->fields['genre_id'] = $value[0];
+
+        if($value[1] == "outros" || $value[1] == "não binario"){
+            $this->other_genre = true ;
+        }else{
+            $this->other_genre = false ;
+        }
+    }
 
     public function selectedCountry($value){
         if(strtoupper($value) != "BRASIL"){
@@ -63,14 +114,7 @@ class CitizenIndex extends Component
         }else{
             $this->imigration = false;
         }
-    }
-
-    public function selectedCounty($value){
-        if(strtoupper($value) != "BRASIL"){
-            $this->imigration = true;
-        }else{
-            $this->imigration = false;
-        }
+        $this->fields['country_id'] = $value;
     }
 
     public function checkNaturalized($value){
@@ -87,7 +131,6 @@ class CitizenIndex extends Component
 
     public function render()
     {
-
         $citizens = Citizen::orderBy('id','desc');;
 
         return view('livewire.citizen.citizen-index',
@@ -147,8 +190,24 @@ class CitizenIndex extends Component
         }
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->user->id ?? 0, [
-            'cpf' => $this->fields["cpf"] ?? null,
-            'name' => $this->fields["name"] ?? null
+            "name" => $this->fields["name"],
+            "cpf" => $this->fields["cpf"],
+            "rg" => $this->fields["rg"],
+            "filiation1" => $this->fields["filiation1"],
+            "filiation2" => $this->fields["filiation2"],
+            "filiation3" => $this->fields["filiation2"],
+
+            "birth_date" => $this->fields["birth_date"],
+            "migration_situation" => $this->fields["migration_situation"],
+            "portaria_nr" => $this->fields["portaria_nr"],
+            "dou_nr" => $this->fields["dou_nr"],
+            "data_dou" => $this->fields["data_dou"],
+            "data" => $this->fields["data"],
+            "secao_folha" => $this->fields["secao_folha"],
+            "social_indicator_id" => $this->fields["social_indicator_id"],
+            "n_social" =>  $this->fields["n_social"],
+            "county_id" => $this->fields["county_id"],
+            "occupation_id" => $this->fields["occupation_id"]
         ]);
 
         $this->messageSuccess();
@@ -157,6 +216,20 @@ class CitizenIndex extends Component
             'url'=> '/users',
             'delay' => 1000
         ]);
+    }
+
+    public function messageSuccess(){
+        if($this->action == "create"){
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'success',
+                'message'=> "Perfil criado com sucesso."
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'success',
+                'message'=> "Perfil foi atualizado com sucesso."
+            ]);
+        }
     }
 
     public function openFilters(){
