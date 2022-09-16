@@ -227,13 +227,13 @@
                             </div>
                          </div>
                       @endif
-                      <span class="row" x-data="{
+
+                      <div x-data="{
                         isOpen:1,
                         select(value) {
                            this.isOpen = value
                         }
-                     }">
-                      <div class="col-lg-1">
+                     }" class="col-lg-1">
                          <div class="mb-3">
                             <label class="form-label">UF<span class="error_tag">*</span></label>
                             <livewire:uf-select.uf-select />
@@ -298,15 +298,23 @@
                                 </select>
                             </div>
                          </div>
-
-                         <div class="col-lg-4">
+                         @if(isset($fields['updated_at']) && $fields['updated_at'])
+                         <div  class="col-lg-4">
                             <div class="mb-3">
                                <label class="form-label">Data da Atualização<span class="error_tag">*</span></label>
-
-                               <input  maxlength="11" value="{{ date_format(now(), 'Y-m-d') }}" wire:model="fields.updated_at" type="text" class="form-control ps-0"  autocomplete="off" disabled required>
+                               <input  maxlength="11" wire:model="fields.updated_at" type="text" class="form-control ps-0"  autocomplete="off" disabled required>
                             </div>
                          </div>
-                      </span>
+                         @endif
+
+                         <div  class="col-lg-4">
+                            <div class="mb-3">
+                               <label class="form-label">Data Cadastro<span class="error_tag">*</span></label>
+                               <input id="date" maxlength="11"  type="text" class="form-control ps-0"  autocomplete="off" disabled required>
+                            </div>
+                         </div>
+
+
                    </div>
                 </div>
              </div>
@@ -315,6 +323,13 @@
     </form>
 
     <script>
+
+
+
+
+document.addEventListener('turbolinks:load', () => {
+    $('#date').val(new Date());
+})
 
 
 
