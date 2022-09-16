@@ -1,4 +1,9 @@
-<div class="page-wrapper">
+<div x-data="{
+    isOpen:1,
+    select(value) {
+       this.isOpen = value
+    }
+ }" class="page-wrapper">
     <form>
        <div class="container-fluid">
           <!-- Page title -->
@@ -227,13 +232,8 @@
                             </div>
                          </div>
                       @endif
-
-                      <div x-data="{
-                        isOpen:1,
-                        select(value) {
-                           this.isOpen = value
-                        }
-                     }" class="col-lg-1">
+                      <span class="row" >
+                      <div class="col-lg-1">
                          <div class="mb-3">
                             <label class="form-label">UF<span class="error_tag">*</span></label>
                             <livewire:uf-select.uf-select />
@@ -314,7 +314,7 @@
                             </div>
                          </div>
 
-
+                      </span>
                    </div>
                 </div>
              </div>
