@@ -244,6 +244,20 @@
                            </span>
                         </a>
                      </li>
+
+                     <li class="nav-item">
+                        <a class="nav-link" href='{{ route('registry.index') }}' >
+                           <span class="nav-link-icon d-md-none d-lg-inline-block">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                              <i class="ti ti-certificate"></i>
+
+
+                           </span>
+                           <span class="nav-link-title">
+                           Cadastro de Cartório
+                           </span>
+                        </a>
+                     </li>
                   </ul>
                </div>
             </div>
