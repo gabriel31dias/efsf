@@ -232,6 +232,18 @@
                         </a>
                      </li>
                      <li class="nav-item">
+                        <a class="nav-link" href='{{ route('genres.index') }}' >
+                           <span class="nav-link-icon d-md-none d-lg-inline-block">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                              <i class="ti ti-gender-transgender"></i>
+
+                           </span>
+                           <span class="nav-link-title">
+                           Cadastro de Géneros
+                           </span>
+                        </a>
+                     </li>
+                     <li class="nav-item">
                         <a class="nav-link" href='{{ route('service-station.index') }}' >
                            <span class="nav-link-icon d-md-none d-lg-inline-block">
                               <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->

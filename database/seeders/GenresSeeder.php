@@ -30,5 +30,6 @@ class GenresSeeder extends Seeder
         DB::table('genres')->insert([
             'name' => "outros"
         ]);
+
     }
 }

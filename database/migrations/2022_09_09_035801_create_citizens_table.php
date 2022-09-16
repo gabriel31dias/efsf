@@ -22,12 +22,13 @@ return new class extends Migration
             $table->string('filiation2')->nullable();
             $table->string('filiation3')->nullable();
             $table->integer('migration_situation')->nullable();
-            $table->integer('migration_situation')->nullable();
-            $table->json('other_filiations');
+            $table->json('other_filiations')->nullable();
             $table->integer('affiliation_id')->nullable();
             $table->string('birth_date')->nullable();
-            $table->string('genre_id')->nullable();
-            $table->string('marital_status')->nullable();
+            $table->integer('genre_id')->nullable();
+            $table->integer('service_station_id')->nullable();
+            $table->string('county_id')->nullable();
+            $table->integer('marital_status_id')->nullable();
             $table->string('country_id')->nullable();
             $table->string('portaria_nr')->nullable();
             $table->string('data')->nullable();
