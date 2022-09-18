@@ -1,4 +1,4 @@
-
+import '../css/tailwind.css';
 import './bootstrap';
 require('./bootstrap');
 var Turbolinks = require("turbolinks")

@@ -9,6 +9,7 @@ class RegistryForm extends Component
 {
     public $action;
     public $registry;
+    public $showCreate; 
     public $fields = [
         'sic_code' => '',
         'cns' => '',
@@ -20,8 +21,14 @@ class RegistryForm extends Component
         'judge_name' => '',
         'note' => '',
         'allow_digit' => true,
-        'uf_id' => '1',
-        'county_id' => '1',
+        'uf_id' => '',
+        'county_id' => '',
+    ];
+
+    public $fieldsCreateDate = [
+        'created_date' => null, 
+        'closing_date' => null,
+        'note' => '',
     ];
 
     protected $rules = [
@@ -35,6 +42,8 @@ class RegistryForm extends Component
     protected $messages = [ 
         "fields.*.required" => "Campo obrigatório",
     ];
+
+    public $listeners = [ 'selectedUf', 'selectedCounty' ];
 
 
     public function render()
@@ -55,6 +64,9 @@ class RegistryForm extends Component
 
         if($this->action == "create"){ 
             $registry = Registry::create($this->fields);
+            if(!empty($this->fieldsCreateDate['created_date']) || !empty($this->fieldsCreateDate['closing_date'])){ 
+                $registry->opening_dates()->create($this->fieldsCreateDate);
+            }
         } else { 
             $registry = Registry::updateOrCreate(['id' => $this->registry->id ],$this->fields);
         }
@@ -66,6 +78,14 @@ class RegistryForm extends Component
                 'delay' => 1000
             ]);
         }
+    }
+
+    public function selectedCounty($value){
+        $this->fields['county_id'] = $value;
+    }
+
+    public function selectedUf($value){
+        $this->fields['uf_id'] = $value;
     }
 
     public function messageSuccess(){

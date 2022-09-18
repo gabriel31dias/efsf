@@ -20,10 +20,10 @@ class UfSelect extends Component
 
     public function mount()
     {
-        $this->reset1();
+        $this->resetValue();
     }
 
-    public function reset1()
+    public function resetValue()
     {
         $this->query = '';
 
@@ -39,7 +39,7 @@ class UfSelect extends Component
     public function incrementHighlight()
     {
         $this->closed = false;
-        if ($this->highlightIndex === count($this->stations) - 1) {
+        if ($this->highlightIndex === count($this->ufs) - 1) {
             $this->highlightIndex = 0;
             return;
         }
@@ -51,7 +51,7 @@ class UfSelect extends Component
 
         $this->selectedId = '';
         if ($this->highlightIndex === 0) {
-            $this->highlightIndex = count($this->stations) - 1;
+            $this->highlightIndex = count($this->ufs) - 1;
             return;
         }
         $this->highlightIndex--;
@@ -59,7 +59,7 @@ class UfSelect extends Component
 
     public function selectContact()
     {
-        $contact = $this->stations[$this->highlightIndex] ?? null;
+        $contact = $this->ufs[$this->highlightIndex] ?? null;
         if ($contact) {
             $this->redirect(route('show-contact', $contact['id']));
         }

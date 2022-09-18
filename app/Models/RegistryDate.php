@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Registry extends Model
+class RegistryDate extends Model
 {
     use HasFactory;
-    
+
     protected $guarded = [
 
     ];
 
-    public function opening_dates() { 
-        return $this->hasMany(RegistryDate::class);
-    }
- }
+    protected $casts = [ 
+        "created_date" => "date:d/m/Y", 
+        "closing_date" => "date:d/m/Y",
+    ];
+
+}

@@ -104,7 +104,7 @@
                            <label class="form-label">Hora Início<span class="error_tag"> *</span></label>
 
                            <div class="input-group input-group-flat">
-                              <input wire:model="fields.start_hour" maxlength="70" type="text" class="form-control"
+                              <input wire:model="fields.start_hour" maxlength="70" type="time" class="form-control"
                                  autocomplete="off" required>
                            </div>
                            @error('fields.start_hour') <span class="text-danger"> {{ $message }}</span> @enderror
@@ -116,7 +116,7 @@
                            <label class="form-label">Hora Fim<span class="error_tag"> *</span></label>
 
                            <div class="input-group input-group-flat">
-                              <input wire:model="fields.end_hour" maxlength="70" type="text" class="form-control"
+                              <input wire:model="fields.end_hour" maxlength="70" type="time" class="form-control"
                                  autocomplete="off" required>
                            </div>
                            @error('fields.end_hour') <span class="text-danger"> {{ $message }}</span> @enderror

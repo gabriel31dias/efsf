@@ -1,5 +1,4 @@
 <div class="page-wrapper">
-    <form>
        <div class="container-fluid">
           <!-- Page title -->
           <div class="page-header d-print-none">
@@ -14,11 +13,11 @@
                    </h2>
                 </div>
                 <!-- Page title actions -->
-                <div class="col-12 col-md-auto ms-auto d-print-none">
+                <div class="col-12 col-md-auto  ms-auto d-print-none">
                    <div class="btn-list">
-                      <a wire:click="saveRegistry" class="btn btn-primary d-none d-sm-inline-block">
+                      <a wire:click="saveRegistry" class="btn btn-primary items-center inline-flex  ">
                          <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                         <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                             stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                             stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -26,17 +25,6 @@
                             <line x1="5" y1="12" x2="19" y2="12" />
                          </svg>
                          Salvar
-                      </a>
-                      <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                         data-bs-target="#modal-report" aria-label="Create new report">
-                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <line x1="12" y1="5" x2="12" y2="19" />
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                         </svg>
                       </a>
                    </div>
                 </div>
@@ -132,10 +120,62 @@
                         <div class="mb-3">
                            <label class="form-label">A Matricula neste cartório permite o valor XX para o dígito verificador?<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
-                              <input wire:model="fields.allow_digit" type="text"
-                                 class="form-control" autocomplete="off" required>
+                              <select class="form-select" wire:model="fields.allow_digit">
+                                    <option value="1">SIM</option>
+                                    <option value="0">NAO</option>
+                              </select>
                            </div>
                            @error('fields.allow_digit') <span class="text-danger"> {{ $message }}</span> @enderror
+                        </div>
+                     </div>
+                     <div class="col-lg-1">
+                        <div class="mb-3">
+                           <label class="form-label">UF<span class="error_tag">*</span></label>
+                           <livewire:uf-select.uf-select />
+                           @error('fields.uf_id') <span class="text-danger"> {{ $message }}</span> @enderror
+
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="mb-3">
+                           <label class="form-label">Município<span class="error_tag">*</span></label>
+                           <livewire:county-select.county-select />
+                           @error('fields.county_id') <span class="text-danger"> {{ $message }}</span> @enderror
+
+                        </div>
+                     </div>
+                     <div class="row" x-data="{action: @entangle('action')}" x-show="action == 'create'" >
+                        <div class="col-lg-4">
+                           <div class="mb-3">
+                              <label class="form-label">Data da Criação</label>
+                              <div class="input-group input-group-flat">
+                                 <input wire:model="fieldsCreateDate.created_date" type="date"
+                                    class="form-control" autocomplete="off" required>
+                              </div>
+                              @error('fieldsCreateDate.created_date') <span class="text-danger"> {{ $message }}</span> @enderror
+                           </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                           <div class="mb-3">
+                              <label class="form-label">Data de Encerramento</label>
+                              <div class="input-group input-group-flat">
+                                 <input wire:model="fieldsCreateDate.closing_date" type="date"
+                                    class="form-control" autocomplete="off" required>
+                              </div>
+                              @error('fieldsCreateDate.closing_date') <span class="text-danger"> {{ $message }}</span> @enderror
+                           </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                           <div class="mb-3">
+                              <label class="form-label">Observação Data</label>
+                              <div class="input-group input-group-flat">
+                                 <input wire:model="fieldsCreateDate.note" type="text"
+                                    class="form-control" autocomplete="off" required>
+                              </div>
+                              @error('fieldsCreateDate.note') <span class="text-danger"> {{ $message }}</span> @enderror
+                           </div>
                         </div>
                      </div>
                      <div class="col-lg-12">
@@ -143,17 +183,18 @@
                            <label class="form-label">OBSERVAÇÃO</label>
                            <div class="input-group input-group-flat">
                               <textarea wire:model="fields.note"
-                                 class="form-control" autocomplete="off" required maxlength="500">
+                                 class="form-control" autocomplete="off" required maxlength="500"> </textarea>
                            </div>
                            @error('fields.note') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
                    </div>
+
+                     @if (isset($this->registry->opening_dates))
+                        <livewire:registry.registry-dates-table :registry_id="$this->registry->id" :dates="$this->registry->opening_dates">
+                     @endif
                 </div>
              </div>
  
-          
- 
        </div>
-    </form>
- </div>
+    </div>

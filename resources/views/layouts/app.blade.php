@@ -49,8 +49,8 @@
       @livewireScripts
       <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.js" integrity="sha512-P3/SDm/poyPMRBbZ4chns8St8nky2t8aeG09fRjunEaKMNEDKjK3BuAstmLKqM7f6L1j0JBYcIRL4h2G6K6Lew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
-      <script defer src="{{ asset('js/app.js') }}"></script>
       <script defer src="{{ asset('css/app.css') }}"></script>
+      @vite('resources/js/app.js', 'build/')
 
 
 

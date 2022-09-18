@@ -20,10 +20,10 @@ class CountySelect extends Component
 
     public function mount()
     {
-        $this->reset1();
+        $this->resetValue();
     }
 
-    public function reset1()
+    public function resetValue()
     {
         $this->query = '';
 
