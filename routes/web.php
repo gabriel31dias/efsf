@@ -37,3 +37,5 @@ Route::resource('users', App\Http\Controllers\UserController::class);
 Route::resource('profile', App\Http\Controllers\ProfileController::class);
 
 Route::resource('service-station', App\Http\Controllers\ServiceStationController::class);
+Route::resource('registry', App\Http\Controllers\RegistryController::class);
+

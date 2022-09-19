@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             GenresSeeder::class,
             CountrySeeder::class,
             CountySeeder::class,
-            UfSeeder::class
+            UfSeeder::class,
+            RegistrySeeder::class,
         ]);
     }
 }
