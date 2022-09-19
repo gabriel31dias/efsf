@@ -29,7 +29,7 @@ return new class extends Migration
             $table->integer('service_station_id')->nullable();
             $table->string('county_id')->nullable();
             $table->integer('marital_status_id')->nullable();
-            $table->string('country_id')->nullable();
+            $table->integer('country_id')->nullable();
             $table->string('portaria_nr')->nullable();
             $table->string('data')->nullable();
             $table->string('dou_nr')->nullable();
@@ -43,6 +43,7 @@ return new class extends Migration
             $table->string('issuing_station')->nullable();
             $table->string('via_rg')->nullable();
             $table->integer('exemption_id')->nullable();
+            $table->string('cid')->nullable();
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ document.addEventListener('turbolinks:load', () => {
         var momentMask = new IMask(element, {
             mask: '00/00/0000'
         });
+
     }
 
     if( document.querySelector('.pis_pasep')){

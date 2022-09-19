@@ -23,7 +23,7 @@
           <a
              wire:click="selectItem({{$item['id']}}, '{{$item['name']}}')"
              class="list-item {{ $highlightIndex === $i ? 'highlight' : '' }}"
-             >{{ $item['name'] }}</a>
+             >{{ $item['name'] }} </a>
           @endforeach
           @else
 

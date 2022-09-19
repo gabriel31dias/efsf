@@ -16,11 +16,17 @@ class MaritalStatusSelect extends Component
     public $selectedValue;
     public $servicesPoints = [];
 
-    protected $listeners = ['clearServiceStationField'];
+    public $marital_status;
+
+    protected $listeners = ['clearServiceStationField', 'setMaritalStatus'];
 
     public function mount()
     {
         $this->reset1();
+    }
+
+    public function setMaritalStatus($maritalStatus){
+        $this->query = $maritalStatus;
     }
 
     public function reset1()

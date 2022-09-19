@@ -16,11 +16,19 @@ class GenresSelect extends Component
     public $selectedValue;
     public $genres = [];
 
-    protected $listeners = ['clearServiceStationField'];
+    public $genre_name;
+
+    protected $listeners = ['clearServiceStationField', 'setGenre'];
 
     public function mount()
     {
         $this->reset1();
+
+
+    }
+
+    public function setGenre($genre_name){
+        $this->query = $genre_name;
     }
 
     public function reset1()

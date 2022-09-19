@@ -32,6 +32,7 @@ class UserRepository {
         }
 
         $servicePoints = $obj['services_points'];
+
         if($obj['type_street'] == ""){
             unset($obj['type_street']);
         }

@@ -16,7 +16,11 @@ class CountrySelect extends Component
     public $selectedValue;
     public $countries = [];
 
-    protected $listeners = ['clearServiceStationField'];
+    protected $listeners = ['clearServiceStationField', 'setCountry'];
+
+    public function setCountry($country){
+        $this->query = $country;
+    }
 
     public function mount()
     {
@@ -79,7 +83,7 @@ class CountrySelect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
-        $this->emitUp('selectedCountry', $value);
+        $this->emitUp('selectedCountry', [$value, $id]);
     }
 
 

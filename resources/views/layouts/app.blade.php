@@ -31,7 +31,8 @@
       <link href="{{ asset('dist/css/tabler-payments.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dist/css/tabler-vendors.min.css') }}" rel="stylesheet">
 
-
+      <script src="./dist/js/tabler.min.js?1661943614" defer></script>
+      <script src="./dist/js/demo.min.js?1661943614" defer></script>
       <link href="{{ asset('dist/css/demo.min.css') }}" rel="stylesheet">
       <script data-turbolinks-track="reload"  src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
       <meta name="csrf-token" id="token" content="{{ csrf_token() }}">

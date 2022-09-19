@@ -33,40 +33,19 @@ class CitizenRepository {
         $obj['migration_situation'] = $obj['migration_situation'] == "" ? null : $obj['migration_situation'];
         $obj['social_indicator_id'] = $obj['social_indicator_id'] == "" ? null : $obj['social_indicator_id'];
 
+        $citizen = Citizen::find($id);
 
-        $user = Citizen::updateOrCreate(['id' => $id ?? 0], $obj);
-
-        if(isset($servicePoints) && count($servicePoints) > 0){
-            foreach ($servicePoints as $value) {
-                $user->userStations()->firstOrCreate([
-                    "service_station_id" => $value['id'],
-                ]);
-            }
+        if(isset($citizen->id)){
+            $user = $citizen->update($obj);
+        }else{
+            $user = Citizen::create($obj);
         }
 
         return $user;
     }
 
-
-
     public function checkMandatory($field){
         return in_array($field, $this->mandatoryFilds);
     }
-
-    public function toggleStatus($user_id){
-        $user =  User::whereId($user_id)->first();
-        return $result = $user->update([
-            'status' => ! $user->status
-        ]);
-    }
-
-    public function toggleBlocked($user_id){
-        $user =  User::whereId($user_id)->first();
-        return $result = $user->update([
-            'blocked' => ! $user->blocked
-        ]);
-    }
-
-
 }
 

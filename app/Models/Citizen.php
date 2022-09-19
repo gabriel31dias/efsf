@@ -16,4 +16,9 @@ class Citizen extends Model
      */
     protected $guarded = [];
 
+
+    protected $casts = [
+        'id' => 'integer'
+    ];
+
 }
