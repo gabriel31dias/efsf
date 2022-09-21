@@ -34,14 +34,16 @@ class CitizenIndex extends Component
     public $errorsKeys = [];
     public $errors = [];
 
+    public $searchGenrer;
 
+    public $genres;
     public $searchCpf;
     public $searchRg;
     public $searchAnoProcesso;
     public $searchNumber;
     public $searchNrCedula;
     public $searchName;
-    public $searchGenrer;
+
     public $searchBirth;
     public $searchFilitation;
 
@@ -193,29 +195,42 @@ class CitizenIndex extends Component
         $this->emit('setGenre', $genre->name ?? null);
         $this->emit('setMaritalStatus', $marital_status->name ?? null);
         $this->emit('setCountry',  $country->name ?? null);
+
+        $this->dispatchBrowserEvent('closeModalList');
+        $this->dispatchBrowserEvent('closeModalSearch');
     }
 
     public function render()
     {
+        $this->genres = Genre::all();
 
         $citizens = new Citizen();
         if($this->searchName){
-            $citizens = $citizens::where('name','ilike', '%'. $this->searchName .'%' );
+            $citizens = $citizens->orWhere('name','ilike', '%'. $this->searchName .'%' );
         }
 
         if($this->searchRg){
-            $citizens = $citizens::where('rg','ilike', '%'. $this->searchRg .'%' );
+            $citizens = $citizens->orWhere('rg','ilike', '%'. $this->searchRg .'%' );
         }
 
         if($this->searchCpf){
-            $citizens = $citizens::where('cpf','ilike', '%'. $this->searchCpf .'%' );
+            $citizens = $citizens->orWhere('cpf','ilike', '%'. $this->searchCpf .'%' );
+        }
+
+        if($this->searchCpf){
+            $citizens = $citizens->orWhere('cpf','ilike', '%'. $this->searchCpf .'%' );
+        }
+
+        if($this->searchGenrer){
+            $genrer = Genre::where('id', $this->searchGenrer)->first();
+            if(isset($genrer->id)){
+                $citizens = $citizens->where('genre_id', $genrer->id);
+            }
         }
 
         if($this->searchNumber){
-            $citizens = $citizens::where('cpf','ilike', '%'. $this->searchNumber .'%' );
+           //$citizens = $citizens::where('cpf','ilike', '%'. $this->searchNumber .'%' );
         }
-
-
 
         return view('livewire.citizen.citizen-index',
         [
