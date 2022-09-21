@@ -318,18 +318,98 @@
                             </select>
                          </div>
                       </div>
-                      <div wire:ignore.self class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+                      <div data-keyboard="false" data-backdrop="static"  wire:ignore.self class="modal modal-blur fade" id="modal-search" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div data-backdrop="static" class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title">Consultar</h5>
+                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                 <div class="row" >
+                                 <div  class="col-lg-6 mb-3">
+                                    <label class="form-label">Cpf</label>
+                                    <input wire:model="searchCpf" placeholder="Cpf do cidadão" type="text" class="form-control" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
+                                 </div>
+
+                                 <div class="col-lg-6 mb-3">
+                                    <label class="form-label">Rg</label>
+                                    <input wire:model="searchRg" placeholder="Rg do cidadão" type="text" class="form-control" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
+                                 </div>
+                              </div>
+                              <div class="row" >
+                                 <div class="col-lg-6 mb-3">
+                                    <label class="form-label">Ano do processo</label>
+                                    <input wire:model="searchAnoProcesso" placeholder="Ano do processo" type="text" class="form-control date" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
+                                 </div>
+
+                                 <div class="col-lg-6 mb-3">
+                                    <label class="form-label">Número do processo</label>
+                                    <input wire:model="searchNumber"  placeholder="Número do processo" type="text" class="form-control" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
+                                 </div>
+
+                                 <div class="col-lg-6 mb-3">
+                                    <label class="form-label">Nr * da cedula</label>
+                                    <input wire:model="searchNrCedula" placeholder="Nr" type="text" class="form-control" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
+                                 </div>
+
+                              </div>
+                              </div>
+
+                              <div class="modal-body">
+                                 <label>Outros dados para pesquisa</label>
+                                 <div class="row" >
+                                 <div  class="col-lg-6 mb-3">
+                                    <label class="form-label">Nome</label>
+                                    <input wire:model="searchName" placeholder="Nome cidadão" type="text" class="form-control" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
+                                 </div>
+
+                                 <div class="col-lg-6 mb-3">
+                                    <label class="form-label">Genero</label>
+                                    <div class="input-group input-group-flat">
+                                       <select class="form-control ps-0"  name="select">
+                                          <option value="1">Masculino</option>
+                                          <option value="2">Feminino</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row" >
+                                 <div class="col-lg-6 mb-3">
+                                    <label class="form-label">Data nascimento</label>
+                                    <input id="nsc" wire:model="searchBirth" placeholder="Data nascimento" type="text" class="form-control date" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
+                                 </div>
+
+                                 <div class="col-lg-6 mb-3">
+                                    <label class="form-label">Filiação</label>
+                                    <input wire:model="searchFilitation" placeholder="Filiação" type="text" class="form-control" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
+                                 </div>
+
+                              </div>
+                              </div>
+
+                              <div class="modal-footer">
+                                <a style="margin-bottom:30px" wire:click="goSearch()" onclick="$('#modal-list').modal('show');" class="btn btn-primary d-none d-sm-inline-block">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <circle cx="10" cy="10" r="7"></circle>
+                                        <line x1="21" y1="21" x2="15" y2="15"></line>
+                                     </svg>
+                                    Pesquisar
+                                 </a>
+
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                      <div wire:ignore.self class="modal modal-blur fade" id="modal-list" tabindex="-1" role="dialog" aria-hidden="true">
                          <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                             <div class="modal-content">
                                <div class="modal-header">
-                                  <h5 class="modal-title">PESQUISA RÁPIDA</h5>
+                                  <h5 class="modal-title">Resultados encontrados</h5>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                               </div>
-                               <div class="modal-body">
-                                  <div class="mb-3">
-                                     <label class="form-label">Pesquisar</label>
-                                     <input wire:model="searchCitizen" type="text" class="form-control" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
-                                  </div>
                                </div>
                                <div class="modal-body">
                                   <div class="row">
@@ -339,23 +419,24 @@
                                               <th scope="col">Nome</th>
                                               <th scope="col">Rg</th>
                                               <th scope="col">Cpf</th>
-                                              <th scope="col">Genero</th>
                                               <th scope="col">Data Dascimento</th>
                                            </tr>
                                         </thead>
                                         <tbody>
+                                            @if($citizens)
                                             @foreach($citizens as $item)
                                             <tr wire:click="setCitizen({{$item['id']}})">
                                                 <td>{{$item->name}}</td>
                                                 <td>{{$item->rg}}</td>
                                                 <td>{{$item->cpf}}</td>
-                                                <td>{{$item->genre_id}}</td>
                                                 <td>{{$item->created_at}}</td>
                                              </tr>
                                             @endforeach
+
                                         </tbody>
                                      </table>
-                                     {{ $citizens->links() }}
+
+                                     @endif
                                   </div>
                                </div>
                                <div class="modal-footer">
@@ -376,9 +457,20 @@
     <script>
        document.addEventListener('turbolinks:load', () => {
            var today = new Date();
-           $('#modal-report').modal('show');
+           $('#modal-search').modal('show');
            $('#date').val( today.toISOString().substring(0, 10));
        })
+
+       window.addEventListener('closeModalSearch',({detail:{user}})=>{
+           $('#modal-search').modal('hide');
+       })
+
+      $('#modal-report').on('shown.bs.modal', function (e) {
+        var elements = document.querySelector('#nsc');
+        var momentMask = new IMask(element, {
+            mask: '00/00/0000'
+        });
+      })
 
 
 

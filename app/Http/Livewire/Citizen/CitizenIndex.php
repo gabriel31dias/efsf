@@ -14,7 +14,7 @@ use App\Models\MaritalStatus;
 class CitizenIndex extends Component
 {
     public $searchTerm = null;
-    public $searchName;
+
     public $filterUnlockeds;
     public $genre_name;
     public $filterActives;
@@ -25,12 +25,25 @@ class CitizenIndex extends Component
     public $searchCep;
     public $searchCelular;
     public $searchEndereco;
-    public $searchCpf;
+
+    public $citizensItems;
+
     public $searchDistrict;
     public $searchCity;
     public $other_genre;
     public $errorsKeys = [];
     public $errors = [];
+
+
+    public $searchCpf;
+    public $searchRg;
+    public $searchAnoProcesso;
+    public $searchNumber;
+    public $searchNrCedula;
+    public $searchName;
+    public $searchGenrer;
+    public $searchBirth;
+    public $searchFilitation;
 
     public $otherFiliations = [];
     public $filiationCount = 2;
@@ -134,6 +147,14 @@ class CitizenIndex extends Component
         $this->dispatchBrowserEvent('changed_indicador_social', []);
     }
 
+    public function goSearch(){
+
+        $this->dispatchBrowserEvent('closeModalSearch', []);
+
+            //->orWhere('rg','ilike', '%'. $this->searchRg .'%')
+            //->orWhere('cpf','ilike', '%'. $this->searchCpf .'%');
+    }
+
     public function setCitizen($id){
         $citizen = Citizen::find($id);
 
@@ -176,20 +197,29 @@ class CitizenIndex extends Component
 
     public function render()
     {
-        if($this->searchCitizen){
-            $searchCitizen = '%'. $this->searchCitizen .'%';
-            $citizens = Citizen::where('name','ilike', '%'. $searchCitizen .'%' )
-            ->orWhere('rg','ilike', '%'. $searchCitizen .'%')
-            ->orWhere('cpf','ilike', '%'. $searchCitizen .'%');
+
+        $citizens = new Citizen();
+        if($this->searchName){
+            $citizens = $citizens::where('name','ilike', '%'. $this->searchName .'%' );
         }
 
-        if (!$this->searchCitizen) {
-            $citizens = Citizen::orderBy('id','desc');
+        if($this->searchRg){
+            $citizens = $citizens::where('rg','ilike', '%'. $this->searchRg .'%' );
         }
+
+        if($this->searchCpf){
+            $citizens = $citizens::where('cpf','ilike', '%'. $this->searchCpf .'%' );
+        }
+
+        if($this->searchNumber){
+            $citizens = $citizens::where('cpf','ilike', '%'. $this->searchNumber .'%' );
+        }
+
+
 
         return view('livewire.citizen.citizen-index',
         [
-            'citizens' =>  $citizens->paginate(10)
+            'citizens' =>  $citizens->get()
         ]);
     }
 

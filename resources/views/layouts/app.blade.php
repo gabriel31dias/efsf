@@ -228,7 +228,7 @@
 
                            </span>
                            <span class="nav-link-title">
-                           Cadastro de cidadão
+                            Consultar cidadão
                            </span>
                         </a>
                      </li>
@@ -318,6 +318,8 @@
     window.addEventListener('editPassword',({detail:{user}})=>{
         passwordChangModal(user)
     })
+
+
 
     window.addEventListener('redirect',({detail:{url, delay}})=>{
         setTimeout(() => {
