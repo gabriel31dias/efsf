@@ -318,6 +318,14 @@
                             </select>
                          </div>
                       </div>
+
+    CPF
+    RG
+    NOME
+    GENERO
+    DATA DE NASCIMENTO
+    FILIAÇÃO
+
                       <div data-keyboard="false" data-backdrop="static"  wire:ignore.self class="modal modal-blur fade" id="modal-search" tabindex="-1" role="dialog" aria-hidden="true">
                          <div data-backdrop="static" class="modal-dialog modal-lg modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -339,25 +347,8 @@
                                         <input wire:model="searchRg" placeholder="Rg do cidadão" type="text" class="form-control" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
                                      </div>
                                   </div>
-                                  <div class="row mb-3" >
-                                     <div class="col-lg-6 mb-3">
-                                        <label class="form-label">Ano do processo</label>
-                                        <input onclick="IMask(
-                                           this, {
-                                           mask: '00/00/0000'
-                                           });" wire:model="searchAnoProcesso" placeholder="Ano do processo" type="text" class="form-control date  " name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
-                                     </div>
-                                     <div class="col-lg-6 mb-3">
-                                        <label class="form-label">Número do processo</label>
-                                        <input wire:model="searchNumber"  placeholder="Número do processo" type="text" class="form-control" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
-                                     </div>
-                                     <div class="col-lg-6 mb-3">
-                                        <label class="form-label">Nr * da cedula</label>
-                                        <input wire:model="searchNrCedula" placeholder="Nr" type="text" class="form-control" name="example-text-input" placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
-                                     </div>
-                                  </div>
-                               </div>
-                               <div class="modal-body">
+
+
                                   <label>Outros dados para pesquisa</label>
                                   <div class="row" >
                                      <div  class="col-lg-6 mb-3">

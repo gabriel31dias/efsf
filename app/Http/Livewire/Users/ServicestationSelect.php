@@ -15,11 +15,15 @@ class ServicestationSelect extends Component
     public $selectedValue;
     public $servicesPoints = [];
 
-    protected $listeners = ['clearServiceStationField'];
+    protected $listeners = ['clearServiceStationField', 'setServiceStation'];
 
     public function mount()
     {
         $this->reset1();
+    }
+
+    public function setServiceStation($value){
+        $this->query = $value;
     }
 
     public function reset1()

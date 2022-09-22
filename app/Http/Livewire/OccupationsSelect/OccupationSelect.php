@@ -16,11 +16,15 @@ class OccupationSelect extends Component
     public $selectedValue;
     public $servicesPoints = [];
 
-    protected $listeners = ['clearServiceStationField'];
+    protected $listeners = ['clearServiceStationField', 'setOccupation'];
 
     public function mount()
     {
         $this->reset1();
+    }
+
+    public function setOccupation($value){
+        $this->query = $value;
     }
 
     public function reset1()

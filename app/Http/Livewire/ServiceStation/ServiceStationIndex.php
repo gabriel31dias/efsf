@@ -11,6 +11,8 @@ class ServiceStationIndex extends Component
     public $filterActives;
     public $filterInactives;
 
+
+
     public function render()
     {
 

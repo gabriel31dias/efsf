@@ -7,9 +7,15 @@ use App\Http\Repositories\CitizenRepository;
 use App\Models\Citizen;
 use App\Models\Genre;
 use App\Models\Country;
+use App\Models\Uf;
+use App\Models\County;
+use App\Models\Occupation;
+
+
 
 
 use App\Models\MaritalStatus;
+use App\Models\ServiceStation;
 
 class CitizenIndex extends Component
 {
@@ -163,6 +169,11 @@ class CitizenIndex extends Component
         $genre = Genre::find($citizen['genre_id']);
         $marital_status = MaritalStatus::find($citizen['marital_status_id']);
         $country = Country::find($citizen['country_id']);
+        $uf = Uf::find($citizen['uf_id']);
+        $county = County::find($citizen['county_id']);
+        $ocupation = Occupation::find($citizen['occupation_id']);
+        $service_station = ServiceStation::find($citizen['service_station_id']);
+
 
         if (isset($citizen->id)) {
             $this->fields = [
@@ -195,6 +206,12 @@ class CitizenIndex extends Component
         $this->emit('setGenre', $genre->name ?? null);
         $this->emit('setMaritalStatus', $marital_status->name ?? null);
         $this->emit('setCountry',  $country->name ?? null);
+        $this->emit('setUf',  $uf->acronym ?? null);
+        $this->emit('setCounty',  $county->name ?? null);
+        $this->emit('setOccupation', $ocupation->name ?? null);
+        $this->emit('setServiceStation', $service_station->name ?? null);
+
+
 
         $this->dispatchBrowserEvent('closeModalList');
         $this->dispatchBrowserEvent('closeModalSearch');
@@ -329,7 +346,8 @@ class CitizenIndex extends Component
             "cid" =>  $this->fields["cid"],
             "via_rg" =>  $this->fields["via_rg"],
             "marital_status_id" => $this->fields["marital_status_id"],
-            "country_id" => $this->fields["country_id"]
+            "country_id" => $this->fields["country_id"],
+            "service_station_id" => $this->fields["service_station_id"]
         ]);
 
         $this->messageSuccess();

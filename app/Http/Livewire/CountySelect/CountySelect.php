@@ -16,11 +16,15 @@ class CountySelect extends Component
     public $selectedValue;
     public $counties = [];
 
-    protected $listeners = ['clearServiceStationField'];
+    protected $listeners = ['clearServiceStationField', 'setCounty'];
 
     public function mount()
     {
         $this->resetValue();
+    }
+
+    public function setCounty($value){
+        $this->query = $value;
     }
 
     public function resetValue()
