@@ -20,10 +20,7 @@ use App\Models\ServiceStation;
 class CitizenIndex extends Component
 {
     public $searchTerm = null;
-
-    public $filterUnlockeds;
     public $genre_name;
-    public $filterActives;
     public $searchCitizen;
     public $action;
     public $filterInactives;
@@ -31,17 +28,14 @@ class CitizenIndex extends Component
     public $searchCep;
     public $searchCelular;
     public $searchEndereco;
-
     public $citizensItems;
-
     public $searchDistrict;
     public $searchCity;
     public $other_genre;
     public $errorsKeys = [];
     public $errors = [];
-
     public $searchGenrer;
-
+    public $citizen;
     public $genres;
     public $searchCpf;
     public $searchRg;
@@ -49,11 +43,10 @@ class CitizenIndex extends Component
     public $searchNumber;
     public $searchNrCedula;
     public $searchName;
-
     public $searchBirth;
     public $searchFilitation;
-
     public $otherFiliations = [];
+    public $otherFiliationsValues = [];
     public $filiationCount = 2;
     public $imigration = false;
     public $marital_status;
@@ -71,6 +64,20 @@ class CitizenIndex extends Component
         "county_id",
         "service_station_id",
         "via_rg"
+    ];
+
+    public $tranlaction_filds = [
+        "rg" => "rg",
+        "cpf" => "cpf",
+        "name" => "nome",
+        "celular" => "celular",
+        "birth_date" => "data de nascimento",
+        "genre_id" => "gênero",
+        "marital_status_id" => "estado civil",
+        "county_id" => "município",
+        "uf_id"  => "uf",
+        "service_station_id" => "posto de serviço",
+        "via_rg" => "via rg"
     ];
 
     public $fields = [
@@ -91,7 +98,6 @@ class CitizenIndex extends Component
         "social_indicator_id" => "",
         "n_social" => "",
         "county_id" => "",
-
         "uf_id" => "",
         "service_station_id" => "",
         "via_rg" => "",
@@ -156,15 +162,13 @@ class CitizenIndex extends Component
     }
 
     public function goSearch(){
-
         $this->dispatchBrowserEvent('closeModalSearch', []);
-
-            //->orWhere('rg','ilike', '%'. $this->searchRg .'%')
-            //->orWhere('cpf','ilike', '%'. $this->searchCpf .'%');
     }
 
     public function setCitizen($id){
         $citizen = Citizen::find($id);
+        $this->citizen = $citizen;
+        $this->action = "update";
 
         $genre = Genre::find($citizen['genre_id']);
         $marital_status = MaritalStatus::find($citizen['marital_status_id']);
@@ -178,6 +182,7 @@ class CitizenIndex extends Component
         if (isset($citizen->id)) {
             $this->fields = [
                 "name" => $citizen->name,
+                "id" => $citizen->id,
                 "cpf" => $citizen->cpf,
                 "rg" => $citizen->rg,
                 "filiation1" => $citizen->filiation1,
@@ -203,13 +208,14 @@ class CitizenIndex extends Component
                 "country_id" =>  $citizen->country_id
             ];
         }
+
         $this->emit('setGenre', $genre->name ?? null);
         $this->emit('setMaritalStatus', $marital_status->name ?? null);
         $this->emit('setCountry',  $country->name ?? null);
         $this->emit('setUf',  $uf->acronym ?? null);
         $this->emit('setCounty',  $county->name ?? null);
         $this->emit('setOccupation', $ocupation->name ?? null);
-        $this->emit('setServiceStation', $service_station->name ?? null);
+        $this->emit('setServiceStation', $service_station->service_station_name ?? null);
 
 
 
@@ -223,19 +229,19 @@ class CitizenIndex extends Component
 
         $citizens = new Citizen();
         if($this->searchName){
-            $citizens = $citizens->orWhere('name','ilike', '%'. $this->searchName .'%' );
+            $citizens = $citizens->where('name','ilike', '%'. $this->searchName .'%' );
         }
 
         if($this->searchRg){
-            $citizens = $citizens->orWhere('rg','ilike', '%'. $this->searchRg .'%' );
+            $citizens = $citizens->where('rg','ilike', '%'. $this->searchRg .'%' );
         }
 
         if($this->searchCpf){
-            $citizens = $citizens->orWhere('cpf','ilike', '%'. $this->searchCpf .'%' );
+            $citizens = $citizens->where('cpf','ilike', '%'. $this->searchCpf .'%' );
         }
 
         if($this->searchCpf){
-            $citizens = $citizens->orWhere('cpf','ilike', '%'. $this->searchCpf .'%' );
+            $citizens = $citizens->where('cpf','ilike', '%'. $this->searchCpf .'%' );
         }
 
         if($this->searchGenrer){
@@ -258,6 +264,7 @@ class CitizenIndex extends Component
     public function addNewFiliationField(){
         $this->filiationCount++;
         $this->otherFiliations[] = "Filiation ".$this->filiationCount;
+
     }
 
     public function filtersCall(){
@@ -274,6 +281,10 @@ class CitizenIndex extends Component
         return in_array($field, $this->obrigatory_filds);
     }
 
+    public function getTranslaction($field){
+       return $this->tranlaction_filds[$field];
+    }
+
     private function validation($fields){
         $errors = [];
         $this->errorsKeys = [];
@@ -281,8 +292,9 @@ class CitizenIndex extends Component
         foreach ($fields as $field => $value)
         {
             if($this->checkMandatory($field) && empty(trim($value))){
+                $field_item = $this->getTranslaction($field);
                 array_push($errors, [
-                    "message" => "O campo {$field} é obrigatorio",
+                    "message" => "O campo {$field_item} é obrigatorio",
                     "valid" => false,
                 ]);
                 $this->errorsKeys[] = $field;
@@ -312,6 +324,7 @@ class CitizenIndex extends Component
     }
 
     public function createCitizen(){
+
         $validation = $this->validation($this->fields);
 
         if(count($validation) > 0){
@@ -324,7 +337,7 @@ class CitizenIndex extends Component
             return false;
         }
 
-        $user = (new CitizenRepository())->createOrUpdateCitizen($this->user->id ?? 0, [
+        $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
             "cpf" => $this->fields["cpf"],
             "rg" => $this->fields["rg"],
@@ -332,6 +345,7 @@ class CitizenIndex extends Component
             "filiation2" => $this->fields["filiation2"],
             "filiation3" => $this->fields["filiation2"],
             "birth_date" => $this->fields["birth_date"],
+            "other_filiations" => \json_encode($this->otherFiliationsValues),
             "migration_situation" => $this->fields["migration_situation"],
             "portaria_nr" => $this->fields["portaria_nr"],
             "dou_nr" => $this->fields["dou_nr"],
@@ -347,13 +361,14 @@ class CitizenIndex extends Component
             "via_rg" =>  $this->fields["via_rg"],
             "marital_status_id" => $this->fields["marital_status_id"],
             "country_id" => $this->fields["country_id"],
-            "service_station_id" => $this->fields["service_station_id"]
-        ]);
+            "service_station_id" => $this->fields["service_station_id"],
+            "uf_id" => $this->fields["uf_id"]
+         ]);
 
         $this->messageSuccess();
 
         $this->dispatchBrowserEvent('redirect',[
-            'url'=> '/users',
+            'url'=> '/citizen',
             'delay' => 1000
         ]);
     }
@@ -362,12 +377,12 @@ class CitizenIndex extends Component
         if($this->action == "create"){
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'success',
-                'message'=> "Perfil criado com sucesso."
+                'message'=> "Cidadão criado com sucesso."
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'success',
-                'message'=> "Perfil foi atualizado com sucesso."
+                'message'=> "Cidadão foi atualizado com sucesso."
             ]);
         }
     }
