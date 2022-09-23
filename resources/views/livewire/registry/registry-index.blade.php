@@ -54,17 +54,21 @@
                             <th><button class="table-sort" >Nome Fantasia</button></th>
                             <th><button class="table-sort" >UF</button></th>
                             <th><button class="table-sort" >Município</button></th>
+                            <th><button class="table-sort" >Atualização</button></th>
+
                          </tr>
                       </thead>
                       <tbody class="table-tbody">
                          @foreach ($registries as $registry)
-                         <tr wire:click="clickUpdate({{$registry['id']}})">
-                            <td class="">{{$registry['sic_code']}}</td>
-                            <td class="">{{$registry['cns']}}</td>
-                            <td class="">{{$registry['name']}}</td>
-                            <td class="">{{$registry['fantasy_name']}}</td>
-                            <td class="">{{$registry['uf_id']}}</td>
-                            <td class="">{{$registry['county_id']}}</td>
+                         <tr wire:click="clickUpdate({{$registry->id}})">
+                            <td class="">{{$registry->sic_code}}</td>
+                            <td class="">{{$registry->cns}}</td>
+                            <td class="">{{$registry->name}}</td>
+                            <td class="">{{$registry->fantasy_name}}</td>
+                            <td class="">{{$registry->uf->name}}</td>
+                            <td class="">{{$registry->county_id}}</td>
+                            <td class="">{{isset($registry->updated_at) ? $registry->updated_at->format('d/m/Y h:i') : ''}}</td>
+
                          </tr>
                          @endforeach
                       </tbody>

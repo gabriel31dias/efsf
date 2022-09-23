@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('closing_date')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

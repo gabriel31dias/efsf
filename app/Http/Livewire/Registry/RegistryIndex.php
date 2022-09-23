@@ -13,7 +13,7 @@ class RegistryIndex extends Component
     {
         if($this->searchTerm){
             $searchTerm = '%'. $this->searchTerm .'%';
-            $registries = Registry::where('name','ilike', '%'. $searchTerm .'%' );
+            $registries = Registry::where('name','ilike', '%'. $searchTerm .'%')->orWhere('sic_code','ilike', '%'. $searchTerm .'%' );
         }else{
             $registries = Registry::orderBy('id','desc');
         }
