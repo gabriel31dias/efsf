@@ -16,11 +16,15 @@ class UfSelect extends Component
     public $selectedValue;
     public $ufs = [];
 
-    protected $listeners = ['clearServiceStationField'];
+    protected $listeners = ['clearServiceStationField', 'setUf'];
 
     public function mount()
     {
         $this->resetValue();
+    }
+
+    public function setUf($uf){
+        $this->query = $uf;
     }
 
     public function resetValue()

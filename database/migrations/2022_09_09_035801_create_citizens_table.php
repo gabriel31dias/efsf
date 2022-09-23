@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('birth_date')->nullable();
             $table->integer('genre_id')->nullable();
             $table->integer('service_station_id')->nullable();
-            $table->string('county_id')->nullable();
+            $table->integer('county_id')->nullable();
             $table->integer('marital_status_id')->nullable();
             $table->integer('country_id')->nullable();
             $table->string('portaria_nr')->nullable();
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('data_dou')->nullable();
             $table->integer('uf_id')->nullable();
             $table->string('city_of_birth')->nullable();
-            $table->string('occupation_id')->nullable();
+            $table->integer('occupation_id')->nullable();
             $table->integer('social_indicator_id')->nullable();
             $table->string('n_social')->nullable();
             $table->string('issuing_station')->nullable();

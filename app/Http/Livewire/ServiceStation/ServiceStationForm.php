@@ -35,7 +35,7 @@ class ServiceStationForm extends Component
         "delivery_post_id" => null
     ];
 
-    public $fieldsEvent = [ 
+    public $fieldsEvent = [
         "start_date" => "",
         "expiry" => "",
         "delivery_date" => "",
@@ -50,7 +50,7 @@ class ServiceStationForm extends Component
             "fields.acronym_post" => "required|unique:service_stations,acronym_post". $id,
             "fields.type_of_post" => "required",
             "fields.city" => "required",
-            "fields.cep" => "required",        
+            "fields.cep" => "required",
             "fields.type_of_street" => "required",
             "fields.address" => "required",
             "fields.number" => "required",
@@ -63,13 +63,13 @@ class ServiceStationForm extends Component
             "fieldsEvent.expiry" =>  "required_if:fields.type_of_post," . ServiceStation::EVENTS_TYPE,
             "fieldsEvent.delivery_date" =>  "required_if:fields.type_of_post," . ServiceStation::EVENTS_TYPE,
 
-            
+
         ];
     }
 
-    protected $messages = [ 
+    protected $messages = [
         "fields.*.required" => "Campo obrigatório",
-        "fields.*.unique" => "Nome indisponivel", 
+        "fields.*.unique" => "Nome indisponivel",
         "fieldsEvent.*.required_if" => "Campo obrigatório para postos de evento."
     ];
 
@@ -115,15 +115,15 @@ class ServiceStationForm extends Component
     }
 
     public function saveStation(){
-        
-        $this->validate(); 
 
-        if($this->action == "create"){ 
+        $this->validate();
+
+        if($this->action == "create"){
             $station = ServiceStation::create($this->fields);
-            if($station->type_of_post == ServiceStation::EVENTS_TYPE){ 
+            if($station->type_of_post == ServiceStation::EVENTS_TYPE){
                 $station->events()->create($this->fieldsEvent);
             }
-        } else { 
+        } else {
             $station = ServiceStation::updateOrCreate(['id' => $this->serviceStation->id ],$this->fields);
         }
 
@@ -182,8 +182,8 @@ class ServiceStationForm extends Component
         $this->emit('clearServiceStationField');
     }
 
-    public function handleChangeExternal(){ 
-        if(!$this->isExternalDelivery){ 
+    public function handleChangeExternal(){
+        if(!$this->isExternalDelivery){
             $this->deliveryPoint =  null;
         }
     }
