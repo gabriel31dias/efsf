@@ -15,6 +15,7 @@ class GenresSelect extends Component
     public $highlightIndex;
     public $selectedValue;
     public $genres = [];
+    public $genre;
 
     public $genre_name;
 
@@ -23,9 +24,14 @@ class GenresSelect extends Component
     public function mount()
     {
         $this->reset1();
-
+        $this->currentGenre();
 
     }
+
+    public function currentGenre(){
+        $this->query = $this->genre;
+    }
+
 
     public function setGenre($genre_name){
         $this->query = $genre_name;

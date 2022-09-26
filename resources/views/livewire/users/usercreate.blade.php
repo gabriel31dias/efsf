@@ -1,6 +1,7 @@
 <div class="page-wrapper">
     <form>
        <div class="container-fluid">
+        <div >
           <!-- Page title -->
           <div class="page-header d-print-none">
              <div class="row g-2 align-items-center">
@@ -64,6 +65,8 @@
        </div>
        <div class="page-body">
           <div class="container-fluid">
+            <div class="card">
+            <div class="card-body">
              <div class="modal-content">
                 <div class="modal-body">
                    <div class="row">
@@ -311,5 +314,6 @@
  </div>
  </div>
  </div>
+
  </form>
  </div>

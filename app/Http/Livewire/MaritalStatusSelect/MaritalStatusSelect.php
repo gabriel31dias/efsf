@@ -23,6 +23,11 @@ class MaritalStatusSelect extends Component
     public function mount()
     {
         $this->reset1();
+        $this->getCurrentValue();
+    }
+
+    public function getCurrentValue(){
+        $this->query = $this->marital_status;
     }
 
     public function setMaritalStatus($maritalStatus){

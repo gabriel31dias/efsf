@@ -15,6 +15,7 @@ class CountrySelect extends Component
     public $highlightIndex;
     public $selectedValue;
     public $countries = [];
+    public $country;
 
     protected $listeners = ['clearServiceStationField', 'setCountry'];
 
@@ -22,9 +23,16 @@ class CountrySelect extends Component
         $this->query = $country;
     }
 
+    public function currentCounty()
+    {
+        $this->query = $this->count;
+    }
+
+
     public function mount()
     {
         $this->reset1();
+        $this->query = $this->country;
     }
 
     public function reset1()

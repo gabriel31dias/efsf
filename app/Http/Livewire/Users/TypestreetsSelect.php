@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Users;
 
+use App\Models\CountryTypeStreat;
 use App\Models\TypeStreet;
+
 use Livewire\Component;
 
 class TypestreetsSelect extends Component
@@ -14,6 +16,15 @@ class TypestreetsSelect extends Component
     public $closed = false;
     public $highlightIndex;
     public $selectedValue;
+    public $typeStreat;
+    public $type;
+
+
+    public $listeners = ['setTypeStreet'];
+
+    public function setTypeStreet($value){
+       $this->query = $value;
+    }
 
     public function curretTypeStreeat(){
         $this->query = $this->typestreet;
@@ -65,9 +76,16 @@ class TypestreetsSelect extends Component
     public function updatedQuery()
     {
         $this->closed = false;
-        $this->type_streets = TypeStreet::where('name_type_street', 'like', '%' . $this->query . '%')
-            ->get()
-            ->toArray();
+        if($this->type == "country_street"){
+            $this->type_streets = CountryTypeStreat::where('name_type_street', 'like', '%' . $this->query . '%')
+                ->get()
+                ->toArray();
+        }else{
+            $this->type_streets = TypeStreet::where('name_type_street', 'like', '%' . $this->query . '%')
+                ->get()
+                ->toArray();
+        }
+
     }
 
     public function selectItem($id, $value){
@@ -75,7 +93,12 @@ class TypestreetsSelect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
-        $this->emitUp('selectedTypeStreat', $id);
+
+        if($this->type == "country_street"){
+            $this->emitUp('selectedCountryTypeStreat', $id);
+        }else{
+            $this->emitUp('selectedTypeStreat', $id);
+        }
     }
 
     public function render()

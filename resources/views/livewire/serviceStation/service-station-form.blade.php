@@ -122,7 +122,6 @@
                            @error('fields.cep') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
-
                      <div class="col-lg-4">
                         <div class="mb-3">
                            <label class="form-label">Tipo de Logradouro<span class="error_tag"> *</span></label>
@@ -130,8 +129,6 @@
                            @error('fields.type_of_street') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
-
-
                      <div class="col-lg-6">
                         <div class="mb-3">
                            <label class="form-label">Endereço<span class="error_tag"> *</span></label>

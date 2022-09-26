@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Genres;
 use Livewire\Component;
 use App\Models\Genre;
 use App\Http\Repositories\ProfileRepository;
+
 class GenresForm extends Component
 {
 
@@ -15,13 +16,14 @@ class GenresForm extends Component
     public $daysToAccessInspiration;
     public $daysToActivityLock;
     public $obrigatory_filds = [
-      "name"
+        "name"
     ];
     public $genres;
     public $action;
     public $fields = [
         "name" => ""
     ];
+
     public function render()
     {
         return view('livewire.genres.genres-form');
@@ -29,60 +31,62 @@ class GenresForm extends Component
 
     public function mount()
     {
-        if($this->genres){
+        if ($this->genres) {
             $this->fields = [
                 "name" => $this->genres->name
             ];
         }
     }
 
-    public function saveProfile(){
+    public function saveProfile()
+    {
         $validation = $this->validation($this->fields);
 
-        if(count($validation) > 0){
+        if (count($validation) > 0) {
             $this->errors = $validation;
 
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'error',
-                'message'=> $validation[0]["message"]
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => $validation[0]["message"]
             ]);
             return false;
         }
 
-        $genres = Genre::updateOrCreate(['id' => $this->genres->id ?? 0],[
+        $genres = Genre::updateOrCreate(['id' => $this->genres->id ?? 0], [
             'name' => $this->fields["name"]
         ]);
 
-        if($genres){
+        if ($genres) {
             $this->messageSuccess();
-            $this->dispatchBrowserEvent('redirect',[
-                'url'=> '/genres',
+            $this->dispatchBrowserEvent('redirect', [
+                'url' => '/genres',
                 'delay' => 1000
             ]);
         }
     }
 
-    public function messageSuccess(){
-        if($this->action == "create"){
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'success',
-                'message'=> "Genero criado com sucesso."
+    public function messageSuccess()
+    {
+        if ($this->action == "create") {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'success',
+                'message' => "Genero criado com sucesso."
             ]);
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'success',
-                'message'=> "Genero foi atualizado com sucesso."
+        } else {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'success',
+                'message' => "Genero foi atualizado com sucesso."
             ]);
         }
     }
 
-    private function validation($fields){
+    private function validation($fields)
+    {
         $errors = [];
         $this->errorsKeys = [];
         $this->errors = [];
-        foreach ($fields as $field => $value)
-        {
-            if($this->checkMandatory($field) && empty(trim($value))){
+        foreach ($fields as $field => $value) {
+            if ($this->checkMandatory($field) && empty(trim($value))) {
                 array_push($errors, [
                     "message" => "O campo {$field} é obrigatorio",
                     "valid" => false,
@@ -94,18 +98,20 @@ class GenresForm extends Component
         return $errors;
     }
 
-    public function checkMandatory($field){
+    public function checkMandatory($field)
+    {
         return in_array($field, $this->obrigatory_filds);
     }
 
-    public function enableDisableRegister(){
+    public function enableDisableRegister()
+    {
         $result = (new ProfileRepository)->toggleStatus($this->genres->id);
-        if($result){
-            $this->genres->status = ! $this->genres->status;
+        if ($result) {
+            $this->genres->status = !$this->genres->status;
 
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'success',
-                'message'=> "Genero desabilitado com sucesso."
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'success',
+                'message' => "Genero desabilitado com sucesso."
             ]);
         }
     }

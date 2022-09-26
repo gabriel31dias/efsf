@@ -16,81 +16,127 @@ class TypeStreet extends Seeder
     public function run()
     {
         DB::table('type_streets')->insert([
-            'name_type_street' => "aeroporto"
+            'name_type_street' => "Aeroporto"
         ]);
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "alameda"
+            'name_type_street' => "Alameda"
         ]);
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "área"
+            'name_type_street' => "Área"
         ]);
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "avenida"
+            'name_type_street' => "Avenida"
         ]);
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "campo"
-        ]);
-
-
-        DB::table('type_streets')->insert([
-            'name_type_street' => "chácara"
+            'name_type_street' => "Condomínio"
         ]);
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "colônia"
+            'name_type_street' => "Conjunto"
         ]);
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "condomínio"
+            'name_type_street' => "Estação"
         ]);
 
-
         DB::table('type_streets')->insert([
-            'name_type_street' => "conjunto"
+            'name_type_street' => "Favela"
         ]);
 
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "distrito"
+            'name_type_street' => "Jardim"
         ]);
 
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "esplanada"
-        ]);
-
-        DB::table('type_streets')->insert([
-            'name_type_street' => "estação"
-        ]);
-
-        DB::table('type_streets')->insert([
-            'name_type_street' => "estrada"
-        ]);
-
-        DB::table('type_streets')->insert([
-            'name_type_street' => "favela"
-        ]);
-
-        DB::table('type_streets')->insert([
-            'name_type_street' => "fazenda"
+            'name_type_street' => "Ladeira"
         ]);
 
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "feira"
+            'name_type_street' => "Lago"
         ]);
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "ladeira"
+            'name_type_street' => "Largo"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Loteamento"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Morro"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Núcleo"
         ]);
 
 
         DB::table('type_streets')->insert([
-            'name_type_street' => "lago"
+            'name_type_street' => "Parque"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Passarela"
+        ]);
+
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Pátio"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Praça"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Quadra"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Residencial"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Rodovia"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Rua"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Setor"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Travessa"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Trecho"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Trevo"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Via"
+        ]);
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Viaduto"
+        ]);
+
+        DB::table('type_streets')->insert([
+            'name_type_street' => "Viela"
         ]);
     }
 }
