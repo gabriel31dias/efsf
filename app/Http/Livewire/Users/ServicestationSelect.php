@@ -9,6 +9,7 @@ class ServicestationSelect extends Component
 {
     public $query;
     public $stations;
+    public $station;
     public $selectedId;
     public $closed = false;
     public $highlightIndex;
@@ -20,6 +21,11 @@ class ServicestationSelect extends Component
     public function mount()
     {
         $this->reset1();
+        $this->currentServiceStation();
+    }
+
+    public function currentServiceStation(){
+       $this->query = $this->station;
     }
 
     public function setServiceStation($value){

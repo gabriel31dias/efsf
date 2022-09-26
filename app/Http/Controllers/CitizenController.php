@@ -15,9 +15,9 @@ class CitizenController extends Controller
 
     public function index(Request $request)
     {
-        $profiles = Citizen::all();
+        $citizen = Citizen::find($request->id);
 
-        return view('citizen.index', compact('profiles'));
+        return view('citizen.index', compact('citizen'));
     }
 
     public function create(Request $request)
@@ -32,9 +32,9 @@ class CitizenController extends Controller
     }
 
 
-    public function edit(Request $request, Citizen $profile)
+    public function edit(Request $request, Citizen $citizen)
     {
-        return view('citizen.edit', compact('profile'));
+        return view('citizen.edit', compact('citizen'));
     }
 
 

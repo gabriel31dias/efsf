@@ -11,6 +11,7 @@ class UfSelect extends Component
     public $query;
     public $maritalStatus;
     public $selectedId;
+    public $uf;
     public $closed = false;
     public $highlightIndex;
     public $selectedValue;
@@ -21,6 +22,11 @@ class UfSelect extends Component
     public function mount()
     {
         $this->resetValue();
+        $this->currentUf();
+    }
+
+    public function currentUf(){
+        $this->query = $this->uf;
     }
 
     public function setUf($uf){

@@ -18,6 +18,19 @@ return new class extends Migration
             $table->string('rg')->unique();
             $table->string('cpf')->nullable();
             $table->string('name')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('countryside')->nullable();//zona rural
+            $table->integer('country_type_street_id')->nullable();
+            $table->integer('type_street_id')->nullable();
+            $table->string('address')->nullable();
+            $table->string('number')->nullable();
+            $table->string('complement')->nullable();
+            $table->string('provenance')->nullable();
+            $table->string('name_place')->nullable();
+            $table->string('reference_point')->nullable();
+            $table->string('cell')->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('email')->nullable();
             $table->string('filiation1')->nullable();
             $table->string('filiation2')->nullable();
             $table->string('filiation3')->nullable();

@@ -26,6 +26,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::post('/checkequalpassword', [App\Http\Controllers\Auth\LoginController::class, 'checkEqualPass'])->name('checkequalpass');
 Route::post('/savepassword', [App\Http\Controllers\Auth\LoginController::class, 'saveNewPassword'])->name('savepassword');
 
+Route::get('/citizen/{id}', [App\Http\Controllers\CitizenController::class, 'index'])->name('citizen');
 
 
 Route::resource('citizen', App\Http\Controllers\CitizenController::class);

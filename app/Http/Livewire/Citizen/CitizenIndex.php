@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Citizen;
 
+use App\Models\CountryTypeStreat;
+use App\Models\TypeStreet;
 use Livewire\Component;
 use App\Http\Repositories\CitizenRepository;
 use App\Models\Citizen;
@@ -10,10 +12,6 @@ use App\Models\Country;
 use App\Models\Uf;
 use App\Models\County;
 use App\Models\Occupation;
-
-
-
-
 use App\Models\MaritalStatus;
 use App\Models\ServiceStation;
 
@@ -35,7 +33,6 @@ class CitizenIndex extends Component
     public $errorsKeys = [];
     public $errors = [];
     public $searchGenrer;
-    public $citizen;
     public $genres;
     public $searchCpf;
     public $searchRg;
@@ -63,7 +60,16 @@ class CitizenIndex extends Component
         "uf_id",
         "county_id",
         "service_station_id",
-        "via_rg"
+        "via_rg",
+        "address",
+        "number",
+        "complement",
+        "provenance",
+        "reference_point",
+        "cell",
+        "telephone",
+        "email",
+        "zip_code"
     ];
 
     public $tranlaction_filds = [
@@ -77,8 +83,19 @@ class CitizenIndex extends Component
         "county_id" => "município",
         "uf_id"  => "uf",
         "service_station_id" => "posto de serviço",
-        "via_rg" => "via rg"
+        "via_rg" => "via rg",
+        "address" => "endereço",
+        "number" => "numero",
+        "complement" => "complemento",
+        "provenance" => "proveniência",
+        "reference_point" => "ponto de referência",
+        "cell" => "celular",
+        "telephone" => "telefone",
+        "email" => "email",
+        "zip_code" => "cep"
     ];
+
+    public $selectedTab;
 
     public $fields = [
         "name" => "",
@@ -101,20 +118,62 @@ class CitizenIndex extends Component
         "uf_id" => "",
         "service_station_id" => "",
         "via_rg" => "",
-        "cid" => ""
+        "cid" => "",
+        "zip_code" => "",
+        "address" => "",
+        "number" => "",
+        "complement" => "",
+        "provenance" => "",
+        "reference_point" => "",
+        "cell" => "",
+        "telephone" => "",
+        "email" => ""
     ];
+
+    public $curretTypeStreet;
+    public $currentCountry;
+    public $idCitizen;
+    public $zone;
 
     public $naturalized = false;
 
     public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus',
-        'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation'
+        'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
+        'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen'
     ];
+
+    public $citizen;
+    public $currentGenre;
+    public $currentMatiral;
+    public $currentUf;
+    public $currentCounty;
+    public $currentOccupation;
+    public $currentServiceStation;
+    public $currentTypeStreet;
+
+    public function setCitizenx(){
+        $this->setCitizen(1);
+    }
+
+    public function selectedTypeStreat($id)
+    {
+        $this->fields['type_street_id'] = $id;
+    }
+
+    public function  selectedCountryTypeStreat($id)
+    {
+        $this->fields['country_type_street_id'] = $id;
+    }
 
     public function selectedServiceStation($id)
     {
         $this->fields['service_station_id'] = $id;
     }
 
+    public function updated(){
+
+        $this->setCitizen($this->idCitizen);
+    }
 
     public function selectedOccupation($value){
         $this->fields['occupation_id'] = $value;
@@ -138,6 +197,15 @@ class CitizenIndex extends Component
         }else{
             $this->other_genre = false ;
         }
+    }
+
+    public function setSelectedTab($tab){
+        $this->selectedTab = $tab;
+        $this->dispatchBrowserEvent('selectedTab',[
+            'tab'=> $tab
+        ]);
+
+        $this->dispatchBrowserEvent('reload-masks');
     }
 
     public function selectedCountry($value){
@@ -165,7 +233,17 @@ class CitizenIndex extends Component
         $this->dispatchBrowserEvent('closeModalSearch', []);
     }
 
+    public function editCitizen($id){
+        $this->dispatchBrowserEvent('redirect',[
+            'url'=> '/citizen/'.$id.'/edit',
+        ]);
+    }
+
     public function setCitizen($id){
+        if(!$id){
+            return false;
+        }
+
         $citizen = Citizen::find($id);
         $this->citizen = $citizen;
         $this->action = "update";
@@ -178,6 +256,13 @@ class CitizenIndex extends Component
         $ocupation = Occupation::find($citizen['occupation_id']);
         $service_station = ServiceStation::find($citizen['service_station_id']);
 
+        if(isset($citizen['country_type_street_id'])){
+            $type_street = CountryTypeStreat::find($citizen['country_type_street_id']);
+        }
+
+        if(isset($citizen['type_street_id'])){
+            $type_street = TypeStreet::find($citizen['type_street_id']);
+        }
 
         if (isset($citizen->id)) {
             $this->fields = [
@@ -205,19 +290,28 @@ class CitizenIndex extends Component
                 "service_station_id" =>  $citizen->service_station_id,
                 "via_rg" => $citizen->via_rg,
                 "cid" => $citizen->cid,
-                "country_id" =>  $citizen->country_id
+                "country_id" =>  $citizen->country_id,
+                "zip_code" => $citizen->zip_code,
+                "address" => $citizen->address,
+                "number" => $citizen->number,
+                "complement" => $citizen->complement,
+                "provenance" => $citizen->provenance,
+                "reference_point" => $citizen->reference_point,
+                "cell" => $citizen->cell,
+                "telephone" => $citizen->telephone,
+                "email" => $citizen->email
             ];
         }
 
-        $this->emit('setGenre', $genre->name ?? null);
-        $this->emit('setMaritalStatus', $marital_status->name ?? null);
-        $this->emit('setCountry',  $country->name ?? null);
-        $this->emit('setUf',  $uf->acronym ?? null);
-        $this->emit('setCounty',  $county->name ?? null);
-        $this->emit('setOccupation', $ocupation->name ?? null);
-        $this->emit('setServiceStation', $service_station->service_station_name ?? null);
-
-
+        $this->curretTypeStreet = $type_street->name_type_street ?? null;
+        $this->currentCountry = $country->name ?? null;
+        $this->currentGenre = $genre->name ?? null;
+        $this->currentMatiral = $marital_status->name ?? null;
+        $this->currentUf = $uf->acronym ?? null ;
+        $this->currentCounty = $county->name ?? null;
+        $this->currentOccupation = $ocupation->name;
+        $this->currentServiceStation = $service_station->service_station_name ?? null;
+        $this->currentTypeStreet = $type_street->name_type_street ?? null;
 
         $this->dispatchBrowserEvent('closeModalList');
         $this->dispatchBrowserEvent('closeModalSearch');
@@ -226,6 +320,12 @@ class CitizenIndex extends Component
     public function render()
     {
         $this->genres = Genre::all();
+
+        if(isset($this->citizen->id)){
+            $this->setCitizen($this->citizen->id);
+        }else{
+            $this->dispatchBrowserEvent("openModalSearch");
+        }
 
         $citizens = new Citizen();
         if($this->searchName){
@@ -264,7 +364,6 @@ class CitizenIndex extends Component
     public function addNewFiliationField(){
         $this->filiationCount++;
         $this->otherFiliations[] = "Filiation ".$this->filiationCount;
-
     }
 
     public function filtersCall(){
@@ -282,7 +381,7 @@ class CitizenIndex extends Component
     }
 
     public function getTranslaction($field){
-       return $this->tranlaction_filds[$field];
+       return $this->tranlaction_filds[$field] ?? "";
     }
 
     private function validation($fields){
@@ -362,7 +461,18 @@ class CitizenIndex extends Component
             "marital_status_id" => $this->fields["marital_status_id"],
             "country_id" => $this->fields["country_id"],
             "service_station_id" => $this->fields["service_station_id"],
-            "uf_id" => $this->fields["uf_id"]
+            "uf_id" => $this->fields["uf_id"],
+            "zip_code" => $this->fields["zip_code"],
+            "address" => $this->fields["address"],
+            "number" => $this->fields["number"],
+            "complement" => $this->fields["complement"],
+            "provenance" =>  $this->fields["provenance"],
+            "reference_point" => $this->fields["reference_point"],
+            "cell" => $this->fields["cell"],
+            "telephone" => $this->fields["telephone"],
+            "email" => $this->fields["email"],
+            "country_type_street_id" => $this->fields["country_type_street_id"] ?? null,
+            "type_street_id" => $this->fields["type_street_id"] ?? null
          ]);
 
         $this->messageSuccess();
@@ -406,7 +516,5 @@ class CitizenIndex extends Component
         ]);
     }
 
-    public function mount(){
-        $this->filterActives = true;
-    }
+
 }

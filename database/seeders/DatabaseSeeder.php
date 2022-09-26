@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             CountySeeder::class,
             UfSeeder::class,
             RegistrySeeder::class,
+            CountryTypeStreetSeeder::class
         ]);
     }
 }
