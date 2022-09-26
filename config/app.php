@@ -211,6 +211,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'ServiceStation' => App\Models\ServiceStation::class,
+        'BlockedCertificate' => App\Models\BlockedCertificate::class
     ])->toArray(),
 
 ];

@@ -6,14 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RegistryInterdiction extends Model
+class BlockedCertificate extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $casts = [ 
-        "start_date" => "date:Y-m-d", 
-        "end_date" => "date:Y-m-d",
-    ];
+    const BOOK_NUMBERS = [1,2,3,7];
+    const BOOK_LETTERS = ['A', 'B' , 'B AUX', 'E'];
 
     protected $guarded = [
 
@@ -23,5 +21,4 @@ class RegistryInterdiction extends Model
     {
         return $this->belongsTo(Registry::class);
     }
-
 }

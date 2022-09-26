@@ -1,47 +1,48 @@
 <?php
 
-namespace App\Http\Livewire\Registry;
+namespace App\Http\Livewire\BlockedCertificate;
 
-use App\Models\RegistryInterdiction;
+use App\Models\BlockedCertificate;
 use Livewire\Component;
 
-class RegistryInterdictionIndex extends Component
+class BlockedCertificateIndex extends Component
 {
+
     public $searchTerm = null;
 
     public function render()
     {
         if($this->searchTerm){
             $searchTerm = '%'. $this->searchTerm .'%';
-            $interdictions = RegistryInterdiction::whereHas('registry', function($q) use($searchTerm)
+            $blockedCertificates = BlockedCertificate::whereHas('registry', function($q) use($searchTerm)
             {
                 $q->where('name','ilike', '%'. $searchTerm .'%');
                 $q->whereNull('deleted_at');
-
             });
         }else{
-            $interdictions = RegistryInterdiction::whereHas('registry', function($q)
+            $blockedCertificates = BlockedCertificate::whereHas('registry', function($q)
             {
                 $q->whereNull('deleted_at');
 
             })->orderBy('id','desc');
         }
-        return view('livewire.registry.registry-interdiction-index',
+        return view('livewire.blocked-certificate.blocked-certificate-index',
         [
-            'interdictions' => $interdictions->paginate(15)
+            'blockedCertificates' => $blockedCertificates->paginate(15)
         ]);
     }
 
-    public function addInterdiction()
+    public function addBlockedCertificate()
     {
         $this->dispatchBrowserEvent('redirect',[
-            'url'=> '/registry-interdiction/create',
+            'url'=> '/blocked-certificate/create',
         ]);
     }
 
     public function clickUpdate($id){
         $this->dispatchBrowserEvent('redirect',[
-            'url'=> '/registry-interdiction/'.$id.'/edit',
+            'url'=> '/blocked-certificate/'.$id.'/edit',
         ]);
     }
+
 }

@@ -30,4 +30,9 @@ class Registry extends Model
     {
         return $this->hasMany(RegistryInterdiction::class);
     }
+
+    public function blocked_certificates()
+    {
+        return $this->hasMany(BlockedCertificate::class);
+    }
  }
