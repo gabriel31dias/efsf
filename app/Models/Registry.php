@@ -21,4 +21,13 @@ class Registry extends Model
     public function uf(){ 
         return $this->belongsTo(Uf::class);
     }
+
+    public function county(){ 
+        return $this->belongsTo(County::class);
+    }
+
+    public function interdictions()
+    {
+        return $this->hasMany(RegistryInterdiction::class);
+    }
  }

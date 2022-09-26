@@ -12,6 +12,7 @@ class DeleteButton extends Component
     public $type = 'large';
     public $previous; 
     public $redirectBack = false; 
+    public $deleteEvent = null;
     public function render()
     {
         switch($this->type){ 
@@ -37,6 +38,10 @@ class DeleteButton extends Component
                 'type'=> 'success',
                 'message'=> "Registro deletado com sucesso!"
             ]);
+
+            if($this->deleteEvent){ 
+                $this->emit($this->deleteEvent);
+            }
             
             if($this->redirectBack){ 
                 $this->dispatchBrowserEvent('redirect',[

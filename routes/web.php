@@ -38,4 +38,5 @@ Route::resource('profile', App\Http\Controllers\ProfileController::class);
 
 Route::resource('service-station', App\Http\Controllers\ServiceStationController::class);
 Route::resource('registry', App\Http\Controllers\RegistryController::class);
+Route::resource('registry-interdiction', App\Http\Controllers\RegistryInterdictionController::class);
 

@@ -29,7 +29,7 @@
                    <td>
                       <div class="flex">
                       <livewire:registry.registry-date-modal-edit :registryDate="$date" :wire:key="$date->id" />
-                      @livewire('global.delete-button', ['objectModel' => $date, 'redirectBack' => true, 'type' => 'table'], key('delete' . $date->id))
+                      @livewire('global.delete-button', ['objectModel' => $date, 'redirectBack' => false, 'type' => 'table', 'deleteEvent' => 'refreshRegistryForm'], key('delete' . $date->id))
                       
                    </div>
 
