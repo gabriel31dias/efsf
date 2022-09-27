@@ -50,8 +50,8 @@
       @livewireScripts
       <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.js" integrity="sha512-P3/SDm/poyPMRBbZ4chns8St8nky2t8aeG09fRjunEaKMNEDKjK3BuAstmLKqM7f6L1j0JBYcIRL4h2G6K6Lew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
-      <script defer src="{{ asset('css/app.css') }}"></script>
-      @vite('resources/js/app.js', 'build/')
+      @vite('resources/js/app.js')
+     
 
 
 
@@ -268,6 +268,34 @@
                            </span>
                            <span class="nav-link-title">
                            Cadastro de Cartório
+                           </span>
+                        </a>
+                     </li>
+
+                     <li class="nav-item">
+                        <a class="nav-link" href='{{ route('registry-interdiction.index') }}' >
+                           <span class="nav-link-icon d-md-none d-lg-inline-block">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                              <i class="ti ti-ban"></i>
+
+
+                           </span>
+                           <span class="nav-link-title">
+                              Interdição de Cartório
+                           </span>
+                        </a>
+                     </li>
+
+                     <li class="nav-item">
+                        <a class="nav-link" href='{{ route('blocked-certificate.index') }}' >
+                           <span class="nav-link-icon d-md-none d-lg-inline-block">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                              <i class="ti ti-ban"></i>
+
+
+                           </span>
+                           <span class="nav-link-title">
+                              Bloqueio de Certidão
                            </span>
                         </a>
                      </li>

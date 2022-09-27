@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('registry_dates', function (Blueprint $table) {
+        Schema::create('registry_interdictions', function (Blueprint $table) {
             $table->id();
             $table->integer('registry_id');
-            $table->date('created_date');
-            $table->date('closing_date')->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('registry_dates');
+        Schema::dropIfExists('registry_interdictions');
     }
 };

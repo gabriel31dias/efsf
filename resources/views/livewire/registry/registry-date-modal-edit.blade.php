@@ -4,7 +4,6 @@
       text-sm p-2.5 text-center inline-flex items-center mr-2" x-data="{id:'modal-edit-registry'}"
         x-on:click="modal=true">
         <i class="ti ti-pencil"></i>
-        {{ $registryDate->id }}
     </button>
     <section :class="{'absolute h-screen flex items-center justify-center': modal}">
         <div class="fixed inset-0 z-10 flex flex-col items-center justify-end overflow-y-auto bg-gray-600 bg-opacity-50 sm:justify-start"

@@ -5,7 +5,7 @@
           <div class="row g-2 align-items-center">
              <div class="col">
                 <h2 class="page-title">
-                   Cartórios
+                    Bloqueio de Certidão
                 </h2>
              </div>
           </div>
@@ -13,7 +13,7 @@
     </div>
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
-          <a wire:click="addRegistry" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
+          <a wire:click="addBlockedCertificate" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
              data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
              <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
@@ -22,7 +22,7 @@
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
              </svg>
-             Cadastrar Cartório
+             Cadastrar Bloqueio
           </a>
        </div>
     </div>
@@ -48,33 +48,24 @@
                    <table class="table">
                       <thead>
                          <tr>
-                            <th><button class="table-sort" >Código SIC</button></th>
-                            <th><button class="table-sort" >CNS</button></th>
-                            <th><button class="table-sort" >Nome</button></th>
-                            <th><button class="table-sort" >Nome Fantasia</button></th>
+                            <th><button class="table-sort" >Nome do Cartorio</button></th>
                             <th><button class="table-sort" >UF</button></th>
-                            <th><button class="table-sort" >Município</button></th>
-                            <th><button class="table-sort" >Atualização</button></th>
-
+                            <th><button class="table-sort" >Municipio</button></th>
+   
                          </tr>
                       </thead>
                       <tbody class="table-tbody">
-                         @foreach ($registries as $registry)
-                         <tr wire:click="clickUpdate({{$registry->id}})">
-                            <td class="">{{$registry->sic_code}}</td>
-                            <td class="">{{$registry->cns}}</td>
-                            <td class="">{{$registry->name}}</td>
-                            <td class="">{{$registry->fantasy_name}}</td>
-                            <td class="">{{$registry->uf->name}}</td>
-                            <td class="">{{$registry->county_id}}</td>
-                            <td class="">{{isset($registry->updated_at) ? $registry->updated_at->format('d/m/Y h:i') : ''}}</td>
-
+                         @foreach ($blockedCertificates as $blockedCertificate)
+                         <tr wire:click="clickUpdate({{$blockedCertificate->id}})">
+                            <td class="">{{$blockedCertificate->registry->name}}</td>
+                            <td class="">{{$blockedCertificate->registry->uf->name}}</td>
+                            <td class="">{{$blockedCertificate->registry->county->name}}</td>
                          </tr>
                          @endforeach
                       </tbody>
                    </table>
                 </div>
-                {{ $registries->links() }}
+                {{ $blockedCertificates->links() }}
              </div>
           </div>
        </div>

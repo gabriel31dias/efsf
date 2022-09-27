@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('uf_id');
             $table->integer('county_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

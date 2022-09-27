@@ -6,17 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RegistryDate extends Model
+class RegistryInterdiction extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $casts = [ 
+        "start_date" => "date:Y-m-d", 
+        "end_date" => "date:Y-m-d",
+    ];
 
     protected $guarded = [
 
     ];
 
-    protected $casts = [ 
-        "created_date" => "date:d/m/Y", 
-        "closing_date" => "date:d/m/Y",
-    ];
+    public function registry()
+    {
+        return $this->belongsTo(Registry::class);
+    }
 
 }

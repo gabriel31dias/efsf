@@ -13,14 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('registry_dates', function (Blueprint $table) {
+        Schema::create('blocked_certificates', function (Blueprint $table) {
             $table->id();
             $table->integer('registry_id');
-            $table->date('created_date');
-            $table->date('closing_date')->nullable();
+            $table->integer('book_number');
+            $table->string('book_letter');
+            $table->string('sheet_number');
+            $table->string('sheet_side');
+            $table->string('registry_number');
             $table->string('note')->nullable();
-            $table->timestamps();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -31,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('registry_dates');
+        Schema::dropIfExists('blocked_certificates');
     }
 };
