@@ -25,14 +25,15 @@ class CountrySelect extends Component
 
     public function currentCounty()
     {
-        $this->query = $this->count;
+        $this->query = $this->country;
     }
 
 
     public function mount()
     {
         $this->reset1();
-        $this->query = $this->country;
+
+        $this->currentCounty();
     }
 
     public function reset1()

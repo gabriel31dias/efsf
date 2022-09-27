@@ -237,7 +237,8 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">País<span
                                                                     class="error_tag">*</span></label>
-                                                            <livewire:country-select.country-select :country="$currentCountry"/>
+                                                            <livewire:country-select.country-select
+                                                                :country="$currentCountry"/>
                                                         </div>
                                                     </div>
                                                     @if($imigration == true)
@@ -405,7 +406,8 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label">Data da Atualização<span
                                                                         class="error_tag">*</span></label>
-                                                                <input maxlength="11" value="{{date('d-m-Y', strtotime($citizen['updated_at']))}}"
+                                                                <input maxlength="11"
+                                                                       value="{{date('d-m-Y', strtotime($citizen['updated_at']))}}"
                                                                        type="text" class="form-control ps-0"
                                                                        autocomplete="off" disabled required>
                                                             </div>
@@ -517,17 +519,23 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <a style="margin-bottom:30px"
-                                                                    wire:click="goSearch()"
-                                                                    onclick="$('#modal-list').modal('hide');"
-                                                                    class="btn btn-primary d-none d-sm-inline-block">
-                                                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                                                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                                                     </svg>
-                                                                     Cadastrar
-                                                                 </a>
+                                                                       wire:click="goSearch()"
+                                                                       onclick="$('#modal-list').modal('hide');"
+                                                                       class="btn btn-primary d-none d-sm-inline-block">
+                                                                        <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             class="icon icon-tabler icon-tabler-plus"
+                                                                             width="24" height="24" viewBox="0 0 24 24"
+                                                                             stroke-width="2" stroke="currentColor"
+                                                                             fill="none" stroke-linecap="round"
+                                                                             stroke-linejoin="round">
+                                                                            <path stroke="none" d="M0 0h24v24H0z"
+                                                                                  fill="none"></path>
+                                                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                                        </svg>
+                                                                        Cadastrar
+                                                                    </a>
                                                                     <a style="margin-bottom:30px"
                                                                        wire:click="goSearch()"
                                                                        onclick="$('#modal-list').modal('show');"
@@ -629,9 +637,10 @@
                                             </div>
 
                                             @if($zone == "1")
-                                                <div class="col-lg-4 mb-3">
+                                                <div  class="col-lg-4 mb-3">
                                                     <label class="form-label">Tipo de Logradouro<span class="error_tag">*</span></label>
-                                                    <livewire:users.typestreets-select :typestreet="$curretTypeStreet" :type="'country_street'"/>
+                                                    <livewire:users.typestreets-select :typestreet="$curretTypeStreet"
+                                                                                       :type="'country_street'"/>
                                                 </div>
                                             @else
                                                 <div class="col-lg-4 mb-3">
@@ -640,40 +649,53 @@
                                                 </div>
                                             @endif
 
-                                            <div class="col-lg-4 mb-3">
-                                                <label class="form-label">Endereço<span
-                                                        class="error_tag">*</span></label>
-                                                <input wire:model="fields.address" maxlength="70" type="text"
-                                                       class="form-control ps-0"
-                                                       autocomplete="off" required>
-                                            </div>
-                                            <div class="col-lg-4 mb-3">
-                                                <label class="form-label">Nº<span class="error_tag">*</span></label>
-                                                <input wire:model="fields.number" maxlength="70" type="text"
-                                                       class="form-control ps-0"
-                                                       autocomplete="off" required>
-                                            </div>
-                                            <div class="col-lg-4 mb-3">
-                                                <label class="form-label">Complemento<span
-                                                        class="error_tag">*</span></label>
-                                                <input wire:model="fields.complement" maxlength="70" type="text"
-                                                       class="form-control ps-0"
-                                                       autocomplete="off" required>
-                                            </div>
-                                            <div class="col-lg-4 mb-3">
-                                                <label class="form-label">Procedência<span
-                                                        class="error_tag">*</span></label>
-                                                <input wire:model="fields.provenance" maxlength="70" type="text"
-                                                       class="form-control ps-0"
-                                                       autocomplete="off" required>
-                                            </div>
-                                            <div class="col-lg-4 mb-3">
-                                                <label class="form-label">Ponto de Referência<span
-                                                        class="error_tag">*</span></label>
-                                                <input wire:model="fields.reference_point" maxlength="70" type="text"
-                                                       class="form-control ps-0"
-                                                       autocomplete="off" required>
-                                            </div>
+                                            @if($zone !== "1")
+                                                <div class="col-lg-4 mb-3">
+                                                    <label class="form-label">Endereço<span
+                                                            class="error_tag">*</span></label>
+                                                    <input wire:model="fields.address" maxlength="70" type="text"
+                                                           class="form-control ps-0"
+                                                           autocomplete="off" required>
+                                                </div>
+                                                <div class="col-lg-4 mb-3">
+                                                    <label class="form-label">Nº<span class="error_tag">*</span></label>
+                                                    <input wire:model="fields.number" maxlength="70" type="text"
+                                                           class="form-control ps-0"
+                                                           autocomplete="off" required>
+                                                </div>
+                                                <div class="col-lg-4 mb-3">
+                                                    <label class="form-label">Complemento<span
+                                                            class="error_tag">*</span></label>
+                                                    <input wire:model="fields.complement" maxlength="70" type="text"
+                                                           class="form-control ps-0"
+                                                           autocomplete="off" required>
+                                                </div>
+                                                <div class="col-lg-4 mb-3">
+                                                    <label class="form-label">Procedência<span
+                                                            class="error_tag">*</span></label>
+                                                    <input wire:model="fields.provenance" maxlength="70" type="text"
+                                                           class="form-control ps-0"
+                                                           autocomplete="off" required>
+                                                </div>
+                                            @endif
+                                            @if($zone == "1")
+                                                <div class="col-lg-4 mb-3">
+                                                    <label class="form-label">Nome<span
+                                                            class="error_tag">*</span></label>
+                                                    <input wire:model="fields.name_place" maxlength="70" type="text"
+                                                           class="form-control ps-0"
+                                                           autocomplete="off" required>
+                                                </div>
+                                                <div class="col-lg-4 mb-3">
+                                                    <label class="form-label">Ponto de Referência<span
+                                                            class="error_tag">*</span></label>
+                                                    <input wire:model="fields.reference_point" maxlength="70"
+                                                           type="text"
+                                                           class="form-control ps-0"
+                                                           autocomplete="off" required>
+                                                </div>
+                                            @endif
+
                                             <div class="col-lg-4 mb-3">
                                                 <label class="form-label">Tel. Celular<span
                                                         class="error_tag">*</span></label>
@@ -713,7 +735,7 @@
 
         document.addEventListener('turbolinks:load', () => {
             let path = window.location.pathname;
-            if(!path.includes("edit")){
+            if (!path.includes("edit")) {
                 var today = new Date();
                 $('#modal-search').modal('show');
                 $('#date').val(today.toISOString().substring(0, 10));

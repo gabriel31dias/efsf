@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('complement')->nullable();
             $table->string('provenance')->nullable();
             $table->string('name_place')->nullable();
+            $table->integer('zone')->nullable();
             $table->string('reference_point')->nullable();
             $table->string('cell')->nullable();
             $table->string('telephone')->nullable();

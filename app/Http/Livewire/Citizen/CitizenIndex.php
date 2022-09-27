@@ -61,7 +61,6 @@ class CitizenIndex extends Component
         "county_id",
         "service_station_id",
         "via_rg",
-        "address",
         "number",
         "complement",
         "provenance",
@@ -151,23 +150,23 @@ class CitizenIndex extends Component
     public $currentServiceStation;
     public $currentTypeStreet;
 
-    public function setCitizenx(){
-        $this->setCitizen(1);
-    }
 
     public function selectedTypeStreat($id)
     {
         $this->fields['type_street_id'] = $id;
+        $this->curretTypeStreet = TypeStreet::find($id)->name_type_street;;
     }
 
     public function  selectedCountryTypeStreat($id)
     {
         $this->fields['country_type_street_id'] = $id;
+        $this->curretTypeStreet = Country::find($id)->name;
     }
 
     public function selectedServiceStation($id)
     {
         $this->fields['service_station_id'] = $id;
+        $this->currentServiceStation = ServiceStation::find($id)->service_station_name;
     }
 
     public function updated(){
@@ -177,16 +176,20 @@ class CitizenIndex extends Component
 
     public function selectedOccupation($value){
         $this->fields['occupation_id'] = $value;
+        $this->currentOccupation = Occupation::find($value)->name;
     }
     public function selectedCounty($value){
         $this->fields['county_id'] = $value;
+        $this->currentCounty = Country::find($value)->name;
     }
 
     public function selectedUf($value){
         $this->fields['uf_id'] = $value;
+        $this->currentUf = Uf::find($value)->acronym;
     }
     public function selectedMaritalStatus($value){
         $this->fields['marital_status_id'] = $value;
+        $this->currentMatiral = MaritalStatus::find($value)->name;
     }
 
     public function selectedGenre($value){
@@ -197,6 +200,8 @@ class CitizenIndex extends Component
         }else{
             $this->other_genre = false ;
         }
+
+        $this->currentGenre = Genre::find($value[0])->name;
     }
 
     public function setSelectedTab($tab){
@@ -206,6 +211,7 @@ class CitizenIndex extends Component
         ]);
 
         $this->dispatchBrowserEvent('reload-masks');
+
     }
 
     public function selectedCountry($value){
@@ -215,6 +221,7 @@ class CitizenIndex extends Component
             $this->imigration = false;
         }
         $this->fields['country_id'] = $value[1];
+        $this->currentCountry= $value[0];
     }
 
     public function checkNaturalized($value){
@@ -423,7 +430,7 @@ class CitizenIndex extends Component
     }
 
     public function createCitizen(){
-
+        $this->fields["zone"] = $this->zone;
         $validation = $this->validation($this->fields);
 
         if(count($validation) > 0){
@@ -472,7 +479,8 @@ class CitizenIndex extends Component
             "telephone" => $this->fields["telephone"],
             "email" => $this->fields["email"],
             "country_type_street_id" => $this->fields["country_type_street_id"] ?? null,
-            "type_street_id" => $this->fields["type_street_id"] ?? null
+            "type_street_id" => $this->fields["type_street_id"] ?? null,
+            "zone" => $this->fields["zone"] ?? null
          ]);
 
         $this->messageSuccess();
