@@ -620,7 +620,7 @@
                                             <div class="col-lg-2 mb-3">
                                                 <label class="form-label ">Zona<span class="error_tag">*</span></label>
                                                 <div wire:ignore class="input-group input-group-flat">
-                                                    <select wire:model="zone" class="form-control ps-0" wire:ignore>
+                                                    <select wire:model="zone" wire:change="changZone" class="form-control ps-0" wire:ignore>
                                                         <option value="0">Selecione</option>
                                                         <option value="1">Rural</option>
                                                         <option value="2">Urbana</option>

@@ -157,6 +157,45 @@ class CitizenIndex extends Component
         $this->curretTypeStreet = TypeStreet::find($id)->name_type_street;;
     }
 
+    public function changZone(){
+        if($this->zone == 1){
+            $keyNumber = array_search('number', $this->obrigatory_filds);
+            if (false !== $keyNumber) {
+                unset($this->obrigatory_filds[$keyNumber]);
+            }
+
+            $keyNumber = array_search('address', $this->obrigatory_filds);
+            if (false !== $keyNumber) {
+                unset($this->obrigatory_filds[$keyNumber]);
+            }
+
+            array_push($this->obrigatory_filds, 'name');
+            array_push($this->obrigatory_filds, 'reference_point');
+            array_push($this->obrigatory_filds, 'provenance');
+
+        }else{
+
+            $keyNumber = array_search('name', $this->obrigatory_filds);
+            if (false !== $keyNumber) {
+                unset($this->obrigatory_filds[$keyNumber]);
+            }
+
+            $keyNumber = array_search('reference_point', $this->obrigatory_filds);
+            if (false !== $keyNumber) {
+                unset($this->obrigatory_filds[$keyNumber]);
+            }
+
+            $keyNumber = array_search('provenance', $this->obrigatory_filds);
+            if (false !== $keyNumber) {
+                unset($this->obrigatory_filds[$keyNumber]);
+            }
+
+
+            array_push($this->obrigatory_filds, 'number');
+            array_push($this->obrigatory_filds, 'address');
+        }
+    }
+
     public function  selectedCountryTypeStreat($id)
     {
         $this->fields['country_type_street_id'] = $id;
