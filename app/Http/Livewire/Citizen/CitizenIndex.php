@@ -126,7 +126,9 @@ class CitizenIndex extends Component
         "reference_point" => "",
         "cell" => "",
         "telephone" => "",
-        "email" => ""
+        "email" => "",
+        "certificate" => "",
+        "type_of_certificate" => ""
     ];
 
     public $curretTypeStreet;
@@ -210,7 +212,7 @@ class CitizenIndex extends Component
 
     public function updated(){
 
-        $this->setCitizen($this->idCitizen);
+
     }
 
     public function selectedOccupation($value){
@@ -345,7 +347,9 @@ class CitizenIndex extends Component
                 "reference_point" => $citizen->reference_point,
                 "cell" => $citizen->cell,
                 "telephone" => $citizen->telephone,
-                "email" => $citizen->email
+                "email" => $citizen->email,
+                "certificate" => "",
+                "type_of_certificate" => ""
             ];
         }
 
@@ -358,20 +362,24 @@ class CitizenIndex extends Component
         $this->currentOccupation = $ocupation->name;
         $this->currentServiceStation = $service_station->service_station_name ?? null;
         $this->currentTypeStreet = $type_street->name_type_street ?? null;
+        $this->zone = $citizen->zone ?? null;
 
         $this->dispatchBrowserEvent('closeModalList');
         $this->dispatchBrowserEvent('closeModalSearch');
     }
 
-    public function render()
-    {
-        $this->genres = Genre::all();
-
+    public function mount(){
         if(isset($this->citizen->id)){
             $this->setCitizen($this->citizen->id);
         }else{
             $this->dispatchBrowserEvent("openModalSearch");
         }
+    }
+    public function render()
+    {
+        $this->genres = Genre::all();
+
+
 
         $citizens = new Citizen();
         if($this->searchName){

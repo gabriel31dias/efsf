@@ -65,9 +65,11 @@
                            data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1">Endereço</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a wire:click="setSelectedTab('s')" class="nav-link" data-bs-toggle="tab" aria-selected="false"
+                        <a wire:click="setSelectedTab('certidao')" class="nav-link" data-bs-toggle="tab" aria-selected="false"
+                        class="nav-link @if($selectedTab == "certidao") active @else   @endif"
                            role="tab" tabindex="-1">Certidão</a>
                     </li>
+
                 </ul>
                 <div class="card-body">
                     <div class="tab-content">
@@ -721,6 +723,185 @@
                                 </div>
                             </div>
                         @endif
+                        @if($selectedTab == "certidao")
+                        <div id="certidao" role="tabpanel">
+                            <div class="page-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-2 mb-3">
+                                            <label class="form-label ">CERTIDÃO<span class="error_tag">*</span></label>
+                                            <div wire:ignore class="input-group input-group-flat">
+                                                <select wire:model="fields.certificate" class="form-control ps-0" wire:ignore>
+                                                    <option value="0">Selecione</option>
+                                                    <option value="1">Nova</option>
+                                                    <option value="2">Antiga</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        @if($fields['certificate'] == 2)
+                                            <div class="col-lg-2 mb-3">
+                                                <label class="form-label ">Tipo De Certidão<span class="error_tag">*</span></label>
+                                                    <div wire:ignore class="input-group input-group-flat">
+                                                        <select wire:model="fields.type_of_certificate" class="form-control ps-0" wire:ignore>
+                                                            <option value="0">Selecione</option>
+                                                            <option value="1">Casado</option>
+                                                            <option value="2">Nascimento</option>
+                                                            <option value="3">Igualdade</option>
+                                                            <option value="4">Naturalização</option>
+                                                            <option value="5">Casamento/Divorcio</option>
+                                                            <option value="6">Casamento/Separação</option>
+                                                            <option value="7">Casamento/Óbito</option>
+                                                        </select>
+                                                    </div>
+                                            </div>
+
+                                            <div class="col-lg-3 mb-3">
+                                                <label class="form-label">Nº do Termo ou Ordem<span
+                                                        class="error_tag">*</span></label>
+                                                <input  maxlength="70" type="text"
+                                                       class="form-control ps-0 "
+                                                       autocomplete="off" required>
+                                            </div>
+
+                                            <div class="col-lg-2 mb-3">
+                                                <label class="form-label ">Nº Do Livro<span class="error_tag">*</span></label>
+                                                    <div wire:ignore class="input-group input-group-flat">
+                                                        <select wire:model="fields.type_of_certificate" class="form-control ps-0" wire:ignore>
+                                                            <option value="0">Selecione</option>
+                                                            @if($fields['type_of_certificate'] == 2)
+                                                                <option value="1">1</option>
+                                                                <option value="2">7</option>
+                                                            @endif
+
+
+                                                            @if($fields['type_of_certificate'] == 1 && $fields['type_of_certificate'] == 6 && $fields['type_of_certificate'] == 7)
+                                                                <option value="3">2</option>
+                                                                <option value="4">3</option>
+                                                                <option value="5">7</option>
+                                                            @endif
+
+                                                            @if($fields['type_of_certificate'] == 3 && $fields['type_of_certificate'] == 4 )
+                                                                <option value="3">2</option>
+                                                                <option value="4">3</option>
+                                                                <option value="5">7</option>
+                                                            @endif
+
+                                                        </select>
+                                                    </div>
+                                            </div>
+
+
+                                            <div class="col-lg-3 mb-3">
+                                                <label class="form-label">Letra Do Livro<span
+                                                        class="error_tag">*</span></label>
+                                                <input  maxlength="70" type="text"
+                                                       class="form-control ps-0 "
+                                                       autocomplete="off" required>
+                                            </div>
+
+
+                                            <div class="col-lg-3 mb-3">
+                                                <label class="form-label">Nº da folha<span
+                                                        class="error_tag">*</span></label>
+                                                <input  maxlength="70" type="text"
+                                                       class="form-control ps-0 "
+                                                       autocomplete="off" required>
+                                            </div>
+
+                                            <div class="col-lg-1">
+                                                <div class="mb-3">
+                                                    <label class="form-label">UF<span class="error_tag">*</span></label>
+                                                    <livewire:uf-select.uf-select
+                                                        :uf="$currentUf"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Município de Naturalidade<span
+                                                            class="error_tag">*</span></label>
+                                                    <livewire:county-select.county-select
+                                                        :county="$currentCounty"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 mb-3">
+                                                <label class="form-label">Cartório<span
+                                                        class="error_tag">*</span></label>
+                                                <input  maxlength="70" type="text"
+                                                       class="form-control ps-0 "
+                                                       autocomplete="off" required>
+                                            </div>
+
+
+                                            <div class="col-lg-3 mb-3">
+                                                <label class="form-label">Certidão do Cadastro Anterior<span
+                                                        class="error_tag">*</span></label>
+                                                <input  maxlength="70" type="text"
+                                                       class="form-control ps-0 "
+                                                       autocomplete="off" required>
+                                            </div>
+
+
+                                        @endif
+
+                                        @if($fields['certificate'] == 1)
+
+                                        <div class="col-lg-3 mb-3">
+                                            <label class="form-label">Matricula<span
+                                                    class="error_tag">*</span></label>
+                                            <input  maxlength="70" type="text"
+                                                   class="form-control ps-0 "
+                                                   autocomplete="off" required>
+                                        </div>
+
+                                        <div class="col-lg-3 mb-3">
+                                            <label class="form-label">Data de Assentamento da Certidão<span
+                                                    class="error_tag">*</span></label>
+                                            <input  maxlength="70" type="text"
+                                                   class="form-control ps-0 "
+                                                   autocomplete="off" required>
+                                        </div>
+
+                                        <div class="col-lg-3 mb-3">
+                                            <label class="form-label">Indicativo de Casamento Homoafetivo<span
+                                                    class="error_tag">*</span></label>
+                                            <input  maxlength="70" type="text"
+                                                   class="form-control ps-0 "
+                                                   autocomplete="off" required>
+                                        </div>
+
+
+                                        <div class="col-lg-3 mb-3">
+                                        <label class="form-label ">Tipo De Certidão<span class="error_tag">*</span></label>
+                                                    <div wire:ignore class="input-group input-group-flat">
+                                                        <select wire:model="fields.type_of_certificate" class="form-control ps-0" wire:ignore>
+                                                            <option value="0">Selecione</option>
+                                                            <option value="1">Sim</option>
+                                                            <option value="2">Não</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-lg-3 mb-3">
+                                                    <label class="form-label"> Data da Certidão/DOU<span
+                                                            class="error_tag">*</span></label>
+                                                    <input  maxlength="70" type="text"
+                                                           class="form-control ps-0 "
+                                                           autocomplete="off" required>
+                                                </div>
+
+                                        @endif
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                         <div class="tab-pane" id="tabs-settings-7" role="tabpanel">
                             <div>Donec ac vitae diam amet vel leo egestas consequat rhoncus in luctus amet, facilisi sit
                                 mauris accumsan nibh habitant senectus

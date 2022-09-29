@@ -58,6 +58,19 @@ return new class extends Migration
             $table->string('via_rg')->nullable();
             $table->integer('exemption_id')->nullable();
             $table->string('cid')->nullable();
+
+            $table->integer('certificate')->nullable();
+            $table->integer('type_of_certificate')->nullable();
+            $table->integer('term_number')->nullable();
+            $table->integer('book_number')->nullable();
+
+
+
+
+
+
+
+
             $table->timestamps();
         });
     }
