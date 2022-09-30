@@ -636,6 +636,11 @@
                                                            class="form-control ps-0"
                                                            autocomplete="off" required>
                                                 </div>
+                                                @if (in_array("zip_code", $errorsKeys))
+                                                    <div class="error_tag" role="alert">
+                                                      O campo Cep é obrigatório
+                                                    </div>
+                                                @endif
                                             </div>
 
                                             @if($zone == "1")
@@ -643,6 +648,11 @@
                                                     <label class="form-label">Tipo de Logradouro<span class="error_tag">*</span></label>
                                                     <livewire:users.typestreets-select :typestreet="$curretTypeStreet"
                                                                                        :type="'country_street'"/>
+                                                    @if (in_array("country_street", $errorsKeys))
+                                                       <div class="error_tag" role="alert">
+                                                            O campo Cep é obrigatório
+                                                       </div>
+                                                    @endif
                                                 </div>
                                             @else
                                                 <div class="col-lg-4 mb-3">
@@ -658,12 +668,23 @@
                                                     <input wire:model="fields.address" maxlength="70" type="text"
                                                            class="form-control ps-0"
                                                            autocomplete="off" required>
+
+                                                    @if (in_array("address", $errorsKeys))
+                                                       <div class="error_tag" role="alert">
+                                                            O campo Endereço é obrigatório
+                                                       </div>
+                                                    @endif
                                                 </div>
                                                 <div class="col-lg-4 mb-3">
                                                     <label class="form-label">Nº<span class="error_tag">*</span></label>
                                                     <input wire:model="fields.number" maxlength="70" type="text"
                                                            class="form-control ps-0"
                                                            autocomplete="off" required>
+                                                    @if (in_array("number", $errorsKeys))
+                                                        <div class="error_tag" role="alert">
+                                                            O campo Nº é obrigatório
+                                                        </div>
+                                                    @endif
                                                 </div>
                                                 <div class="col-lg-4 mb-3">
                                                     <label class="form-label">Complemento<span
@@ -671,6 +692,11 @@
                                                     <input wire:model="fields.complement" maxlength="70" type="text"
                                                            class="form-control ps-0"
                                                            autocomplete="off" required>
+                                                        @if (in_array("complement", $errorsKeys))
+                                                           <div class="error_tag" role="alert">
+                                                               O campo Complemento é obrigatório
+                                                           </div>
+                                                       @endif
                                                 </div>
                                                 <div class="col-lg-4 mb-3">
                                                     <label class="form-label">Procedência<span
@@ -678,6 +704,11 @@
                                                     <input wire:model="fields.provenance" maxlength="70" type="text"
                                                            class="form-control ps-0"
                                                            autocomplete="off" required>
+                                                    @if (in_array("provenance", $errorsKeys))
+                                                        <div class="error_tag" role="alert">
+                                                            O campo Procedência é obrigatório
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             @endif
                                             @if($zone == "1")
@@ -687,6 +718,11 @@
                                                     <input wire:model="fields.name_place" maxlength="70" type="text"
                                                            class="form-control ps-0"
                                                            autocomplete="off" required>
+                                                    @if (in_array("name_place", $errorsKeys))
+                                                        <div class="error_tag" role="alert">
+                                                            O campo Nome é obrigatório
+                                                        </div>
+                                                    @endif
                                                 </div>
                                                 <div class="col-lg-4 mb-3">
                                                     <label class="form-label">Ponto de Referência<span
@@ -695,6 +731,11 @@
                                                            type="text"
                                                            class="form-control ps-0"
                                                            autocomplete="off" required>
+                                                    @if (in_array("reference_point", $errorsKeys))
+                                                        <div class="error_tag" role="alert">
+                                                            O campo Ponto de Referência é obrigatório
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             @endif
 
@@ -703,20 +744,35 @@
                                                         class="error_tag">*</span></label>
                                                 <input wire:model="fields.cell" maxlength="70" type="text"
                                                        class="form-control phone ps-0"
-                                                       autocomplete="off" required>
+                                                       autocomplete="off" required/>
+                                                @if (in_array("cell", $errorsKeys))
+                                                    <div class="error_tag" role="alert">
+                                                        O campo Tel. Celular é obrigatório
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="col-lg-4 mb-3">
                                                 <label class="form-label">Tel. fixo<span
                                                         class="error_tag">*</span></label>
-                                                <input wire:model="fields.telephone" maxlength="70" type="text"
-                                                       class="form-control ps-0 "
-                                                       autocomplete="off" required>
+                                                        <input wire:model="fields.telephone" maxlength="70" type="text"
+                                                        class="form-control phone ps-0"
+                                                        autocomplete="off" required/>
+                                                @if (in_array("telephone", $errorsKeys))
+                                                    <div class="error_tag" role="alert">
+                                                        O campo Tel. fixo é obrigatório
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="col-lg-4 mb-3">
-                                                <label class="form-label">Email<span class="error_tag">*</span></label>
-                                                <input wire:model="fields.email" maxlength="70" type="text"
-                                                       class="form-control ps-0"
+
+                                                <label class="form-label">Email</label>
+
+
+
+                                                       <input  wire:model="fields.email"
+                                                       type="text" class="form-control ps-0"
                                                        autocomplete="off" required>
+
                                             </div>
                                         </div>
                                     </div>
@@ -795,16 +851,32 @@
                                             <div class="col-lg-3 mb-3">
                                                 <label class="form-label">Letra Do Livro<span
                                                         class="error_tag">*</span></label>
-                                                <input  maxlength="70" type="text"
-                                                       class="form-control ps-0 "
-                                                       autocomplete="off" required>
+                                                        <div wire:ignore class="input-group input-group-flat">
+                                                            <select wire:model="fields.type_of_certificate" class="form-control ps-0" wire:ignore>
+                                                                <option value="0">Selecione</option>
+
+
+                                                                @if($fields['type_of_certificate'] == 1 || $fields['type_of_certificate'] == 6 || $fields['type_of_certificate'] == 7 )
+                                                                    <option value="1">B</option>
+                                                                    <option value="2">B Aux</option>
+                                                                    <option value="2">E</option>
+                                                                @endif
+
+
+                                                                @if($fields['type_of_certificate'] == 2 )
+                                                                    <option value="3">A</option>
+                                                                    <option value="4">E</option>
+                                                                @endif
+
+                                                            </select>
+                                                        </div>
                                             </div>
 
 
                                             <div class="col-lg-3 mb-3">
                                                 <label class="form-label">Nº da folha<span
                                                         class="error_tag">*</span></label>
-                                                <input  maxlength="70" type="text"
+                                                <input wire:model="sheet_number" maxlength="70" type="text"
                                                        class="form-control ps-0 "
                                                        autocomplete="off" required>
                                             </div>
@@ -861,17 +933,22 @@
                                         <div class="col-lg-3 mb-3">
                                             <label class="form-label">Data de Assentamento da Certidão<span
                                                     class="error_tag">*</span></label>
-                                            <input  maxlength="70" type="text"
-                                                   class="form-control ps-0 "
+                                            <input wire:model="fields.certificate_entry_date"  maxlength="70" type="text"
+                                                   class="form-control date ps-0 "
                                                    autocomplete="off" required>
                                         </div>
 
                                         <div class="col-lg-3 mb-3">
                                             <label class="form-label">Indicativo de Casamento Homoafetivo<span
                                                     class="error_tag">*</span></label>
-                                            <input  maxlength="70" type="text"
-                                                   class="form-control ps-0 "
-                                                   autocomplete="off" required>
+
+                                                   <div wire:ignore class="input-group input-group-flat">
+                                                    <select wire:model="fields.same_sex_marriage" class="form-control ps-0" wire:ignore>
+                                                        <option value="0">Selecione</option>
+                                                        <option value="1">Sim</option>
+                                                        <option value="2">Não</option>
+                                                    </select>
+                                                </div>
                                         </div>
 
 
@@ -887,15 +964,17 @@
 
                                                 </div>
 
-                                                <div class="col-lg-3 mb-3">
-                                                    <label class="form-label"> Data da Certidão/DOU<span
-                                                            class="error_tag">*</span></label>
-                                                    <input  maxlength="70" type="text"
-                                                           class="form-control ps-0 "
-                                                           autocomplete="off" required>
-                                                </div>
+
 
                                         @endif
+
+                                        <div class="col-lg-3 mb-3">
+                                            <label class="form-label"> Data da Certidão/DOU<span
+                                                    class="error_tag">*</span></label>
+                                            <input wire:model="dou_certificate_date" maxlength="70" type="text"
+                                                   class="form-control ps-0 "
+                                                   autocomplete="off" required>
+                                        </div>
 
                                     </div>
                                 </div>

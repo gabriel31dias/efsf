@@ -61,14 +61,11 @@ class CitizenIndex extends Component
         "county_id",
         "service_station_id",
         "via_rg",
-        "number",
-        "complement",
-        "provenance",
-        "reference_point",
         "cell",
         "telephone",
         "email",
-        "zip_code"
+        "zip_code",
+        "zone"
     ];
 
     public $tranlaction_filds = [
@@ -93,6 +90,7 @@ class CitizenIndex extends Component
         "email" => "email",
         "zip_code" => "cep"
     ];
+
 
     public $selectedTab;
 
@@ -160,41 +158,12 @@ class CitizenIndex extends Component
     }
 
     public function changZone(){
-        if($this->zone == 1){
-            $keyNumber = array_search('number', $this->obrigatory_filds);
-            if (false !== $keyNumber) {
-                unset($this->obrigatory_filds[$keyNumber]);
-            }
+        $RURAL_ZONE = 1;
+        if($this->zone == $RURAL_ZONE){
 
-            $keyNumber = array_search('address', $this->obrigatory_filds);
-            if (false !== $keyNumber) {
-                unset($this->obrigatory_filds[$keyNumber]);
-            }
-
-            array_push($this->obrigatory_filds, 'name');
-            array_push($this->obrigatory_filds, 'reference_point');
-            array_push($this->obrigatory_filds, 'provenance');
 
         }else{
 
-            $keyNumber = array_search('name', $this->obrigatory_filds);
-            if (false !== $keyNumber) {
-                unset($this->obrigatory_filds[$keyNumber]);
-            }
-
-            $keyNumber = array_search('reference_point', $this->obrigatory_filds);
-            if (false !== $keyNumber) {
-                unset($this->obrigatory_filds[$keyNumber]);
-            }
-
-            $keyNumber = array_search('provenance', $this->obrigatory_filds);
-            if (false !== $keyNumber) {
-                unset($this->obrigatory_filds[$keyNumber]);
-            }
-
-
-            array_push($this->obrigatory_filds, 'number');
-            array_push($this->obrigatory_filds, 'address');
         }
     }
 
@@ -348,8 +317,8 @@ class CitizenIndex extends Component
                 "cell" => $citizen->cell,
                 "telephone" => $citizen->telephone,
                 "email" => $citizen->email,
-                "certificate" => "",
-                "type_of_certificate" => ""
+                "certificate" => $citizen->certificate,
+                "type_of_certificate" => $citizen->type_of_certificate
             ];
         }
 
@@ -440,6 +409,8 @@ class CitizenIndex extends Component
 
     private function validation($fields){
         $errors = [];
+        $ZONE_RURAL = 1;
+        $ZONE_URBANA = 2;
         $this->errorsKeys = [];
         $this->errors = [];
         foreach ($fields as $field => $value)
@@ -452,6 +423,8 @@ class CitizenIndex extends Component
                 ]);
                 $this->errorsKeys[] = $field;
             }
+
+
         }
 
         if(trim($this->fields['filiation1']) == "" || $this->fields['filiation2'] == "" ){
@@ -471,6 +444,46 @@ class CitizenIndex extends Component
                 ]);
                 $this->errorsKeys[] = $field;
             }
+        }
+
+
+        if($this->zone == $ZONE_URBANA){
+            $fileds_validation = ["provenance", "number", "address", "complement"];
+
+            foreach ($fileds_validation as $value) {
+                if(empty($this->fields[$value])){
+
+                    $value = $this->getTranslaction($value);
+                    array_push($errors, [
+                        "message" => "O campo {$value} é obrigatorio",
+                        "valid" => false,
+                    ]);
+                }
+
+            }
+
+            $this->errorsKeys[] = $value;
+        }
+
+
+
+        if($this->zone == $ZONE_RURAL){
+            $fileds_validation = ["name", "reference_point"];
+
+            foreach ($fileds_validation as $value) {
+                if(empty($this->fields[$value])){
+
+                    $value = $this->getTranslaction($value);
+
+                    array_push($errors, [
+                        "message" => "O campo {$value} é obrigatorio",
+                        "valid" => false,
+                    ]);
+                }
+
+            }
+
+            $this->errorsKeys[] = $value;
         }
 
         return $errors;

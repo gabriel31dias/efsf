@@ -65,9 +65,19 @@ return new class extends Migration
             $table->integer('book_number')->nullable();
 
 
-
-
-
+            $table->string('sheet_number')->nullable();
+            $table->integer('uf_certificate')->nullable();
+            $table->integer('county_certificate')->nullable();
+            $table->integer('registry')->nullable();
+            $table->integer('county_certificate')->nullable();
+            $table->string('certificate_entry_date')->nullable();
+            $table->integer('book_letter')->nullable();
+            $table->integer('registry')->nullable();
+            $table->integer('previous_registration_certificate')->nullable();
+            $table->integer('matriculation')->nullable();
+            $table->integer('certificate_entry_date')->nullable();
+            $table->integer('same_sex_marriage')->nullable();
+            $table->integer('dou_certificate_date')->nullable();
 
 
 
