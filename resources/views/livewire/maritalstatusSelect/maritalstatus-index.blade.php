@@ -6,8 +6,8 @@
           class="form-input"
           placeholder="Pesquisar estado civil..."
           wire:model="query"
-          wire:keydown.escape="reset"
-          wire:keydown.tab="reset"
+          wire:keydown.escape="reset1"
+          wire:keydown.tab="reset1"
           wire:keydown.arrow-up="decrementHighlight"
           wire:keydown.arrow-down="incrementHighlight"
           wire:keydown.enter="selectContact"
@@ -16,7 +16,6 @@
           <div class="list-item">Searching...</div>
        </div>
        @if(!empty($query))
-       <div class="fixed top-0 bottom-0 left-0 right-0" wire:click="reset"></div>
        <div class="absolute z-10 w-full bg-white rounded-t-none shadow-lg list-group">
           @if(!empty($maritalStatus) && $closed == false)
           @foreach($maritalStatus as $i => $item)
