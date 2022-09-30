@@ -287,6 +287,20 @@
                      </li>
 
                      <li class="nav-item">
+                        <a class="nav-link" href='{{ route('registry-suspension.index') }}' >
+                           <span class="nav-link-icon d-md-none d-lg-inline-block">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                              <i class="ti ti-ban"></i>
+
+
+                           </span>
+                           <span class="nav-link-title">
+                              Suspensão de Cartório
+                           </span>
+                        </a>
+                     </li>
+
+                     <li class="nav-item">
                         <a class="nav-link" href='{{ route('blocked-certificate.index') }}' >
                            <span class="nav-link-icon d-md-none d-lg-inline-block">
                               <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->

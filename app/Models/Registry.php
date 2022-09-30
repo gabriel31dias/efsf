@@ -31,6 +31,11 @@ class Registry extends Model
         return $this->hasMany(RegistryInterdiction::class);
     }
 
+    public function suspensions()
+    {
+        return $this->hasMany(RegistrySuspension::class);
+    }
+
     public function blocked_certificates()
     {
         return $this->hasMany(BlockedCertificate::class);

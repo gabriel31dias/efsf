@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('country_type_streets', function (Blueprint $table) {
+        Schema::create('registry_suspensions', function (Blueprint $table) {
             $table->id();
-            $table->string('name_type_street', 100);
+            $table->integer('registry_id');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('country_type_streets');
+        Schema::dropIfExists('registry_suspensions');
     }
 };
