@@ -21,7 +21,7 @@
          @foreach($profiles as $i => $profile)
          <a
             wire:click="selectItem({{$profile['id']}}, '{{$profile['name_profile']}}')"
-            class="list-item {{ $highlightIndex === $i ? 'highlight' : '' }}"
+            class="text-decoration-none  hover:cursor-pointer hover:bg-sky-600 rounded hover:text-white p-2 list-item list-none {{ $highlightIndex === $i ? 'highlight' : '' }}"
             >{{ $profile['name_profile'] }}</a>
          @endforeach
          @else

@@ -13,7 +13,7 @@
          wire:keydown.enter="selectContact"
          />
       <div wire:loading class="absolute z-10 w-full bg-white rounded-t-none shadow-lg list-group">
-         <div class="list-item">Searching...</div>
+         <div class="">Searching...</div>
       </div>
       @if(!empty($query))
       <div class="absolute z-10 w-full bg-white rounded-t-none shadow-lg list-group">
@@ -22,7 +22,7 @@
          @foreach($type_streets as $i => $type_street)
          <a
             wire:click="selectItem({{$type_street['id']}}, '{{$type_street['name_type_street']}}')"
-            class="list-item {{ $highlightIndex === $i ? 'highlight' : '' }}"
+            class="text-decoration-none  hover:cursor-pointer hover:bg-sky-600 rounded hover:text-white p-2 list-item list-none {{ $highlightIndex === $i ? 'highlight' : '' }}"
             >{{ $type_street['name_type_street'] }}</a>
          @endforeach
          @else
