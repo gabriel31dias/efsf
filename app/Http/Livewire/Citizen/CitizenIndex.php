@@ -126,7 +126,22 @@ class CitizenIndex extends Component
         "telephone" => "",
         "email" => "",
         "certificate" => "",
-        "type_of_certificate" => ""
+        "book_number" => "",
+        "term_number" => "",
+        "book_letter" => "",
+        "forwarded_with_process" => "",
+        "sheet_number" => "",
+        "certificate_entry_date" => "",
+        "same_sex_marriage" => "",
+        "type_of_certificate" => "",
+        "dou_certificate_date" => "",
+        "uf_certificate" => "",
+        "county_certificate" => "",
+        "previous_registration_certificate" => "",
+        "matriculation"=> "",
+        "name_place" => "",
+        "marital_status_id" => "",
+        "genre_id" => ""
     ];
 
     public $curretTypeStreet;
@@ -134,27 +149,42 @@ class CitizenIndex extends Component
     public $idCitizen;
     public $zone;
 
+    public $registrySuspension;
+
     public $naturalized = false;
 
     public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus',
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
-        'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen'
+        'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert'
     ];
 
     public $citizen;
     public $currentGenre;
     public $currentMatiral;
     public $currentUf;
+    public $currentUfCert;
     public $currentCounty;
+    public $currentCountyCert;
+
     public $currentOccupation;
     public $currentServiceStation;
     public $currentTypeStreet;
 
+    public function selectedUfCert($id){
+        $this->fields['type_street_id'] = $id;
+        $this->currentUfCert = Uf::find($id)->name_type_street;
+    }
+
+    public function selectedCountyCert($id){
+        $this->fields['county_certificate'] = $id;
+        $this->currentCountyCert = County::find($id)->name_type_street;
+    }
 
     public function selectedTypeStreat($id)
     {
+        $RURAL_ZONE = 1;
         $this->fields['type_street_id'] = $id;
-        $this->curretTypeStreet = TypeStreet::find($id)->name_type_street;;
+        $this->curretTypeStreet = TypeStreet::find($id)->name_type_street;
     }
 
     public function changZone(){
@@ -170,7 +200,7 @@ class CitizenIndex extends Component
     public function  selectedCountryTypeStreat($id)
     {
         $this->fields['country_type_street_id'] = $id;
-        $this->curretTypeStreet = Country::find($id)->name;
+        $this->curretTypeStreet = CountryTypeStreat::find($id)->name_type_street;
     }
 
     public function selectedServiceStation($id)
@@ -273,6 +303,14 @@ class CitizenIndex extends Component
         $ocupation = Occupation::find($citizen['occupation_id']);
         $service_station = ServiceStation::find($citizen['service_station_id']);
 
+
+        //dd($citizen );
+        $this->currentUfCert = Uf::find($citizen['uf_certificate']);
+
+        $this->zone = $citizen->zone;
+
+
+
         if(isset($citizen['country_type_street_id'])){
             $type_street = CountryTypeStreat::find($citizen['country_type_street_id']);
         }
@@ -280,6 +318,7 @@ class CitizenIndex extends Component
         if(isset($citizen['type_street_id'])){
             $type_street = TypeStreet::find($citizen['type_street_id']);
         }
+
 
         if (isset($citizen->id)) {
             $this->fields = [
@@ -315,10 +354,18 @@ class CitizenIndex extends Component
                 "provenance" => $citizen->provenance,
                 "reference_point" => $citizen->reference_point,
                 "cell" => $citizen->cell,
+                "fields" => $citizen->zone,
                 "telephone" => $citizen->telephone,
                 "email" => $citizen->email,
                 "certificate" => $citizen->certificate,
-                "type_of_certificate" => $citizen->type_of_certificate
+                "type_of_certificate" => $citizen->type_of_certificate,
+                "previous_registration_certificate" => $citizen->previous_registration_certificate,
+                "matriculation" => $citizen->matriculation,
+                "name_place" => $citizen->name_place,
+                "certificate_entry_date" => $citizen->certificate_entry_date,
+                "same_sex_marriage" => $citizen->certificate_entry_date,
+
+
             ];
         }
 
@@ -503,6 +550,10 @@ class CitizenIndex extends Component
             return false;
         }
 
+        $time = strtotime('10/16/2003');
+
+        $newformat = date('Y-m-d',$time);
+
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
             "cpf" => $this->fields["cpf"],
@@ -526,6 +577,7 @@ class CitizenIndex extends Component
             "cid" =>  $this->fields["cid"],
             "via_rg" =>  $this->fields["via_rg"],
             "marital_status_id" => $this->fields["marital_status_id"],
+
             "country_id" => $this->fields["country_id"],
             "service_station_id" => $this->fields["service_station_id"],
             "uf_id" => $this->fields["uf_id"],
@@ -540,7 +592,27 @@ class CitizenIndex extends Component
             "email" => $this->fields["email"],
             "country_type_street_id" => $this->fields["country_type_street_id"] ?? null,
             "type_street_id" => $this->fields["type_street_id"] ?? null,
-            "zone" => $this->fields["zone"] ?? null
+            "zone" => $this->fields["zone"] ?? null,
+
+            "certificate" => $this->fields["certificate"] ?? null,
+            "type_of_certificate" => $this->fields["type_of_certificate"] ?? null,
+            "book_number" => $this->fields["book_number"] ?? null,
+            "term_number" => $this->fields["term_number"] ?? null,
+            "book_letter" => $this->fields["book_letter"] ?? null,
+            "forwarded_with_process" => $this->fields["forwarded_with_process"] ?? null,
+            "sheet_number" => $this->fields["sheet_number"] ?? null,
+            "certificate_entry_date" => $this->fields["certificate_entry_date"] ?? null,
+            "same_sex_marriage" => $this->fields["same_sex_marriage"] ?? null,
+            "dou_certificate_date" => $this->fields["dou_certificate_date"] ?? null,
+            "uf_certificate" => $this->fields["uf_certificate"] ?? null,
+            "county_certificate" => $this->fields["county_certificate"] ?? null,
+            "previous_registration_certificate" => $this->fields["previous_registration_certificate"] ?? null,
+            "matriculation" => $this->fields["matriculation"] ?? null,
+            "name_place" => $this->fields["name_place"] ?? null,
+
+
+
+
          ]);
 
         $this->messageSuccess();

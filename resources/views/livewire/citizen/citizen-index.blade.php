@@ -620,7 +620,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-lg-2 mb-3">
-                                                <label class="form-label ">Zona<span class="error_tag">*</span></label>
+                                                <label class="form-label ">Zona {{$zone}}<span class="error_tag">*</span></label>
                                                 <div wire:ignore class="input-group input-group-flat">
                                                     <select wire:model="zone" wire:change="changZone" class="form-control ps-0" wire:ignore>
                                                         <option value="0">Selecione</option>
@@ -643,7 +643,7 @@
                                                 @endif
                                             </div>
 
-                                            @if($zone == "1")
+                                            @if($zone == "1" || $zone == 1)
                                                 <div  class="col-lg-4 mb-3">
                                                     <label class="form-label">Tipo de Logradouro<span class="error_tag">*</span></label>
                                                     <livewire:users.typestreets-select :typestreet="$curretTypeStreet"
@@ -661,7 +661,7 @@
                                                 </div>
                                             @endif
 
-                                            @if($zone !== "1")
+                                            @if($zone != "1" || $zone != 1)
                                                 <div class="col-lg-4 mb-3">
                                                     <label class="form-label">Endereço<span
                                                             class="error_tag">*</span></label>
@@ -742,8 +742,11 @@
                                             <div class="col-lg-4 mb-3">
                                                 <label class="form-label">Tel. Celular<span
                                                         class="error_tag">*</span></label>
-                                                <input wire:model="fields.cell" maxlength="70" type="text"
-                                                       class="form-control phone ps-0"
+                                                <input onclick="IMask(
+                                                        this, {
+                                                        mask: '(00)00000-0000'
+                                                    });"  wire:model="fields.cell" maxlength="70" type="text"
+                                                       class="form-control  ps-0"
                                                        autocomplete="off" required/>
                                                 @if (in_array("cell", $errorsKeys))
                                                     <div class="error_tag" role="alert">
@@ -754,8 +757,11 @@
                                             <div class="col-lg-4 mb-3">
                                                 <label class="form-label">Tel. fixo<span
                                                         class="error_tag">*</span></label>
-                                                        <input wire:model="fields.telephone" maxlength="70" type="text"
-                                                        class="form-control phone ps-0"
+                                                        <input onclick="IMask(
+                                                            this, {
+                                                            mask: '(00)00000-0000'
+                                                        });" wire:model="fields.telephone" maxlength="70" type="text"
+                                                        class="form-control ps-0"
                                                         autocomplete="off" required/>
                                                 @if (in_array("telephone", $errorsKeys))
                                                     <div class="error_tag" role="alert">
@@ -766,9 +772,6 @@
                                             <div class="col-lg-4 mb-3">
 
                                                 <label class="form-label">Email</label>
-
-
-
                                                        <input  wire:model="fields.email"
                                                        type="text" class="form-control ps-0"
                                                        autocomplete="off" required>
@@ -785,8 +788,8 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-lg-2 mb-3">
-                                            <label class="form-label ">CERTIDÃO<span class="error_tag">*</span></label>
-                                            <div wire:ignore class="input-group input-group-flat">
+                                            <label class="form-label ">CERTIDÃO{{$fields['certificate']}}<span class="error_tag">*</span></label>
+                                            <div class="input-group input-group-flat">
                                                 <select wire:model="fields.certificate" class="form-control ps-0" wire:ignore>
                                                     <option value="0">Selecione</option>
                                                     <option value="1">Nova</option>
@@ -795,10 +798,10 @@
                                             </div>
                                         </div>
 
-                                        @if($fields['certificate'] == 2)
+                                        @if($fields['certificate'] == 2 || $fields['certificate'] == "2")
                                             <div class="col-lg-2 mb-3">
                                                 <label class="form-label ">Tipo De Certidão<span class="error_tag">*</span></label>
-                                                    <div wire:ignore class="input-group input-group-flat">
+                                                    <div  class="input-group input-group-flat">
                                                         <select wire:model="fields.type_of_certificate" class="form-control ps-0" wire:ignore>
                                                             <option value="0">Selecione</option>
                                                             <option value="1">Casado</option>
@@ -815,29 +818,29 @@
                                             <div class="col-lg-3 mb-3">
                                                 <label class="form-label">Nº do Termo ou Ordem<span
                                                         class="error_tag">*</span></label>
-                                                <input  maxlength="70" type="text"
+                                                <input wire:model="fields.term_number"  maxlength="70" type="text"
                                                        class="form-control ps-0 "
                                                        autocomplete="off" required>
                                             </div>
 
+
                                             <div class="col-lg-2 mb-3">
-                                                <label class="form-label ">Nº Do Livro<span class="error_tag">*</span></label>
-                                                    <div wire:ignore class="input-group input-group-flat">
-                                                        <select wire:model="fields.type_of_certificate" class="form-control ps-0" wire:ignore>
+                                                <label class="form-label ">Nº Do Livro {{$fields['type_of_certificate']}}<span class="error_tag">*</span></label>
+                                                    <div class="input-group input-group-flat">
+                                                        <select wire:model="fields.book_number" class="form-control ps-0" @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] ==  4) disabled  @endif >
                                                             <option value="0">Selecione</option>
                                                             @if($fields['type_of_certificate'] == 2)
                                                                 <option value="1">1</option>
                                                                 <option value="2">7</option>
                                                             @endif
 
-
-                                                            @if($fields['type_of_certificate'] == 1 && $fields['type_of_certificate'] == 6 && $fields['type_of_certificate'] == 7)
+                                                            @if($fields['type_of_certificate'] == 1 || $fields['type_of_certificate'] == 6 || $fields['type_of_certificate'] == 5 || $fields['type_of_certificate'] == 7)
                                                                 <option value="3">2</option>
                                                                 <option value="4">3</option>
                                                                 <option value="5">7</option>
                                                             @endif
 
-                                                            @if($fields['type_of_certificate'] == 3 && $fields['type_of_certificate'] == 4 )
+                                                            @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] == 4)
                                                                 <option value="3">2</option>
                                                                 <option value="4">3</option>
                                                                 <option value="5">7</option>
@@ -851,17 +854,15 @@
                                             <div class="col-lg-3 mb-3">
                                                 <label class="form-label">Letra Do Livro<span
                                                         class="error_tag">*</span></label>
-                                                        <div wire:ignore class="input-group input-group-flat">
-                                                            <select wire:model="fields.type_of_certificate" class="form-control ps-0" wire:ignore>
+                                                        <div  class="input-group input-group-flat">
+                                                            <select wire:model="fields.book_letter" class="form-control ps-0" @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] ==  4) disabled  @endif>
                                                                 <option value="0">Selecione</option>
-
 
                                                                 @if($fields['type_of_certificate'] == 1 || $fields['type_of_certificate'] == 6 || $fields['type_of_certificate'] == 7 )
                                                                     <option value="1">B</option>
                                                                     <option value="2">B Aux</option>
                                                                     <option value="2">E</option>
                                                                 @endif
-
 
                                                                 @if($fields['type_of_certificate'] == 2 )
                                                                     <option value="3">A</option>
@@ -872,11 +873,30 @@
                                                         </div>
                                             </div>
 
+                                            @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] ==  4)
+                                            <div class="col-lg-3 mb-3">
+                                                <label class="form-label">Doc. encaminhado com o processo’<span
+                                                        class="error_tag">*</span></label>
+                                                        <div  class="input-group input-group-flat">
+                                                            <select wire:model="fields.forwarded_with_process" class="form-control ps-0" >
+                                                                <option value="0">Selecione</option>
+                                                                    <option value="1">Original e copia (certidão nascimento)</option>
+                                                                    <option value="2">Original e copia (certidão casamento)</option>
+                                                                    <option value="3">Original e copia (certidão casamento/divorcio)</option>
+                                                                    <option value="4">Original e copia (certidão casamento/divorcio)</option>
+                                                                    <option value="5">Original e copia (certidão casamento/separação)</option>
+                                                                    <option value="6">Original e copia (certidão casamento/obito)</option>
+                                                                    <option value="7">Original e copia (cert/dou naturalização)</option>
+                                                                    <option value="8">Original e copia (cert/dou naturalização casamento/divorciado)</option>
+                                                            </select>
+                                                        </div>
+                                            </div>
+                                            @endif
 
                                             <div class="col-lg-3 mb-3">
                                                 <label class="form-label">Nº da folha<span
                                                         class="error_tag">*</span></label>
-                                                <input wire:model="sheet_number" maxlength="70" type="text"
+                                                <input wire:model="fields.sheet_number" maxlength="70" type="text"
                                                        class="form-control ps-0 "
                                                        autocomplete="off" required>
                                             </div>
@@ -885,7 +905,8 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">UF<span class="error_tag">*</span></label>
                                                     <livewire:uf-select.uf-select
-                                                        :uf="$currentUf"
+                                                        :defaultValue="$currentUfCert"
+                                                        :customEvent="'selectedUfCert'"
                                                     />
                                                 </div>
                                             </div>
@@ -895,7 +916,8 @@
                                                     <label class="form-label">Município de Naturalidade<span
                                                             class="error_tag">*</span></label>
                                                     <livewire:county-select.county-select
-                                                        :county="$currentCounty"
+                                                        :defaultValue="$currentCountyCert"
+                                                        :customEvent="'selectedUfCert'"
                                                     />
                                                 </div>
                                             </div>
@@ -903,16 +925,14 @@
                                             <div class="col-lg-3 mb-3">
                                                 <label class="form-label">Cartório<span
                                                         class="error_tag">*</span></label>
-                                                <input  maxlength="70" type="text"
-                                                       class="form-control ps-0 "
-                                                       autocomplete="off" required>
+                                                @livewire('registry-select.registry-select', ['defaultValue' => $registrySuspension])
                                             </div>
 
 
                                             <div class="col-lg-3 mb-3">
                                                 <label class="form-label">Certidão do Cadastro Anterior<span
                                                         class="error_tag">*</span></label>
-                                                <input  maxlength="70" type="text"
+                                                <input wire:model="fields.previous_registration_certificate" maxlength="70" type="text"
                                                        class="form-control ps-0 "
                                                        autocomplete="off" required>
                                             </div>
@@ -925,7 +945,7 @@
                                         <div class="col-lg-3 mb-3">
                                             <label class="form-label">Matricula<span
                                                     class="error_tag">*</span></label>
-                                            <input  maxlength="70" type="text"
+                                            <input wire:model="fields.matriculation" maxlength="70" type="text"
                                                    class="form-control ps-0 "
                                                    autocomplete="off" required>
                                         </div>
@@ -933,7 +953,10 @@
                                         <div class="col-lg-3 mb-3">
                                             <label class="form-label">Data de Assentamento da Certidão<span
                                                     class="error_tag">*</span></label>
-                                            <input wire:model="fields.certificate_entry_date"  maxlength="70" type="text"
+                                            <input onclick="IMask(
+                                                        this, {
+                                                        mask: '00/00/0000'
+                                                    });" wire:model="fields.certificate_entry_date"  maxlength="70" type="text"
                                                    class="form-control date ps-0 "
                                                    autocomplete="off" required>
                                         </div>
@@ -954,24 +977,23 @@
 
                                         <div class="col-lg-3 mb-3">
                                         <label class="form-label ">Tipo De Certidão<span class="error_tag">*</span></label>
-                                                    <div wire:ignore class="input-group input-group-flat">
+                                                    <div  class="input-group input-group-flat">
                                                         <select wire:model="fields.type_of_certificate" class="form-control ps-0" wire:ignore>
                                                             <option value="0">Selecione</option>
                                                             <option value="1">Sim</option>
                                                             <option value="2">Não</option>
                                                         </select>
                                                     </div>
-
                                                 </div>
-
-
-
                                         @endif
 
                                         <div class="col-lg-3 mb-3">
                                             <label class="form-label"> Data da Certidão/DOU<span
                                                     class="error_tag">*</span></label>
-                                            <input wire:model="dou_certificate_date" maxlength="70" type="text"
+                                            <input onclick="IMask(
+                                                this, {
+                                                mask: '00/00/0000'
+                                                });" wire:model="fields.dou_certificate_date" maxlength="70" type="text"
                                                    class="form-control ps-0 "
                                                    autocomplete="off" required>
                                         </div>

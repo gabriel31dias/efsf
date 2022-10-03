@@ -15,13 +15,17 @@ class UfSelect extends Component
     public $closed = false;
     public $highlightIndex;
     public $selectedValue;
+    public $defaultValue;
     public $ufs = [];
+
+    public $customEvent;
 
     protected $listeners = ['clearServiceStationField', 'setUf'];
 
     public function mount()
     {
         $this->resetValue();
+        if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->acronym);
         $this->currentUf();
     }
 
@@ -89,7 +93,11 @@ class UfSelect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
-        $this->emitUp('selectedUf', $id);
+        if($this->customEvent){
+            $this->emitUp($this->customEvent, $id);
+        }else{
+            $this->emitUp('selectedUf', $id);
+        }
     }
 
 
