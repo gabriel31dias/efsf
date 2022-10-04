@@ -25,8 +25,10 @@ class UfSelect extends Component
     public function mount()
     {
         $this->resetValue();
-        if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->acronym);
+
         $this->currentUf();
+
+        if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->acronym);
     }
 
     public function currentUf(){

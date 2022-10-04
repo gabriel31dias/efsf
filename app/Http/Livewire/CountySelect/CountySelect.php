@@ -17,12 +17,16 @@ class CountySelect extends Component
     public $counties = [];
     public $county;
 
+    public $defaultValue;
+    public $customEvent;
+
     protected $listeners = ['clearServiceStationField', 'setCounty'];
 
     public function mount()
     {
         $this->resetValue();
         $this->currentCounty();
+        if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->name);
     }
 
     public function setCounty($value){
@@ -90,7 +94,12 @@ class CountySelect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
-        $this->emitUp('selectedCounty', $id);
+
+        if($this->customEvent){
+            $this->emitUp($this->customEvent, $id);
+        }else{
+            $this->emitUp('selectedCounty', $id);
+        }
     }
 
 

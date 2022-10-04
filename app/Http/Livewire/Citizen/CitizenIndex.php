@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Citizen;
 
 use App\Models\CountryTypeStreat;
+use App\Models\Registry;
 use App\Models\TypeStreet;
 use Livewire\Component;
 use App\Http\Repositories\CitizenRepository;
@@ -14,6 +15,7 @@ use App\Models\County;
 use App\Models\Occupation;
 use App\Models\MaritalStatus;
 use App\Models\ServiceStation;
+use PHPUnit\Framework\Constraint\Count;
 
 class CitizenIndex extends Component
 {
@@ -155,7 +157,8 @@ class CitizenIndex extends Component
 
     public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus',
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
-        'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert'
+        'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
+        'selectedRegistry'
     ];
 
     public $citizen;
@@ -171,13 +174,18 @@ class CitizenIndex extends Component
     public $currentTypeStreet;
 
     public function selectedUfCert($id){
-        $this->fields['type_street_id'] = $id;
-        $this->currentUfCert = Uf::find($id)->name_type_street;
+        $this->fields['uf_certificate'] = $id;
+        $this->currentUfCert = Uf::find($id);
+    }
+
+    public function selectedRegistry($id){
+        $this->fields['registry_id'] = $id;
+        $this->registrySuspension = Registry::find($id);
     }
 
     public function selectedCountyCert($id){
         $this->fields['county_certificate'] = $id;
-        $this->currentCountyCert = County::find($id)->name_type_street;
+        $this->currentCountyCert = County::find($id);
     }
 
     public function selectedTypeStreat($id)
@@ -306,6 +314,7 @@ class CitizenIndex extends Component
 
         //dd($citizen );
         $this->currentUfCert = Uf::find($citizen['uf_certificate']);
+        $this->currentCountyCert = County::find($citizen['county_certificate']);
 
         $this->zone = $citizen->zone;
 
@@ -319,6 +328,9 @@ class CitizenIndex extends Component
             $type_street = TypeStreet::find($citizen['type_street_id']);
         }
 
+        if (isset($citizen['type_street_id'])) {
+            $this->registrySuspension = Registry::find($citizen->registry_id);
+        }
 
         if (isset($citizen->id)) {
             $this->fields = [
@@ -364,7 +376,12 @@ class CitizenIndex extends Component
                 "name_place" => $citizen->name_place,
                 "certificate_entry_date" => $citizen->certificate_entry_date,
                 "same_sex_marriage" => $citizen->certificate_entry_date,
-
+                "registry_id" => $citizen->registry_id,
+                "book_number" => $citizen->book_number,
+                "term_number" => $citizen->term_number,
+                "book_letter" => $citizen->book_letter,
+                "sheet_number" => $citizen->sheet_number,
+                "dou_certificate_date" => $citizen->dou_certificate_date,
 
             ];
         }
@@ -609,10 +626,7 @@ class CitizenIndex extends Component
             "previous_registration_certificate" => $this->fields["previous_registration_certificate"] ?? null,
             "matriculation" => $this->fields["matriculation"] ?? null,
             "name_place" => $this->fields["name_place"] ?? null,
-
-
-
-
+            "registry_id" => $this->fields["registry_id"] ?? null
          ]);
 
         $this->messageSuccess();

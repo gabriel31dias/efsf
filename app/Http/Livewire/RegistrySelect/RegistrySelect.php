@@ -22,12 +22,12 @@ class RegistrySelect extends Component
     public function mount()
     {
         $this->resetValue();
-        if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->registry->name);
+        if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->name);
     }
 
     public function resetValue()
     {
-            $this->selectedId = null; 
+            $this->selectedId = null;
             $this->query = '';
             $this->highlightIndex = 0;
     }

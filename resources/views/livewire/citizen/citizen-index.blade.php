@@ -906,7 +906,7 @@
                                                             class="error_tag">*</span></label>
                                                     <livewire:county-select.county-select
                                                         :defaultValue="$currentCountyCert"
-                                                        :customEvent="'selectedUfCert'"
+                                                        :customEvent="'selectedCountyCert'"
                                                     />
                                                 </div>
                                             </div>
@@ -983,6 +983,17 @@
                                                 this, {
                                                 mask: '00/00/0000'
                                                 });" wire:model="fields.dou_certificate_date" maxlength="70" type="text"
+                                                   class="form-control ps-0 "
+                                                   autocomplete="off" required>
+                                        </div>
+
+                                        <div class="col-lg-3 mb-3">
+                                            <label class="form-label">Matricula<span
+                                                    class="error_tag">*</span></label>
+                                            <input onclick="IMask(
+                                                this, {
+                                                mask: '000000.00.00.0000.0.00000.000.0000000.00'
+                                                });" maxlength="70" type="text"
                                                    class="form-control ps-0 "
                                                    autocomplete="off" required>
                                         </div>
