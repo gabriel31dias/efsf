@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Citizen;
 
+use App\Http\Services\CheckRegistration;
 use App\Models\CountryTypeStreat;
 use App\Models\Registry;
 use App\Models\TypeStreet;
@@ -216,6 +217,20 @@ class CitizenIndex extends Component
         $n_do_termo = substr($this->fields['matriculation'], 29, 9);
         $verifyingDigit = substr($this->fields['matriculation'], 29, 9);
 
+        $birth_date = $this->citizen->birth_date ?? $this->fields['birth_date'];
+
+        dd( $birth_date);
+
+        $check = new CheckRegistration();
+        $check->call([
+            "birth_date" => $this->citizen->birth_date,
+            "cns" => $CnsString,
+            "registrocv" => $registroCv,
+            "civilregistryservice" => $civilRegistryService,
+            "birth_year" => $birth_year,
+            "typeofcertificate" => $TypeOfCertificate,
+            "booknumber" => $bookNumber
+        ]);
 
 
     }
