@@ -62,7 +62,7 @@ return new class extends Migration
             $table->integer('certificate')->nullable();
             $table->integer('type_of_certificate')->nullable();
             $table->string('type_of_certificate_new')->nullable();
-            $table->integer('term_number')->nullable();
+            $table->string('term_number')->nullable();
             $table->integer('book_number')->nullable();
             $table->integer('forwarded_with_process')->nullable();
             $table->string('sheet_number')->nullable();

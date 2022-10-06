@@ -205,6 +205,21 @@ class CitizenIndex extends Component
         }
     }
 
+    public function changeRegistration(){
+        $CnsString = substr($this->fields['matriculation'], 0, 6);
+        $registroCv = substr($this->fields['matriculation'], 7, 2);
+        $civilRegistryService = substr($this->fields['matriculation'], 10, 2);
+        $birth_year = substr($this->fields['matriculation'], 12, 5);
+        $TypeOfCertificate = substr($this->fields['matriculation'], 18, 1);
+        $bookNumber = substr($this->fields['matriculation'], 20, 5);
+        $sheet_number = substr($this->fields['matriculation'], 26, 3);
+        $n_do_termo = substr($this->fields['matriculation'], 29, 9);
+        $verifyingDigit = substr($this->fields['matriculation'], 29, 9);
+
+
+
+    }
+
     public function  selectedCountryTypeStreat($id)
     {
         $this->fields['country_type_street_id'] = $id;

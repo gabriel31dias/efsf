@@ -785,6 +785,11 @@
                                                     <option value="2">Antiga</option>
                                                 </select>
                                             </div>
+                                            @if (in_array("certificate", $errorsKeys))
+                                                <div class="error_tag" role="alert">
+                                                    O campo Certidão é obrigatório
+                                                </div>
+                                            @endif
                                         </div>
 
                                         @if($fields['certificate'] == 2 || $fields['certificate'] == "2")
@@ -802,6 +807,11 @@
                                                             <option value="7">Casamento/Óbito</option>
                                                         </select>
                                                     </div>
+                                                    @if (in_array("type_of_certificate", $errorsKeys))
+                                                        <div class="error_tag" role="alert">
+                                                            O campo Tipo de certificado é obrigatório
+                                                        </div>
+                                                    @endif
                                             </div>
 
                                             <div class="col-lg-3 mb-3">
@@ -836,7 +846,13 @@
                                                             @endif
 
                                                         </select>
+
                                                     </div>
+                                                    @if (in_array("book_number", $errorsKeys))
+                                                        <div class="error_tag" role="alert">
+                                                            O campo Número do livro é obrigatório
+                                                        </div>
+                                                    @endif
                                             </div>
 
 
@@ -860,6 +876,11 @@
 
                                                             </select>
                                                         </div>
+                                                        @if (in_array("book_letter", $errorsKeys))
+                                                            <div class="error_tag" role="alert">
+                                                                O campo Letra do livro é obrigatório
+                                                            </div>
+                                                        @endif
                                             </div>
 
                                             @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] ==  4)
@@ -879,6 +900,7 @@
                                                                     <option value="8">Original e copia (cert/dou naturalização casamento/divorciado)</option>
                                                             </select>
                                                         </div>
+
                                             </div>
                                             @endif
 
@@ -888,6 +910,12 @@
                                                 <input wire:model="fields.sheet_number" maxlength="70" type="text"
                                                        class="form-control ps-0 "
                                                        autocomplete="off" required>
+
+                                                @if (in_array("sheet_number", $errorsKeys))
+                                                    <div class="error_tag" role="alert">
+                                                           O campo Letra do livro é obrigatório
+                                                    </div>
+                                                @endif
                                             </div>
 
                                             <div class="col-lg-1">
@@ -908,6 +936,11 @@
                                                         :defaultValue="$currentCountyCert"
                                                         :customEvent="'selectedCountyCert'"
                                                     />
+                                                    @if (in_array("sheet_number", $errorsKeys))
+                                                        <div class="error_tag" role="alert">
+                                                           O campo Município de Naturalidade é obrigatório
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -924,6 +957,12 @@
                                                 <input wire:model="fields.previous_registration_certificate" maxlength="70" type="text"
                                                        class="form-control ps-0 "
                                                        autocomplete="off" required>
+
+                                                @if (in_array("previous_registration_certificate", $errorsKeys))
+                                                    <div class="error_tag" role="alert">
+                                                        O campo Certidão do Cadastro Anterior é obrigatório
+                                                    </div>
+                                                @endif
                                             </div>
 
 
@@ -931,13 +970,7 @@
 
                                         @if($fields['certificate'] == 1)
 
-                                        <div class="col-lg-3 mb-3">
-                                            <label class="form-label">Matricula<span
-                                                    class="error_tag">*</span></label>
-                                            <input wire:model="fields.matriculation" maxlength="70" type="text"
-                                                   class="form-control ps-0 "
-                                                   autocomplete="off" required>
-                                        </div>
+
 
                                         <div class="col-lg-3 mb-3">
                                             <label class="form-label">Data de Assentamento da Certidão<span
@@ -974,6 +1007,20 @@
                                                         </select>
                                                     </div>
                                                 </div>
+
+
+                                        <div class="col-lg-3 mb-3">
+                                            <label class="form-label">Matricula<span
+                                                    class="error_tag">*</span></label>
+                                            <input wire:change="changeRegistration" onclick="IMask(
+                                                this, {
+                                                mask: '000000 00 00 0000 0 00000 000 0000000 00'
+                                                });" maxlength="70" type="text"
+
+                                                wire:model="fields.matriculation"
+                                                   class="form-control ps-0 "
+                                                   autocomplete="off" required>
+                                        </div>
                                         @endif
 
                                         <div class="col-lg-3 mb-3">
@@ -987,16 +1034,7 @@
                                                    autocomplete="off" required>
                                         </div>
 
-                                        <div class="col-lg-3 mb-3">
-                                            <label class="form-label">Matricula<span
-                                                    class="error_tag">*</span></label>
-                                            <input onclick="IMask(
-                                                this, {
-                                                mask: '000000.00.00.0000.0.00000.000.0000000.00'
-                                                });" maxlength="70" type="text"
-                                                   class="form-control ps-0 "
-                                                   autocomplete="off" required>
-                                        </div>
+
 
                                     </div>
                                 </div>
