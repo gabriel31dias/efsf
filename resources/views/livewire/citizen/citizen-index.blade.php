@@ -1010,7 +1010,7 @@
 
 
                                         <div class="col-lg-3 mb-3">
-                                            <label class="form-label">Matricula<span
+                                            <label class="form-label">Matricula  {{$registrationError}}<span
                                                     class="error_tag">*</span></label>
                                             <input wire:change="changeRegistration" onclick="IMask(
                                                 this, {
@@ -1020,6 +1020,13 @@
                                                 wire:model="fields.matriculation"
                                                    class="form-control ps-0 "
                                                    autocomplete="off" required>
+
+                                                   @if ($registrationError == false)
+                                                        <div class="error_tag" role="alert">
+                                                           Existe um problema ná matricula inserida por favor, verifique em seu cartório de origem.
+                                                        </div>
+                                                   @endif
+
                                         </div>
                                         @endif
 

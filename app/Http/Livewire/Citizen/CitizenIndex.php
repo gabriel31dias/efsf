@@ -43,6 +43,8 @@ class CitizenIndex extends Component
     public $searchNumber;
     public $searchNrCedula;
     public $searchName;
+
+    public $registrationError = "ddd";
     public $searchBirth;
     public $searchFilitation;
     public $otherFiliations = [];
@@ -208,29 +210,28 @@ class CitizenIndex extends Component
 
     public function changeRegistration(){
         $CnsString = substr($this->fields['matriculation'], 0, 6);
-        $registroCv = substr($this->fields['matriculation'], 7, 2);
+        $civilRegistration = substr($this->fields['matriculation'], 7, 2);
         $civilRegistryService = substr($this->fields['matriculation'], 10, 2);
-        $birth_year = substr($this->fields['matriculation'], 12, 5);
-        $TypeOfCertificate = substr($this->fields['matriculation'], 18, 1);
+        $birth_year = substr($this->fields['matriculation'], 13, 4);
+        $typeOfCertificate = substr($this->fields['matriculation'], 18, 1);
         $bookNumber = substr($this->fields['matriculation'], 20, 5);
         $sheet_number = substr($this->fields['matriculation'], 26, 3);
         $n_do_termo = substr($this->fields['matriculation'], 29, 9);
         $verifyingDigit = substr($this->fields['matriculation'], 29, 9);
-
         $birth_date = $this->citizen->birth_date ?? $this->fields['birth_date'];
 
-        dd( $birth_date);
-
         $check = new CheckRegistration();
-        $check->call([
-            "birth_date" => $this->citizen->birth_date,
+        $this->registrationError = $check->call([
+            "birth_date" => $birth_date,
             "cns" => $CnsString,
-            "registrocv" => $registroCv,
+            "civilregistration" => $civilRegistration,
             "civilregistryservice" => $civilRegistryService,
             "birth_year" => $birth_year,
-            "typeofcertificate" => $TypeOfCertificate,
+            "typeofcertificate" => $typeOfCertificate,
             "booknumber" => $bookNumber
         ]);
+
+
 
 
     }

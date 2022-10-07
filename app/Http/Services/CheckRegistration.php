@@ -11,13 +11,16 @@ class CheckRegistration
         if(!$this->checkCns($obj)){
             return false;
         }
-        if(!$this->checkCns($obj)){
+
+        if(!$this->checkBirthYear($obj)){
             return false;
         }
-        if(!$this->checkCns($obj)){
+
+        if(!$this->checkTypeOfCertificate($obj)){
             return false;
         }
-        if(!$this->checkCns($obj)){
+
+        if(!$this->checkCivilRegistration($obj)){
             return false;
         }
 
@@ -30,12 +33,15 @@ class CheckRegistration
     }
 
     public function checkBirthYear($obj){
-        $deteBirth = explode("-", $obj['birth_date']);
-        return $deteBirth[2] == $obj['birth_date'] ? true : false;
+        $deteBirth = explode("/", $obj['birth_date']);
+        return $deteBirth[2] == $obj['birth_year'] ? true : false;
     }
 
-    public function checkRegistroCv(){
-        return true;
+    public function checkTypeOfCertificate($obj){
+        return $obj['typeofcertificate'] == "1" || $obj['typeofcertificate'] == "2" ? true : false;
     }
 
+    public function checkCivilRegistration($obj){
+        return $obj['civilregistration'] == "55" ? true : false;
+    }
 }
