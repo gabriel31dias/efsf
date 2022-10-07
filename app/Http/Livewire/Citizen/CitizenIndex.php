@@ -146,7 +146,8 @@ class CitizenIndex extends Component
         "matriculation"=> "",
         "name_place" => "",
         "marital_status_id" => "",
-        "genre_id" => ""
+        "genre_id" => "",
+        "genre_biologic_id" => ""
     ];
 
     public $curretTypeStreet;
@@ -413,6 +414,7 @@ class CitizenIndex extends Component
                 "book_letter" => $citizen->book_letter,
                 "sheet_number" => $citizen->sheet_number,
                 "dou_certificate_date" => $citizen->dou_certificate_date,
+                "genre_biologic_id" => $citizen->genre_biologic_id
 
             ];
         }
@@ -538,6 +540,17 @@ class CitizenIndex extends Component
                     "valid" => false,
                 ]);
                 $this->errorsKeys[] = $field;
+            }
+        }
+
+        if($this->fields['genre_id'] == "3"){
+
+            if(isset($this->fields['genre_biologic_id']) && $this->fields['genre_biologic_id'] == '0'){
+                array_push($errors, [
+                    "message" => "O campo sexo biologico é obrigatorio",
+                    "valid" => false,
+                ]);
+                $this->errorsKeys[] = "genre_biologic_id";
             }
         }
 

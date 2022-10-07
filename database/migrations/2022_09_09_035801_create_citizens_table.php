@@ -39,6 +39,7 @@ return new class extends Migration
             $table->json('other_filiations')->nullable();
             $table->integer('affiliation_id')->nullable();
             $table->string('birth_date')->nullable();
+            $table->integer('genre_biologic_id')->nullable();
             $table->integer('genre_id')->nullable();
             $table->integer('service_station_id')->nullable();
             $table->integer('county_id')->nullable();

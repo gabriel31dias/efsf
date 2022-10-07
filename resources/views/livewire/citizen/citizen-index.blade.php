@@ -193,6 +193,11 @@
                                                                        autocomplete="off" required>
                                                             </div>
                                                         </div>
+                                                        @if (in_array("birth_date", $errorsKeys))
+                                                            <div class="error_tag" role="alert">
+                                                                O campo Data de Nascimento é obrigatório
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                     <div class="col-lg-2">
                                                         <div class="mb-3">
@@ -203,17 +208,28 @@
                                                                 :genre="$currentGenre"
                                                             />
                                                         </div>
+                                                        @if (in_array("genre_id", $errorsKeys))
+                                                            <div class="error_tag" role="alert">
+                                                                O campo Data de Nascimento é obrigatório
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                     @if($other_genre == true)
                                                         <div class="col-lg-2">
                                                             <label class="form-label">Sexo Biológico<span
                                                                     class="error_tag">*</span></label>
                                                             <div class="input-group input-group-flat">
-                                                                <select class="form-control ps-0" name="select">
+                                                                <select wire:model="fields.genre_biologic_id" class="form-control ps-0" name="select">
+                                                                    <option value="0">Selecione</option>
                                                                     <option value="1">Masculino</option>
                                                                     <option value="2">Feminino</option>
                                                                 </select>
                                                             </div>
+                                                            @if (in_array("genre_biologic_id", $errorsKeys))
+                                                            <div class="error_tag" role="alert">
+                                                                O campo Data de Nascimento é obrigatório
+                                                            </div>
+                                                        @endif
                                                         </div>
                                                     @endif
                                                     <div class="col-lg-2">
@@ -361,6 +377,12 @@
                                                                        wire:model="fields.n_social" type="text"
                                                                        class="form-control nis" autocomplete="off"
                                                                        required>
+
+                                                                @if (in_array("n_social", $errorsKeys))
+                                                                    <div class="error_tag" role="alert">
+                                                                           O campo Posto de atendimento é obrigatório
+                                                                    </div>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -371,6 +393,12 @@
                                                             <livewire:users.servicestation-select
                                                                 :station="$currentServiceStation"
                                                             />
+
+                                                            @if (in_array("service_station_id", $errorsKeys))
+                                                                <div class="error_tag" role="alert">
+                                                                    O campo Posto de atendimento é obrigatório
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3">
@@ -390,9 +418,13 @@
                                                                 <option value="8">8a</option>
                                                             </select>
                                                         </div>
+                                                        @if (in_array("via_rg", $errorsKeys))
+                                                            <div class="error_tag" role="alert">
+                                                                O campo Via do rg é obrigatório
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                     @if(isset($citizen['updated_at']) && $citizen['updated_at'])
-
                                                         <div class="col-lg-4">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Data da Atualização<span
@@ -427,6 +459,11 @@
                                                                 <option value="5">Autista</option>
                                                             </select>
                                                         </div>
+                                                        @if (in_array("cid", $errorsKeys))
+                                                            <div class="error_tag" role="alert">
+                                                                O campo CID é obrigatório
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                     <div data-keyboard="false" data-backdrop="static" wire:ignore.self
                                                          class="modal modal-blur fade" id="modal-search" tabindex="-1"
