@@ -147,7 +147,11 @@ class CitizenIndex extends Component
         "name_place" => "",
         "marital_status_id" => "",
         "genre_id" => "",
-        "genre_biologic_id" => ""
+        "genre_biologic_id" => "",
+        "rg_gemeo" => "",
+        "name_gemeo" => "",
+        "name_social" => "",
+        "social_name_visible" => ""
     ];
 
     public $curretTypeStreet;
@@ -343,6 +347,17 @@ class CitizenIndex extends Component
         $ocupation = Occupation::find($citizen['occupation_id']);
         $service_station = ServiceStation::find($citizen['service_station_id']);
 
+        $dou_certificate_date = $this->formateDateBR($citizen['dou_certificate_date']);
+
+        $this->other_genre = $genre->id == 3 ? true : false;
+
+        $other_filiations = json_decode($citizen->other_filiations);
+
+        foreach ($other_filiations as  $key =>  $value) {
+            $this->otherFiliationsValues[] = $value;
+            $key = $key + 3;
+            $this->otherFiliations[] = "Filiação ".$key;
+        }
 
         //dd($citizen );
         $this->currentUfCert = Uf::find($citizen['uf_certificate']);
@@ -407,15 +422,18 @@ class CitizenIndex extends Component
                 "matriculation" => $citizen->matriculation,
                 "name_place" => $citizen->name_place,
                 "certificate_entry_date" => $citizen->certificate_entry_date,
-                "same_sex_marriage" => $citizen->certificate_entry_date,
+                "same_sex_marriage" => $citizen->same_sex_marriage,
                 "registry_id" => $citizen->registry_id,
                 "book_number" => $citizen->book_number,
                 "term_number" => $citizen->term_number,
                 "book_letter" => $citizen->book_letter,
                 "sheet_number" => $citizen->sheet_number,
-                "dou_certificate_date" => $citizen->dou_certificate_date,
-                "genre_biologic_id" => $citizen->genre_biologic_id
-
+                "dou_certificate_date" => $dou_certificate_date ,
+                "genre_biologic_id" => $citizen->genre_biologic_id,
+                "rg_gemeo" => $citizen->rg_gemeo,
+                "name_gemeo" => $citizen->name_gemeo,
+                "name_social" =>  $citizen->name_social,
+                "social_name_visible" => $citizen->social_name_visible,
             ];
         }
 
@@ -444,8 +462,6 @@ class CitizenIndex extends Component
     public function render()
     {
         $this->genres = Genre::all();
-
-
 
         $citizens = new Citizen();
         if($this->searchName){
@@ -483,7 +499,7 @@ class CitizenIndex extends Component
 
     public function addNewFiliationField(){
         $this->filiationCount++;
-        $this->otherFiliations[] = "Filiation ".$this->filiationCount;
+        $this->otherFiliations[] = "Filiação ".$this->filiationCount;
     }
 
     public function filtersCall(){
@@ -594,7 +610,53 @@ class CitizenIndex extends Component
             $this->errorsKeys[] = $value;
         }
 
+
+            $fileds_validation_date = ["dou_certificate_date"];
+
+            foreach ($fileds_validation_date as $value) {
+                if(empty($this->fields[$value]) && $this->checkDataIsValid($value)){
+
+                    $value = $this->getTranslaction($value);
+
+                    array_push($errors, [
+                        "message" => "O campo {$value} é obrigatorio",
+                        "valid" => false,
+                    ]);
+                }
+
+            }
+
+            $this->errorsKeys[] = $value;
+
+
         return $errors;
+    }
+
+    public function checkDataIsValid($dateStr, $format = "Y-m-d")
+    {
+	    $dateFormated = explode("/",$dateStr);
+
+        if(!count($dateFormated) > 2){
+            return false;
+        }
+
+        try {
+            $formateToAmericamFormat = $dateFormated[2].'-'.$dateFormated[1].'-'.$dateFormated[0];
+        } catch (\Exception $e) {
+              return false;
+        }
+
+
+
+        date_default_timezone_set('UTC');
+        $date = \DateTime::createFromFormat($format, $formateToAmericamFormat);
+        return $date && ($date->format($format) === $formateToAmericamFormat);
+    }
+
+    public function formateDateBR($date){
+        $explodedDate = explode("-", $date);
+        $formatedBr = $explodedDate[2]."/".$explodedDate[1]."/".$explodedDate[0];
+        return $formatedBr;
     }
 
     public function createCitizen(){
@@ -638,6 +700,7 @@ class CitizenIndex extends Component
             "cid" =>  $this->fields["cid"],
             "via_rg" =>  $this->fields["via_rg"],
             "marital_status_id" => $this->fields["marital_status_id"],
+            "genre_biologic_id" => $this->fields["genre_biologic_id"],
 
             "country_id" => $this->fields["country_id"],
             "service_station_id" => $this->fields["service_station_id"],
@@ -670,7 +733,11 @@ class CitizenIndex extends Component
             "previous_registration_certificate" => $this->fields["previous_registration_certificate"] ?? null,
             "matriculation" => $this->fields["matriculation"] ?? null,
             "name_place" => $this->fields["name_place"] ?? null,
-            "registry_id" => $this->fields["registry_id"] ?? null
+            "registry_id" => $this->fields["registry_id"] ?? null,
+            "rg_gemeo" => $this->fields["rg_gemeo"] ?? null,
+            "name_gemeo" => $this->fields["name_gemeo"] ?? null,
+            "name_social" => $this->fields["name_social"] ?? null,
+            "social_name_visible" => $this->fields["social_name_visible"] ?? null
          ]);
 
         $this->messageSuccess();

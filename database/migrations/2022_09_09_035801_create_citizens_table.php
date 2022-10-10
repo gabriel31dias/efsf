@@ -78,7 +78,10 @@ return new class extends Migration
             $table->integer('same_sex_marriage')->nullable();
             $table->date('dou_certificate_date')->nullable();
 
-
+            $table->string('rg_gemeo')->nullable();
+            $table->string('name_gemeo')->nullable();
+            $table->string('name_social')->nullable();
+            $table->integer('social_name_visible')->nullable();
 
             $table->timestamps();
         });
