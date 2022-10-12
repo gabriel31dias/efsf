@@ -48,6 +48,9 @@ class CitizenRepository {
         $obj['matriculation'] = $obj['matriculation'] == "" ? 0 : $obj['matriculation'];
         $obj['previous_registration_certificate'] = $obj['previous_registration_certificate'] == "" ? 0 : $obj['previous_registration_certificate'];
         $obj['same_sex_marriage'] = $obj['same_sex_marriage'] == "" ? 0 : $obj['same_sex_marriage'];
+        $obj['genre_biologic_id'] = $obj['genre_biologic_id'] == "" ? 0 : $obj['genre_biologic_id'];
+        $obj['social_name_visible'] = $obj['social_name_visible'] == "" ? 0 : $obj['social_name_visible'];
+
 
         $obj['certificate'] = $obj['certificate'] == "" ? 0 : $obj['certificate'];
         $obj['migration_situation'] = $obj['migration_situation'] == "" ? null : $obj['migration_situation'];

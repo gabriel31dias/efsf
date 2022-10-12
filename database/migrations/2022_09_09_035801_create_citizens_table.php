@@ -38,7 +38,7 @@ return new class extends Migration
             $table->integer('migration_situation')->nullable();
             $table->json('other_filiations')->nullable();
             $table->integer('affiliation_id')->nullable();
-            $table->string('birth_date')->nullable();
+            $table->date('birth_date')->nullable();
             $table->integer('genre_biologic_id')->nullable();
             $table->integer('genre_id')->nullable();
             $table->integer('service_station_id')->nullable();
@@ -78,7 +78,10 @@ return new class extends Migration
             $table->integer('same_sex_marriage')->nullable();
             $table->date('dou_certificate_date')->nullable();
 
-
+            $table->string('rg_gemeo')->nullable();
+            $table->string('name_gemeo')->nullable();
+            $table->string('name_social')->nullable();
+            $table->integer('social_name_visible')->nullable();
 
             $table->timestamps();
         });
