@@ -151,7 +151,8 @@ class CitizenIndex extends Component
         "rg_gemeo" => "",
         "name_gemeo" => "",
         "name_social" => "",
-        "social_name_visible" => ""
+        "social_name_visible" => "",
+        "type_of_certificate_new" => ""
     ];
 
     public $curretTypeStreet;
@@ -348,6 +349,8 @@ class CitizenIndex extends Component
         $service_station = ServiceStation::find($citizen['service_station_id']);
 
         $dou_certificate_date = $this->formateDateBR($citizen['dou_certificate_date']);
+        $birth_date = $this->formateDateBR($citizen['birth_date']);
+
 
         $this->other_genre = $genre->id == 3 ? true : false;
 
@@ -388,7 +391,7 @@ class CitizenIndex extends Component
                 "filiation1" => $citizen->filiation1,
                 "filiation2" => $citizen->filiation2,
                 "other_filiations" => "",
-                "birth_date" => $citizen->birth_date,
+                "birth_date" => $birth_date,
                 "migration_situation" => $citizen->migration_situation,
                 "portaria_nr" => $citizen->portaria_nr,
                 "dou_nr" => $citizen->dou_nr,
@@ -434,6 +437,7 @@ class CitizenIndex extends Component
                 "name_gemeo" => $citizen->name_gemeo,
                 "name_social" =>  $citizen->name_social,
                 "social_name_visible" => $citizen->social_name_visible,
+                "type_of_certificate_new" => $citizen->type_of_certificate_new
             ];
         }
 
@@ -659,6 +663,10 @@ class CitizenIndex extends Component
         return $formatedBr;
     }
 
+    public function formateDateUSA($date){
+        return implode('-', array_reverse(explode('/', $date)));
+    }
+
     public function createCitizen(){
         $this->fields["zone"] = $this->zone;
         $validation = $this->validation($this->fields);
@@ -673,9 +681,9 @@ class CitizenIndex extends Component
             return false;
         }
 
-        $time = strtotime('10/16/2003');
+        $dou_certificate_date = $this->formateDateUSA($this->fields["dou_certificate_date"] );
+        $birth_date = $this->formateDateUSA($this->fields["birth_date"] );
 
-        $newformat = date('Y-m-d',$time);
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
@@ -684,7 +692,7 @@ class CitizenIndex extends Component
             "filiation1" => $this->fields["filiation1"],
             "filiation2" => $this->fields["filiation2"],
             "filiation3" => $this->fields["filiation2"],
-            "birth_date" => $this->fields["birth_date"],
+            "birth_date" => $birth_date,
             "other_filiations" => \json_encode($this->otherFiliationsValues),
             "migration_situation" => $this->fields["migration_situation"],
             "portaria_nr" => $this->fields["portaria_nr"],
@@ -727,7 +735,7 @@ class CitizenIndex extends Component
             "sheet_number" => $this->fields["sheet_number"] ?? null,
             "certificate_entry_date" => $this->fields["certificate_entry_date"] ?? null,
             "same_sex_marriage" => $this->fields["same_sex_marriage"] ?? null,
-            "dou_certificate_date" => $this->fields["dou_certificate_date"] ?? null,
+            "dou_certificate_date" => $dou_certificate_date,
             "uf_certificate" => $this->fields["uf_certificate"] ?? null,
             "county_certificate" => $this->fields["county_certificate"] ?? null,
             "previous_registration_certificate" => $this->fields["previous_registration_certificate"] ?? null,
@@ -737,7 +745,8 @@ class CitizenIndex extends Component
             "rg_gemeo" => $this->fields["rg_gemeo"] ?? null,
             "name_gemeo" => $this->fields["name_gemeo"] ?? null,
             "name_social" => $this->fields["name_social"] ?? null,
-            "social_name_visible" => $this->fields["social_name_visible"] ?? null
+            "social_name_visible" => $this->fields["social_name_visible"] ?? null,
+            "type_of_certificate_new" => $this->fields["type_of_certificate_new"] ?? null
          ]);
 
         $this->messageSuccess();
