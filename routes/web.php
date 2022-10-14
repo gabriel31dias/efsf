@@ -43,4 +43,5 @@ Route::resource('blocked-certificate', App\Http\Controllers\BlockedCertificateCo
 Route::resource('registry', App\Http\Controllers\RegistryController::class);
 Route::resource('registry-interdiction', App\Http\Controllers\RegistryInterdictionController::class);
 Route::resource('registry-suspension', App\Http\Controllers\RegistrySuspensionController::class);
+Route::resource('registry-transfer', App\Http\Controllers\RegistryTransferController::class);
 

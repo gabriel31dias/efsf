@@ -16,6 +16,7 @@ class RegistrySelect extends Component
     public $selectedValue;
     public $registries = [];
     public $defaultValue = null;
+    public $customEventSelect = null;
 
     protected $listeners = [];
 
@@ -79,7 +80,11 @@ class RegistrySelect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
-        $this->emitUp('selectedRegistry', $id);
+        if(isset($this->customEventSelect)){ 
+            $this->emitUp($this->customEventSelect, $id);
+        } else { 
+            $this->emitUp('selectedRegistry', $id);
+        }
     }
 
 
