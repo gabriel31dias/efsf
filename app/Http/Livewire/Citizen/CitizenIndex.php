@@ -152,7 +152,31 @@ class CitizenIndex extends Component
         "name_gemeo" => "",
         "name_social" => "",
         "social_name_visible" => "",
-        "type_of_certificate_new" => ""
+        "type_of_certificate_new" => "",
+        "names_previous" => "",
+        "filitions_previous" => "",
+        "cni" => "",
+        "national_card_sus" => "",
+        "voter_registration" => "",
+        "number_voter" => "",
+        "zone_voter" => "",
+        "section" => "",
+        "national_drivers_license" => "",
+        "reservist_certificate" => "",
+        "blood_type" => "",
+        "rh_factor" => "",
+        "professional_identity_1" => "",
+        "professional_id_number_1" => "",
+        "professional_identity_acronym_1" => "",
+        "professional_identity_2" => "",
+        "professional_id_number_2" => "",
+        "professional_identity_acronym_2" => "",
+        "uf_professional_identity" => "",
+        "social_security_work_card" => "",
+        "ctps_number" => "",
+        "serie_wallet" => "",
+        "uf_wallet" => "",
+        "cid_wallet" => ""
     ];
 
     public $curretTypeStreet;
@@ -437,7 +461,33 @@ class CitizenIndex extends Component
                 "name_gemeo" => $citizen->name_gemeo,
                 "name_social" =>  $citizen->name_social,
                 "social_name_visible" => $citizen->social_name_visible,
-                "type_of_certificate_new" => $citizen->type_of_certificate_new
+                "type_of_certificate_new" => $citizen->type_of_certificate_new,
+                "names_previous" => $citizen->names_previous,
+                "filitions_previous" => $citizen->filitions_previous,
+
+                "cni" => $citizen->cni,
+                "national_card_sus" => $citizen->national_card_sus,
+                "voter_registration" => $citizen->voter_registration,
+                "number_voter" => $citizen->number_voter,
+                "zone_voter" => $citizen->zone_voter,
+                "section" => $citizen->section,
+                "national_drivers_license" => $citizen->national_drivers_license,
+                "reservist_certificate" => $citizen->reservist_certificate,
+                "blood_type" => $citizen->blood_type,
+                "rh_factor" => $citizen->rh_factor,
+                "professional_identity_1" => $citizen->professional_identity_1,
+                "professional_id_number_1" => $citizen->professional_id_number_1,
+                "professional_identity_acronym_1" => $citizen->professional_identity_acronym_1,
+
+                "professional_identity_2" => $citizen->professional_identity_2,
+                "professional_id_number_2" => $citizen->professional_id_number_2,
+                "professional_identity_acronym_2" => $citizen->professional_identity_acronym_2,
+                "uf_professional_identity" => $citizen->uf_professional_identity,
+                "social_security_work_card" => $citizen->social_security_work_card,
+                "ctps_number" => $citizen->ctps_number,
+                "serie_wallet" => $citizen->serie_wallet,
+                "uf_wallet" => $citizen->uf_wallet,
+                "cid_wallet" => $citizen->cid_wallet
             ];
         }
 
@@ -746,7 +796,32 @@ class CitizenIndex extends Component
             "name_gemeo" => $this->fields["name_gemeo"] ?? null,
             "name_social" => $this->fields["name_social"] ?? null,
             "social_name_visible" => $this->fields["social_name_visible"] ?? null,
-            "type_of_certificate_new" => $this->fields["type_of_certificate_new"] ?? null
+            "type_of_certificate_new" => $this->fields["type_of_certificate_new"] ?? null,
+            "names_previous" =>  $this->fields["names_previous"] ?? null,
+            "filitions_previous" =>  $this->fields["filitions_previous"] ?? null,
+
+            "cni" =>  $this->fields["cni"] ?? null,
+            "national_card_sus" =>  $this->fields["national_card_sus"] ?? null,
+            "voter_registration" =>  $this->fields["voter_registration"] ?? null,
+            "number_voter" =>  $this->fields["number_voter"] ?? null,
+            "zone_voter" =>  $this->fields["zone_voter"] ?? null,
+            "section" =>  $this->fields["section"] ?? null,
+            "national_drivers_license" =>  $this->fields["national_drivers_license"] ?? null,
+            "reservist_certificate" => $this->fields["reservist_certificate"] ?? null,
+            "blood_type" => $this->fields["blood_type"] ?? null,
+            "rh_factor" => $this->fields["rh_factor"] ?? null,
+            "professional_identity_1" => $this->fields["professional_identity_1"] ?? null,
+            "professional_id_number_1" => $this->fields["professional_id_number_1"] ?? null,
+            "professional_identity_acronym_1" => $this->fields["professional_identity_acronym_1"] ?? null,
+            "professional_identity_2" => $this->fields["professional_identity_2"] ?? null,
+            "professional_id_number_2" => $this->fields["professional_id_number_2"] ?? null,
+            "professional_identity_acronym_2" => $this->fields["professional_identity_acronym_2"] ?? null,
+            "uf_professional_identity" => $this->fields["uf_professional_identity"] ?? null,
+            "social_security_work_card" => $this->fields["social_security_work_card"] ?? null,
+            "ctps_number" => $this->fields["ctps_number"] ?? null,
+            "serie_wallet" => $this->fields["serie_wallet"] ?? null,
+            "uf_wallet" => $this->fields["uf_wallet"] ?? null,
+            "cid_wallet" => $this->fields["cid_wallet"] ?? null
          ]);
 
         $this->messageSuccess();
