@@ -82,6 +82,31 @@ return new class extends Migration
             $table->string('name_gemeo')->nullable();
             $table->string('name_social')->nullable();
             $table->integer('social_name_visible')->nullable();
+            $table->string('names_previous', 300)->nullable();
+            $table->string('filitions_previous', 300)->nullable();
+
+            $table->string('cni')->nullable();
+            $table->string('national_card_sus')->nullable();
+            $table->string('voter_registration')->nullable();
+            $table->string('number_voter')->nullable();
+            $table->string('zone_voter')->nullable();
+            $table->string('section')->nullable();
+            $table->string('national_drivers_license')->nullable();
+            $table->string('reservist_certificate')->nullable();
+            $table->string('blood_type')->nullable();
+            $table->string('rh_factor')->nullable();
+            $table->string('professional_identity_1')->nullable();
+            $table->string('professional_id_number_1')->nullable();
+            $table->string('professional_identity_acronym_1')->nullable();
+            $table->string('professional_identity_2')->nullable();
+            $table->string('professional_id_number_2')->nullable();
+            $table->string('professional_identity_acronym_2')->nullable();
+            $table->string('uf_professional_identity')->nullable();
+            $table->string('social_security_work_card')->nullable();
+            $table->string('ctps_number')->nullable();
+            $table->string('serie_wallet')->nullable();
+            $table->string('uf_wallet')->nullable();
+            $table->integer('cid_wallet')->nullable();
 
             $table->timestamps();
         });
