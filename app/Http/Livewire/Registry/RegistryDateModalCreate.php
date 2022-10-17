@@ -13,7 +13,14 @@ class RegistryDateModalCreate extends Component
         'created_date' => null, 
         'closing_date' => null,
         'note' => '',
+        'incorporated_date' => null,
+        'unincorporated_date' => null,
+        'collection_number' => null,
+        'incorporated_registry_id' => null,
     ];
+    public $ignore_number = [];
+
+    public $listeners = ['selectedRegistry'];
 
 
     protected $rules = [
@@ -27,6 +34,13 @@ class RegistryDateModalCreate extends Component
     public function render()
     {
         return view('livewire.registry.registry-date-modal-create');
+    }
+
+    public function selectedRegistry($value) { 
+        $this->fieldsCreateDate['incorporated_registry_id'] = $value;
+        $this->ignore_number = RegistryDate::where('incorporated_registry_id', $this->fieldsCreateDate['incorporated_registry_id'])
+                                ->where('registry_id', $this->registry_id)
+                                ->pluck('collection_number')->toArray();
     }
 
     public function saveRegistry(){

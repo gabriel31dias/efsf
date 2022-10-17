@@ -37,10 +37,12 @@ class RegistryForm extends Component
         'fields.name' => 'required',
         'fields.uf_id' => 'required',
         'fields.county_id' => 'required',
+        'fieldsCreateDate.created_date' => 'required',
     ];
 
     protected $messages = [ 
         "fields.*.required" => "Campo obrigatório",
+        "fieldsCreateDate.*.required" => "Campo obrigatório",
     ];
 
     public $listeners = [ 'selectedUf', 'selectedCounty' ];
