@@ -44,6 +44,8 @@ class CitizenIndex extends Component
     public $searchNrCedula;
     public $searchName;
 
+    public $currentUfIdent;
+
     public $registrationError = "ddd";
     public $searchBirth;
     public $searchFilitation;
@@ -191,12 +193,15 @@ class CitizenIndex extends Component
     public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus',
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
-        'selectedRegistry'
+        'selectedRegistry', 'selectedUfIdent','selectedUfCarteira'
     ];
 
     public $citizen;
     public $currentGenre;
     public $currentMatiral;
+    public $currentUfCarteira;
+
+
     public $currentUf;
     public $currentUfCert;
     public $currentCounty;
@@ -209,6 +214,16 @@ class CitizenIndex extends Component
     public function selectedUfCert($id){
         $this->fields['uf_certificate'] = $id;
         $this->currentUfCert = Uf::find($id);
+    }
+
+    public function selectedUfIdent($id){
+        $this->fields['uf_professional_identity'] = $id;
+        $this->currentUfIdent = Uf::find($id);
+    }
+
+    public function selectedUfCarteira($id){
+        $this->fields['uf_wallet'] = $id;
+        $this->currentUfIdent = Uf::find($id);
     }
 
     public function selectedRegistry($id){
@@ -374,6 +389,7 @@ class CitizenIndex extends Component
 
         $dou_certificate_date = $this->formateDateBR($citizen['dou_certificate_date']);
         $birth_date = $this->formateDateBR($citizen['birth_date']);
+        $certificate_entry_date = $this->formateDateBR($citizen['certificate_entry_date']);
 
 
         $this->other_genre = $genre->id == 3 ? true : false;
@@ -448,7 +464,7 @@ class CitizenIndex extends Component
                 "previous_registration_certificate" => $citizen->previous_registration_certificate,
                 "matriculation" => $citizen->matriculation,
                 "name_place" => $citizen->name_place,
-                "certificate_entry_date" => $citizen->certificate_entry_date,
+                "certificate_entry_date" => $certificate_entry_date,
                 "same_sex_marriage" => $citizen->same_sex_marriage,
                 "registry_id" => $citizen->registry_id,
                 "book_number" => $citizen->book_number,
@@ -733,6 +749,7 @@ class CitizenIndex extends Component
 
         $dou_certificate_date = $this->formateDateUSA($this->fields["dou_certificate_date"] );
         $birth_date = $this->formateDateUSA($this->fields["birth_date"] );
+        $certificate_entry_date = $this->formateDateUSA($this->fields["certificate_entry_date"] );
 
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
@@ -783,7 +800,7 @@ class CitizenIndex extends Component
             "book_letter" => $this->fields["book_letter"] ?? null,
             "forwarded_with_process" => $this->fields["forwarded_with_process"] ?? null,
             "sheet_number" => $this->fields["sheet_number"] ?? null,
-            "certificate_entry_date" => $this->fields["certificate_entry_date"] ?? null,
+            "certificate_entry_date" => $certificate_entry_date ?? null,
             "same_sex_marriage" => $this->fields["same_sex_marriage"] ?? null,
             "dou_certificate_date" => $dou_certificate_date,
             "uf_certificate" => $this->fields["uf_certificate"] ?? null,
@@ -816,11 +833,11 @@ class CitizenIndex extends Component
             "professional_identity_2" => $this->fields["professional_identity_2"] ?? null,
             "professional_id_number_2" => $this->fields["professional_id_number_2"] ?? null,
             "professional_identity_acronym_2" => $this->fields["professional_identity_acronym_2"] ?? null,
-            "uf_professional_identity" => $this->fields["uf_professional_identity"] ?? null,
+            "uf_professional_identity" => $this->currentUfIdent ?? null,
             "social_security_work_card" => $this->fields["social_security_work_card"] ?? null,
             "ctps_number" => $this->fields["ctps_number"] ?? null,
             "serie_wallet" => $this->fields["serie_wallet"] ?? null,
-            "uf_wallet" => $this->fields["uf_wallet"] ?? null,
+            "uf_wallet" => $this->currentUfCarteira ?? null,
             "cid_wallet" => $this->fields["cid_wallet"] ?? null
          ]);
 
