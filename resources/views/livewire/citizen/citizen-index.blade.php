@@ -45,7 +45,7 @@
        <li class="nav-item" role="presentation">
           <a wire:click="setSelectedTab('dados-basicos')"
           class="nav-link @if($selectedTab == "" || $selectedTab == "dados-basicos") active @else   @endif"
-          data-bs-toggle="tab" aria-selected="true" role="tab">Dados Basicos {{$selectedTab}}</a>
+          data-bs-toggle="tab" aria-selected="true" role="tab">Dados Basicos</a>
        </li>
        <li role="presentation">
           <a wire:click="setSelectedTab('endereco')"
@@ -61,11 +61,6 @@
           <a wire:click="setSelectedTab('outros_dados')"  data-bs-toggle="tab" aria-selected="false"
           class="nav-link @if($selectedTab == "outros_dados") active @else   @endif"
           role="tab" tabindex="-1">Outros dados</a>
-       </li>
-       <li class="nav-item" role="presentation">
-          <a wire:click="setSelectedTab('nomes_anteriores')" data-bs-toggle="tab" aria-selected="false"
-          class="nav-link @if($selectedTab == "nomes_anteriores") active @else   @endif"
-          role="tab" tabindex="-1">Nomes anteriores</a>
        </li>
        <li class="nav-item" role="presentation">
           <a wire:click="setSelectedTab('outros_documentos')"  data-bs-toggle="tab" aria-selected="false"
@@ -849,25 +844,25 @@
                             class="form-control ps-0 "
                             autocomplete="off" required>
                       </div>
-                      <div class="col-lg-3 mb-3">
+                      <div class="col-lg-4 mb-3">
                          <label class="form-label ">Titulo de eleitor<span class="error_tag">*</span></label>
                          <input wire:model="fields.voter_registration"  maxlength="70" type="text"
                             class="form-control ps-0 "
                             autocomplete="off" required>
                       </div>
-                      <div class="col-lg-3 mb-3">
+                      <div class="col-lg-2 mb-3">
                          <label class="form-label ">Nº<span class="error_tag">*</span></label>
                          <input wire:model="fields.number_voter"  maxlength="70" type="text"
                             class="form-control ps-0 "
                             autocomplete="off" required>
                       </div>
-                      <div class="col-lg-3 mb-3">
+                      <div class="col-lg-2 mb-3">
                          <label class="form-label ">Zona<span class="error_tag">*</span></label>
                          <input wire:model="fields.zone_voter"  maxlength="70" type="text"
                             class="form-control ps-0 "
                             autocomplete="off" required>
                       </div>
-                      <div class="col-lg-3 mb-3">
+                      <div class="col-lg-2 mb-3">
                          <label class="form-label ">Seção<span class="error_tag">*</span></label>
                          <input wire:model="fields.section"  maxlength="70" type="text"
                             class="form-control ps-0 "
@@ -885,20 +880,20 @@
                             class="form-control ps-0 "
                             autocomplete="off" required>
                       </div>
-                      <div class="col-lg-3 mb-3">
+                      <div class="col-lg-2 mb-3">
                          <label class="form-label ">Tipo sanguineo<span class="error_tag">*</span></label>
                          <input wire:model="fields.blood_type"  maxlength="70" type="text"
                             class="form-control ps-0 "
                             autocomplete="off" required>
                       </div>
-                      <div class="col-lg-3 mb-3">
+                      <div class="col-lg-2 mb-3">
                          <label class="form-label ">Fator Rh<span class="error_tag">*</span></label>
                          <input wire:model="fields.rh_factor"  maxlength="70" type="text"
                             class="form-control ps-0 "
                             autocomplete="off" required>
                       </div>
 
-                      <div class="col-lg-3 mb-3">
+                      <div class="col-lg-4 mb-3">
                          <label class="form-label ">Identidade profissional 1<span class="error_tag">*</span></label>
                          <input wire:model="fields.professional_identity_1"  maxlength="70" type="text"
                             class="form-control ps-0 "
@@ -990,48 +985,94 @@
                 <div class="page-body">
                    <div class="container-fluid">
                       <div class="row">
-                         <div class="col-lg-3 mb-3">
-                            <label class="form-label ">Inclusão do nome social<span class="error_tag">*</span></label>
-                            <div class="input-group input-group-flat">
-                               <select  wire:model="fields.social_name_visible"  class="form-control ps-0" wire:ignore>
-                                  <option value="0">Selecione</option>
-                                  <option value="1">Suprimir</option>
-                                  <option value="2">Imprimir</option>
-                               </select>
+                        <div class="col-lg-12">
+                            <div class="card mb-3">
+                              <div class="card-body row">
+                                <label class="mb-3" >Nome social</label>
+                                <div class="col-lg-3 mb-3">
+                                    <label class="form-label ">Inclusão do nome social<span class="error_tag">*</span></label>
+                                    <div class="input-group input-group-flat">
+                                       <select  wire:model="fields.social_name_visible"  class="form-control ps-0" wire:ignore>
+                                          <option value="0">Selecione</option>
+                                          <option value="1">Suprimir</option>
+                                          <option value="2">Imprimir</option>
+                                       </select>
+                                    </div>
+                                    @if (in_array("certificate", $errorsKeys))
+                                    <div class="error_tag" role="alert">
+                                       O campo Certidão é obrigatório
+                                    </div>
+                                    @endif
+                                 </div>
+                                 <div class="col-lg-6 mb-3">
+                                    <label class="form-label ">Nome social<span class="error_tag">*</span></label>
+                                    <input wire:model="fields.name_social"  maxlength="70" type="text"
+                                       class="form-control ps-0 "
+                                       autocomplete="off" required>
+                                 </div>
+
+                              </div>
                             </div>
-                            @if (in_array("certificate", $errorsKeys))
-                            <div class="error_tag" role="alert">
-                               O campo Certidão é obrigatório
-                            </div>
-                            @endif
-                         </div>
-                         <div class="col-lg-6 mb-3">
-                            <label class="form-label ">Nome social<span class="error_tag">*</span></label>
-                            <input wire:model="fields.name_social"  maxlength="70" type="text"
-                               class="form-control ps-0 "
-                               autocomplete="off" required>
-                         </div>
-                         <div id="gemeo" role="tabpanel">
-                            <div class="row">
-                               <div class="col-lg-3 mb-3">
-                                  <label class="form-label ">Nº DE RG DE IRMÃO GÊMEO<span class="error_tag">*</span></label>
-                                  <input wire:model="fields.rg_gemeo"  maxlength="70" type="text"
-                                     class="form-control ps-0 "
-                                     autocomplete="off" required>
-                                  @if (in_array("certificate", $errorsKeys))
-                                  <div class="error_tag" role="alert">
-                                     O campo Certidão é obrigatório
-                                  </div>
-                                  @endif
-                               </div>
-                               <div class="col-lg-6 mb-3">
-                                  <label class="form-label ">NOME DE IRMÃO GÊMEO <span class="error_tag">*</span></label>
-                                  <input wire:model="fields.name_gemeo"  maxlength="70" type="text"
-                                     class="form-control ps-0 "
-                                     autocomplete="off" required>
-                               </div>
-                            </div>
-                         </div>
+
+
+                            <div class="card mb-3">
+                                <div class="card-body row">
+                                    <div id="gemeo" role="tabpanel">
+                                        <div class="row">
+                                            <label class="mb-3" >Gemeos</label>
+                                           <div class="col-lg-3 mb-3">
+                                              <label class="form-label ">Nº DE RG DE IRMÃO GÊMEO<span class="error_tag">*</span></label>
+                                              <input wire:model="fields.rg_gemeo"  maxlength="70" type="text"
+                                                 class="form-control ps-0 "
+                                                 autocomplete="off" required>
+                                              @if (in_array("certificate", $errorsKeys))
+                                              <div class="error_tag" role="alert">
+                                                 O campo Certidão é obrigatório
+                                              </div>
+                                              @endif
+                                           </div>
+                                           <div class="col-lg-6 mb-3">
+                                              <label class="form-label ">NOME DE IRMÃO GÊMEO <span class="error_tag">*</span></label>
+                                              <input wire:model="fields.name_gemeo"  maxlength="70" type="text"
+                                                 class="form-control ps-0 "
+                                                 autocomplete="off" required>
+                                           </div>
+                                        </div>
+                                     </div>
+
+                                </div>
+                              </div>
+
+
+
+
+                            <div class="card mb-3">
+                                <div class="card-body row">
+                                    <div id="nomes_anteriores" role="tabpanel">
+                                        <div class="page-body">
+                                           <div class="container-fluid">
+                                              <div class="row">
+                                                <label class="mb-3" >Nomes anteriores</label>
+                                                 <div class="col-lg-6 mb-3">
+                                                    <label class="form-label ">Nomes anteriores<span class="error_tag">*</span></label>
+                                                    <input wire:model="fields.names_previous"  maxlength="70" type="text"
+                                                       class="form-control ps-0 "
+                                                       autocomplete="off" required>
+                                                 </div>
+                                                 <div class="col-lg-6 mb-3">
+                                                    <label class="form-label ">Filiações anteriores<span class="error_tag">*</span></label>
+                                                    <input wire:model="fields.filitions_previous"  maxlength="70" type="text"
+                                                       class="form-control ps-0 "
+                                                       autocomplete="off" required>
+                                                 </div>
+                                              </div>
+                                           </div>
+
+                                </div>
+                              </div>
+
+
+                          </div>
                       </div>
                    </div>
                    @endif

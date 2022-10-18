@@ -391,6 +391,9 @@ class CitizenIndex extends Component
         $birth_date = $this->formateDateBR($citizen['birth_date']);
         $certificate_entry_date = $this->formateDateBR($citizen['certificate_entry_date']);
 
+        $this->currentUfIdent = Uf::find($citizen['uf_professional_identity']);
+        $this->currentUfCarteira = Uf::find($citizen['cid_wallet']);
+
 
         $this->other_genre = $genre->id == 3 ? true : false;
 
@@ -421,6 +424,8 @@ class CitizenIndex extends Component
         if (isset($citizen['type_street_id'])) {
             $this->registrySuspension = Registry::find($citizen->registry_id);
         }
+
+
 
         if (isset($citizen->id)) {
             $this->fields = [
@@ -833,11 +838,11 @@ class CitizenIndex extends Component
             "professional_identity_2" => $this->fields["professional_identity_2"] ?? null,
             "professional_id_number_2" => $this->fields["professional_id_number_2"] ?? null,
             "professional_identity_acronym_2" => $this->fields["professional_identity_acronym_2"] ?? null,
-            "uf_professional_identity" => $this->currentUfIdent ?? null,
+            "uf_professional_identity" => $this->fields["uf_professional_identity"] ?? null,
             "social_security_work_card" => $this->fields["social_security_work_card"] ?? null,
             "ctps_number" => $this->fields["ctps_number"] ?? null,
             "serie_wallet" => $this->fields["serie_wallet"] ?? null,
-            "uf_wallet" => $this->currentUfCarteira ?? null,
+            "uf_wallet" => $this->fields['uf_wallet'] ?? null,
             "cid_wallet" => $this->fields["cid_wallet"] ?? null
          ]);
 
