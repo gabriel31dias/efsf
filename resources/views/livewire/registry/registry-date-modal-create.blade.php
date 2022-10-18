@@ -13,7 +13,7 @@
             x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-500"
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-            <div class="w-full h-1/2 px-2 py-20 transition-all transform sm:max-w-2xl" role="dialog" aria-modal="true"
+            <div class="w-full px-2 py-20 transition-all transform sm:max-w-2xl" role="dialog" aria-modal="true"
                 aria-labelledby="modal-headline" x-show="modal" x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0 -translate-y-4 sm:translate-y-4"
                 x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-300"
@@ -24,7 +24,7 @@
 
                     <div>
                             <div class="row" >
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                    <div class="mb-3">
                                       <label class="form-label">Data da Criação</label>
                                       <div class="input-group input-group-flat">
@@ -35,7 +35,7 @@
                                    </div>
                                 </div>
         
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                    <div class="mb-3">
                                       <label class="form-label">Data de Encerramento</label>
                                       <div class="input-group input-group-flat">
@@ -45,10 +45,56 @@
                                       @error('fieldsCreateDate.closing_date') <span class="text-danger"> {{ $message }}</span> @enderror
                                    </div>
                                 </div>
+
+                                <div class="col-lg-6">
+                                 <div class="mb-3">
+                                    <label class="form-label">Data da Incorporação</label>
+                                    <div class="input-group input-group-flat">
+                                       <input wire:model="fieldsCreateDate.incorporated_date" type="date"
+                                          class="form-control" autocomplete="off" required>
+                                    </div>
+                                    @error('fieldsCreateDate.incorporated_date') <span class="text-danger"> {{ $message }}</span> @enderror
+                                 </div>
+                              </div>
+      
+                              <div class="col-lg-6">
+                                 <div class="mb-3">
+                                    <label class="form-label">Data de Desincorporação</label>
+                                    <div class="input-group input-group-flat">
+                                       <input wire:model="fieldsCreateDate.unincorporated_date" type="date"
+                                          class="form-control" autocomplete="off" required>
+                                    </div>
+                                    @error('fieldsCreateDate.unincorporated_date') <span class="text-danger"> {{ $message }}</span> @enderror
+                                 </div>
+                              </div>
+
+                              <div class="col-lg-6">
+                                 <div class="mb-3">
+                                    <label class="form-label">Cartório Incorporado</label>
+                                    @livewire('registry-select.registry-select')
+                                    @error('fieldsCreateDate.created_date') <span class="text-danger"> {{ $message }}</span> @enderror
+                                 </div>
+                              </div>
+      
+                              <div class="col-lg-6">
+                                 <div class="mb-3">
+                                    <label class="form-label">N do Acervo</label>
+                                    <select wire:model="fieldsCreateDate.collection_number" class="form-control ps-0"
+                                       name="select">
+                                       <option value="" selected >Selecione</option>
+                                       @for ($i = 2; $i <= 30; $i++)
+                                          @if (!in_array($i,$this->ignore_number))
+                                             <option  value="{{ $i }}">{{ $i }}</option> 
+                                          @endif
+                                       @endfor
+                                    </select>
+                                    @error('fieldsCreateDate.collection_number') <span class="text-danger"> {{ $message }}</span> @enderror
+                                 </div>
+                              </div>
         
                                 <div class="col-lg-12">
                                    <div class="mb-3">
-                                      <label class="form-label">Observação Data</label>
+                                      <label class="form-label">Observação</label>
                                       <div class="input-group input-group-flat">
                                          <input wire:model="fieldsCreateDate.note" type="text"
                                             class="form-control" autocomplete="off" required>
