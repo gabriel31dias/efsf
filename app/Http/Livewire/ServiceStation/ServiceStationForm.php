@@ -151,10 +151,6 @@ class ServiceStationForm extends Component
     }
 
     public function enableDisableRegister(){
-        $result = Profile::whereId($this->serviceStation->id)->update([
-            'status' => ! $this->serviceStation->status
-        ]);
-
         $this->serviceStation->status = ! $this->serviceStation->status;
         $status = $this->serviceStation->status ? "habilitado" : "desabilitado";
         $this->serviceStation->save();

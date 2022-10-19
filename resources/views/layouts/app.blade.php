@@ -245,6 +245,19 @@
                         </a>
                      </li>
                      <li class="nav-item">
+                        <a class="nav-link" href='{{ route('feature.index') }}' >
+                           <span class="nav-link-icon d-md-none d-lg-inline-block">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                              <i class="ti ti-eyeglass"></i>
+
+
+                           </span>
+                           <span class="nav-link-title">
+                              Cadastro de Características
+                           </span>
+                        </a>
+                     </li>
+                     <li class="nav-item">
                         <a class="nav-link" href='{{ route('service-station.index') }}' >
                            <span class="nav-link-icon d-md-none d-lg-inline-block">
                               <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
