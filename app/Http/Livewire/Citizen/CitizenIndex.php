@@ -75,6 +75,8 @@ class CitizenIndex extends Component
         "zone"
     ];
 
+    public $caracteristics;
+
     public $tranlaction_filds = [
         "rg" => "rg",
         "cpf" => "cpf",
@@ -243,15 +245,6 @@ class CitizenIndex extends Component
         $this->curretTypeStreet = TypeStreet::find($id)->name_type_street;
     }
 
-    public function changZone(){
-        $RURAL_ZONE = 1;
-        if($this->zone == $RURAL_ZONE){
-
-
-        }else{
-
-        }
-    }
 
     public function changeRegistration(){
         $CnsString = substr($this->fields['matriculation'], 0, 6);
@@ -275,10 +268,6 @@ class CitizenIndex extends Component
             "typeofcertificate" => $typeOfCertificate,
             "booknumber" => $bookNumber
         ]);
-
-
-
-
     }
 
     public function  selectedCountryTypeStreat($id)
@@ -293,10 +282,6 @@ class CitizenIndex extends Component
         $this->currentServiceStation = ServiceStation::find($id)->service_station_name;
     }
 
-    public function updated(){
-
-
-    }
 
     public function selectedOccupation($value){
         $this->fields['occupation_id'] = $value;
@@ -527,6 +512,11 @@ class CitizenIndex extends Component
         $this->dispatchBrowserEvent('closeModalSearch');
     }
 
+    public function getCharacteristics(){
+        $this->caracteristics  = (new CitizenRepository())->getCharacteristics();
+
+    }
+
     public function mount(){
         if(isset($this->citizen->id)){
             $this->setCitizen($this->citizen->id);
@@ -534,8 +524,10 @@ class CitizenIndex extends Component
             $this->dispatchBrowserEvent("openModalSearch");
         }
     }
+
     public function render()
     {
+        $this->getCharacteristics();
         $this->genres = Genre::all();
 
         $citizens = new Citizen();
