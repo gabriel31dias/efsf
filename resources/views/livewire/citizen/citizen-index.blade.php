@@ -67,6 +67,11 @@
           class="nav-link @if($selectedTab == "outros_documentos") 'active' @else   @endif"
           role="tab" tabindex="-1">Outros documentos</a>
        </li>
+       <li class="nav-item" role="presentation">
+          <a wire:click="setSelectedTab('caracteristicas')"  data-bs-toggle="tab" aria-selected="false"
+          class="nav-link @if($selectedTab == "caracteristicas") 'active' @else   @endif"
+          role="tab" tabindex="-1">Características</a>
+       </li>
     </ul>
     <div class="card-body">
     <div class="tab-content">
@@ -654,7 +659,7 @@
                 <div class="col-lg-2 mb-3">
                    <label class="form-label ">Zona {{$zone}}<span class="error_tag">*</span></label>
                    <div wire:ignore class="input-group input-group-flat">
-                      <select wire:model="zone" wire:change="changZone" class="form-control ps-0" wire:ignore>
+                      <select wire:model="zone"  class="form-control ps-0" wire:ignore>
                          <option value="0">Selecione</option>
                          <option value="1">Rural</option>
                          <option value="2">Urbana</option>
@@ -810,269 +815,271 @@
     @endif
     @if($selectedTab == "nomes_anteriores")
     <div id="nomes_anteriores" role="tabpanel">
+    <div class="page-body">
+    <div class="container-fluid">
+       <div class="row">
+          <div class="col-lg-6 mb-3">
+             <label class="form-label ">Nomes anteriores<span class="error_tag">*</span></label>
+             <input wire:model="fields.names_previous"  maxlength="70" type="text"
+                class="form-control ps-0 "
+                autocomplete="off" required>
+          </div>
+          <div class="col-lg-6 mb-3">
+             <label class="form-label ">Filiações anteriores<span class="error_tag">*</span></label>
+             <input wire:model="fields.filitions_previous"  maxlength="70" type="text"
+                class="form-control ps-0 "
+                autocomplete="off" required>
+          </div>
+       </div>
+    </div>
+    @endif
+    @if($selectedTab == "outros_documentos")
+    <div id="nomes_anteriores" role="tabpanel">
        <div class="page-body">
           <div class="container-fluid">
              <div class="row">
-                <div class="col-lg-6 mb-3">
-                   <label class="form-label ">Nomes anteriores<span class="error_tag">*</span></label>
-                   <input wire:model="fields.names_previous"  maxlength="70" type="text"
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Cni<span class="error_tag">*</span></label>
+                   <input wire:model="fields.cni"  maxlength="70" type="text"
+                      class="form-control ps-0 " autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Carteira nacional do sus<span class="error_tag">*</span></label>
+                   <input wire:model="fields.national_card_sus"  maxlength="70" type="text"
                       class="form-control ps-0 "
                       autocomplete="off" required>
                 </div>
-                <div class="col-lg-6 mb-3">
-                   <label class="form-label ">Filiações anteriores<span class="error_tag">*</span></label>
-                   <input wire:model="fields.filitions_previous"  maxlength="70" type="text"
+                <div class="col-lg-4 mb-3">
+                   <label class="form-label ">Titulo de eleitor<span class="error_tag">*</span></label>
+                   <input wire:model="fields.voter_registration"  maxlength="70" type="text"
                       class="form-control ps-0 "
                       autocomplete="off" required>
                 </div>
-             </div>
-          </div>
-          @endif
-          @if($selectedTab == "outros_documentos")
-          <div id="nomes_anteriores" role="tabpanel">
-             <div class="page-body">
-                <div class="container-fluid">
-                   <div class="row">
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Cni<span class="error_tag">*</span></label>
-                         <input wire:model="fields.cni"  maxlength="70" type="text"
-                            class="form-control ps-0 " autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Carteira nacional do sus<span class="error_tag">*</span></label>
-                         <input wire:model="fields.national_card_sus"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-4 mb-3">
-                         <label class="form-label ">Titulo de eleitor<span class="error_tag">*</span></label>
-                         <input wire:model="fields.voter_registration"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-2 mb-3">
-                         <label class="form-label ">Nº<span class="error_tag">*</span></label>
-                         <input wire:model="fields.number_voter"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-2 mb-3">
-                         <label class="form-label ">Zona<span class="error_tag">*</span></label>
-                         <input wire:model="fields.zone_voter"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-2 mb-3">
-                         <label class="form-label ">Seção<span class="error_tag">*</span></label>
-                         <input wire:model="fields.section"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Carteira nacional habilitação<span class="error_tag">*</span></label>
-                         <input wire:model="fields.national_drivers_license"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Certificado de reservista<span class="error_tag">*</span></label>
-                         <input wire:model="fields.reservist_certificate"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-2 mb-3">
-                         <label class="form-label ">Tipo sanguineo<span class="error_tag">*</span></label>
-                         <input wire:model="fields.blood_type"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-2 mb-3">
-                         <label class="form-label ">Fator Rh<span class="error_tag">*</span></label>
-                         <input wire:model="fields.rh_factor"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-
-                      <div class="col-lg-4 mb-3">
-                         <label class="form-label ">Identidade profissional 1<span class="error_tag">*</span></label>
-                         <input wire:model="fields.professional_identity_1"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Número de identidade profissional<span class="error_tag">*</span></label>
-                         <input wire:model="fields.professional_id_number_1"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Sigla de identidade profissional<span class="error_tag">*</span></label>
-                         <input wire:model="fields.professional_identity_acronym_1"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Identidade profissional 2<span class="error_tag">*</span></label>
-                         <input wire:model="fields.professional_identity_2"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Número de identidade profissional<span class="error_tag">*</span></label>
-                         <input wire:model="fields.professional_id_number_2"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Sigla de identidade profissional<span class="error_tag">*</span></label>
-                         <input wire:model="fields.professional_identity_acronym_2"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Uf identidade profissional<span class="error_tag">*</span></label>
-
-                         <livewire:uf-select.uf-select
-                            :defaultValue="$currentUfIdent"
-                            :customEvent="'selectedUfIdent'"
-                         />
-
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Carteira trabalho providência social<span class="error_tag">*</span></label>
-                         <input wire:model="fields.social_security_work_card"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Numero Ctps<span class="error_tag">*</span></label>
-                         <input wire:model="fields.ctps_number"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Serie<span class="error_tag">*</span></label>
-                         <input wire:model="fields.serie_wallet"  maxlength="70" type="text"
-                            class="form-control ps-0 "
-                            autocomplete="off" required>
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">Uf carteira<span class="error_tag">*</span></label>
-                            <livewire:uf-select.uf-select
-                                :defaultValue="$currentUfCarteira"
-                                :customEvent="'selectedUfCarteira'"
-                            />
-                      </div>
-                      <div class="col-lg-3 mb-3">
-                         <label class="form-label ">CID<span class="error_tag">*</span></label>
-                         <div class="input-group input-group-flat">
-                            <select  wire:model="fields.cid_wallet"  class="form-control ps-0" wire:ignore>
-                               <option value="0">Selecione</option>
-                               <option value="1">Deficiente Físico</option>
-                               <option value="2">Deficiente Visual</option>
-                               <option value="3">Deficiente Intelectual</option>
-                               <option value="4">Deficiente Auditivo</option>
-                               <option value="5">Autista</option>
-                            </select>
-                         </div>
-                      </div>
+                <div class="col-lg-2 mb-3">
+                   <label class="form-label ">Nº<span class="error_tag">*</span></label>
+                   <input wire:model="fields.number_voter"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-2 mb-3">
+                   <label class="form-label ">Zona<span class="error_tag">*</span></label>
+                   <input wire:model="fields.zone_voter"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-2 mb-3">
+                   <label class="form-label ">Seção<span class="error_tag">*</span></label>
+                   <input wire:model="fields.section"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Carteira nacional habilitação<span class="error_tag">*</span></label>
+                   <input wire:model="fields.national_drivers_license"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Certificado de reservista<span class="error_tag">*</span></label>
+                   <input wire:model="fields.reservist_certificate"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-2 mb-3">
+                   <label class="form-label ">Tipo sanguineo<span class="error_tag">*</span></label>
+                   <input wire:model="fields.blood_type"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-2 mb-3">
+                   <label class="form-label ">Fator Rh<span class="error_tag">*</span></label>
+                   <input wire:model="fields.rh_factor"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-4 mb-3">
+                   <label class="form-label ">Identidade profissional 1<span class="error_tag">*</span></label>
+                   <input wire:model="fields.professional_identity_1"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Número de identidade profissional<span class="error_tag">*</span></label>
+                   <input wire:model="fields.professional_id_number_1"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Sigla de identidade profissional<span class="error_tag">*</span></label>
+                   <input wire:model="fields.professional_identity_acronym_1"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Identidade profissional 2<span class="error_tag">*</span></label>
+                   <input wire:model="fields.professional_identity_2"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Número de identidade profissional<span class="error_tag">*</span></label>
+                   <input wire:model="fields.professional_id_number_2"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Sigla de identidade profissional<span class="error_tag">*</span></label>
+                   <input wire:model="fields.professional_identity_acronym_2"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Uf identidade profissional<span class="error_tag">*</span></label>
+                   <livewire:uf-select.uf-select
+                      :defaultValue="$currentUfIdent"
+                      :customEvent="'selectedUfIdent'"
+                      />
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Carteira trabalho providência social<span class="error_tag">*</span></label>
+                   <input wire:model="fields.social_security_work_card"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Numero Ctps<span class="error_tag">*</span></label>
+                   <input wire:model="fields.ctps_number"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Serie<span class="error_tag">*</span></label>
+                   <input wire:model="fields.serie_wallet"  maxlength="70" type="text"
+                      class="form-control ps-0 "
+                      autocomplete="off" required>
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">Uf carteira<span class="error_tag">*</span></label>
+                   <livewire:uf-select.uf-select
+                      :defaultValue="$currentUfCarteira"
+                      :customEvent="'selectedUfCarteira'"
+                      />
+                </div>
+                <div class="col-lg-3 mb-3">
+                   <label class="form-label ">CID<span class="error_tag">*</span></label>
+                   <div class="input-group input-group-flat">
+                      <select  wire:model="fields.cid_wallet"  class="form-control ps-0" wire:ignore>
+                         <option value="0">Selecione</option>
+                         <option value="1">Deficiente Físico</option>
+                         <option value="2">Deficiente Visual</option>
+                         <option value="3">Deficiente Intelectual</option>
+                         <option value="4">Deficiente Auditivo</option>
+                         <option value="5">Autista</option>
+                      </select>
                    </div>
                 </div>
              </div>
-             @endif
-             @if($selectedTab == "outros_dados")
-             <div id="nome_social" role="tabpanel">
-                <div class="page-body">
-                   <div class="container-fluid">
-                      <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card mb-3">
-                              <div class="card-body row">
-                                <label class="mb-3" >Nome social</label>
-                                <div class="col-lg-3 mb-3">
-                                    <label class="form-label ">Inclusão do nome social<span class="error_tag">*</span></label>
-                                    <div class="input-group input-group-flat">
-                                       <select  wire:model="fields.social_name_visible"  class="form-control ps-0" wire:ignore>
-                                          <option value="0">Selecione</option>
-                                          <option value="1">Suprimir</option>
-                                          <option value="2">Imprimir</option>
-                                       </select>
-                                    </div>
-                                    @if (in_array("certificate", $errorsKeys))
-                                    <div class="error_tag" role="alert">
-                                       O campo Certidão é obrigatório
-                                    </div>
-                                    @endif
-                                 </div>
-                                 <div class="col-lg-6 mb-3">
-                                    <label class="form-label ">Nome social<span class="error_tag">*</span></label>
-                                    <input wire:model="fields.name_social"  maxlength="70" type="text"
-                                       class="form-control ps-0 "
-                                       autocomplete="off" required>
-                                 </div>
-
-                              </div>
+          </div>
+       </div>
+       @endif
+       @if($selectedTab == "outros_dados")
+       <div id="nome_social" role="tabpanel">
+          <div class="page-body">
+             <div class="container-fluid">
+                <div class="row">
+                   <div class="col-lg-12">
+                      <div class="card mb-3">
+                         <div class="card-body row">
+                            <label class="mb-3" >Nome social</label>
+                            <div class="col-lg-3 mb-3">
+                               <label class="form-label ">Inclusão do nome social<span class="error_tag">*</span></label>
+                               <div class="input-group input-group-flat">
+                                  <select  wire:model="fields.social_name_visible"  class="form-control ps-0" wire:ignore>
+                                     <option value="0">Selecione</option>
+                                     <option value="1">Suprimir</option>
+                                     <option value="2">Imprimir</option>
+                                  </select>
+                               </div>
+                               @if (in_array("certificate", $errorsKeys))
+                               <div class="error_tag" role="alert">
+                                  O campo Certidão é obrigatório
+                               </div>
+                               @endif
                             </div>
-
-
-                            <div class="card mb-3">
-                                <div class="card-body row">
-                                    <div id="gemeo" role="tabpanel">
-                                        <div class="row">
-                                            <label class="mb-3" >Gemeos</label>
-                                           <div class="col-lg-3 mb-3">
-                                              <label class="form-label ">Nº DE RG DE IRMÃO GÊMEO<span class="error_tag">*</span></label>
-                                              <input wire:model="fields.rg_gemeo"  maxlength="70" type="text"
-                                                 class="form-control ps-0 "
-                                                 autocomplete="off" required>
-                                              @if (in_array("certificate", $errorsKeys))
-                                              <div class="error_tag" role="alert">
-                                                 O campo Certidão é obrigatório
-                                              </div>
-                                              @endif
-                                           </div>
-                                           <div class="col-lg-6 mb-3">
-                                              <label class="form-label ">NOME DE IRMÃO GÊMEO <span class="error_tag">*</span></label>
-                                              <input wire:model="fields.name_gemeo"  maxlength="70" type="text"
-                                                 class="form-control ps-0 "
-                                                 autocomplete="off" required>
-                                           </div>
-                                        </div>
+                            <div class="col-lg-6 mb-3">
+                               <label class="form-label ">Nome social<span class="error_tag">*</span></label>
+                               <input wire:model="fields.name_social"  maxlength="70" type="text"
+                                  class="form-control ps-0 "
+                                  autocomplete="off" required>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="card mb-3">
+                         <div class="card-body row">
+                            <div id="gemeo" role="tabpanel">
+                               <div class="row">
+                                  <label class="mb-3" >Gemeos</label>
+                                  <div class="col-lg-3 mb-3">
+                                     <label class="form-label ">Nº DE RG DE IRMÃO GÊMEO<span class="error_tag">*</span></label>
+                                     <input wire:model="fields.rg_gemeo"  maxlength="70" type="text"
+                                        class="form-control ps-0 "
+                                        autocomplete="off" required>
+                                     @if (in_array("certificate", $errorsKeys))
+                                     <div class="error_tag" role="alert">
+                                        O campo Certidão é obrigatório
                                      </div>
-
-                                </div>
-                              </div>
-
-
-
-
-                            <div class="card mb-3">
-                                <div class="card-body row">
-                                    <div id="nomes_anteriores" role="tabpanel">
-                                        <div class="page-body">
-                                           <div class="container-fluid">
-                                              <div class="row">
-                                                <label class="mb-3" >Nomes anteriores</label>
-                                                 <div class="col-lg-6 mb-3">
-                                                    <label class="form-label ">Nomes anteriores<span class="error_tag">*</span></label>
-                                                    <input wire:model="fields.names_previous"  maxlength="70" type="text"
-                                                       class="form-control ps-0 "
-                                                       autocomplete="off" required>
-                                                 </div>
-                                                 <div class="col-lg-6 mb-3">
-                                                    <label class="form-label ">Filiações anteriores<span class="error_tag">*</span></label>
-                                                    <input wire:model="fields.filitions_previous"  maxlength="70" type="text"
-                                                       class="form-control ps-0 "
-                                                       autocomplete="off" required>
-                                                 </div>
-                                              </div>
-                                           </div>
-
-                                </div>
-                              </div>
-
-
-                          </div>
+                                     @endif
+                                  </div>
+                                  <div class="col-lg-6 mb-3">
+                                     <label class="form-label ">NOME DE IRMÃO GÊMEO <span class="error_tag">*</span></label>
+                                     <input wire:model="fields.name_gemeo"  maxlength="70" type="text"
+                                        class="form-control ps-0 "
+                                        autocomplete="off" required>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="card mb-3">
+                         <div class="card-body row">
+                            <div id="gemeo" role="tabpanel">
+                               <div class="row">
+                                  <label class="mb-3" >Nomes anteriores</label>
+                                  <div class="col-lg-6 mb-3">
+                                     <label class="form-label ">Nomes anteriores<span class="error_tag">*</span></label>
+                                     <input wire:model="fields.names_previous"  maxlength="70" type="text"
+                                        class="form-control ps-0 "
+                                        autocomplete="off" required>
+                                  </div>
+                                  <div class="col-lg-6 mb-3">
+                                     <label class="form-label ">Filiações anteriores<span class="error_tag">*</span></label>
+                                     <input wire:model="fields.filitions_previous"  maxlength="70" type="text"
+                                        class="form-control ps-0 "
+                                        autocomplete="off" required>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                   @endif
+                   @if($selectedTab == "caracteristicas")
+                   <div class=" mb-3">
+                      <div class=" row">
+                         <div id="gemeo" role="tabpanel">
+                            <div class="row">
+                               @foreach($caracteristics as $ca)
+                               <div class="col-lg-6 mb-3">
+                                  <label class="form-label "> {{$ca->type}}<span class="error_tag">*</span></label>
+                                  <select class="form-control ps-0" name="select">
+                                     @foreach($ca->items as $item)
+                                     <option   value="valor1">{{$item}}</option>
+                                     @endforeach
+                                  </select>
+                               </div>
+                               @endforeach
+                            </div>
+                         </div>
                       </div>
                    </div>
                    @endif

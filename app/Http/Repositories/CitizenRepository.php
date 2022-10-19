@@ -70,5 +70,23 @@ class CitizenRepository {
     public function checkMandatory($field){
         return in_array($field, $this->mandatoryFilds);
     }
+
+    public function getCharacteristics(){
+        $characteristics = [];
+
+        $obj = new \StdClass;
+        $obj->type = 'Cor';
+        $obj->items = ['Branco', 'Negro', 'Pardo'];
+
+        array_push($characteristics, $obj);
+
+        $obj = new \StdClass;
+        $obj->type = 'Cor do cabelo';
+        $obj->items = ['Branco', 'Negro', 'Loiro'];
+
+        array_push($characteristics, $obj);
+
+        return $characteristics;
+    }
 }
 
