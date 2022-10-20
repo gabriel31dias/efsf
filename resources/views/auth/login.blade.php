@@ -8,7 +8,7 @@
          <img class="absolute inset-0 h-full w-full object-cover" src="{{ asset('static/bg-digital.jpg') }}" />
       </div>
 
-   <div class="lg:col-span-1 mx-auto container-tight lg:py-4 pb-10">
+   <div class="lg:col-span-1 mx-auto container-tight lg:py-4 ">
       <div class="text-center px-2 mb-4 grid">
          <img class="w-14 justify-self-end" src="{{ asset('static/amapa.png') }}" alt="">
          <img class="w-28 justify-self-center mt-10" src="{{ asset('static/pca.png') }}" alt="">
