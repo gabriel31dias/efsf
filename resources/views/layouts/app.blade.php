@@ -114,11 +114,25 @@
                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                <span class="navbar-toggler-icon"></span>
                </button>
-               <h1 style="text-align:center;background-color:#206bc4;  border-bottom-left-radius: 25px;" >
-                  <a href=".">
-                    <h2 style="color: white">Sic</h2>
+               <h1 class="" style="text-align:center;" >
+                  <div class="bg-sky-800 pt-2">
+                  <div class="relative ">
+                     <a class="text-decoration-none shadow-lg" href="#">
+                        <div class="flex px-4 items-center">
+                           <img class="w-8 mx-8" src="{{ asset('static/pca.png') }}" alt="">
+                           <h2 style="color: white" class="text-xl font-bold mt">SIC</h2>
+                        </div>
+                     </div>
+                   </div>
+
+                        <div class="h-4" style="overflow: hidden;">
+                           <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+                             <path class="fill-sky-800" d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;"></path>
+                           </svg>
+                        </div>
                   </a>
-               </h1>
+
+                  </h1>
                <div class="navbar-nav flex-row d-lg-none">
                   <div class="nav-item d-none d-lg-flex me-3">
                      <div class="btn-list">

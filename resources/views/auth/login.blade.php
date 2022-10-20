@@ -1,11 +1,20 @@
 @extends('layouts.app')
 @section('content')
-<div class="page page-center">
-   <div class="container-tight py-4">
-      <div class="text-center mb-4">
-         <a href="." class="navbar-brand navbar-brand-autodark"><img  height="100" alt=""></a>
+<div class="page page-center flex">
+
+   <div class="grid lg:grid-cols-3">
+
+      <div class="lg:block hidden lg:col-span-2 h-48  min-h-screen relative overflow-hidden bg-gray-400 shadow-2xl" >
+         <img class="absolute inset-0 h-full w-full object-cover" src="{{ asset('static/bg-digital.jpg') }}" />
       </div>
-      <form method="POST" action="{{ route('login.auth') }}" class="card card-md" action="." autocomplete="off">
+
+   <div class="lg:col-span-1 mx-auto container-tight lg:py-4 pb-10">
+      <div class="text-center px-2 mb-4 grid">
+         <img class="w-14 justify-self-end" src="{{ asset('static/amapa.png') }}" alt="">
+         <img class="w-28 justify-self-center mt-10" src="{{ asset('static/pca.png') }}" alt="">
+         <span class="font-bold text-3xl"> SISTEMA DE IDENTIFICAÇÃO CIVIL  </span>
+      </div>
+      <form method="POST" action="{{ route('login.auth') }}" class="card " action="." autocomplete="off">
          <div class="card-body">
             <h2 class="card-title text-center mb-4">Logar no sistema</h2>
             <div class="mb-3">
@@ -46,14 +55,16 @@
             <div class="mb-2">
                <label class="form-check">
                <input type="checkbox" class="form-check-input"/>
-               <span class="form-check-label">Remember me on this device</span>
+               <span class="form-check-label">Manter-me conectado</span>
                </label>
             </div>
-            <div class="form-footer">
-               <button type="submit" class="btn btn-primary bg-sky-600 w-100">Sign in</button>
+            <div class="grid form-footer">
+               <button type="submit" class="btn btn-primary bg-sky-800 rounded-full w-3/5 justify-self-center ">Entrar</button>
             </div>
          </div>
       </form>
    </div>
+</div>
+
 </div>
 @endsection
