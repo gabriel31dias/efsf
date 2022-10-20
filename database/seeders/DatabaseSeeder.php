@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             Profile::class,
             TypeStreet::class,
+            FeatureSeeder::class,
             User::class,
             ServiceStations::class,
             Occupation::class,

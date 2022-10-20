@@ -2,7 +2,8 @@
 
 namespace App\Http\Repositories;
 use App\Models\Citizen;
-
+use App\Models\Feature;
+use App\Models\FeatureOption;
 
 class CitizenRepository {
 
@@ -74,19 +75,23 @@ class CitizenRepository {
     public function getCharacteristics(){
         $characteristics = [];
 
-        $obj = new \StdClass;
-        $obj->type = 'Cor';
-        $obj->items = ['Branco', 'Negro', 'Pardo'];
+        $getFeautures = Feature::get();
 
-        array_push($characteristics, $obj);
 
-        $obj = new \StdClass;
-        $obj->type = 'Cor do cabelo';
-        $obj->items = ['Branco', 'Negro', 'Loiro'];
+        $getFeautures = $getFeautures->map(function ($item) {
+            $obj = new \StdClass;
+            $obj->type = $item->name;
+            $items = FeatureOption::where('feature_id', $item->id)->get();
 
-        array_push($characteristics, $obj);
+            $items = $items->map(function ($item) {
+                return $item->name;
+            });
 
-        return $characteristics;
+            $obj->items = $items;
+            return $obj;
+        });
+
+        return $getFeautures;
     }
 }
 
