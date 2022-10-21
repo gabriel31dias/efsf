@@ -1069,9 +1069,23 @@
                          <div id="gemeo" role="tabpanel">
                             <div class="row">
                                @foreach($caracteristics as $ca)
-                               <div class="col-lg-6 mb-3">
-                                  <label class="form-label "> {{$ca->type}}<span class="error_tag">*</span></label>
-                                  <select class="form-control ps-0" name="select">
+                                {{var_dump($fieldsFeatures)}}
+
+
+                               @if($ca->type == "Amputação")
+                                <div class="col-lg-3 mb-3">
+                                    <label   label class="form-label ">Altura<span class="error_tag">*</span></label>
+                                    <input wire:model="fields.height" maxlength="70" type="text"
+                                        class="form-control ps-0 "
+
+                                        autocomplete="off" required>
+                                </div>
+                               @endif
+
+                               <div class="col-lg-3 mb-3">
+                                  <label class="form-label ">{{$ca->type}}<span class="error_tag">*</span></label>
+                                    <select    wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
+
                                      @foreach($ca->items as $item)
                                      <option   value="valor1">{{$item}}</option>
                                      @endforeach

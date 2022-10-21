@@ -97,11 +97,16 @@ class CitizenIndex extends Component
         "cell" => "celular",
         "telephone" => "telefone",
         "email" => "email",
-        "zip_code" => "cep"
+        "zip_code" => "cep",
+        "height" => "altura"
     ];
 
 
     public $selectedTab;
+
+    public $fieldsFeatures = [
+        "name" => ""
+    ];
 
     public $fields = [
         "name" => "",
@@ -180,7 +185,9 @@ class CitizenIndex extends Component
         "ctps_number" => "",
         "serie_wallet" => "",
         "uf_wallet" => "",
-        "cid_wallet" => ""
+        "cid_wallet" => "",
+        "height" => "",
+        "features" => ""
     ];
 
     public $curretTypeStreet;
@@ -411,6 +418,7 @@ class CitizenIndex extends Component
         }
 
 
+        $this->fieldsFeatures = \json_decode($citizen->features);
 
         if (isset($citizen->id)) {
             $this->fields = [
@@ -493,7 +501,9 @@ class CitizenIndex extends Component
                 "ctps_number" => $citizen->ctps_number,
                 "serie_wallet" => $citizen->serie_wallet,
                 "uf_wallet" => $citizen->uf_wallet,
-                "cid_wallet" => $citizen->cid_wallet
+                "cid_wallet" => $citizen->cid_wallet,
+                "height" => $citizen->height,
+                "features" => \json_decode($citizen->features)
             ];
         }
 
@@ -835,7 +845,9 @@ class CitizenIndex extends Component
             "ctps_number" => $this->fields["ctps_number"] ?? null,
             "serie_wallet" => $this->fields["serie_wallet"] ?? null,
             "uf_wallet" => $this->fields['uf_wallet'] ?? null,
-            "cid_wallet" => $this->fields["cid_wallet"] ?? null
+            "cid_wallet" => $this->fields["cid_wallet"] ?? null,
+            "height" => $this->fields["height"] ?? null,
+            "features" => \json_encode($this->fields["features"]) ?? null,
          ]);
 
         $this->messageSuccess();

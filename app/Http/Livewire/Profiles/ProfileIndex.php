@@ -7,6 +7,8 @@ use App\Models\Profile;
 class ProfileIndex extends Component
 {
     public $perfilName;
+
+
     public $daysToAccessInspiration;
     public $daysToActivityLock;
     public $searchTerm = null;
@@ -38,18 +40,8 @@ class ProfileIndex extends Component
     public function filtersCall(){
         $searchTerm = "";
 
-        if($this->perfilName){
-            $searchTerm = '%'. $this->perfilName .'%';
-            $profiles = Profile::where('name_profile','ilike', '%'. $searchTerm .'%' );
-        }
-
-        if($this->daysToAccessInspiration){
-            $searchTerm = '%'. $this->daysToAccessInspiration .'%';
-            $profiles = Profile::where('name_profile','ilike', '%'. $searchTerm .'%' );
-        }
-
-        if($this->daysToActivityLock){
-            $searchTerm = '%'. $this->daysToActivityLock .'%';
+        if($this->searchTerm){
+            $searchTerm = '%'. $this->searchTerm .'%';
             $profiles = Profile::where('name_profile','ilike', '%'. $searchTerm .'%' );
         }
 

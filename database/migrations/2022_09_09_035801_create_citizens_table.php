@@ -108,6 +108,11 @@ return new class extends Migration
             $table->string('uf_wallet')->nullable();
             $table->integer('cid_wallet')->nullable();
 
+
+            $table->json('features')->nullable();
+
+            $table->string('height')->nullable();
+
             $table->timestamps();
         });
     }

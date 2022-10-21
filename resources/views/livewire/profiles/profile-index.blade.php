@@ -46,6 +46,7 @@
                    <line x1="21" y1="21" x2="15" y2="15"></line>
                 </svg>
              </span>
+             <input style="width: 100%" wire:model="searchTerm" placeholder="Nome" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
           </div>
           <br>
           <div class="card">
@@ -53,19 +54,15 @@
                 <div id="table-default" class="table-responsive">
                    <table class="table">
                       <thead>
-                         <tr>
-                            <th>
-                                <input style="width: 100%" wire:model="perfilName" placeholder="Nome" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
-                            </th>
-
-                            <th>
-                                <input style="width: 100%" wire:model="daysToAccessInspiration" placeholder="Cpf" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
-                            </th>
-
-                            <th>
-                                <input style="width: 100%" wire:model="daysToActivityLock" placeholder="Celular" maxlength="70" type="text" class="form-control" autocomplete="off" required="">
-                           </th>
-                         </tr>
+                        <th>
+                          Nome Perfil
+                        </th>
+                        <th>
+                          Prazo para expiração (em dias)*
+                        </th>
+                        <th>
+                          Prazo para expiração por inatividade (em dias)*
+                        </th>
                       </thead>
                       <tbody class="table-tbody">
                         @foreach ($profiles as $profile)
