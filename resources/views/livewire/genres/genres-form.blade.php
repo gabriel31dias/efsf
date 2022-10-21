@@ -12,7 +12,7 @@
                   Cadastro
                </div>
                <h2 class="page-title">
-                  Géneros
+                  Gêneros
                </h2>
             </div>
             <!-- Page title actions -->
@@ -38,12 +38,14 @@
    </div>
    <div class="page-body">
       <div class="container-fluid">
+   <div class="card">
+      <div class="card-body">
          <div class="modal-content">
             <div class="modal-body">
                <div class="row">
                   <div class="col-lg-4">
                      <div class="mb-3">
-                        <label class="form-label">Nome perfil<span class="error_tag">*</span></label>
+                        <label class="form-label">Nome Gênero<span class="error_tag">*</span></label>
                         <div class="input-group input-group-flat">
                            <input wire:model="fields.name" maxlength="70" type="text" class="form-control ps-0"  autocomplete="off" required>
                         </div>
@@ -55,6 +57,8 @@
                </div>
             </div>
          </div>
+      </div>
+   </div>
       </div>
    </div>
 </form>

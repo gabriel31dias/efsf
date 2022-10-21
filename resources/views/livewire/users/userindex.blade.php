@@ -49,7 +49,7 @@
                <line x1="21" y1="21" x2="15" y2="15"></line>
             </svg>
          </span>
-         <input wire:model="searchTerm" type="text" value="" class="form-control" placeholder="Pesquisar.."
+         <input wire:model="searchTerm" type="text" value="" class="form-control w-1/2" placeholder="Pesquisar.."
                >
       </div>
 

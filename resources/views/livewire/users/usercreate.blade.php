@@ -62,7 +62,7 @@
              <div class="modal-content">
                 <div class="modal-body">
                    <div class="row">
-                      <div class="col-lg-4">
+                      <div class="col-lg-8">
                          <div class="mb-3">
                             <label class="form-label">Nome Completo <span class="error_tag">*</span></label>
                             <div class="input-group input-group-flat">
@@ -92,20 +92,24 @@
                             @endif
                          </div>
                       </div>
-                      <div class="col-lg-4">
-                         <div class="mb-3">
-                            <label class="form-label">Cep</label>
-                            <div class="input-group input-group-flat">
-                               <input id="cep"  onblur="pesquisacep(this.value);" wire:model="fields.cep" type="text" class="form-control"  autocomplete="off">
-                            </div>
-                         </div>
-                      </div>
+   
                    </div>
                 </div>
+                <div class="border-b border-gray-200 my-2 font-bold">
+                  <span>Endereço</span>
+                </div>
                 <div class="row">
-                   <div class="col-lg-4">
+                  <div class="col-lg-2">
+                     <div class="mb-3">
+                        <label class="form-label">CEP</label>
+                        <div class="input-group input-group-flat">
+                           <input id="cep"  onblur="pesquisacep(this.value);" wire:model="fields.cep" type="text" class="form-control"  autocomplete="off">
+                        </div>
+                     </div>
+                  </div>
+                   <div class="col-lg-2">
                       <div class="mb-3">
-                         <label class="form-label">Tipo de Logradouro</label>
+                         <label class="form-label">Logradouro</label>
                          <livewire:users.typestreets-select :typestreet="$type_street" />
                       </div>
                    </div>
@@ -149,7 +153,7 @@
                       </div>
                    </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                    <div class="mb-3">
                       <label class="form-label">Cidade</label>
                       <div class="input-group input-group-flat">
@@ -157,16 +161,17 @@
                       </div>
                    </div>
                 </div>
+                <div class="col-lg-1">
+                  <div class="mb-3">
+                     <label class="form-label">UF</label>
+                     <div class="input-group input-group-flat">
+                        <input id="uf" maxlength="4"type_streat  wire:model="fields.uf" type="text" class="form-control"  autocomplete="off">
+                     </div>
+                  </div>
+               </div>
              </div>
              <div class="row">
-                <div class="col-lg-3">
-                   <div class="mb-3">
-                      <label class="form-label">UF</label>
-                      <div class="input-group input-group-flat">
-                         <input id="uf" maxlength="4"type_streat  wire:model="fields.uf" type="text" class="form-control"  autocomplete="off">
-                      </div>
-                   </div>
-                </div>
+                
                 <div class="col-lg-4">
                    <div class="mb-3">
                       <label class="form-label">Celular <span style="color: red">*</span></label>
@@ -175,7 +180,7 @@
                       </div>
                    </div>
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-4">
                    <div class="mb-3">
                       <label class="form-label">Email <span style="color: red">*</span></label>
                       <div class="input-group input-group-flat">
@@ -183,21 +188,22 @@
                       </div>
                    </div>
                 </div>
+                <div class="col-lg-4">
+                  <div class="mb-3">
+                     <label class="form-label">Confirmação de email <span style="color: red">*</span></label>
+                     <div class="input-group input-group-flat">
+                        <input  maxlength="50" wire:model="fields.email_confirm" type="text" class="form-control "  autocomplete="off">
+                     </div>
+                     @if ($fields['email_confirm'] != $fields['email'])
+                     <div  class="error_tag" role="alert">
+                        O email digitado está diferente da confirmação
+                     </div>
+                     @endif
+                  </div>
+               </div>
              </div>
              <div class="row">
-                <div class="col-lg-4">
-                   <div class="mb-3">
-                      <label class="form-label">Confirmação de email <span style="color: red">*</span></label>
-                      <div class="input-group input-group-flat">
-                         <input  maxlength="50" wire:model="fields.email_confirm" type="text" class="form-control "  autocomplete="off">
-                      </div>
-                      @if ($fields['email_confirm'] != $fields['email'])
-                      <div  class="error_tag" role="alert">
-                         O email digitado está diferente da confirmação
-                      </div>
-                      @endif
-                   </div>
-                </div>
+               
                 <div class="col-lg-4">
                    <div class="mb-3">
                       <label class="form-label">Login <span style="color: red">*</span></label>
@@ -240,16 +246,17 @@
                       @endif
                    </div>
                 </div>
+                <div class="col-lg-4">
+                  <div class="mb-3">
+                     <label class="form-label">Perfil de Acesso</label>
+                     <livewire:users.profile-select :perfil_name="$perfil_namex"/>
+                  </div>
+               </div>
              </div>
              <div class="row">
              </div>
              <div class="row">
-                <div class="col-lg-6">
-                   <div class="mb-3">
-                      <label class="form-label">Perfil de Acesso</label>
-                      <livewire:users.profile-select :perfil_name="$perfil_namex"/>
-                   </div>
-                </div>
+  
              </div>
              <div class="container-fluid card">
                 <label style="margin-top:1%" class="form-label">Postos de atendimento</label>

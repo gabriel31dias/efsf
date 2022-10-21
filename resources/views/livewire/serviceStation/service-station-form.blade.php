@@ -112,9 +112,13 @@
                         </div>
                      </div>
 
-                     <div class="col-lg-4">
+                     <div class="border-b border-gray-200 mt-2 mb-3 font-bold">
+                        <span>Endereço</span>
+                      </div>
+
+                     <div class="col-lg-3">
                         <div class="mb-3">
-                           <label class="form-label">Cep<span class="error_tag"> *</span></label>
+                           <label class="form-label">CEP<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
                               <input id="cep" onblur="pesquisacep(this.value);" wire:model="fields.cep" type="text"
                                  class="form-control" autocomplete="off">
@@ -122,14 +126,14 @@
                            @error('fields.cep') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-3">
                         <div class="mb-3">
-                           <label class="form-label">Tipo de Logradouro<span class="error_tag"> *</span></label>
+                           <label class="form-label">Logradouro<span class="error_tag"> *</span></label>
                            <livewire:users.typestreets-select :typestreet="$type_street" />
                            @error('fields.type_of_street') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
-                     <div class="col-lg-6">
+                     <div class="col-lg-5">
                         <div class="mb-3">
                            <label class="form-label">Endereço<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
@@ -139,7 +143,7 @@
                            @error('fields.address') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
-                     <div class="col-lg-2">
+                     <div class="col-lg-1">
                         <div class="mb-3">
                            <label class="form-label">Nº<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
@@ -149,7 +153,7 @@
                         </div>
                      </div>
 
-                     <div class="col-lg-4">
+                     <div class="col-lg-3">
                         <div class="mb-3">
                            <label class="form-label">Bairro<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
@@ -179,7 +183,7 @@
                            @error('fields.city') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-1">
                         <div class="mb-3">
                            <label class="form-label">UF<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">

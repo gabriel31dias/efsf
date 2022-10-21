@@ -31,7 +31,6 @@
       <link href="{{ asset('dist/css/tabler-payments.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dist/css/tabler-vendors.min.css') }}" rel="stylesheet">
 
-      <script src="./dist/js/tabler.min.js?1661943614" defer></script>
       <script src="./dist/js/demo.min.js?1661943614" defer></script>
       <link href="{{ asset('dist/css/demo.min.css') }}" rel="stylesheet">
       <script data-turbolinks-track="reload"  src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -108,7 +107,7 @@
         </div>
       </header>
 
-      <div class="page">
+      <div class="page p-10">
          <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
             <div class="container-fluid">
                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
@@ -254,7 +253,7 @@
 
                            </span>
                            <span class="nav-link-title">
-                           Cadastro de Géneros
+                           Cadastro de Gêneros
                            </span>
                         </a>
                      </li>
@@ -285,73 +284,89 @@
                         </a>
                      </li>
 
-                     <li class="nav-item">
-                        <a class="nav-link" href='{{ route('registry.index') }}' >
-                           <span class="nav-link-icon d-md-none d-lg-inline-block">
-                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                              <i class="ti ti-certificate"></i>
-
-
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                          <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                            <i class="ti ti-plus"></i>
                            </span>
-                           <span class="nav-link-title">
-                           Cadastro de Cartório
-                           </span>
+                          <span class="nav-link-title">
+                            Cadastro de Cartório
+                          </span>
                         </a>
+                        <div class="dropdown-menu">
+                          <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                              <a class="dropdown-item"href='{{ route('registry.index') }}' >
+                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                                    <i class="ti ti-certificate"></i>
+                                 </span>
+                                 <span class="nav-link-title">
+                                 Novo Cartório
+                                 </span>
+                              </a>
+                              <a class="dropdown-item" href='{{ route('registry-transfer.index') }}' >
+                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-arrows-left-right"></i>
+      
+      
+                                 </span>
+                                 <span class="nav-link-title">
+                                    Transferência de Cartório
+                                 </span>
+                              </a>
+
+                              <a class="dropdown-item" href='{{ route('registry-interdiction.index') }}' >
+                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                                    <i class="ti ti-ban"></i>
+      
+                                 </span>
+                                 <span class="nav-link-title">
+                                    Interdição de Cartório
+                                 </span>
+                              </a>
+
+                              <a class="dropdown-item" href='{{ route('registry-suspension.index') }}' >
+                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                                    <i class="ti ti-ban"></i>
+      
+      
+                                 </span>
+                                 <span class="nav-link-title">
+                                    Suspensão de Cartório
+                                 </span>
+                              </a>
+
+                              <a class="dropdown-item" href='{{ route('blocked-certificate.index') }}' >
+                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                                    <i class="ti ti-ban"></i>
+      
+      
+                                 </span>
+                                 <span class="nav-link-title">
+                                    Bloqueio de Certidão
+                                 </span>
+                              </a>
+
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+
+   
+                     <li class="nav-item">
+                      
                      </li>
 
                      <li class="nav-item">
-                        <a class="nav-link" href='{{ route('registry-transfer.index') }}' >
-                           <span class="nav-link-icon d-md-none d-lg-inline-block">
-                              <i class="ti ti-arrows-left-right"></i>
-
-
-                           </span>
-                           <span class="nav-link-title">
-                              Transferência de Cartório
-                           </span>
-                        </a>
+                        
                      </li>
 
                      <li class="nav-item">
-                        <a class="nav-link" href='{{ route('registry-interdiction.index') }}' >
-                           <span class="nav-link-icon d-md-none d-lg-inline-block">
-                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                              <i class="ti ti-ban"></i>
-
-
-                           </span>
-                           <span class="nav-link-title">
-                              Interdição de Cartório
-                           </span>
-                        </a>
-                     </li>
-
-                     <li class="nav-item">
-                        <a class="nav-link" href='{{ route('registry-suspension.index') }}' >
-                           <span class="nav-link-icon d-md-none d-lg-inline-block">
-                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                              <i class="ti ti-ban"></i>
-
-
-                           </span>
-                           <span class="nav-link-title">
-                              Suspensão de Cartório
-                           </span>
-                        </a>
-                     </li>
-
-                     <li class="nav-item">
-                        <a class="nav-link" href='{{ route('blocked-certificate.index') }}' >
-                           <span class="nav-link-icon d-md-none d-lg-inline-block">
-                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                              <i class="ti ti-ban"></i>
-
-
-                           </span>
-                           <span class="nav-link-title">
-                              Bloqueio de Certidão
-                           </span>
-                        </a>
+                        
                      </li>
                   </ul>
                </div>
@@ -359,7 +374,7 @@
 
             @endif
          </aside>
-            @yield('content')
+            @yield('content')            
       </div>
       <!-- Libs JS -->
 

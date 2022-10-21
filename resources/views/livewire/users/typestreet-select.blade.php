@@ -4,7 +4,7 @@
       class="form-control"
          type="text"
          class="form-input"
-         placeholder="Search Tipo logradouro..."
+         placeholder="Tipo logradouro..."
          wire:model="query"
          wire:keydown.escape="reset1"
          wire:keydown.tab="reset1"

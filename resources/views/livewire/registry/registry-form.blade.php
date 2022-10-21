@@ -39,16 +39,7 @@
              <div class="card">
                 <div class="card-body">
                    <div class="row">
-                     <div class="col-lg-4">
-                        <div class="mb-3">
-                           <label class="form-label">Nome do Cartório<span class="error_tag"> *</span></label>
-                           <div class="input-group input-group-flat">
-                              <input wire:model="fields.name" type="text"
-                                 class="form-control" autocomplete="off" required>
-                           </div>
-                           @error('fields.name') <span class="text-danger"> {{ $message }}</span> @enderror
-                        </div>
-                     </div>
+
                      <div class="col-lg-2">
                         <div class="mb-3">
                            <label class="form-label">Codigo SIC<span class="error_tag"> *</span></label>
@@ -59,6 +50,18 @@
                            @error('fields.sic_code') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
+
+                     <div class="col-lg-4">
+                        <div class="mb-3">
+                           <label class="form-label">Nome do Cartório<span class="error_tag"> *</span></label>
+                           <div class="input-group input-group-flat">
+                              <input wire:model="fields.name" type="text"
+                                 class="form-control" autocomplete="off" required>
+                           </div>
+                           @error('fields.name') <span class="text-danger"> {{ $message }}</span> @enderror
+                        </div>
+                     </div>
+                    
                      <div class="col-lg-2">
                         <div class="mb-3">
                            <label class="form-label">CNS<span class="error_tag"> *</span></label>
@@ -119,18 +122,7 @@
                            @error('fields.assignment') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
-                     <div class="col-lg-3">
-                        <div class="mb-3">
-                           <label class="form-label">A Matricula neste cartório permite o valor XX para o dígito verificador?<span class="error_tag"> *</span></label>
-                           <div class="input-group input-group-flat">
-                              <select class="form-select" wire:model="fields.allow_digit">
-                                    <option value="1">SIM</option>
-                                    <option value="0">NAO</option>
-                              </select>
-                           </div>
-                           @error('fields.allow_digit') <span class="text-danger"> {{ $message }}</span> @enderror
-                        </div>
-                     </div>
+                    
                      <div class="col-lg-1">
                         <div class="mb-3">
                            <label class="form-label">UF<span class="error_tag">*</span></label>
@@ -147,8 +139,21 @@
 
                         </div>
                      </div>
+
+                      <div class="col-lg-5">
+                        <div class="mb-3">
+                           <label class="form-label">A Matricula neste cartório permite o valor XX para o dígito verificador?<span class="error_tag"> *</span></label>
+                           <div class="input-group input-group-flat w-1/5">
+                              <select class="form-select" wire:model="fields.allow_digit">
+                                    <option value="1">SIM</option>
+                                    <option value="0">NAO</option>
+                              </select>
+                           </div>
+                           @error('fields.allow_digit') <span class="text-danger"> {{ $message }}</span> @enderror
+                        </div>
+                     </div>
                      <div class="row" x-data="{action: @entangle('action')}" x-show="action == 'create'" >
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                            <div class="mb-3">
                               <label class="form-label">Data da Criação</label>
                               <div class="input-group input-group-flat">
@@ -159,7 +164,7 @@
                            </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                            <div class="mb-3">
                               <label class="form-label">Data de Encerramento</label>
                               <div class="input-group input-group-flat">
@@ -170,16 +175,6 @@
                            </div>
                         </div>
 
-                        <div class="col-lg-4">
-                           <div class="mb-3">
-                              <label class="form-label">Observação Data</label>
-                              <div class="input-group input-group-flat">
-                                 <input wire:model="fieldsCreateDate.note" type="text"
-                                    class="form-control" autocomplete="off" required>
-                              </div>
-                              @error('fieldsCreateDate.note') <span class="text-danger"> {{ $message }}</span> @enderror
-                           </div>
-                        </div>
                      </div>
                      <div class="col-lg-12">
                         <div class="mb-3">
