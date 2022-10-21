@@ -1069,7 +1069,7 @@
                          <div id="gemeo" role="tabpanel">
                             <div class="row">
                                @foreach($caracteristics as $ca)
-                                {{var_dump($fieldsFeatures)}}
+
 
 
                                @if($ca->type == "Amputação")

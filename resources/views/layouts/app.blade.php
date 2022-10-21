@@ -50,7 +50,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.js" integrity="sha512-P3/SDm/poyPMRBbZ4chns8St8nky2t8aeG09fRjunEaKMNEDKjK3BuAstmLKqM7f6L1j0JBYcIRL4h2G6K6Lew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
       @vite('resources/js/app.js')
-     
+
 
 
 
@@ -90,12 +90,27 @@
                 </a>
 
               </div>
+              <div class="nav-item dropdown d-none d-md-flex me-3">
+               <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
+                 <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
+
+                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
+                  <path d="M7 12h14l-3 -3m0 6l3 -3"></path>
+               </svg>
+               </a>
+
+             </div>
             </div>
+
+
+
             <div class="nav-item dropdown">
               <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                 <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
                 <div class="d-none d-xl-block ps-2">
-                  <div>{{Auth::user()->email ?? ''}}</div>
+                  <div>{{Auth::user()->email ?? ''}} </div>
                   <div class="mt-1 small text-muted">{{Auth::user()->name ?? ''}}</div>
                 </div>
               </a>
@@ -308,8 +323,8 @@
                               <a class="dropdown-item" href='{{ route('registry-transfer.index') }}' >
                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-arrows-left-right"></i>
-      
-      
+
+
                                  </span>
                                  <span class="nav-link-title">
                                     Transferência de Cartório
@@ -320,7 +335,7 @@
                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                     <i class="ti ti-ban"></i>
-      
+
                                  </span>
                                  <span class="nav-link-title">
                                     Interdição de Cartório
@@ -331,8 +346,8 @@
                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                     <i class="ti ti-ban"></i>
-      
-      
+
+
                                  </span>
                                  <span class="nav-link-title">
                                     Suspensão de Cartório
@@ -343,8 +358,8 @@
                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                     <i class="ti ti-ban"></i>
-      
-      
+
+
                                  </span>
                                  <span class="nav-link-title">
                                     Bloqueio de Certidão
@@ -356,17 +371,17 @@
                         </div>
                       </li>
 
-   
+
                      <li class="nav-item">
-                      
+
                      </li>
 
                      <li class="nav-item">
-                        
+
                      </li>
 
                      <li class="nav-item">
-                        
+
                      </li>
                   </ul>
                </div>
@@ -374,7 +389,7 @@
 
             @endif
          </aside>
-            @yield('content')            
+            @yield('content')
       </div>
       <!-- Libs JS -->
 
