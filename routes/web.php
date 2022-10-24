@@ -46,3 +46,6 @@ Route::resource('registry-suspension', App\Http\Controllers\RegistrySuspensionCo
 Route::resource('registry-transfer', App\Http\Controllers\RegistryTransferController::class);
 Route::resource('feature', App\Http\Controllers\FeatureController::class);
 
+Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
+
+

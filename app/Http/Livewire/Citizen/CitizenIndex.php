@@ -418,7 +418,7 @@ class CitizenIndex extends Component
         }
 
 
-        $this->fieldsFeatures = \json_decode($citizen->features);
+        $this->fieldsFeatures = \json_decode($citizen->features, true);
 
         if (isset($citizen->id)) {
             $this->fields = [
@@ -503,7 +503,7 @@ class CitizenIndex extends Component
                 "uf_wallet" => $citizen->uf_wallet,
                 "cid_wallet" => $citizen->cid_wallet,
                 "height" => $citizen->height,
-                "features" => \json_decode($citizen->features)
+                "features" =>  $this->fieldsFeatures
             ];
         }
 
@@ -847,7 +847,7 @@ class CitizenIndex extends Component
             "uf_wallet" => $this->fields['uf_wallet'] ?? null,
             "cid_wallet" => $this->fields["cid_wallet"] ?? null,
             "height" => $this->fields["height"] ?? null,
-            "features" => \json_encode($this->fields["features"]) ?? null,
+            "features" => \json_encode($this->fieldsFeatures) ?? null,
          ]);
 
         $this->messageSuccess();

@@ -1070,8 +1070,6 @@
                             <div class="row">
                                @foreach($caracteristics as $ca)
 
-
-
                                @if($ca->type == "Amputação")
                                 <div class="col-lg-3 mb-3">
                                     <label   label class="form-label ">Altura<span class="error_tag">*</span></label>
@@ -1087,7 +1085,7 @@
                                     <select    wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
 
                                      @foreach($ca->items as $item)
-                                     <option   value="valor1">{{$item}}</option>
+                                     <option   value="{{$item}}">{{$item}}</option>
                                      @endforeach
                                   </select>
                                </div>
