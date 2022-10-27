@@ -16,12 +16,17 @@ use App\Models\County;
 use App\Models\Occupation;
 use App\Models\MaritalStatus;
 use App\Models\ServiceStation;
+use Livewire\WithFileUploads;
 use PHPUnit\Framework\Constraint\Count;
 
 class CitizenIndex extends Component
 {
+
+    use WithFileUploads;
     public $searchTerm = null;
     public $genre_name;
+
+    public $file;
     public $searchCitizen;
     public $action;
     public $filterInactives;
@@ -39,6 +44,9 @@ class CitizenIndex extends Component
     public $genres;
     public $searchCpf;
     public $searchRg;
+
+    public $tempFile = "";
+    public $tempTypeFile = "";
     public $searchAnoProcesso;
     public $searchNumber;
     public $searchNrCedula;
@@ -75,6 +83,7 @@ class CitizenIndex extends Component
         "zone"
     ];
 
+    public $fieldsDigitalizedDocuments = ["field1"=>null];
     public $caracteristics;
 
     public $tranlaction_filds = [
@@ -275,6 +284,37 @@ class CitizenIndex extends Component
             "typeofcertificate" => $typeOfCertificate,
             "booknumber" => $bookNumber
         ]);
+    }
+
+    public function addedDocument(){
+        if(count($this->fieldsDigitalizedDocuments) == 1){
+
+            $item = new \stdClass;
+            $item->file = $this->tempFile;
+            $item->type = $this->fieldsDigitalizedDocuments['field1']['type'];
+            $this->fieldsDigitalizedDocuments['field1'] = $item;
+
+            $this->tempFile = "";
+            $this->tempTypeFile = "";
+
+
+            $countDocuments = count($this->fieldsDigitalizedDocuments) + 1;
+
+            $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
+            return ;
+        }
+
+        $countDocuments = count($this->fieldsDigitalizedDocuments) + 1;
+
+        $item = new \stdClass;
+        $item->file = $this->tempFile;
+        $item->type = "";
+
+
+        $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
+
+        $this->tempFile = "";
+        $this->tempTypeFile = "";
     }
 
     public function  selectedCountryTypeStreat($id)

@@ -72,6 +72,11 @@
           class="nav-link @if($selectedTab == "caracteristicas") 'active' @else   @endif"
           role="tab" tabindex="-1">Características</a>
        </li>
+       <li class="nav-item" role="presentation">
+          <a wire:click="setSelectedTab('documentos_digitalizados')"  data-bs-toggle="tab" aria-selected="false"
+          class="nav-link @if($selectedTab == "documentos_digitalizados") 'active' @else   @endif"
+          role="tab" tabindex="-1">Documentos digitalizados</a>
+       </li>
     </ul>
     <div class="card-body">
     <div class="tab-content">
@@ -1069,21 +1074,17 @@
                          <div id="gemeo" role="tabpanel">
                             <div class="row">
                                @foreach($caracteristics as $ca)
-
                                @if($ca->type == "Amputação")
-                                <div class="col-lg-3 mb-3">
-                                    <label   label class="form-label ">Altura<span class="error_tag">*</span></label>
-                                    <input wire:model="fields.height" maxlength="70" type="text"
-                                        class="form-control ps-0 "
-
-                                        autocomplete="off" required>
-                                </div>
+                               <div class="col-lg-3 mb-3">
+                                  <label   label class="form-label ">Altura<span class="error_tag">*</span></label>
+                                  <input wire:model="fields.height" maxlength="70" type="text"
+                                     class="form-control ps-0 "
+                                     autocomplete="off" required>
+                               </div>
                                @endif
-
                                <div class="col-lg-3 mb-3">
                                   <label class="form-label ">{{$ca->type}}<span class="error_tag">*</span></label>
-                                    <select    wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
-
+                                  <select    wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
                                      @foreach($ca->items as $item)
                                      <option   value="{{$item}}">{{$item}}</option>
                                      @endforeach
@@ -1092,6 +1093,46 @@
                                @endforeach
                             </div>
                          </div>
+                      </div>
+                   </div>
+                   @endif
+                   @if($selectedTab == "documentos_digitalizados")
+                   <div class=" mb-3">
+
+                         <div id="gemeo" role="tabpanel">
+                            @foreach($fieldsDigitalizedDocuments as $key => $item)
+                            <div class="row">
+                               <div class="col-lg-5 mb-3">
+
+                                  <select wire:model="fieldsDigitalizedDocuments.{{$key}}.type" class="form-control ps-0" wire:ignore>
+                                     <option value="0">Selecione</option>
+                                     <option value="1">CPF</option>
+                                     <option value="2">PIS</option>
+                                     <option value="3">PASEP</option>
+                                     <option value="4">COMPROVANTE DE ENDEREÇO</option>
+                                     <option value="5">Laudo Médico</option>
+                                     <option value="6">TITULO ELEITOR</option>
+                                     <option value="7">IDENTIFICAÇÃO PROFISSIONAL</option>
+                                     <option value="8">CARTEIRA DE TRABALHO E PREVIDENCIA SOCIAL – CTPS</option>
+                                     <option value="9">CARTEIRA NACIONAL DE HABILITAÇÃO – CNH</option>
+                                     <option value="10">CERTIFICADO MILITAR</option>
+                                     <option value="11"> EXAME TIPO SANGUINEO/FATOR RH</option>
+                                     <option value="12"> COMPROVANTE DE VULNERABILIDADE OU A CONDIÇÃO PARTICULAR DE SAÚDE</option>
+                                     <option value="13">CARTÃO DE BENEFICIO SOCIAL </option>
+                                     <option value="14">ENCAMINHAMENTO SOCIAL </option>
+                                     <option value="15">BOLETIM DE OCORRENCIA</option>
+                                  </select>
+                               </div>
+
+                               <div class="col-lg-3 mb-3">
+                                    <input wire:change="addedDocument()" type="file" wire:model="tempFile">
+                               </div>
+
+                            </div>
+                                  @endforeach
+
+                            </div>
+
                       </div>
                    </div>
                    @endif

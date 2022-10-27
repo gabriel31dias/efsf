@@ -110,6 +110,7 @@ return new class extends Migration
 
 
             $table->json('features')->nullable();
+            $table->json('digitalized_documents')->nullable();
 
             $table->string('height')->nullable();
 
