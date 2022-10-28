@@ -37,6 +37,7 @@ class CitizenIndex extends Component
     public $citizensItems;
     public $searchDistrict;
     public $searchCity;
+    public $jaUtilizados = [];
     public $other_genre;
     public $errorsKeys = [];
     public $errors = [];
@@ -62,6 +63,24 @@ class CitizenIndex extends Component
     public $filiationCount = 2;
     public $imigration = false;
     public $marital_status;
+
+    public $listDOCS = [
+       "CPF",
+       "PIS",
+       "PASEP",
+       "COMPROVANTE DE ENDEREÇO",
+       "Laudo Médico",
+       "TITULO ELEITOR",
+       "IDENTIFICAÇÃO PROFISSIONAL",
+       "CARTEIRA DE TRABALHO E PREVIDENCIA SOCIAL – CTPS",
+       "CARTEIRA NACIONAL DE HABILITAÇÃO – CNH",
+       "CERTIFICADO MILITAR",
+       "EXAME TIPO SANGUINEO/FATOR RH",
+       "COMPROVANTE DE VULNERABILIDADE OU A CONDIÇÃO PARTICULAR DE SAÚDE",
+       "CARTÃO DE BENEFICIO SOCIAL",
+       "ENCAMINHAMENTO SOCIAL",
+       "BOLETIM DE OCORRENCIA"
+    ];
 
     public $obrigatory_filds = [
         "rg",
@@ -196,7 +215,8 @@ class CitizenIndex extends Component
         "uf_wallet" => "",
         "cid_wallet" => "",
         "height" => "",
-        "features" => ""
+        "features" => "",
+        "digitalized_documents" => ""
     ];
 
     public $curretTypeStreet;
@@ -287,34 +307,25 @@ class CitizenIndex extends Component
     }
 
     public function addedDocument(){
-        if(count($this->fieldsDigitalizedDocuments) == 1){
 
+        if(count($this->fieldsDigitalizedDocuments) == 1){
             $item = new \stdClass;
             $item->file = $this->tempFile;
             $item->type = $this->fieldsDigitalizedDocuments['field1']['type'];
             $this->fieldsDigitalizedDocuments['field1'] = $item;
-
-            $this->tempFile = "";
-            $this->tempTypeFile = "";
-
-
+            $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field1']->type;
             $countDocuments = count($this->fieldsDigitalizedDocuments) + 1;
-
             $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
             return ;
         }
 
         $countDocuments = count($this->fieldsDigitalizedDocuments) + 1;
-
+        $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field'.count($this->fieldsDigitalizedDocuments)]['type'];
         $item = new \stdClass;
         $item->file = $this->tempFile;
         $item->type = "";
-
-
         $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
-
         $this->tempFile = "";
-        $this->tempTypeFile = "";
     }
 
     public function  selectedCountryTypeStreat($id)
@@ -460,6 +471,8 @@ class CitizenIndex extends Component
 
         $this->fieldsFeatures = \json_decode($citizen->features, true);
 
+        $this->fieldsDigitalizedDocuments = \json_decode($citizen->digitalized_documents, true);
+
         if (isset($citizen->id)) {
             $this->fields = [
                 "name" => $citizen->name,
@@ -543,7 +556,8 @@ class CitizenIndex extends Component
                 "uf_wallet" => $citizen->uf_wallet,
                 "cid_wallet" => $citizen->cid_wallet,
                 "height" => $citizen->height,
-                "features" =>  $this->fieldsFeatures
+                "features" =>  $this->fieldsFeatures,
+                "digitalized_documents" => $this->fieldsDigitalizedDocuments
             ];
         }
 
@@ -749,6 +763,11 @@ class CitizenIndex extends Component
         return $errors;
     }
 
+    public function checkDOC($doc){
+        $this->jaUtilizados[] = $doc;
+
+    }
+
     public function checkDataIsValid($dateStr, $format = "Y-m-d")
     {
 	    $dateFormated = explode("/",$dateStr);
@@ -780,7 +799,25 @@ class CitizenIndex extends Component
         return implode('-', array_reverse(explode('/', $date)));
     }
 
+    public function storeDocuments($documents){
+        foreach ($documents as &$doc){
+            if($doc['file'] != ""){
+                $path = $doc['file']->store('docs');
+                $doc['file'] = $path;
+            }
+        }
+
+        $documents = array_filter($documents, function($doc) {
+            return $doc['file'] != "";
+        });
+
+        dd($documents);
+
+        return $documents;
+    }
+
     public function createCitizen(){
+
         $this->fields["zone"] = $this->zone;
         $validation = $this->validation($this->fields);
 
@@ -798,6 +835,8 @@ class CitizenIndex extends Component
         $birth_date = $this->formateDateUSA($this->fields["birth_date"] );
         $certificate_entry_date = $this->formateDateUSA($this->fields["certificate_entry_date"] );
 
+
+        $this->storeDocuments($this->fieldsDigitalizedDocuments);
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
@@ -888,6 +927,7 @@ class CitizenIndex extends Component
             "cid_wallet" => $this->fields["cid_wallet"] ?? null,
             "height" => $this->fields["height"] ?? null,
             "features" => \json_encode($this->fieldsFeatures) ?? null,
+            "digitalized_documents" => \json_encode($this->fieldsDigitalizedDocuments) ?? null
          ]);
 
         $this->messageSuccess();
