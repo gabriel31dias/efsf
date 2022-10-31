@@ -1106,34 +1106,33 @@
                                <div class="col-lg-5 mb-3">
 
 
+                                <select  wire:model="fieldsDigitalizedDocuments.{{$key}}.type" class="form-control ps-0" wire:ignore>
+                                    <option value="0">Selecione</option>
+                                    @unless(in_array("1",$jaUtilizados)) <option value="1">CPF</option> @endif
+                                    @unless(in_array("2",$jaUtilizados)) <option value="2">PIS</option> @endif
+                                    @unless(in_array("3",$jaUtilizados)) <option value="3">PASEP</option> @endif
+                                    @unless(in_array("4",$jaUtilizados)) <option value="4">COMPROVANTE DE ENDEREÇO</option> @endif
+                                    @unless(in_array("5",$jaUtilizados)) <option value="5">Laudo Médico</option> @endif
+                                    @unless(in_array("6",$jaUtilizados)) <option value="6">TITULO ELEITOR</option> @endif
+                                    @unless(in_array("7",$jaUtilizados)) <option value="7">IDENTIFICAÇÃO PROFISSIONAL</option> @endif
+                                    @unless(in_array("8",$jaUtilizados)) <option value="8">CARTEIRA DE TRABALHO E PREVIDENCIA SOCIAL – CTPS</option> @endif
+                                    @unless(in_array("9",$jaUtilizados)) <option value="9">CARTEIRA NACIONAL DE HABILITAÇÃO – CNH</option> @endif
+                                    @unless(in_array("10",$jaUtilizados)) <option value="10">CERTIFICADO MILITAR</option> @endif
+                                    @unless(in_array("11",$jaUtilizados)) <option value="11">EXAME TIPO SANGUINEO/FATOR RH</option> @endif
+                                    @unless(in_array("12",$jaUtilizados)) <option value="12">COMPROVANTE DE VULNERABILIDADE OU A CONDIÇÃO PARTICULAR DE SAÚDE</option> @endif
+                                    @unless(in_array("13",$jaUtilizados)) <option value="13">CARTÃO DE BENEFICIO SOCIAL</option> @endif
+                                    @unless(in_array("14",$jaUtilizados)) <option value="14">ENCAMINHAMENTO SOCIAL</option> @endif
+                                    @unless(in_array("15",$jaUtilizados)) <option value="15">BOLETIM DE OCORRENCIA</option> @endif
+                                    @if($fields['name_social']) <option value="15">DECLARAÇÃO DE NOME SOCIAL</option> @endif
+                                    @if($currentMatiral=='casado')<option value="15">CERTIDÃO DE CASAMENTO</option> @endif
+                                    @if($currentMatiral=='divorciado')<option value="15">CERTIDÃO DE CASAMENTO/DIVORCIADO</option> @endif
 
-                                  <select  wire:model="fieldsDigitalizedDocuments.{{$key}}.type" class="form-control ps-0" wire:ignore>
+                                 </select>
 
-
-                                     <option value="0">Selecione</option>
-                                     @unless(in_array("1",$jaUtilizados)) <option value="1">CPF</option> @endif
-                                     @unless(in_array("2",$jaUtilizados)) <option value="2">PIS</option> @endif
-                                     @unless(in_array("3",$jaUtilizados)) <option value="3">PASEP</option> @endif
-                                     @unless(in_array("4",$jaUtilizados)) <option value="4">COMPROVANTE DE ENDEREÇO</option> @endif
-                                     @unless(in_array("5",$jaUtilizados)) <option value="5">Laudo Médico</option> @endif
-                                     @unless(in_array("6",$jaUtilizados)) <option value="6">TITULO ELEITOR</option> @endif
-                                     @unless(in_array("7",$jaUtilizados)) <option value="7">IDENTIFICAÇÃO PROFISSIONAL</option> @endif
-                                     @unless(in_array("8",$jaUtilizados)) <option value="8">CARTEIRA DE TRABALHO E PREVIDENCIA SOCIAL – CTPS</option> @endif
-                                     @unless(in_array("9",$jaUtilizados)) <option value="9">CARTEIRA NACIONAL DE HABILITAÇÃO – CNH</option> @endif
-                                     @unless(in_array("10",$jaUtilizados)) <option value="10">CERTIFICADO MILITAR</option> @endif
-                                     @unless(in_array("11",$jaUtilizados)) <option value="11">EXAME TIPO SANGUINEO/FATOR RH</option> @endif
-                                     @unless(in_array("12",$jaUtilizados)) <option value="12">COMPROVANTE DE VULNERABILIDADE OU A CONDIÇÃO PARTICULAR DE SAÚDE</option> @endif
-                                     @unless(in_array("13",$jaUtilizados)) <option value="13">CARTÃO DE BENEFICIO SOCIAL</option> @endif
-                                     @unless(in_array("14",$jaUtilizados)) <option value="14">ENCAMINHAMENTO SOCIAL</option> @endif
-                                     @unless(in_array("15",$jaUtilizados)) <option value="15">BOLETIM DE OCORRENCIA</option> @endif
-
-
-                                  </select>
 
 
 
                                </div>
-
                                <div class="col-lg-3 mb-3">
                                     <input wire:change="addedDocument();" type="file" wire:model="fieldsDigitalizedDocuments.{{$key}}.file" >
                                </div>
