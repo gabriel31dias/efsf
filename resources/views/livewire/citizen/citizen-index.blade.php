@@ -1126,6 +1126,10 @@
                                     @if($fields['name_social']) <option value="15">DECLARAÇÃO DE NOME SOCIAL</option> @endif
                                     @if($currentMatiral=='casado')<option value="15">CERTIDÃO DE CASAMENTO</option> @endif
                                     @if($currentMatiral=='divorciado')<option value="15">CERTIDÃO DE CASAMENTO/DIVORCIADO</option> @endif
+                                    @if($fields['type_of_certificate'] == 2) <option value="15">CERTIDÃO DE NASCIMENTO</option> @endif
+                                    @if($fields['type_of_certificate'] == 6) <option value="15">Certidão de casamento/COM AVERBAÇÃO DE SEPARAÇÃO</option> @endif
+                                    @if($fields['type_of_certificate'] == 7) <option value="15">Certidão de casamento/CASAMENTO COM AVERBAÇÃO DE ÓBITO</option> @endif
+                                    @if($fields['migration_situation'] == 2 || $fields['migration_situation'] == 3) <option value="15">CERTIDÃO DE NASCIMENTO/CASAMENTO ESTRANGEIRA</option> @endif
 
                                  </select>
 

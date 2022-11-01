@@ -742,22 +742,31 @@ class CitizenIndex extends Component
         }
 
 
-            $fileds_validation_date = ["dou_certificate_date"];
 
-            foreach ($fileds_validation_date as $value) {
-                if(empty($this->fields[$value]) && $this->checkDataIsValid($value)){
+        if(count($this->fieldsDigitalizedDocuments) == 1){
+            array_push($errors, [
+                "message" => "Adicione pelomenos certidão como anexo, na aba documentos",
+                "valid" => false,
+            ]);
+        }
 
-                    $value = $this->getTranslaction($value);
+
+        $fileds_validation_date = ["dou_certificate_date"];
+
+        foreach ($fileds_validation_date as $value) {
+            if(empty($this->fields[$value]) && $this->checkDataIsValid($value)){
+
+                $value = $this->getTranslaction($value);
 
                     array_push($errors, [
                         "message" => "O campo {$value} é obrigatorio",
                         "valid" => false,
                     ]);
-                }
-
             }
 
-            $this->errorsKeys[] = $value;
+        }
+
+        $this->errorsKeys[] = $value;
 
 
         return $errors;
