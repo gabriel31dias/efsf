@@ -317,10 +317,6 @@ class CitizenIndex extends Component
             "booknumber" => $bookNumber
         ]);
 
-
-
-
-
     }
 
     public function addedDocument(){

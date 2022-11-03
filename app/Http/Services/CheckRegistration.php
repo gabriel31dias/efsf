@@ -9,8 +9,7 @@ class CheckRegistration
 {
     public function call($obj){
 
-        dd($this->checkRegistryDates($obj));
-        if($this->checkRegistryDates($obj)){
+        if(!$this->checkRegistryDates($obj)){
             return false;
         }
 
@@ -46,7 +45,6 @@ class CheckRegistration
 
         $dou_certificate_date = Carbon::parse($dou_certificate_date);
 
-        dd($certificate_entry_date);
 
         if($getDateRegistry[0]->created_date <= $dou_certificate_date && $getDateRegistry[0]->closing_date >= $dou_certificate_date){
             $returnVarDou_certificate_date = true;
@@ -69,7 +67,6 @@ class CheckRegistration
     }
 
     public function checkBirthYear($obj){
-        dd( $obj['birth_date']);
         $deteBirth = explode("/", $obj['birth_date']);
         return $deteBirth[2] == $obj['birth_year'] ? true : false;
     }
