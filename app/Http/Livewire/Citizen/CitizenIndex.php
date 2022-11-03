@@ -46,6 +46,8 @@ class CitizenIndex extends Component
     public $searchCpf;
     public $searchRg;
 
+    public $currentRegistryId = "";
+
     public $tempFile = "";
     public $tempTypeFile = "";
     public $searchAnoProcesso;
@@ -297,12 +299,13 @@ class CitizenIndex extends Component
         $birth_date = $this->citizen->birth_date ?? $this->fields['birth_date'];
 
         $check = new CheckRegistration();
-        $tempRegistry = Registry::where('cns', $CnsString)->get();
+        $tempRegistry = Registry::where('cns', $CnsString)->first();
 
-        if(count($tempRegistry) > 0){
-            $this->registrySelected = Registry::where('cns', $CnsString)->first();
+        if(isset($tempRegistry->id)){
+            $this->registrySelected =  $tempRegistry;
         }
 
+        $this->currentRegistryId = $tempRegistry->id;
 
         $this->registrationError = $check->call([
             "dou_certificate_date" => $this->fields['dou_certificate_date'],
@@ -957,7 +960,7 @@ class CitizenIndex extends Component
             "previous_registration_certificate" => $this->fields["previous_registration_certificate"] ?? null,
             "matriculation" => $this->fields["matriculation"] ?? null,
             "name_place" => $this->fields["name_place"] ?? null,
-            "registry_id" => $this->fields["registry_id"] ?? null,
+            "registry_id" => $this->fields["registry_id"] ?? $this->currentRegistryId,
             "rg_gemeo" => $this->fields["rg_gemeo"] ?? null,
             "name_gemeo" => $this->fields["name_gemeo"] ?? null,
             "name_social" => $this->fields["name_social"] ?? null,
