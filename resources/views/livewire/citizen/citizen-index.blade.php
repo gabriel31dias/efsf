@@ -1100,42 +1100,68 @@
                    @if($selectedTab == "documentos_digitalizados")
                    <div class=" mb-3">
 
+
+
                          <div id="gemeo" role="tabpanel">
                             @foreach($fieldsDigitalizedDocuments as $key => $item)
                             <div class="row">
                                <div class="col-lg-5 mb-3">
 
-
-
-                                  <select  wire:model="fieldsDigitalizedDocuments.{{$key}}.type" class="form-control ps-0" wire:ignore>
-
-
-                                     <option value="0">Selecione</option>
-                                     @unless(in_array("1",$jaUtilizados)) <option value="1">CPF</option> @endif
-                                     @unless(in_array("2",$jaUtilizados)) <option value="2">PIS</option> @endif
-                                     @unless(in_array("3",$jaUtilizados)) <option value="3">PASEP</option> @endif
-                                     @unless(in_array("4",$jaUtilizados)) <option value="4">COMPROVANTE DE ENDEREÇO</option> @endif
-                                     @unless(in_array("5",$jaUtilizados)) <option value="5">Laudo Médico</option> @endif
-                                     @unless(in_array("6",$jaUtilizados)) <option value="6">TITULO ELEITOR</option> @endif
-                                     @unless(in_array("7",$jaUtilizados)) <option value="7">IDENTIFICAÇÃO PROFISSIONAL</option> @endif
-                                     @unless(in_array("8",$jaUtilizados)) <option value="8">CARTEIRA DE TRABALHO E PREVIDENCIA SOCIAL – CTPS</option> @endif
-                                     @unless(in_array("9",$jaUtilizados)) <option value="9">CARTEIRA NACIONAL DE HABILITAÇÃO – CNH</option> @endif
-                                     @unless(in_array("10",$jaUtilizados)) <option value="10">CERTIFICADO MILITAR</option> @endif
-                                     @unless(in_array("11",$jaUtilizados)) <option value="11">EXAME TIPO SANGUINEO/FATOR RH</option> @endif
-                                     @unless(in_array("12",$jaUtilizados)) <option value="12">COMPROVANTE DE VULNERABILIDADE OU A CONDIÇÃO PARTICULAR DE SAÚDE</option> @endif
-                                     @unless(in_array("13",$jaUtilizados)) <option value="13">CARTÃO DE BENEFICIO SOCIAL</option> @endif
-                                     @unless(in_array("14",$jaUtilizados)) <option value="14">ENCAMINHAMENTO SOCIAL</option> @endif
-                                     @unless(in_array("15",$jaUtilizados)) <option value="15">BOLETIM DE OCORRENCIA</option> @endif
-
-
-                                  </select>
-
-
+                              @if(isset($fieldsDigitalizedDocuments[$key]['file']) && $fieldsDigitalizedDocuments[$key]['file'] != '' )
+                                 <input  value="{{$this->getDocument($fieldsDigitalizedDocuments[$key]['type'])}}"   maxlength="70" type="text" class="form-control ps-0 " autocomplete="off" readonly>
+                              @else
+                                 <select  wire:model="fieldsDigitalizedDocuments.{{$key}}.type" class="form-control ps-0" wire:ignore>
+                                    <option value="0">Selecione</option>
+                                    @unless(in_array("1",$jaUtilizados)) <option value="1">CPF</option> @endif
+                                    @unless(in_array("2",$jaUtilizados)) <option value="2">PIS</option> @endif
+                                    @unless(in_array("3",$jaUtilizados)) <option value="3">PASEP</option> @endif
+                                    @unless(in_array("4",$jaUtilizados)) <option value="4">COMPROVANTE DE ENDEREÇO</option> @endif
+                                    @unless(in_array("5",$jaUtilizados)) <option value="5">Laudo Médico</option> @endif
+                                    @unless(in_array("6",$jaUtilizados)) <option value="6">TITULO ELEITOR</option> @endif
+                                    @unless(in_array("7",$jaUtilizados)) <option value="7">IDENTIFICAÇÃO PROFISSIONAL</option> @endif
+                                    @unless(in_array("8",$jaUtilizados)) <option value="8">CARTEIRA DE TRABALHO E PREVIDENCIA SOCIAL – CTPS</option> @endif
+                                    @unless(in_array("9",$jaUtilizados)) <option value="9">CARTEIRA NACIONAL DE HABILITAÇÃO – CNH</option> @endif
+                                    @unless(in_array("10",$jaUtilizados)) <option value="10">CERTIFICADO MILITAR</option> @endif
+                                    @unless(in_array("11",$jaUtilizados)) <option value="11">EXAME TIPO SANGUINEO/FATOR RH</option> @endif
+                                    @unless(in_array("12",$jaUtilizados)) <option value="12">COMPROVANTE DE VULNERABILIDADE OU A CONDIÇÃO PARTICULAR DE SAÚDE</option> @endif
+                                    @unless(in_array("13",$jaUtilizados)) <option value="13">CARTÃO DE BENEFICIO SOCIAL</option> @endif
+                                    @unless(in_array("14",$jaUtilizados)) <option value="14">ENCAMINHAMENTO SOCIAL</option> @endif
+                                    @unless(in_array("15",$jaUtilizados)) <option value="15">BOLETIM DE OCORRENCIA</option> @endif
+                                    @if($fields['name_social']) <option value="16">DECLARAÇÃO DE NOME SOCIAL</option> @endif
+                                    @if($currentMatiral=='casado')<option value="17">CERTIDÃO DE CASAMENTO</option> @endif
+                                    @if($currentMatiral=='divorciado')<option value="18">CERTIDÃO DE CASAMENTO/DIVORCIADO</option> @endif
+                                    @if($fields['type_of_certificate'] == 2) <option value="19">CERTIDÃO DE NASCIMENTO</option> @endif
+                                    @if($fields['type_of_certificate'] == 6) <option value="20">Certidão de casamento/COM AVERBAÇÃO DE SEPARAÇÃO</option> @endif
+                                    @if($fields['type_of_certificate'] == 7) <option value="21">Certidão de casamento/CASAMENTO COM AVERBAÇÃO DE ÓBITO</option> @endif
+                                    @if($fields['migration_situation'] == 2 || $fields['migration_situation'] == 3) <option value="22">CERTIDÃO DE NASCIMENTO/CASAMENTO ESTRANGEIRA</option> @endif
+                                 </select>
+                              @endif
 
                                </div>
-
                                <div class="col-lg-3 mb-3">
-                                    <input wire:change="addedDocument();" type="file" wire:model="fieldsDigitalizedDocuments.{{$key}}.file" >
+
+                                    @if(isset($fieldsDigitalizedDocuments[$key]['file'] ) && $fieldsDigitalizedDocuments[$key]['file'] != '' && strpos( $fieldsDigitalizedDocuments[$key]['file'], "tmp") == false)
+                                        <a href="" target="_blank" >
+
+                                            <a onclick="window.open('/{{ str_replace("public","storage", $fieldsDigitalizedDocuments[$key]['file']) }}', '_blank')" class="btn btn-primary inline-flex">
+                                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <circle cx="12" cy="12" r="2"></circle>
+                                                    <path d="M12 19c-4 0 -7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7c-.42 .736 -.858 1.414 -1.311 2.033"></path>
+                                                    <path d="M15 19l2 2l4 -4"></path>
+                                                 </svg>
+                                                Abrir documento
+                                             </a>
+                                        </a>
+                                    @else
+                                     @if(isset($fieldsDigitalizedDocuments[$key]['type']) && $fieldsDigitalizedDocuments[$key]['type'])
+                                        <input wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file">
+                                     @else
+                                        <input wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file" disabled>
+                                     @endif
+                                    @endif
+
                                </div>
 
                             </div>

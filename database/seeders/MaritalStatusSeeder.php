@@ -17,11 +17,11 @@ class MaritalStatusSeeder extends Seeder
     {
 
         DB::table('marital_statuses')->insert([
-            'name' => "solteiro’"
+            'name' => "solteiro"
         ]);
 
         DB::table('marital_statuses')->insert([
-            'name' => "casado’",
+            'name' => "casado",
         ]);
 
         DB::table('marital_statuses')->insert([
@@ -33,7 +33,7 @@ class MaritalStatusSeeder extends Seeder
         ]);
 
         DB::table('marital_statuses')->insert([
-            'name' => "‘viúvo’",
+            'name' => "‘viúvo",
         ]);
 
         DB::table('marital_statuses')->insert([

@@ -51,6 +51,13 @@ class CitizenRepository {
         $obj['same_sex_marriage'] = $obj['same_sex_marriage'] == "" ? 0 : $obj['same_sex_marriage'];
         $obj['genre_biologic_id'] = $obj['genre_biologic_id'] == "" ? 0 : $obj['genre_biologic_id'];
         $obj['social_name_visible'] = $obj['social_name_visible'] == "" ? 0 : $obj['social_name_visible'];
+        $obj['registry_id'] = $obj['registry_id'] == "" ? 0 : $obj['registry_id'];
+        $obj['cid_wallet'] = $obj['cid_wallet'] == "" ? 0 : $obj['cid_wallet'];
+
+
+
+
+
 
 
         $obj['certificate'] = $obj['certificate'] == "" ? 0 : $obj['certificate'];

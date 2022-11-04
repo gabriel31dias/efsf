@@ -2,11 +2,16 @@
 
 namespace App\Http\Services;
 use App\Models\Registry;
-
+use App\Models\RegistryDate;
+use Carbon\Carbon;
 
 class CheckRegistration
 {
     public function call($obj){
+
+        if(!$this->checkRegistryDates($obj)){
+            return false;
+        }
 
         if(!$this->checkCns($obj)){
             return false;
@@ -25,6 +30,38 @@ class CheckRegistration
         }
 
         return true;
+    }
+
+
+    public function checkRegistryDates($obj){
+        if(!isset($obj['registry']->id)){
+            return false;
+        }
+        $getDateRegistry = RegistryDate::where('registry_id', $obj['registry']->id)->get();
+        $dou_certificate_date = explode('/', $obj['dou_certificate_date']);
+        $dou_certificate_date =   $dou_certificate_date[2]."-".$dou_certificate_date[1]."-".$dou_certificate_date[0];
+
+        $certificate_entry_date = explode('/', $obj['certificate_entry_date']);
+        $certificate_entry_date =   $certificate_entry_date[2]."-".$certificate_entry_date[1]."-".$certificate_entry_date[0];
+
+        $certificate_entry_date = Carbon::parse($certificate_entry_date);
+
+        $dou_certificate_date = Carbon::parse($dou_certificate_date);
+
+
+        if($getDateRegistry[0]->created_date <= $dou_certificate_date && $getDateRegistry[0]->closing_date >= $dou_certificate_date){
+            $returnVarDou_certificate_date = true;
+        }else{
+            $returnVarDou_certificate_date = false;
+        }
+
+        if($getDateRegistry[0]->created_date <= $certificate_entry_date && $getDateRegistry[0]->closing_date >= $certificate_entry_date){
+            $returnVarCertificate_entry_date = true;
+        }else{
+            $returnVarCertificate_entry_date = false;
+        }
+
+        return $returnVarDou_certificate_date == $returnVarCertificate_entry_date ? true : false;
     }
 
     public function checkCns($obj){

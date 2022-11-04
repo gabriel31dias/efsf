@@ -46,6 +46,8 @@ class CitizenIndex extends Component
     public $searchCpf;
     public $searchRg;
 
+    public $currentRegistryId = "";
+
     public $tempFile = "";
     public $tempTypeFile = "";
     public $searchAnoProcesso;
@@ -63,6 +65,8 @@ class CitizenIndex extends Component
     public $filiationCount = 2;
     public $imigration = false;
     public $marital_status;
+
+    public $registrySelected;
 
     public $listDOCS = [
        "CPF",
@@ -295,7 +299,20 @@ class CitizenIndex extends Component
         $birth_date = $this->citizen->birth_date ?? $this->fields['birth_date'];
 
         $check = new CheckRegistration();
+        $tempRegistry = Registry::where('cns', $CnsString)->first();
+
+        if(isset($tempRegistry->id)){
+            $this->registrySelected =  $tempRegistry;
+        }
+
+
+
+        $this->currentRegistryId = $tempRegistry->id ?? null;
+
         $this->registrationError = $check->call([
+            "dou_certificate_date" => $this->fields['dou_certificate_date'],
+            "certificate_entry_date" => $this->fields['certificate_entry_date'],
+            "registry" => $this->registrySelected,
             "birth_date" => $birth_date,
             "cns" => $CnsString,
             "civilregistration" => $civilRegistration,
@@ -304,28 +321,33 @@ class CitizenIndex extends Component
             "typeofcertificate" => $typeOfCertificate,
             "booknumber" => $bookNumber
         ]);
+
     }
 
     public function addedDocument(){
 
         if(count($this->fieldsDigitalizedDocuments) == 1){
-            $item = new \stdClass;
-            $item->file = $this->tempFile;
-            $item->type = $this->fieldsDigitalizedDocuments['field1']['type'];
+
+            $item = [];
+            $item['file'] = $this->tempFile;
+            $item['type'] = $this->fieldsDigitalizedDocuments['field1']['type'];
+
             $this->fieldsDigitalizedDocuments['field1'] = $item;
-            $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field1']->type;
+            $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field1']['type'];
             $countDocuments = count($this->fieldsDigitalizedDocuments) + 1;
             $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
             return ;
         }
 
         $countDocuments = count($this->fieldsDigitalizedDocuments) + 1;
+
+
         $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field'.count($this->fieldsDigitalizedDocuments)]['type'];
-        $item = new \stdClass;
-        $item->file = $this->tempFile;
-        $item->type = "";
+
+        $item = [];
+        $item['file'] = "";
+        $item['type'] = "";
         $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
-        $this->tempFile = "";
     }
 
     public function  selectedCountryTypeStreat($id)
@@ -413,6 +435,35 @@ class CitizenIndex extends Component
         ]);
     }
 
+    public function getDocument($index){
+        $documents = [
+            "1" => "CPF",
+            "2" => "PIS",
+            "3" => "PASEP",
+            "4" => "COMPROVANTE DE ENDEREÇO",
+            "5" => "Laudo Médico",
+            "6" => "TITULO ELEITOR",
+            "7" => "IDENTIFICAÇÃO PROFISSIONAL",
+            "8" => "CARTEIRA DE TRABALHO E PREVIDENCIA SOCIAL – CTPS",
+            "9" => "CARTEIRA NACIONAL DE HABILITAÇÃO – CNH",
+            "10" => "CERTIFICADO MILITAR",
+            "11" => "EXAME TIPO SANGUINEO/FATOR RH",
+            "12" => "COMPROVANTE DE VULNERABILIDADE OU A CONDIÇÃO PARTICULAR DE SAÚDE",
+            "13" => "CARTÃO DE BENEFICIO SOCIAL",
+            "14" => "ENCAMINHAMENTO SOCIAL",
+            "15" => "BOLETIM DE OCORRENCIA",
+            "16" => "DECLARAÇÃO DE NOME SOCIAL",
+            "17" => "CERTIDÃO DE CASAMENTO",
+            "18" => "CERTIDÃO DE CASAMENTO/DIVORCIADO",
+            "19" => "CERTIDÃO DE NASCIMENTO",
+            "20" => "Certidão de casamento/COM AVERBAÇÃO DE SEPARAÇÃO",
+            "21" => "Certidão de casamento/CASAMENTO COM AVERBAÇÃO DE ÓBITO",
+            "22" => "CERTIDÃO DE NASCIMENTO/CASAMENTO ESTRANGEIRA"
+        ];
+
+        return $documents[$index];
+    }
+
     public function setCitizen($id){
         if(!$id){
             return false;
@@ -472,6 +523,15 @@ class CitizenIndex extends Component
         $this->fieldsFeatures = \json_decode($citizen->features, true);
 
         $this->fieldsDigitalizedDocuments = \json_decode($citizen->digitalized_documents, true);
+
+        foreach ($this->fieldsDigitalizedDocuments  as $item) {
+            $this->jaUtilizados[] = $item['type'];
+        }
+
+        $item = new \stdClass;
+        $item->file = $this->tempFile;
+        $item->type = "";
+        $this->fieldsDigitalizedDocuments['field'.count($this->fieldsDigitalizedDocuments ) + 1] = $item;
 
         if (isset($citizen->id)) {
             $this->fields = [
@@ -721,7 +781,6 @@ class CitizenIndex extends Component
         }
 
 
-
         if($this->zone == $ZONE_RURAL){
             $fileds_validation = ["name", "reference_point"];
 
@@ -742,22 +801,39 @@ class CitizenIndex extends Component
         }
 
 
-            $fileds_validation_date = ["dou_certificate_date"];
+        if(count($this->fieldsDigitalizedDocuments) > 1){
+            $documents = array_filter($this->fieldsDigitalizedDocuments, function($doc) {
+                return $doc['file'] != "";
+            });
+        }else{
+            $documents = [];
+        }
 
-            foreach ($fileds_validation_date as $value) {
-                if(empty($this->fields[$value]) && $this->checkDataIsValid($value)){
 
-                    $value = $this->getTranslaction($value);
+        if(count($documents) == 0){
+            array_push($errors, [
+                "message" => "Adicione pelomenos certidão como anexo, na aba documentos",
+                "valid" => false,
+            ]);
+        }
+
+
+        $fileds_validation_date = ["dou_certificate_date"];
+
+        foreach ($fileds_validation_date as $value) {
+            if(empty($this->fields[$value]) && $this->checkDataIsValid($value)){
+
+                $value = $this->getTranslaction($value);
 
                     array_push($errors, [
                         "message" => "O campo {$value} é obrigatorio",
                         "valid" => false,
                     ]);
-                }
-
             }
 
-            $this->errorsKeys[] = $value;
+        }
+
+        $this->errorsKeys[] = $value;
 
 
         return $errors;
@@ -801,8 +877,8 @@ class CitizenIndex extends Component
 
     public function storeDocuments($documents){
         foreach ($documents as &$doc){
-            if($doc['file'] != ""){
-                $path = $doc['file']->store('docs');
+            if($doc['file'] != "" && ! is_string($doc['file'])){
+                $path = $doc['file']->store('public');
                 $doc['file'] = $path;
             }
         }
@@ -810,9 +886,6 @@ class CitizenIndex extends Component
         $documents = array_filter($documents, function($doc) {
             return $doc['file'] != "";
         });
-
-        dd($documents);
-
         return $documents;
     }
 
@@ -836,7 +909,9 @@ class CitizenIndex extends Component
         $certificate_entry_date = $this->formateDateUSA($this->fields["certificate_entry_date"] );
 
 
-        $this->storeDocuments($this->fieldsDigitalizedDocuments);
+        $documents = $this->storeDocuments($this->fieldsDigitalizedDocuments);
+
+
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
@@ -894,7 +969,7 @@ class CitizenIndex extends Component
             "previous_registration_certificate" => $this->fields["previous_registration_certificate"] ?? null,
             "matriculation" => $this->fields["matriculation"] ?? null,
             "name_place" => $this->fields["name_place"] ?? null,
-            "registry_id" => $this->fields["registry_id"] ?? null,
+            "registry_id" => $this->fields["registry_id"] ?? $this->currentRegistryId,
             "rg_gemeo" => $this->fields["rg_gemeo"] ?? null,
             "name_gemeo" => $this->fields["name_gemeo"] ?? null,
             "name_social" => $this->fields["name_social"] ?? null,
@@ -927,7 +1002,7 @@ class CitizenIndex extends Component
             "cid_wallet" => $this->fields["cid_wallet"] ?? null,
             "height" => $this->fields["height"] ?? null,
             "features" => \json_encode($this->fieldsFeatures) ?? null,
-            "digitalized_documents" => \json_encode($this->fieldsDigitalizedDocuments) ?? null
+            "digitalized_documents" => \json_encode($documents) ?? null
          ]);
 
         $this->messageSuccess();
@@ -961,10 +1036,7 @@ class CitizenIndex extends Component
         $this->dispatchBrowserEvent('redirect',[
             'url'=> '/citizen/create',
         ]);
-
-
     }
-
     public function clickUpdate($id){
         $this->dispatchBrowserEvent('redirect',[
             'url'=> '/users/'.$id.'/edit',
