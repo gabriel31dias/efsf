@@ -1143,7 +1143,7 @@
                                     @if(isset($fieldsDigitalizedDocuments[$key]['file'] ) && $fieldsDigitalizedDocuments[$key]['file'] != '' && strpos( $fieldsDigitalizedDocuments[$key]['file'], "tmp") == false)
                                         <a href="" target="_blank" >
 
-                                            <a onclick="window.open('http://127.0.0.1:8000/{{ str_replace("public","storage", $fieldsDigitalizedDocuments[$key]['file']) }}', '_blank')" class="btn btn-primary inline-flex">
+                                            <a onclick="window.open('/{{ str_replace("public","storage", $fieldsDigitalizedDocuments[$key]['file']) }}', '_blank')" class="btn btn-primary inline-flex">
                                                 <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
