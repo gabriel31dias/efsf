@@ -305,7 +305,9 @@ class CitizenIndex extends Component
             $this->registrySelected =  $tempRegistry;
         }
 
-        $this->currentRegistryId = $tempRegistry->id;
+
+
+        $this->currentRegistryId = $tempRegistry->id ?? null;
 
         $this->registrationError = $check->call([
             "dou_certificate_date" => $this->fields['dou_certificate_date'],
@@ -779,7 +781,6 @@ class CitizenIndex extends Component
         }
 
 
-
         if($this->zone == $ZONE_RURAL){
             $fileds_validation = ["name", "reference_point"];
 
@@ -799,9 +800,15 @@ class CitizenIndex extends Component
             $this->errorsKeys[] = $value;
         }
 
-        $documents = array_filter($this->fieldsDigitalizedDocuments, function($doc) {
-            return $doc['file'] != "";
-        });
+
+        if(count($this->fieldsDigitalizedDocuments) > 1){
+            $documents = array_filter($this->fieldsDigitalizedDocuments, function($doc) {
+                return $doc['file'] != "";
+            });
+        }else{
+            $documents = [];
+        }
+
 
         if(count($documents) == 0){
             array_push($errors, [
@@ -903,6 +910,8 @@ class CitizenIndex extends Component
 
 
         $documents = $this->storeDocuments($this->fieldsDigitalizedDocuments);
+
+
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],

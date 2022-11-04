@@ -1099,7 +1099,7 @@
                    @endif
                    @if($selectedTab == "documentos_digitalizados")
                    <div class=" mb-3">
-                        {{var_dump($registrySelected)}}
+
 
 
                          <div id="gemeo" role="tabpanel">
@@ -1155,7 +1155,11 @@
                                              </a>
                                         </a>
                                     @else
-                                        <input wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file" >
+                                     @if(isset($fieldsDigitalizedDocuments[$key]['type']) && $fieldsDigitalizedDocuments[$key]['type'])
+                                        <input wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file">
+                                     @else
+                                        <input wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file" disabled>
+                                     @endif
                                     @endif
 
                                </div>

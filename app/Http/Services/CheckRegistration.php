@@ -34,6 +34,9 @@ class CheckRegistration
 
 
     public function checkRegistryDates($obj){
+        if(!isset($obj['registry']->id)){
+            return false;
+        }
         $getDateRegistry = RegistryDate::where('registry_id', $obj['registry']->id)->get();
         $dou_certificate_date = explode('/', $obj['dou_certificate_date']);
         $dou_certificate_date =   $dou_certificate_date[2]."-".$dou_certificate_date[1]."-".$dou_certificate_date[0];
