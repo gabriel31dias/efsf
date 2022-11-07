@@ -272,6 +272,46 @@
                            </span>
                         </a>
                      </li>
+
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                  <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                     <i class="ti ti-location"></i>
+                  </span>
+                  <span class="nav-link-title">
+                     Cadastro de Localidades
+                  </span>
+               </a>
+               <div class="dropdown-menu">
+                  <div class="dropdown-menu-columns">
+                     <div class="dropdown-menu-column">
+                        <a class="dropdown-item" href='{{ route('county.index') }}' >
+                           <span class="nav-link-icon d-md-none d-lg-inline-block">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                              <i class="ti ti-plus"></i>
+
+
+                           </span>
+                           <span class="nav-link-title">
+                           Cadastro de Município
+                           </span>
+                        </a>
+                        <a class="dropdown-item" href='{{ route('uf.index') }}' >
+                           <span class="nav-link-icon d-md-none d-lg-inline-block">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                              <i class="ti ti-plus"></i>
+
+
+                           </span>
+                           <span class="nav-link-title">
+                           Cadastro de Estado
+                           </span>
+                        </a>
+                     </div>
+                  </div>
+                </div>
+              </li>
+
                      <li class="nav-item">
                         <a class="nav-link" href='{{ route('feature.index') }}' >
                            <span class="nav-link-icon d-md-none d-lg-inline-block">

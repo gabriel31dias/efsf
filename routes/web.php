@@ -45,6 +45,9 @@ Route::resource('registry-interdiction', App\Http\Controllers\RegistryInterdicti
 Route::resource('registry-suspension', App\Http\Controllers\RegistrySuspensionController::class);
 Route::resource('registry-transfer', App\Http\Controllers\RegistryTransferController::class);
 Route::resource('feature', App\Http\Controllers\FeatureController::class);
+Route::resource('county', App\Http\Controllers\CountyController::class);
+Route::resource('uf', App\Http\Controllers\UfController::class);
+
 
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
