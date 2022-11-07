@@ -8,28 +8,58 @@ use Carbon\Carbon;
 class CheckRegistration
 {
     public function call($obj){
+        $trace = [];
+        try {
+            if(!$this->checkRegistryDates($obj)){
+                array_push($trace, "checkRegistry-error");
+                return [
+                    "result" => false,
+                    "debug" => $trace
+                ];
+            }
 
-        if(!$this->checkRegistryDates($obj)){
-            return false;
+            if(!$this->checkCns($obj)){
+                array_push($trace, "checkCns-error");
+                return [
+                    "result" => false,
+                    "debug" => $trace
+                ];
+            }
+
+            if(!$this->checkBirthYear($obj)){
+                array_push($trace, "checkcheckBirthYear-error");
+                return [
+                    "result" => false,
+                    "debug" => $trace
+                ];
+            }
+
+            if(!$this->checkTypeOfCertificate($obj)){
+                array_push($trace, "checkTypeOfCertificate-error");
+                return [
+                    "result" => false,
+                    "debug" => $trace
+                ];
+            }
+
+            if(!$this->checkCivilRegistration($obj)){
+                array_push($trace, "checkCivilRegistration-error");
+                return [
+                    "result" => false,
+                    "debug" => $trace
+                ];
+            }
+
+            return [
+                "result" => true,
+                "debug" => $trace
+            ];
+        } catch (\Exception $e) {
+            return [
+                "result" => false,
+                "debug" => $trace
+            ];
         }
-
-        if(!$this->checkCns($obj)){
-            return false;
-        }
-
-        if(!$this->checkBirthYear($obj)){
-            return false;
-        }
-
-        if(!$this->checkTypeOfCertificate($obj)){
-            return false;
-        }
-
-        if(!$this->checkCivilRegistration($obj)){
-            return false;
-        }
-
-        return true;
     }
 
 

@@ -25,7 +25,7 @@ class CitizenIndex extends Component
     use WithFileUploads;
     public $searchTerm = null;
     public $genre_name;
-
+    public $traceErrorsMatriculation;
     public $file;
     public $searchCitizen;
     public $action;
@@ -57,7 +57,7 @@ class CitizenIndex extends Component
 
     public $currentUfIdent;
 
-    public $registrationError = "ddd";
+    public $registrationError = true;
     public $searchBirth;
     public $searchFilitation;
     public $otherFiliations = [];
@@ -305,11 +305,9 @@ class CitizenIndex extends Component
             $this->registrySelected =  $tempRegistry;
         }
 
-
-
         $this->currentRegistryId = $tempRegistry->id ?? null;
 
-        $this->registrationError = $check->call([
+        $resultValidation = $check->call([
             "dou_certificate_date" => $this->fields['dou_certificate_date'],
             "certificate_entry_date" => $this->fields['certificate_entry_date'],
             "registry" => $this->registrySelected,
@@ -322,6 +320,8 @@ class CitizenIndex extends Component
             "booknumber" => $bookNumber
         ]);
 
+        $this->registrationError = $resultValidation["result"];
+        $this->traceErrorsMatriculation = $resultValidation["debug"];
     }
 
     public function addedDocument(){
@@ -485,9 +485,13 @@ class CitizenIndex extends Component
         $birth_date = $this->formateDateBR($citizen['birth_date']);
         $certificate_entry_date = $this->formateDateBR($citizen['certificate_entry_date']);
 
-        $this->currentUfIdent = Uf::find($citizen['uf_professional_identity']);
-        $this->currentUfCarteira = Uf::find($citizen['cid_wallet']);
+        if($citizen['uf_professional_identity']){
+            $this->currentUfIdent = Uf::find($citizen['uf_professional_identity']);
+        }
 
+        if($citizen['cid_wallet']){
+            $this->currentUfCarteira = Uf::find($citizen['cid_wallet']);
+        }
 
         $this->other_genre = $genre->id == 3 ? true : false;
 
@@ -809,6 +813,13 @@ class CitizenIndex extends Component
             $documents = [];
         }
 
+        if($this->registrationError == false){
+            array_push($errors, [
+                "message" => "Matricula incorreta.",
+                "valid" => false,
+            ]);
+        }
+
 
         if(count($documents) == 0){
             array_push($errors, [
@@ -816,7 +827,6 @@ class CitizenIndex extends Component
                 "valid" => false,
             ]);
         }
-
 
         $fileds_validation_date = ["dou_certificate_date"];
 

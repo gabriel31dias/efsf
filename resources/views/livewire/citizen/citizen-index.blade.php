@@ -41,6 +41,7 @@
     </div>
     <div class="col-md-12">
     <div>
+
     <ul class="nav nav-tabs" data-bs-toggle="tabs" role="tablist">
        <li class="nav-item" role="presentation">
           <a wire:click="setSelectedTab('dados-basicos')"
@@ -64,17 +65,17 @@
        </li>
        <li class="nav-item" role="presentation">
           <a wire:click="setSelectedTab('outros_documentos')"  data-bs-toggle="tab" aria-selected="false"
-          class="nav-link @if($selectedTab == "outros_documentos") 'active' @else   @endif"
+          class="nav-link @if($selectedTab == "outros_documentos") active @else   @endif"
           role="tab" tabindex="-1">Outros documentos</a>
        </li>
        <li class="nav-item" role="presentation">
           <a wire:click="setSelectedTab('caracteristicas')"  data-bs-toggle="tab" aria-selected="false"
-          class="nav-link @if($selectedTab == "caracteristicas") 'active' @else   @endif"
+          class="nav-link @if($selectedTab == "caracteristicas") active @else   @endif"
           role="tab" tabindex="-1">Características</a>
        </li>
        <li class="nav-item" role="presentation">
           <a wire:click="setSelectedTab('documentos_digitalizados')"  data-bs-toggle="tab" aria-selected="false"
-          class="nav-link @if($selectedTab == "documentos_digitalizados") 'active' @else   @endif"
+          class="nav-link @if($selectedTab == "documentos_digitalizados") active @else   @endif"
           role="tab" tabindex="-1">Documentos digitalizados</a>
        </li>
     </ul>
@@ -123,7 +124,7 @@
                             <label class="form-label">Nome do Cidadão<span
                                class="error_tag">*</span></label>
                             <div class="input-group input-group-flat">
-                               <input wire:model="fields.name" maxlength="11"
+                               <input wire:model="fields.name"
                                   type="text" class="form-control ps-0"
                                   autocomplete="off" required>
                             </div>
