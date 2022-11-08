@@ -11,7 +11,7 @@
                       Cadastro
                    </div>
                    <h2 class="page-title">
-                      Usuários
+                    Servidores
                    </h2>
                 </div>
                 <!-- Page title actions -->
@@ -92,7 +92,7 @@
                             @endif
                          </div>
                       </div>
-   
+
                    </div>
                 </div>
                 <div class="border-b border-gray-200 my-2 font-bold">
@@ -171,7 +171,7 @@
                </div>
              </div>
              <div class="row">
-                
+
                 <div class="col-lg-4">
                    <div class="mb-3">
                       <label class="form-label">Celular <span style="color: red">*</span></label>
@@ -203,7 +203,7 @@
                </div>
              </div>
              <div class="row">
-               
+
                 <div class="col-lg-4">
                    <div class="mb-3">
                       <label class="form-label">Login <span style="color: red">*</span></label>
@@ -256,7 +256,7 @@
              <div class="row">
              </div>
              <div class="row">
-  
+
              </div>
              <div class="container-fluid card">
                 <label style="margin-top:1%" class="form-label">Postos de atendimento</label>

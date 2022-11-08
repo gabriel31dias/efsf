@@ -46,7 +46,7 @@
        <li class="nav-item" role="presentation">
           <a wire:click="setSelectedTab('dados-basicos')"
           class="nav-link @if($selectedTab == "" || $selectedTab == "dados-basicos") active @else   @endif"
-          data-bs-toggle="tab" aria-selected="true" role="tab">Dados Basicos</a>
+          data-bs-toggle="tab" aria-selected="true" role="tab">Dados Básicos</a>
        </li>
        <li role="presentation">
           <a wire:click="setSelectedTab('endereco')"
@@ -498,7 +498,7 @@
                                <div class="modal-body">
                                   <div class="row">
                                      <div class="col-lg-6 mb-3">
-                                        <label class="form-label">Cpf</label>
+                                        <label class="form-label">CPF</label>
                                         <input onclick="IMask(
                                            this, {
                                            mask: '000.000.000-00'
@@ -508,9 +508,9 @@
                                            placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
                                      </div>
                                      <div class="col-lg-6 mb-3">
-                                        <label class="form-label">Rg</label>
+                                        <label class="form-label">RG</label>
                                         <input wire:model="searchRg"
-                                           placeholder="Rg do cidadão"
+                                           placeholder="RG do cidadão"
                                            type="text" class="form-control"
                                            name="example-text-input"
                                            placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
@@ -527,7 +527,7 @@
                                            placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
                                      </div>
                                      <div class="col-lg-6 mb-3">
-                                        <label class="form-label">Genero</label>
+                                        <label class="form-label">Gênero</label>
                                         <div class="input-group input-group-flat">
                                            <select wire:model="searchGenrer"
                                               class="form-control ps-0"
@@ -542,7 +542,7 @@
                                   </div>
                                   <div class="row">
                                      <div class="col-lg-6 mb-3">
-                                        <label class="form-label">Data
+                                        <label class="form-label">Data de
                                         nascimento</label>
                                         <input id="nsc" onclick="IMask(
                                            this, {
