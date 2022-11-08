@@ -4,8 +4,8 @@
 <div class="container ">
 
 
-    <div class="page-body">
-        <div class="container-xl">
+    <div  class="page-body">
+        <div style="margin-left:20%" class="container-xl">
           <div class="row row-deck row-cards">
             <div class="row">
                 <div class="col-lg-8">
