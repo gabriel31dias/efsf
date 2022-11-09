@@ -950,7 +950,7 @@
                        :customEvent="'selectedUfCarteira'"
                        />
                  </div>
-
+                 <label class="form-label ">Identidade profissional 1<span class="error_tag">*</span></label>
                  <div class="col-lg-4 mb-3">
                     <label class="form-label ">Número de identidade profissional<span class="error_tag">*</span></label>
                     <input wire:model="fields.professional_id_number_1"  maxlength="70" type="text"
@@ -965,14 +965,17 @@
                        autocomplete="off" required>
                  </div>
 
+                 <div class="col-lg-3 mb-3">
+                    <label class="form-label ">Uf identidade profissional<span class="error_tag">*</span></label>
+                    <livewire:uf-select.uf-select
+                       :defaultValue="$currentUfIdent"
+                       :customEvent="'selectedUfIdent'"
+                       />
+                 </div>
 
-                <div class="col-lg-4 mb-3">
-                   <label class="form-label ">Identidade profissional 1<span class="error_tag">*</span></label>
-                   <input wire:model="fields.professional_identity_1"  maxlength="70" type="text"
-                      class="form-control ps-0 "
-                      autocomplete="off" required>
-                </div>
 
+
+                 <label class="form-label ">Identidade profissional 2<span class="error_tag">*</span></label>
 
                 <div class="col-lg-4 mb-3">
                     <label class="form-label ">Número de identidade profissional<span class="error_tag">*</span></label>
@@ -988,12 +991,7 @@
                        autocomplete="off" required>
                  </div>
 
-                <div class="col-lg-4 mb-3">
-                   <label class="form-label ">Identidade profissional 2<span class="error_tag">*</span></label>
-                   <input wire:model="fields.professional_identity_2"  maxlength="70" type="text"
-                      class="form-control ps-0 "
-                      autocomplete="off" required>
-                </div>
+
 
 
                 <div class="col-lg-3 mb-3">

@@ -287,7 +287,7 @@ class CitizenIndex extends Component
 
 
     public function changeRegistration(){
-        dd("");
+
         $CnsString = substr($this->fields['matriculation'], 0, 6);
         $civilRegistration = substr($this->fields['matriculation'], 7, 2);
         $civilRegistryService = substr($this->fields['matriculation'], 10, 2);
