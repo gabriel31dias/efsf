@@ -18,6 +18,7 @@ use App\Models\MaritalStatus;
 use App\Models\ServiceStation;
 use Livewire\WithFileUploads;
 use PHPUnit\Framework\Constraint\Count;
+use App\Models\BlockedCertificate;
 
 class CitizenIndex extends Component
 {
@@ -323,6 +324,16 @@ class CitizenIndex extends Component
 
         $this->registrationError = $resultValidation["result"];
         $this->traceErrorsMatriculation = $resultValidation["debug"];
+    }
+
+    public function checkBlockedCertificate($registry_id){
+        $blocked = BlockedCertificate::where('registry_id', $this->fields["registry_id"])
+        ->where('book_number', $this->fields["book_number"])
+        ->where('book_letter', $this->fields["book_letter"])
+        ->where('sheet_number', $this->fields["sheet_number"])
+        ->first();
+
+        return isset($blocked->id);
     }
 
     public function addedDocument(){
@@ -734,6 +745,13 @@ class CitizenIndex extends Component
             }
 
 
+        }
+
+        if($this->checkBlockedCertificate($this->currentRegistryId)){
+            array_push($errors, [
+                "message" => "Esta certidão está bloqueada",
+                "valid" => false,
+            ]);
         }
 
         if(trim($this->fields['filiation1']) == "" || $this->fields['filiation2'] == "" ){

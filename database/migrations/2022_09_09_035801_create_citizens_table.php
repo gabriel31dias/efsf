@@ -64,14 +64,14 @@ return new class extends Migration
             $table->integer('type_of_certificate')->nullable();
             $table->string('type_of_certificate_new')->nullable();
             $table->string('term_number')->nullable();
-            $table->integer('book_number')->nullable();
+            $table->string('book_number')->nullable();
             $table->integer('forwarded_with_process')->nullable();
             $table->string('sheet_number')->nullable();
             $table->integer('uf_certificate')->nullable();
             $table->integer('county_certificate')->nullable();
             $table->integer('registry_id')->nullable();
 
-            $table->integer('book_letter')->nullable();
+            $table->string('book_letter')->nullable();
             $table->string('previous_registration_certificate')->nullable();
             $table->string('matriculation')->nullable();
             $table->date('certificate_entry_date')->nullable();

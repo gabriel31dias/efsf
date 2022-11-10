@@ -1250,17 +1250,17 @@
                                      <option value="0">Selecione</option>
                                      @if($fields['type_of_certificate'] == 2 || $fields['type_of_certificate'] == '2')
                                      <option value="1">1</option>
-                                     <option value="2">7</option>
+                                     <option value="7">7</option>
                                      @endif
                                      @if($fields['type_of_certificate'] == 1 || $fields['type_of_certificate'] == 6 || $fields['type_of_certificate'] == 5 || $fields['type_of_certificate'] == 7)
-                                     <option value="3">2</option>
-                                     <option value="4">3</option>
-                                     <option value="5">7</option>
+                                     <option value="2">2</option>
+                                     <option value="3">3</option>
+                                     <option value="7">7</option>
                                      @endif
                                      @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] == 4)
-                                     <option value="3">2</option>
-                                     <option value="4">3</option>
-                                     <option value="5">7</option>
+                                     <option value="2">2</option>
+                                     <option value="3">3</option>
+                                     <option value="7">7</option>
                                      @endif
                                      </select>
                                   </div>
@@ -1277,13 +1277,13 @@
                                      <select wire:model="fields.book_letter" class="form-control ps-0" @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] ==  4) disabled  @endif>
                                      <option value="0">Selecione</option>
                                      @if($fields['type_of_certificate'] == 1 || $fields['type_of_certificate'] == 6 || $fields['type_of_certificate'] == 7 )
-                                     <option value="1">B</option>
-                                     <option value="2">B Aux</option>
-                                     <option value="2">E</option>
+                                     <option value="B">B</option>
+                                     <option value="B AUX">B Aux</option>
+                                     <option value="E">E</option>
                                      @endif
                                      @if($fields['type_of_certificate'] == 2 )
-                                     <option value="3">A</option>
-                                     <option value="4">E</option>
+                                     <option value="A">A</option>
+                                     <option value="E">E</option>
                                      @endif
                                      </select>
                                   </div>
