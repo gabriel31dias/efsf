@@ -1122,9 +1122,6 @@
                    @endif
                    @if($selectedTab == "documentos_digitalizados")
                    <div class=" mb-3">
-
-
-
                          <div id="gemeo" role="tabpanel">
                             @foreach($fieldsDigitalizedDocuments as $key => $item)
                             <div class="row">
@@ -1162,7 +1159,6 @@
 
                                </div>
                                <div class="col-lg-3 mb-3">
-
                                     @if(isset($fieldsDigitalizedDocuments[$key]['file'] ) && $fieldsDigitalizedDocuments[$key]['file'] != '' && strpos( $fieldsDigitalizedDocuments[$key]['file'], "tmp") == false)
                                         <a href="" target="_blank" >
 
@@ -1176,6 +1172,17 @@
                                                  </svg>
                                                 Abrir documento
                                              </a>
+
+                                             <a href="/{{ str_replace("public","storage", $fieldsDigitalizedDocuments[$key]['file']) }}" download  class="btn btn-primary inline-flex">
+                                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
+                                                    <polyline points="7 11 12 16 17 11"></polyline>
+                                                    <line x1="12" y1="4" x2="12" y2="16"></line>
+                                                 </svg>
+                                                Download
+                                             </a>
                                         </a>
                                     @else
                                      @if(isset($fieldsDigitalizedDocuments[$key]['type']) && $fieldsDigitalizedDocuments[$key]['type'])
@@ -1184,9 +1191,7 @@
                                         <input wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file" disabled>
                                      @endif
                                     @endif
-
                                </div>
-
                             </div>
                                   @endforeach
 
