@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('blocked_certificates', function (Blueprint $table) {
             $table->id();
             $table->integer('registry_id');
-            $table->integer('book_number');
+            $table->string('book_number');
             $table->string('book_letter');
             $table->string('sheet_number');
             $table->string('sheet_side');

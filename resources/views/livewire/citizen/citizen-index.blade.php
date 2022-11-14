@@ -1249,25 +1249,11 @@
                                      autocomplete="off" required>
                                </div>
                                <div class="col-lg-2 mb-3">
-                                  <label class="form-label ">Nº Do Livro{{$fields['type_of_certificate']}}<span class="error_tag">*</span></label>
+                                  <label class="form-label ">Nº Do Livro<span class="error_tag">*</span></label>
                                   <div class="input-group input-group-flat">
-                                     <select wire:model="fields.book_number" class="form-control ps-0" @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] ==  4) disabled  @endif >
-                                     <option value="0">Selecione</option>
-                                     @if($fields['type_of_certificate'] == 2 || $fields['type_of_certificate'] == '2')
-                                     <option value="1">1</option>
-                                     <option value="7">7</option>
-                                     @endif
-                                     @if($fields['type_of_certificate'] == 1 || $fields['type_of_certificate'] == 6 || $fields['type_of_certificate'] == 5 || $fields['type_of_certificate'] == 7)
-                                     <option value="2">2</option>
-                                     <option value="3">3</option>
-                                     <option value="7">7</option>
-                                     @endif
-                                     @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] == 4)
-                                     <option value="2">2</option>
-                                     <option value="3">3</option>
-                                     <option value="7">7</option>
-                                     @endif
-                                     </select>
+                                     <input wire:model="fields.book_number"  maxlength="70" type="text"
+                                     class="form-control ps-0 "
+                                     autocomplete="off" required>
                                   </div>
                                   @if (in_array("book_number", $errorsKeys))
                                   <div class="error_tag" role="alert">

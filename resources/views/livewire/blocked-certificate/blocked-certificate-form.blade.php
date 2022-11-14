@@ -39,7 +39,7 @@
           <div class="card">
              <div class="card-body">
                 <div class="row">
-                    
+
                     <div class="col-lg-6">
                         <div class="mb-3">
                            <label class="form-label">Cartório<span class="error_tag">*</span></label>
@@ -53,14 +53,8 @@
                            <label class="form-label">Nº do Livro<span class="error_tag">*</span></label>
 
                             <div class="input-group input-group-flat">
-                              <select wire:model="fields.book_number" class="form-select"
-                                 aria-label="Default select example">
-                                 <option value="" selected disabled>Selecione...</option>
-                                 @foreach (BlockedCertificate::BOOK_NUMBERS as $value)
-                                 <option value="{{ $value }}">{{ $value }}</option>
-                                 @endforeach
-                              </select>
-                           </div>                          
+                                <input wire:model="fields.book_number" type="number" min="0" class="form-control" autocomplete="off">
+                            </div>
                         @error('fields.book_number') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
@@ -77,7 +71,7 @@
                                  <option value="{{ $value }}">{{ $value }}</option>
                                  @endforeach
                               </select>
-                           </div>                          
+                           </div>
                         @error('fields.book_letter') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
@@ -103,7 +97,7 @@
                                  <option value="Frente">Frente</option>
                                  <option value="Verso">Verso</option>
                               </select>
-                           </div>                          
+                           </div>
                         @error('fields.sheet_side') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
@@ -117,7 +111,7 @@
                            @error('fields.registry_number') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
-                    
+
                   <div class="col-lg-12">
                      <div class="mb-3">
                         <label class="form-label">OBSERVAÇÃO</label>
