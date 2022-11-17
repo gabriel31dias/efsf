@@ -41,7 +41,7 @@
     </div>
     <div class="col-md-12">
     <div>
-
+  {{var_dump($traceErrorsMatriculation)}}
     <ul class="nav nav-tabs" data-bs-toggle="tabs" role="tablist">
        <li class="nav-item" role="presentation">
           <a wire:click="setSelectedTab('dados-basicos')"
@@ -1364,7 +1364,7 @@
                                   <input onclick="IMask(
                                      this, {
                                      mask: '00/00/0000'
-                                     });" wire:model="fields.certificate_entry_date"  maxlength="70" type="text"
+                                     });" wire:model="fields.certificate_entry_date"  wire:change="changeRegistration" maxlength="70" type="text"
                                      class="form-control date ps-0 "
                                      autocomplete="off" required>
                                </div>
@@ -1412,7 +1412,7 @@
                                   <input onclick="IMask(
                                      this, {
                                      mask: '00/00/0000'
-                                     });" wire:model="fields.dou_certificate_date" maxlength="70" type="text"
+                                     });" wire:change="changeRegistration" wire:model="fields.dou_certificate_date" maxlength="70" type="text"
                                      class="form-control ps-0 "
                                      autocomplete="off" required>
                                   @if($fields['dou_certificate_date'])
