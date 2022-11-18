@@ -1373,6 +1373,11 @@
     })
 
 
+    $("#modal-captura-facial" ).on('shown.bs.modal', function(){
+        setupStartCaptureImage()
+    });
+
+
     function setupStartCaptureImage(){
         let camera_button = document.querySelector("#start-camera");
         let video = document.querySelector("#video");
