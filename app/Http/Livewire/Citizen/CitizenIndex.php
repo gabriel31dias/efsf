@@ -47,6 +47,8 @@ class CitizenIndex extends Component
     public $searchCpf;
     public $searchRg;
 
+    public $file_capture_image;
+
     public $currentRegistryId = "";
 
     public $tempFile = "";
@@ -327,7 +329,8 @@ class CitizenIndex extends Component
     }
 
     public function checkBlockedCertificate($registry_id){
-        $blocked = BlockedCertificate::where('registry_id', $this->fields["registry_id"])
+
+        $blocked = BlockedCertificate::where('registry_id', $registry_id)
         ->where('book_number', $this->fields["book_number"])
         ->where('book_letter', $this->fields["book_letter"])
         ->where('sheet_number', $this->fields["sheet_number"])
@@ -360,6 +363,11 @@ class CitizenIndex extends Component
         $item['file'] = "";
         $item['type'] = "";
         $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
+    }
+
+    public function addFileCapture(){
+
+
     }
 
     public function  selectedCountryTypeStreat($id)
@@ -747,11 +755,15 @@ class CitizenIndex extends Component
 
         }
 
-        if($this->checkBlockedCertificate($this->currentRegistryId)){
-            array_push($errors, [
-                "message" => "Esta certidão está bloqueada",
-                "valid" => false,
-            ]);
+
+        if(isset($this->fields["registry_id"])){
+            if($this->checkBlockedCertificate($this->currentRegistryId)){
+
+                array_push($errors, [
+                    "message" => "Esta certidão está bloqueada",
+                    "valid" => false,
+                ]);
+            }
         }
 
         if(trim($this->fields['filiation1']) == "" || $this->fields['filiation2'] == "" ){
@@ -832,12 +844,15 @@ class CitizenIndex extends Component
             $documents = [];
         }
 
-        if($this->registrationError == false){
-            array_push($errors, [
-                "message" => "Matricula incorreta.",
-                "valid" => false,
-            ]);
+        if($this->fields['certificate'] == "1"){
+            if($this->registrationError == false){
+                array_push($errors, [
+                    "message" => "Matricula incorreta.",
+                    "valid" => false,
+                ]);
+            }
         }
+
 
 
         if(count($documents) == 0){
@@ -918,6 +933,13 @@ class CitizenIndex extends Component
         return $documents;
     }
 
+    public function storeFacilCapture(){
+        $this->validate([
+            'file_capture_image' => 'image|max:1024', // 1MB Max
+        ]);
+        $this->file_capture_image->store('facil_captures');
+    }
+
     public function createCitizen(){
 
         $this->fields["zone"] = $this->zone;
@@ -939,6 +961,8 @@ class CitizenIndex extends Component
 
 
         $documents = $this->storeDocuments($this->fieldsDigitalizedDocuments);
+
+        $this->storeFacilCapture();
 
 
 

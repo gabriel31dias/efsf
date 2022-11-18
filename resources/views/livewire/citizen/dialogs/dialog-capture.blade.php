@@ -13,7 +13,7 @@
          </div>
          <div style="text-align: center" class="modal-body">
             <a style="width: 150px;
-               height: 150px;" id="start-camera"  onclick="alert('wdwd');$('#modal-captura-facial').modal('show');"  class="btn btn-primary ">
+               height: 150px;" id="start-camera"  onclick="setupStartCaptureImage();$('#modal-captura-facial').modal('show');"  class="btn btn-primary ">
                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-camera" width="100" height="100" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -24,7 +24,7 @@
                Captura Facial
             </a>
             <a style="width: 150px;
-               height: 150px;"   onclick="$('#file-capture-image').trigger('click'); "  class="btn btn-primary inline-flex">
+               height: 150px;" wire:change="addFileCapture();"  onclick="$('#file-capture-image').trigger('click'); "  class="btn btn-primary inline-flex">
                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -34,7 +34,7 @@
                Anexar
             </a>
 
-            <input  style="display: none" type="file"  id="file-capture-image">
+            <input  style="display: none"  wire:model="file_capture_image" name="file-capture-image" type="file"  id="file-capture-image">
 
             <video style="display: none" id="video" width="320" height="240" autoplay></video>
          </div>
