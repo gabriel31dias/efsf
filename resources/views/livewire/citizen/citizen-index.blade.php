@@ -1376,7 +1376,7 @@
     function setupStartCaptureImage(){
         let camera_button = document.querySelector("#start-camera");
         let video = document.querySelector("#video");
-        let click_button = document.querySelector("#click-photo");
+        let click_button = document.querySelector("#capturar");
         let canvas = document.querySelector("#canvas");
 
         camera_button.addEventListener('click', async function() {

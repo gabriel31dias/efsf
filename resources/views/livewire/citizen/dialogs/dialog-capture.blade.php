@@ -12,8 +12,7 @@
                aria-label="Close"></button>
          </div>
          <div style="text-align: center" class="modal-body">
-            <a style="width: 150px;
-               height: 150px;" id="start-camera"  onclick="setupStartCaptureImage();$('#modal-captura-facial').modal('show');"  class="btn btn-primary ">
+            <a  id="start-camera"  onclick="$('#video').show() ;$('#capturar').show() ;$('#anexar').hide();$('#start-camera').hide();setupStartCaptureImage();"  class="btn btn-primary ">
                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-camera" width="100" height="100" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -23,8 +22,7 @@
                <br>
                Captura Facial
             </a>
-            <a style="width: 150px;
-               height: 150px;" wire:change="addFileCapture();"  onclick="$('#file-capture-image').trigger('click'); "  class="btn btn-primary inline-flex">
+            <a id="anexar" wire:change="addFileCapture();"  onclick="$('#file-capture-image').trigger('click'); "  class="btn btn-primary inline-flex">
                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -36,7 +34,18 @@
 
             <input  style="display: none"  wire:model="file_capture_image" name="file-capture-image" type="file"  id="file-capture-image">
 
-            <video  id="video" width="320" height="240" autoplay></video>
+            <a  style="display: none" id="capturar"  class="btn btn-primary ">
+               <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-camera" width="100" height="100" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"></path>
+                  <circle cx="12" cy="13" r="3"></circle>
+               </svg>
+               <br>
+               Capturar foto
+            </a>
+
+            <video style="display: none" id="video" width="320" height="240" autoplay></video>
          </div>
          <div class="modal-footer">
          </div>
