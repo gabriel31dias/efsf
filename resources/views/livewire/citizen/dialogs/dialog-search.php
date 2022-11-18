@@ -48,6 +48,7 @@
                      <select wire:model="searchGenrer"
                         class="form-control ps-0"
                         name="select">
+
                         @foreach ($genres as $item)
                         <option
                            value="{{$item['id']}}">{{$item['name']}}</option>
