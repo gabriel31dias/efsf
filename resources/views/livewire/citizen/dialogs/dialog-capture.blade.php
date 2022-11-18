@@ -36,7 +36,7 @@
 
             <input  style="display: none"  wire:model="file_capture_image" name="file-capture-image" type="file"  id="file-capture-image">
 
-            <video style="display: none" id="video" width="320" height="240" autoplay></video>
+            <video  id="video" width="320" height="240" autoplay></video>
          </div>
          <div class="modal-footer">
          </div>
