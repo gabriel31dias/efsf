@@ -89,6 +89,7 @@ class CheckRegistration
 
 
         foreach ($getDateRegistry as $item) {
+
             // checa Data da Certidão/DOU* com a Data da Criação do cartorio
             if($item->closing_date && $returnVarDou_certificate_date == false){
                 if($item->created_date <= $dou_certificate_date && $item->closing_date >= $dou_certificate_date){
@@ -125,8 +126,6 @@ class CheckRegistration
                         $returnVarDou_certificate_date_incorporation = true;
                     }
                 }
-
-                dd($returnVarDou_certificate_date_incorporation);
 
                 // checa a Data de Encerramento com a Data de incorporação do cartorio, não pode ter dentro desse periodo
                 if($item->unincorporated_date && $returnVarCertificate_entry_date_incorporation == false){
