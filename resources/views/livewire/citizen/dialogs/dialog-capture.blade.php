@@ -45,12 +45,11 @@
 
             <input  style="display: none"  wire:model="file_capture_image" name="file-capture-image" type="file"  id="file-capture-image">
             <div class="cssbox">
-                <canvas onclick="document.getElementById('canvas').width = 500;" style="display: none" id="canvas" width="100%" height="100%"></canvas>
+                <canvas style="display: none" id="canvas" width="600" height="600"></canvas>
             </div>
 
 
-
-            <video style="display: none" width="100%" height="100%"  id="video" width="320" height="240" autoplay></video>
+            <video style="display: none" width="100%" height="80%"  id="video" width="320" height="240" autoplay></video>
          </div>
          <div class="modal-footer">
          </div>
