@@ -11,72 +11,88 @@
     @include('livewire.citizen.dialogs.dialog-search')
 
     <style>
-        html,body {
-  font-family: sans-serif;
-  padding: 0 1em;
-  font-size: 19px;
-  background: #222;
-  color: #aaa;
-  text-align:center;
+        /* The work below, CSSBox, is released under the Creative Commons
+   Attribution-ShareAlike 4.0 license and is available on
+   https://github.com/TheLastProject/CSSBox. You are not required to add
+   additional credit to your website, just leave the above text in this file */
+div.cssbox {
+  display: inline-block;
 }
 
-p {
-  margin: 1.5em 0;
-  color: #aaa;
-}
-
-img {
-  max-height: 50vh;
-}
-
-a {
-  color: inherit;
-}
-
-a:hover {
-  color: #bbb;
-}
-
-.italic { font-style: italic; }
-.small { font-size: 0.8em; }
-
-/** LIGHTBOX MARKUP **/
-
-.lightbox {
-  /* Default to hidden */
-  display: none;
-
-  /* Overlay entire screen */
+span.cssbox_full {
+  z-index: 999999;
   position: fixed;
-  z-index: 999;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.8);
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-
-  /* A bit of padding around image */
-  padding: 1em;
-
-  /* Translucent background */
-  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+  transition: opacity 0.5s linear;
 }
 
-/* Unhide the lightbox when it's the target */
-.lightbox:target {
-  display: block;
+span.cssbox_full img {
+  position: fixed;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  max-height: 90%;
+  max-width: 90%;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px black;
 }
 
-.lightbox span {
-  /* Full width and height */
-  display: block;
-  width: 100%;
-  height: 100%;
-
-  /* Size and position background image */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+a.cssbox_close,
+a.cssbox_prev,
+a.cssbox_next {
+  z-index: 999999;
+  position: fixed;
+  text-decoration: none;
+  visibility: hidden;
+  color: white;
+  font-size: 36px;
 }
+
+a.cssbox_close {
+  top: 1%;
+  right: 1%
+}
+
+a.cssbox_close::after {
+  content: '\00d7';
+}
+
+a.cssbox_prev,
+a.cssbox_next {
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+a.cssbox_prev {
+  left: 5%;
+}
+
+a.cssbox_next {
+  right: 5%;
+}
+
+a:target ~ a.cssbox_close,
+a:target ~ a.cssbox_prev,
+a:target ~ a.cssbox_next {
+  visibility: visible;
+}
+
+a:target > img.cssbox_thumb + span.cssbox_full {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: initial;
+}
+/* This is the end of CSSBox */
     </style>
 
 
