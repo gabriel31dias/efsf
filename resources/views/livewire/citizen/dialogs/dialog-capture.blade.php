@@ -46,6 +46,8 @@
 
             <input  style="display: none"  wire:model="file_capture_image" name="file-capture-image" type="file"  id="file-capture-image">
 
+            <canvas id="canvas" width="320" height="240"></canvas>
+
             <video width="100%" height="100%"  id="video" width="320" height="240" autoplay></video>
          </div>
          <div class="modal-footer">
