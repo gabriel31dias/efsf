@@ -45,7 +45,7 @@
 
             <input  style="display: none"  wire:model="file_capture_image" name="file-capture-image" type="file"  id="file-capture-image">
             <div class="cssbox">
-                <canvas style="display: none" id="canvas" width="600" height="600"></canvas>
+                <canvas style="display: none" id="canvas" width="300" height="300"></canvas>
             </div>
 
 
