@@ -1386,16 +1386,10 @@
     });
 
 
-    function downloadImage(){
-        var canvas = document.getElementById("canvas");
-        var image = canvas.toDataURL();
+    function saveImageFacial(){
+        let base64Image = $('canvas').getCanvasImage();
+        alert(base64Image)
 
-        var aLink = document.createElement('a');
-        var evt = document.createEvent("HTMLEvents");
-        evt.initEvent("click");
-        aLink.download = 'image.png';
-        aLink.href = image;
-        aLink.dispatchEvent(evt);
     }
 
     function setupStartCaptureImage(){

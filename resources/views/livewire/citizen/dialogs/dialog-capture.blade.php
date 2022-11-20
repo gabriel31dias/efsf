@@ -34,7 +34,7 @@
                 Capturar novamente
              </a>
 
-            <a onclick="downloadImage()" style="display: none; margin:1%" id="salvar-captura"  class="btn btn-primary " class="btn btn-primary inline-flex">
+            <a  onclick="saveImageFacial()" style="display: none; margin:1%" id="salvar-captura"  class="btn btn-primary " class="btn btn-primary inline-flex">
                 <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-camera" width="24" height="24"  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -66,7 +66,7 @@
 
             <input  style="display: none"  wire:model="file_capture_image" name="file-capture-image" type="file"  id="file-capture-image">
             <div class="cssbox">
-                <canvas style="display: none" id="canvas" width="1000" height="600"></canvas>
+                <canvas  style="display: none" id="canvas" width="1000" height="600"></canvas>
             </div>
 
 

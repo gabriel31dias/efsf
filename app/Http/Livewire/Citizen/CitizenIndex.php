@@ -735,7 +735,16 @@ class CitizenIndex extends Component
        return $this->tranlaction_filds[$field] ?? "";
     }
 
+    public function saveImageFacial(){
+        $this->validate([
+            'file_capture_image' => 'image|max:1024', // 1MB Max
+        ]);
+
+        $this->file_capture_image->store('facil_captures');
+    }
+
     private function validation($fields){
+
         $errors = [];
         $ZONE_RURAL = 1;
         $ZONE_URBANA = 2;
@@ -765,6 +774,7 @@ class CitizenIndex extends Component
                 ]);
             }
         }
+
 
         if(trim($this->fields['filiation1']) == "" || $this->fields['filiation2'] == "" ){
             array_push($errors, [
@@ -963,6 +973,8 @@ class CitizenIndex extends Component
         $documents = $this->storeDocuments($this->fieldsDigitalizedDocuments);
 
         $this->storeFacilCapture();
+
+        $this->saveImageFacial();
 
 
 
