@@ -740,9 +740,9 @@ class CitizenIndex extends Component
     public function saveImageFacial(){
        $base64 = $this->file_capture_image_string;
        if(!$base64){
-            return false;
+        return false;
        }
-       $file = Storage::disk('public')->put('myfile.jpg', base64_decode($base64));
+       $file = Storage::disk('local')->putFile('face_captures/img.png', base64_decode($base64));
     }
 
     private function validation($fields){
