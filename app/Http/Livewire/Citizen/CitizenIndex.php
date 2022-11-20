@@ -391,6 +391,10 @@ class CitizenIndex extends Component
         $this->currentOccupation = Occupation::find($value)->name;
     }
     public function selectedCounty($value){
+        if(!$value){
+            return false;
+        }
+
         $this->fields['county_id'] = $value;
         $this->currentCounty = Country::find($value)->name;
     }
