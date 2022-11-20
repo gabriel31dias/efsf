@@ -1386,6 +1386,18 @@
     });
 
 
+    function downloadImage(){
+        var canvas = document.getElementById("canvas");
+        var image = canvas.toDataURL();
+
+        var aLink = document.createElement('a');
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent("click");
+        aLink.download = 'image.png';
+        aLink.href = image;
+        aLink.dispatchEvent(evt);
+    }
+
     function setupStartCaptureImage(){
         let camera_button = document.querySelector("#start-camera");
         let video = document.querySelector("#video");
