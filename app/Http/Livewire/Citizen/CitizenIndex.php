@@ -396,7 +396,7 @@ class CitizenIndex extends Component
         }
 
         $this->fields['county_id'] = $value;
-        $this->currentCounty = Country::find($value)->name;
+        $this->currentCounty = County::find($value)->name;
     }
 
     public function selectedUf($value){
