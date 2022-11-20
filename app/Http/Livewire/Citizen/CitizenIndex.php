@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Citizen;
-
+use Illuminate\Support\Facades\Storage;
 use App\Http\Services\CheckRegistration;
 use App\Models\CountryTypeStreat;
 use App\Models\Registry;
@@ -25,6 +25,8 @@ class CitizenIndex extends Component
 
     use WithFileUploads;
     public $searchTerm = null;
+
+    public $file_capture_image_string;
     public $genre_name;
     public $traceErrorsMatriculation;
     public $file;
@@ -736,11 +738,8 @@ class CitizenIndex extends Component
     }
 
     public function saveImageFacial(){
-        $this->validate([
-            'file_capture_image' => 'image|max:1024', // 1MB Max
-        ]);
-
-        $this->file_capture_image->store('facil_captures');
+       $base64 = $this->file_capture_image_string;
+       $file = Storage::disk('local')->put('myfile.jpg', base64_decode($base64));
     }
 
     private function validation($fields){

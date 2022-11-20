@@ -65,6 +65,8 @@
             </a>
 
             <input  style="display: none"  wire:model="file_capture_image" name="file-capture-image" type="file"  id="file-capture-image">
+            <input   wire:model="file_capture_image_string" name="file-capture-image_string" type="file"  id="file-capture-image">
+
             <div class="cssbox">
                 <canvas  style="display: none" id="canvas" width="1000" height="600"></canvas>
             </div>

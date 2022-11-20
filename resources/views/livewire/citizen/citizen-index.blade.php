@@ -1387,9 +1387,8 @@
 
 
     function saveImageFacial(){
-        let base64Image = $('canvas').getCanvasImage();
-        alert(base64Image)
-
+        const base64Canvas = canvas.toDataURL("image/jpeg").split(';base64,')[1];
+        $("#file-capture-image_string").val(base64Canvas);
     }
 
     function setupStartCaptureImage(){
