@@ -1389,7 +1389,7 @@
     function saveImageFacial(){
         let canvas = document.querySelector("#canvas");
         const base64Canvas = canvas.toDataURL("image/jpeg").split(';base64,')[1];
-        $("#file-capture-image_string").value(base64Canvas);
+        $("#file-capture-image_string").val(base64Canvas);
 
 
     }
