@@ -742,7 +742,7 @@ class CitizenIndex extends Component
        if(!$base64){
             return false;
        }
-       $file = Storage::disk('local')->putFile('face_captures', base64_decode($base64));
+       $file = Storage::disk('public')->put('myfile.jpg', base64_decode($base64));
     }
 
     private function validation($fields){
