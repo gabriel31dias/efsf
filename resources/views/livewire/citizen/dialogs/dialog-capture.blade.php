@@ -63,8 +63,9 @@
                </svg>
                Anexar
             </a>
-
+            <!-- input imagem anexo -->
             <input  style="display: none"  wire:model="file_capture_image" name="file-capture-image" type="file"  id="file-capture-image">
+            <!-- input imagem capturada via camera tranformada em string pós a captura -->
             <input   wire:model="file_capture_image_string" name="file-capture-image_string" type="text"  id="file-capture-image_string">
 
             <div class="cssbox">

@@ -739,7 +739,10 @@ class CitizenIndex extends Component
 
     public function saveImageFacial(){
        $base64 = $this->file_capture_image_string;
-       $file = Storage::disk('local')->put('myfile.jpg', base64_decode($base64));
+       if(!$base64){
+            return false;
+       }
+       $file = Storage::disk('local')->putFile('face_captures', base64_decode($base64));
     }
 
     private function validation($fields){
@@ -943,13 +946,18 @@ class CitizenIndex extends Component
     }
 
     public function storeFacilCapture(){
+        if(!$this->file_capture_image){
+            return false;
+        }
         $this->validate([
             'file_capture_image' => 'image|max:1024', // 1MB Max
         ]);
-        $this->file_capture_image->store('facil_captures');
+        $this->file_capture_image->store('face_captures');
     }
 
     public function createCitizen(){
+
+
 
         $this->fields["zone"] = $this->zone;
         $validation = $this->validation($this->fields);
@@ -970,6 +978,7 @@ class CitizenIndex extends Component
 
 
         $documents = $this->storeDocuments($this->fieldsDigitalizedDocuments);
+
 
         $this->storeFacilCapture();
 
