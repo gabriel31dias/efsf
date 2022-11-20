@@ -1395,11 +1395,27 @@
         });
     }
 
+    let isImageSelected = false
+    let tipeCaputure = ''
+
     function saveImageFacial(){
-        let canvas = document.querySelector("#canvas");
-        const base64Canvas = canvas.toDataURL("image/jpeg").split(';base64,')[1];
-        $("#file-capture-image_string").val(base64Canvas);
-        Livewire.emit('setFaceCapture', base64Canvas)
+        if(isImageSelected == false){
+            Swal.fire('Antes de salvar capture, ou insira um anexo.', '', 'warning')
+            return false
+        }
+        if (tipeCaputure == 1){
+            Swal.fire('Foto salva com sucesso.', '', 'success')
+        }else{
+            let canvas = document.querySelector("#canvas");
+            const base64Canvas = canvas.toDataURL("image/jpeg").split(';base64,')[1];
+            $("#file-capture-image_string").val(base64Canvas);
+
+            Livewire.emit('setFaceCapture', base64Canvas)
+            Swal.fire('Foto salva com sucesso.', '', 'success')
+        }
+
+        $('#modal-captura-facial').modal('hide')
+
     }
 
     function setupStartCaptureImage(){
@@ -1414,9 +1430,13 @@
         });
 
         document.getElementById("file-capture-image").addEventListener("change",async function({target}){
+            isImageSelected = true
+            tipeCaputure = 1
             if (target.files && target.files.length) {
                 const imagePreviewBase64 = await convertFileToBase64(target.files[0]);
                 Livewire.emit('setImagePreview', imagePreviewBase64)
+                document.getElementById("salvar-captura").style.display = "flex";
+
             }
         })
 
@@ -1432,6 +1452,9 @@
 
             $('#image-preview').hide()
 
+
+            isImageSelected = true
+            tipeCaputure = 2
 
    	        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
    	        let image_data_url = canvas.toDataURL('image/jpeg');
