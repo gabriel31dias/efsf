@@ -11,11 +11,11 @@
     @include('livewire.citizen.dialogs.dialog-search')
 
     <style>
-canvas {
-  height: 100%;
-  width: 100%;
-  display: block;
-}
+    canvas {
+        height: 100%;
+        width: 100%;
+        display: block;
+     }
     </style>
 
 
