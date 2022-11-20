@@ -11,7 +11,11 @@
     @include('livewire.citizen.dialogs.dialog-search')
 
     <style>
-
+canvas {
+  height: 100vh;
+  width: 100vw;
+  display: block;
+}
     </style>
 
 
@@ -1401,6 +1405,7 @@
             $('#video').hide()
 
             $('#capturar').hide()
+
 
    	        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
    	        let image_data_url = canvas.toDataURL('image/jpeg');
