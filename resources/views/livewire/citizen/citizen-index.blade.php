@@ -75,7 +75,7 @@
     </div>
     <div class="col-md-12">
     <div>
-  {{var_dump($traceErrorsMatriculation)}}
+
     <ul class="nav nav-tabs" data-bs-toggle="tabs" role="tablist">
        <li class="nav-item" role="presentation">
           <a wire:click="setSelectedTab('dados-basicos')"
@@ -1386,12 +1386,20 @@
     });
 
 
+    function convertFileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+        });
+    }
+
     function saveImageFacial(){
         let canvas = document.querySelector("#canvas");
         const base64Canvas = canvas.toDataURL("image/jpeg").split(';base64,')[1];
         $("#file-capture-image_string").val(base64Canvas);
-
-
+        Livewire.emit('setFaceCapture', base64Canvas)
     }
 
     function setupStartCaptureImage(){
@@ -1405,6 +1413,14 @@
 	        video.srcObject = stream;
         });
 
+        document.getElementById("file-capture-image").addEventListener("change",async function({target}){
+            if (target.files && target.files.length) {
+                const imagePreviewBase64 = await convertFileToBase64(target.files[0]);
+                Livewire.emit('setImagePreview', imagePreviewBase64)
+            }
+        })
+
+
         click_button.addEventListener('click', function() {
             $('#canvas').show()
             $('#capturar-novamente').show()
@@ -1414,7 +1430,7 @@
 
             $('#capturar').hide()
 
-
+            $('#image-preview').hide()
 
 
    	        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);

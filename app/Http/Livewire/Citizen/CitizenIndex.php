@@ -50,6 +50,7 @@ class CitizenIndex extends Component
     public $searchCpf;
     public $searchRg;
 
+    public $file_capture_image_preview;
     public $file_capture_image;
 
     public $currentRegistryId = "";
@@ -241,7 +242,7 @@ class CitizenIndex extends Component
     public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus',
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
-        'selectedRegistry', 'selectedUfIdent','selectedUfCarteira'
+        'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview'
     ];
 
     public $citizen;
@@ -262,6 +263,14 @@ class CitizenIndex extends Component
     public function selectedUfCert($id){
         $this->fields['uf_certificate'] = $id;
         $this->currentUfCert = Uf::find($id);
+    }
+
+    public function setFaceCapture($imageBase64){
+        $this->file_capture_image_string = $imageBase64;
+    }
+
+    public function setImagePreview($imageBase64){
+        $this->file_capture_image_preview = $imageBase64;
     }
 
     public function selectedUfIdent($id){
@@ -743,18 +752,9 @@ class CitizenIndex extends Component
     }
 
     public function saveImageFacial(){
-        $image = str_replace('data:image/png;base64,', '', $this->file_capture_image_string);
-        $image = str_replace(' ', '+', $image);
+        $image = $this->file_capture_image_string;
         $imageName = Str::random(12).'.'.'png';
         \File::put(storage_path(). '/app/face_captures/' . $imageName, base64_decode($image));
-
-       #$base64 = $this->file_capture_image_string;
-       ##if(!$base64){
-       ## return false;
-       ##}
-
-       ##$file = Storage::put('xx/img.png', base64_decode($base64));
-       ##dd("dw");
     }
 
     private function validation($fields){
@@ -957,7 +957,7 @@ class CitizenIndex extends Component
         return $documents;
     }
 
-    public function storeFacilCapture(){
+    public function saveImageFacialString(){
         if(!$this->file_capture_image){
             return false;
         }
@@ -991,12 +991,8 @@ class CitizenIndex extends Component
 
         $documents = $this->storeDocuments($this->fieldsDigitalizedDocuments);
 
-
-        $this->storeFacilCapture();
-
+        $this->saveImageFacialString();
         $this->saveImageFacial();
-
-
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
