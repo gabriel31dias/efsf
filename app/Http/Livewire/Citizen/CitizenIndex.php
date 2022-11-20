@@ -19,6 +19,7 @@ use App\Models\ServiceStation;
 use Livewire\WithFileUploads;
 use PHPUnit\Framework\Constraint\Count;
 use App\Models\BlockedCertificate;
+use Illuminate\Support\Str;
 
 class CitizenIndex extends Component
 {
@@ -738,11 +739,18 @@ class CitizenIndex extends Component
     }
 
     public function saveImageFacial(){
-       $base64 = $this->file_capture_image_string;
-       if(!$base64){
-        return false;
-       }
-       $file = Storage::disk('local')->putFile('face_captures/img.png', base64_decode($base64));
+        $image = str_replace('data:image/png;base64,', '', $this->file_capture_image_string);
+        $image = str_replace(' ', '+', $image);
+        $imageName = Str::random(12).'.'.'png';
+        \File::put(storage_path(). '/app/face_captures/' . $imageName, base64_decode($image));
+
+       #$base64 = $this->file_capture_image_string;
+       ##if(!$base64){
+       ## return false;
+       ##}
+
+       ##$file = Storage::put('xx/img.png', base64_decode($base64));
+       ##dd("dw");
     }
 
     private function validation($fields){
