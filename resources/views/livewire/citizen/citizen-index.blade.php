@@ -1387,8 +1387,11 @@
 
 
     function saveImageFacial(){
+        let canvas = document.querySelector("#canvas");
         const base64Canvas = canvas.toDataURL("image/jpeg").split(';base64,')[1];
-        $("#file-capture-image_string").val(base64Canvas);
+        $("#file-capture-image_string").value(base64Canvas);
+
+
     }
 
     function setupStartCaptureImage(){
@@ -1411,7 +1414,7 @@
 
             $('#capturar').hide()
 
-            saveImageFacial()
+
 
 
    	        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
