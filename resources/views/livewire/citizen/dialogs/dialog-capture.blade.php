@@ -63,7 +63,7 @@
                Anexar
             </a>
 
-            <a  onclick="saveImageFacial()" id="salvar-captura"  class="btn btn-success " class="btn btn-primary inline-flex">
+            <a  onclick="saveImageFacial()" id="salvar-captura"  class="btn btn-success" class="btn btn-primary inline-flex">
                 <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -80,7 +80,7 @@
             <!-- input imagem anexo -->
             <input  style="display: none"  wire:model="file_capture_image" name="file-capture-image" type="file"  id="file-capture-image">
             <!-- input imagem capturada via camera tranformada em string pós a captura -->
-            <input   wire:model="file_capture_image_string" name="file-capture-image_string" type="text"  id="file-capture-image_string">
+            <input  style="display: none" wire:model="file_capture_image_string" name="file-capture-image_string" type="text"  id="file-capture-image_string">
 
             <div class="cssbox">
                 <canvas  style="display: none" id="canvas" width="1000" height="600"></canvas>
