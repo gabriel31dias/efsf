@@ -1412,7 +1412,7 @@
 
             Livewire.emit('setFaceCapture', base64Canvas)
 
-            Livewire.emit('setImagePreview', imagePreviewBase64)
+            Livewire.emit('setImagePreview', base64Canvas)
 
             Swal.fire('Foto salva com sucesso.', '', 'success')
         }
