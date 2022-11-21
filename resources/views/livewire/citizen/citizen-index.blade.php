@@ -1411,6 +1411,9 @@
             $("#file-capture-image_string").val(base64Canvas);
 
             Livewire.emit('setFaceCapture', base64Canvas)
+
+            Livewire.emit('setImagePreview', imagePreviewBase64)
+
             Swal.fire('Foto salva com sucesso.', '', 'success')
         }
 
