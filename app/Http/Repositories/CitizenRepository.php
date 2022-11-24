@@ -79,9 +79,13 @@ class CitizenRepository {
         $getFeautures = Feature::get();
 
 
+
+
         $getFeautures = $getFeautures->map(function ($item) {
             $obj = new \StdClass;
             $obj->type = $item->name;
+            $obj->multiple = $item->mult_select;
+
             $items = FeatureOption::where('feature_id', $item->id)->get();
 
             $items = $items->map(function ($item) {

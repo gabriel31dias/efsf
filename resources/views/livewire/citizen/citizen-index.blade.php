@@ -16,7 +16,9 @@
         width: 100%;
         display: block;
      }
+
     </style>
+
 
 
  <form>
@@ -1012,9 +1014,10 @@
                       <div class=" row">
                          <div id="gemeo" role="tabpanel">
                             <div class="row">
+                                {{var_dump($caracteristics)}}
                                @foreach($caracteristics as $ca)
                                @if($ca->type == "Amputação")
-                               <div class="col-lg-3 mb-3">
+                                <div class="col-lg-3 mb-3">
                                   <label   label class="form-label ">Altura<span class="error_tag">*</span></label>
                                   <input wire:model="fields.height" maxlength="70" type="text"
                                      class="form-control ps-0 "
@@ -1023,12 +1026,28 @@
                                @endif
                                <div class="col-lg-3 mb-3">
                                   <label class="form-label ">{{$ca->type}}<span class="error_tag">*</span></label>
-                                  <select    wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
+                                  @if($ca->multiple == true)
+                                  <div class="input-group ">
+                                    <select  wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
+                                        <option value="0">Selecione</option>
+                                        @foreach($ca->items as $item)
+                                            <option  value="{{$item}}">{{$item}}</option>
+                                        @endforeach
+                                      </select>
+                                    <div class="input-group-append">
+                                        <a  wire:click="plusFeature('{{$ca->type}}')" class="btn btn-danger w-100">
+                                            +
+                                        </a>
+                                    </div>
+                                  </div>
+                                  @else
+                                  <select  wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
                                     <option value="0">Selecione</option>
                                     @foreach($ca->items as $item)
-                                     <option  value="{{$item}}">{{$item}}</option>
-                                     @endforeach
+                                        <option  value="{{$item}}">{{$item}}</option>
+                                    @endforeach
                                   </select>
+                                  @endif
                                </div>
                                @endforeach
                             </div>

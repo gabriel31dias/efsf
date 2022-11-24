@@ -114,7 +114,7 @@ class CitizenIndex extends Component
     ];
 
     public $fieldsDigitalizedDocuments = ["field1"=>null];
-    public $caracteristics;
+    public $caracteristics = [];
 
     public $tranlaction_filds = [
         "rg" => "rg",
@@ -498,6 +498,37 @@ class CitizenIndex extends Component
         ];
 
         return $documents[$index];
+    }
+
+    public function plusFeature($typeFeature){
+        $quantityType = $this->checkAmountOfTheSamefeature($typeFeature);
+
+        $obj = [];
+        $obj['type'] = $typeFeature.$quantityType;
+        $obj['multiple'] = true;
+
+        $this->caracteristics[] = $obj;
+    }
+
+    function array_usearch(array $array, callable $comparitor) {
+        return array_filter(
+            $array,
+            function ($element) use ($comparitor) {
+                if ($comparitor($element)) {
+                    return $element;
+                }
+            }
+        );
+    }
+
+    public function checkAmountOfTheSamefeature($newFeature){
+        $count_characteristics = 0;
+        $this->caracteristics->map(function($caracteristic) use($count_characteristics, $newFeature) {
+            if(str_contains($caracteristic['type'], $newFeature)){
+                $count_characteristics =  $count_characteristics + 1;
+            }
+        });
+        return $count_characteristics;
     }
 
     public function setCitizen($id){

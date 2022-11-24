@@ -14,7 +14,8 @@ class FeatureForm extends Component
     public $feature_options = [];
 
     public $fields = [
-        "name" => ""
+        "name" => "",
+        "mult_select" => false
     ];
 
     protected $rules = [
@@ -90,8 +91,8 @@ class FeatureForm extends Component
         ]);
     }
 
-    public function addFeatureOptions(){ 
-        if(in_array($this->feature_option_name, $this->feature_options)) { 
+    public function addFeatureOptions(){
+        if(in_array($this->feature_option_name, $this->feature_options)) {
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'warning',
                 'message'=> "Nome de característica ja cadastrado ."
@@ -99,9 +100,9 @@ class FeatureForm extends Component
             $this->feature_option_name = '';
             return;
         }
-        if($this->action == "create"){ 
+        if($this->action == "create"){
             $this->feature_options[] = $this->feature_option_name;
-        } else { 
+        } else {
             $this->feature->feature_options()->create(['name' => $this->feature_option_name]);
             $this->feature = Feature::findOrFail($this->feature->id);
             $this->feature_option= $this->feature->feature_options;
@@ -110,15 +111,15 @@ class FeatureForm extends Component
 
     }
 
-    public function removeFeatureOption($value){ 
+    public function removeFeatureOption($value){
         if (($key = array_search($value, $this->feature_options)) !== false) {
             unset($this->feature_options[$key]);
         }
     }
-    
-    public function refreshFeatureForm() { 
+
+    public function refreshFeatureForm() {
         //ADICIONAR CHAMADA AQUI PARA REMOVER DOS CITIZENS AS CARACTERISTICAS REMOVIDAS
-        
+
         $this->feature = Feature::findOrFail($this->feature->id);
         $this->feature_option= $this->feature->feature_options;
 

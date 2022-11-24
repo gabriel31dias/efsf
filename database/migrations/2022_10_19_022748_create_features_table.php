@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('features', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->boolean('mult_select')->default(0);
+
             $table->boolean('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

@@ -59,6 +59,7 @@
                                     @error('fields.name') <span class="text-danger"> {{ $message }}</span> @enderror
                                 </div>
                             </div>
+
                             <div class="col-lg-4">
                                 <label style="" class="form-label">Características</label>
                                 <div class="input-group mb-1">
@@ -80,6 +81,19 @@
                                 </div>
                                 @error('feature_options') <span class="text-danger"> {{ $message }}</span> @enderror
                             </div>
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Multi seleção<span class="error_tag"> *</span></label>
+                                    <select wire:model="fields.mult_select" class="form-control ps-0" name="select">
+                                        <option >Selecione</option>
+                                        <option value="true">Sim</option>
+                                        <option value="false">Não</option>
+                                     </select>
+                                    @error('fields.mult_select') <span class="text-danger"> {{ $message }}</span> @enderror
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -104,15 +118,15 @@
                                             <tr class="hover:bg-gray-100 hover:text-black">
                                                 <td class="sort-name">{{ $option }}</td>
                                                 <td class="">
-                                                        <a wire:click="removeFeatureOption('{{ $option }}')" class="text-decoration-none hover:cursor-pointer hover:bg-gray-800 text-gray-700 
-                                                        hover:text-white focus:ring-4 font-medium rounded-lg 
+                                                        <a wire:click="removeFeatureOption('{{ $option }}')" class="text-decoration-none hover:cursor-pointer hover:bg-gray-800 text-gray-700
+                                                        hover:text-white focus:ring-4 font-medium rounded-lg
                                                         text-sm p-2.5 text-center inline-flex items-center mr-2 ">
                                                         <i class="ti ti-trash"></i>
                                                         </a>
                                                 </td>
                                             </tr>
                                         @endforeach
-                                    @else 
+                                    @else
 
                                     @foreach ($feature->feature_options as $option)
                                     <tr class="hover:bg-gray-100 hover:text-black">
