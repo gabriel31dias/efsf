@@ -105,7 +105,7 @@
           role="tab" tabindex="-1">Outros documentos</a>
        </li>
        <li class="nav-item" role="presentation">
-          <a wire:click="setSelectedTab('caracteristicas')"  data-bs-toggle="tab" aria-selected="false"
+          <a wire:click="setSelectedTab('caracteristicas');" onclick="loadMultSelect()"  data-bs-toggle="tab" aria-selected="false"
           class="nav-link @if($selectedTab == "caracteristicas") active @else   @endif"
           role="tab" tabindex="-1">Características</a>
        </li>
@@ -1014,7 +1014,7 @@
                       <div class=" row">
                          <div id="gemeo" role="tabpanel">
                             <div class="row">
-                                {{var_dump($caracteristics)}}
+
                                @foreach($caracteristics as $ca)
                                @if($ca->type == "Amputação")
                                 <div class="col-lg-3 mb-3">
@@ -1028,17 +1028,17 @@
                                   <label class="form-label ">{{$ca->type}}<span class="error_tag">*</span></label>
                                   @if($ca->multiple == true)
                                   <div class="input-group ">
-                                    <select  wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
-                                        <option value="0">Selecione</option>
+
+                                    @php
+                                        $id_feature = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))
+                                    @endphp
+
+                                    <select onchange="livewire.emit('updated_feature', [ '{{$id_feature}}', $('#{{$id_feature}}').val() , '{{$ca->type}}'])"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  class="form-control multselect" multiple="multiple" id="select2">
+                                        <option value="0">Select Option</option>
                                         @foreach($ca->items as $item)
                                             <option  value="{{$item}}">{{$item}}</option>
                                         @endforeach
-                                      </select>
-                                    <div class="input-group-append">
-                                        <a  wire:click="plusFeature('{{$ca->type}}')" class="btn btn-danger w-100">
-                                            +
-                                        </a>
-                                    </div>
+                                    </select>
                                   </div>
                                   @else
                                   <select  wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
@@ -1378,7 +1378,23 @@
             $('#modal-search').modal('show');
             $('#date').val(today.toISOString().substring(0, 10));
         }
+
+        loadMultSelect()
     })
+
+
+    function loadMultSelect(){
+        setTimeout(() => {
+            $('.multselect').select2({
+            tags: true,
+            tokenSeparators: [',', ' '],
+            createTag: function (params) {
+                var term = $.trim(params.term);
+                return null;
+        }});
+
+        }, 300);
+    }
 
     window.addEventListener('closeModalSearch', ({detail: {user}}) => {
         $('#modal-search').modal('hide');

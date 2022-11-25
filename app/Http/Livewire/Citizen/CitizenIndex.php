@@ -242,7 +242,7 @@ class CitizenIndex extends Component
     public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus',
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
-        'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview'
+        'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature'
     ];
 
     public $citizen;
@@ -263,6 +263,18 @@ class CitizenIndex extends Component
     public function selectedUfCert($id){
         $this->fields['uf_certificate'] = $id;
         $this->currentUfCert = Uf::find($id);
+    }
+
+    public function updated_feature($object){
+
+        if(isset($this->fieldsFeatures[$object[0]])){
+
+            $this->fieldsFeatures[$object[0]] =  array_merge($this->fieldsFeatures[$object[0]], $object[1])   ;
+        }
+
+
+
+
     }
 
     public function setFaceCapture($imageBase64){
@@ -341,6 +353,8 @@ class CitizenIndex extends Component
     }
 
     public function checkBlockedCertificate($registry_id){
+
+        return false;
 
         $blocked = BlockedCertificate::where('registry_id', $registry_id)
         ->where('book_number', $this->fields["book_number"])
@@ -1024,6 +1038,8 @@ class CitizenIndex extends Component
 
         $this->saveImageFacialString();
         $this->saveImageFacial();
+
+        dd($this->fieldsFeatures);
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
