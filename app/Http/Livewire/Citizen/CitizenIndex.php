@@ -266,15 +266,8 @@ class CitizenIndex extends Component
     }
 
     public function updated_feature($object){
-
-        if(isset($this->fieldsFeatures[$object[0]])){
-
-            $this->fieldsFeatures[$object[0]] =  array_merge($this->fieldsFeatures[$object[0]], $object[1])   ;
-        }
-
-
-
-
+        $this->fieldsFeatures[$object[0]] = $object[1];
+        $this->dispatchBrowserEvent('reloadInputsSelect');
     }
 
     public function setFaceCapture($imageBase64){
@@ -353,8 +346,9 @@ class CitizenIndex extends Component
     }
 
     public function checkBlockedCertificate($registry_id){
-
-        return false;
+        if(!$registry_id){
+            return false;
+        }
 
         $blocked = BlockedCertificate::where('registry_id', $registry_id)
         ->where('book_number', $this->fields["book_number"])
@@ -389,11 +383,6 @@ class CitizenIndex extends Component
         $item['file'] = "";
         $item['type'] = "";
         $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
-    }
-
-    public function addFileCapture(){
-
-
     }
 
     public function  selectedCountryTypeStreat($id)
@@ -512,37 +501,6 @@ class CitizenIndex extends Component
         ];
 
         return $documents[$index];
-    }
-
-    public function plusFeature($typeFeature){
-        $quantityType = $this->checkAmountOfTheSamefeature($typeFeature);
-
-        $obj = [];
-        $obj['type'] = $typeFeature.$quantityType;
-        $obj['multiple'] = true;
-
-        $this->caracteristics[] = $obj;
-    }
-
-    function array_usearch(array $array, callable $comparitor) {
-        return array_filter(
-            $array,
-            function ($element) use ($comparitor) {
-                if ($comparitor($element)) {
-                    return $element;
-                }
-            }
-        );
-    }
-
-    public function checkAmountOfTheSamefeature($newFeature){
-        $count_characteristics = 0;
-        $this->caracteristics->map(function($caracteristic) use($count_characteristics, $newFeature) {
-            if(str_contains($caracteristic['type'], $newFeature)){
-                $count_characteristics =  $count_characteristics + 1;
-            }
-        });
-        return $count_characteristics;
     }
 
     public function setCitizen($id){
@@ -1039,7 +997,7 @@ class CitizenIndex extends Component
         $this->saveImageFacialString();
         $this->saveImageFacial();
 
-        dd($this->fieldsFeatures);
+
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],

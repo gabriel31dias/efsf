@@ -64,7 +64,6 @@ class UfSelect extends Component
 
     public function decrementHighlight()
     {
-
         $this->selectedId = '';
         if ($this->highlightIndex === 0) {
             $this->highlightIndex = count($this->ufs) - 1;
@@ -75,16 +74,16 @@ class UfSelect extends Component
 
     public function selectContact()
     {
-        $contact = $this->ufs[$this->highlightIndex] ?? null;
-        if ($contact) {
-            $this->redirect(route('show-contact', $contact['id']));
+        $uf = $this->ufs[$this->highlightIndex] ?? null;
+        if ($uf) {
+            $this->selectItem($uf['id'],  $uf['acronym']);
         }
     }
 
     public function updatedQuery()
     {
         $this->closed = false;
-        $this->ufs = Uf::where('name', 'ilike', '%' . $this->query . '%')
+        $this->ufs = Uf::where('acronym', 'ilike', '%' . $this->query . '%')
             ->get()
             ->toArray();
     }

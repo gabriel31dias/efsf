@@ -41,7 +41,6 @@ class CountySelect extends Component
     public function resetValue()
     {
         $this->query = '';
-
         $this->selectedId = '';
         $this->maritalStatus = [];
         $this->highlightIndex = 0;
@@ -54,7 +53,7 @@ class CountySelect extends Component
     public function incrementHighlight()
     {
         $this->closed = false;
-        if ($this->highlightIndex === count($this->stations) - 1) {
+        if ($this->highlightIndex === count($this->counties) - 1) {
             $this->highlightIndex = 0;
             return;
         }
@@ -63,10 +62,9 @@ class CountySelect extends Component
 
     public function decrementHighlight()
     {
-
         $this->selectedId = '';
         if ($this->highlightIndex === 0) {
-            $this->highlightIndex = count($this->stations) - 1;
+            $this->highlightIndex = count($this->counties) - 1;
             return;
         }
         $this->highlightIndex--;
@@ -74,9 +72,9 @@ class CountySelect extends Component
 
     public function selectContact()
     {
-        $contact = $this->stations[$this->highlightIndex] ?? null;
-        if ($contact) {
-            $this->redirect(route('show-contact', $contact['id']));
+        $county = $this->counties[$this->highlightIndex] ?? null;
+        if ($county) {
+            $this->selectItem($county['id'], $county['name']);
         }
     }
 
@@ -89,7 +87,6 @@ class CountySelect extends Component
     }
 
     public function selectItem($id, $value){
-
         $this->query = $value;
         $this->selectedId = $id;
         $this->selectedValue = $value;

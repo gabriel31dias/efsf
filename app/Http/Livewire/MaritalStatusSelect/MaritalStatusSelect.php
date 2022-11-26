@@ -50,7 +50,7 @@ class MaritalStatusSelect extends Component
     public function incrementHighlight()
     {
         $this->closed = false;
-        if ($this->highlightIndex === count($this->stations) - 1) {
+        if ($this->highlightIndex === count($this->maritalStatus) - 1) {
             $this->highlightIndex = 0;
             return;
         }
@@ -62,7 +62,7 @@ class MaritalStatusSelect extends Component
 
         $this->selectedId = '';
         if ($this->highlightIndex === 0) {
-            $this->highlightIndex = count($this->stations) - 1;
+            $this->highlightIndex = count($this->maritalStatus) - 1;
             return;
         }
         $this->highlightIndex--;

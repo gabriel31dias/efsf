@@ -25,7 +25,6 @@ class GenresSelect extends Component
     {
         $this->reset1();
         $this->currentGenre();
-
     }
 
     public function currentGenre(){
@@ -40,7 +39,6 @@ class GenresSelect extends Component
     public function reset1()
     {
         $this->query = '';
-
         $this->selectedId = '';
         $this->maritalStatus = [];
         $this->highlightIndex = 0;
@@ -53,7 +51,7 @@ class GenresSelect extends Component
     public function incrementHighlight()
     {
         $this->closed = false;
-        if ($this->highlightIndex === count($this->stations) - 1) {
+        if ($this->highlightIndex === count($this->genres) - 1) {
             $this->highlightIndex = 0;
             return;
         }
@@ -65,7 +63,7 @@ class GenresSelect extends Component
 
         $this->selectedId = '';
         if ($this->highlightIndex === 0) {
-            $this->highlightIndex = count($this->stations) - 1;
+            $this->highlightIndex = count($this->genres) - 1;
             return;
         }
         $this->highlightIndex--;
@@ -73,9 +71,9 @@ class GenresSelect extends Component
 
     public function selectContact()
     {
-        $contact = $this->stations[$this->highlightIndex] ?? null;
-        if ($contact) {
-            $this->redirect(route('show-contact', $contact['id']));
+        $genre = $this->genres[$this->highlightIndex] ?? null;
+        if($genre){
+            $this->selectItem($genre['id'], $genre['name']);
         }
     }
 

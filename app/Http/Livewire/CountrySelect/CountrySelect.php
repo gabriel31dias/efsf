@@ -52,7 +52,7 @@ class CountrySelect extends Component
     public function incrementHighlight()
     {
         $this->closed = false;
-        if ($this->highlightIndex === count($this->stations) - 1) {
+        if ($this->highlightIndex === count($this->countries) - 1) {
             $this->highlightIndex = 0;
             return;
         }
@@ -64,17 +64,17 @@ class CountrySelect extends Component
 
         $this->selectedId = '';
         if ($this->highlightIndex === 0) {
-            $this->highlightIndex = count($this->stations) - 1;
+            $this->highlightIndex = count($this->countries) - 1;
             return;
         }
         $this->highlightIndex--;
     }
 
-    public function selectContact()
+    public function selectCountry()
     {
-        $contact = $this->countries[$this->highlightIndex] ?? null;
-        if ($contact) {
-            $this->redirect(route('show-contact', $contact['id']));
+        $country = $this->countries[$this->highlightIndex] ?? null;
+        if($country){
+            $this->selectItem($country['id'], $country['name']);
         }
     }
 

@@ -48,7 +48,7 @@ class OccupationSelect extends Component
     public function incrementHighlight()
     {
         $this->closed = false;
-        if ($this->highlightIndex === count($this->stations) - 1) {
+        if ($this->highlightIndex === count($this->occupations) - 1) {
             $this->highlightIndex = 0;
             return;
         }
@@ -60,7 +60,7 @@ class OccupationSelect extends Component
 
         $this->selectedId = '';
         if ($this->highlightIndex === 0) {
-            $this->highlightIndex = count($this->stations) - 1;
+            $this->highlightIndex = count($this->occupations) - 1;
             return;
         }
         $this->highlightIndex--;
@@ -68,9 +68,9 @@ class OccupationSelect extends Component
 
     public function selectContact()
     {
-        $contact = $this->stations[$this->highlightIndex] ?? null;
-        if ($contact) {
-            $this->redirect(route('show-contact', $contact['id']));
+        $occupation = $this->occupations[$this->highlightIndex] ?? null;
+        if ($occupation) {
+            $this->selectItem($occupation['id'], $occupation['name']);
         }
     }
 
@@ -83,7 +83,6 @@ class OccupationSelect extends Component
     }
 
     public function selectItem($id, $value){
-
         $this->query = $value;
         $this->selectedId = $id;
         $this->selectedValue = $value;
