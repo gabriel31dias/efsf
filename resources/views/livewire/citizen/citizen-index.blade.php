@@ -1017,7 +1017,7 @@
                                         $id_feature = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))
                                     @endphp
 
-                                    <select   id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  class="form-control multselect" multiple="multiple" id="select2">
+                                    <select  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  class="form-control multselect" multiple="multiple" id="select2">
                                         <option value="0">Select Option</option>
                                         @foreach($ca->items as $item)
                                             <option  value="{{$item}}">{{$item}}</option>
@@ -1372,6 +1372,15 @@
         setTimeout(() => {
             if($('.multselect')){
 
+
+
+            }else{
+                loadMultSelect()
+            }
+
+        }, 150);
+
+        setIntervalLimit(function(){
             $('.multselect').select2({
                 tags: true,
                 tokenSeparators: [',', ' '],
@@ -1379,13 +1388,21 @@
                     var term = $.trim(params.term);
                     return null;
                 }});
-
-            }else{
-                loadMultSelect()
-            }
-
-        }, 150);
+        }, 300, 3);
     }
+
+
+    function setIntervalLimit(func, time, limit){
+    var n = 0; // CRIA UM CONTADOR INTERNO
+    var f = function(){ // CRIA UM FUNCAO INTERNA
+        func();
+        n++;
+        if(n < limit){ // VEFIFICA CONTAGEM
+            setTimeout(f, time); // REALIZA LOOP
+        }
+    }
+    f(); // CHAMA A FUNÇÃO INTERNA 1ª VEZ
+}
 
 
 
