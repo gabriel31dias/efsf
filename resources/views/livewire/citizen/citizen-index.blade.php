@@ -1368,6 +1368,7 @@
 
 
     function loadMultSelect(){
+        alert('dwdw')
         setTimeout(() => {
             $('.multselect').select2({
                 tags: true,
