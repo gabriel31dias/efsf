@@ -1368,11 +1368,7 @@
 
 
     function loadMultSelect(){
-
-
-
         let i = setInterval(() => {
-
             if( $('.multselect').length ) {
                 $('.multselect').select2({
                 tags: true,
@@ -1386,7 +1382,7 @@
 
             }
 
-        }, 150);
+        }, 10);
     }
 
 
