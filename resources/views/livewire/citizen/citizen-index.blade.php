@@ -1368,8 +1368,6 @@
 
 
     function loadMultSelect(){
-
-
         setIntervalLimit(function(){
             $('.multselect').select2({
                 tags: true,
@@ -1379,7 +1377,7 @@
                     return null;
                 }});
 
-        }, 150, 10);
+        }, 150, 5);
     }
 
 
