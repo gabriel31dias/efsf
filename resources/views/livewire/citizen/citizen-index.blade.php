@@ -1368,7 +1368,7 @@
 
 
     function loadMultSelect(){
-
+        setTimeout(() => {
             $('.multselect').select2({
                 tags: true,
                 tokenSeparators: [',', ' '],
@@ -1376,12 +1376,10 @@
                     var term = $.trim(params.term);
                     return null;
             }});
-
+        }, 300);
     }
 
-    window.addEventListener('reloadInputsSelect',()=>{
-        loadMultSelect()
-    })
+
 
     window.addEventListener('closeModalSearch', ({detail: {user}}) => {
         $('#modal-search').modal('hide');
