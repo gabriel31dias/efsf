@@ -1381,8 +1381,9 @@
                     var term = $.trim(params.term);
                     return null;
                 }});
-            }else{
                 clearInterval(i)
+            }else{
+
             }
 
         }, 150);
