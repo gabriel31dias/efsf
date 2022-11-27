@@ -994,7 +994,7 @@
                    </div>
                    @endif
                    @if($selectedTab == "caracteristicas")
-                   <div class=" mb-3">
+                   <div wire:ignore class=" mb-3">
                       <div class=" row">
                          <div id="gemeo" role="tabpanel">
                             <div class="row">
