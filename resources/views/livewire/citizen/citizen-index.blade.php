@@ -1003,7 +1003,7 @@
                                @if($ca->type == "Amputação")
                                 <div class="col-lg-3 mb-3">
                                   <label   label class="form-label ">Altura<span class="error_tag">*</span></label>
-                                  <input wire:ignore  onchange="loadMultSelect()" wire:model="fields.height" maxlength="70" type="text"
+                                  <input  onchange="loadMultSelect()" wire:model="fields.height" maxlength="70" type="text"
                                      class="form-control ps-0 "
                                      autocomplete="off" required>
                                </div>
@@ -1025,7 +1025,7 @@
                                     </select>
                                   </div>
                                   @else
-                                  <select  wire:ignore id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" name="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:ignore onchange="loadMultSelect()"  wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
+                                  <select   id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" name="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:ignore onchange="loadMultSelect()"  wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
                                     <option value="0">Selecione</option>
                                     @foreach($ca->items as $item)
                                         <option  value="{{$item}}">{{$item}}</option>
@@ -1368,7 +1368,10 @@
 
 
     function loadMultSelect(){
-          setTimeout(() => {
+
+        setTimeout(() => {
+            if($('.multselect')){
+
             $('.multselect').select2({
                 tags: true,
                 tokenSeparators: [',', ' '],
@@ -1376,7 +1379,12 @@
                     var term = $.trim(params.term);
                     return null;
                 }});
-            }, 150);
+
+            }else{
+                loadMultSelect()
+            }
+
+        }, 150);
     }
 
 
