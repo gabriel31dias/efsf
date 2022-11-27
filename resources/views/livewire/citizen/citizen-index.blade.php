@@ -651,18 +651,7 @@
                    </div>
                    @endif
                 </div>
-                <div class="col-lg-4 mb-3">
-                   <label class="form-label">Procedência<span
-                      class="error_tag">*</span></label>
-                   <input wire:model="fields.provenance" maxlength="70" type="text"
-                      class="form-control ps-0"
-                      autocomplete="off" required>
-                   @if (in_array("provenance", $errorsKeys))
-                   <div class="error_tag" role="alert">
-                      O campo Procedência é obrigatório
-                   </div>
-                   @endif
-                </div>
+
                 @endif
                 @if($zone == "1")
                 <div class="col-lg-4 mb-3">
@@ -1320,7 +1309,7 @@
                                   </div>
                                </div>
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Matricula  {{$registrationError}}<span
+                                  <label class="form-label">Matricula<span
                                      class="error_tag">*</span></label>
                                   <input wire:change="changeRegistration" onclick="IMask(
                                      this, {

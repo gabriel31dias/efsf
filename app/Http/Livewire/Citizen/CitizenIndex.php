@@ -131,7 +131,6 @@ class CitizenIndex extends Component
         "address" => "endereço",
         "number" => "numero",
         "complement" => "complemento",
-        "provenance" => "proveniência",
         "reference_point" => "ponto de referência",
         "cell" => "celular",
         "telephone" => "telefone",

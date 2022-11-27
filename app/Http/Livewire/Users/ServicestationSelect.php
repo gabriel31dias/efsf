@@ -68,9 +68,10 @@ class ServicestationSelect extends Component
 
     public function selectContact()
     {
-        $contact = $this->stations[$this->highlightIndex] ?? null;
-        if ($contact) {
-            $this->redirect(route('show-contact', $contact['id']));
+        $station = $this->stations[$this->highlightIndex] ?? null;
+
+        if ($station) {
+            $this->selectItem($station['id'], $station['service_station_name']);
         }
     }
 
@@ -81,7 +82,6 @@ class ServicestationSelect extends Component
             ->get()
             ->toArray();
     }
-
 
 
     public function selectItem($id, $value){

@@ -20,7 +20,7 @@
           @foreach($stations as $i => $station)
           <a
              wire:click="selectItem({{$station['id']}}, '{{$station['service_station_name']}}')"
-             class="text-decoration-none  hover:cursor-pointer hover:bg-sky-600 rounded hover:text-white p-2 list-item list-none {{ $highlightIndex === $i ? 'highlight' : '' }}"
+             class="text-decoration-none  hover:cursor-pointer hover:bg-sky-600 rounded hover:text-white p-2 list-item list-none {{ $highlightIndex === $i ? 'bg-sky-600 text-white' : '' }}"
              >{{ $station['service_station_name'] }}</a>
           @endforeach
           @else
