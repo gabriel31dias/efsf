@@ -1003,7 +1003,7 @@
                                @if($ca->type == "Amputação")
                                 <div class="col-lg-3 mb-3">
                                   <label   label class="form-label ">Altura<span class="error_tag">*</span></label>
-                                  <input onchange="loadMultSelect()" wire:model="fields.height" maxlength="70" type="text"
+                                  <input wire:ignore  onchange="loadMultSelect()" wire:model="fields.height" maxlength="70" type="text"
                                      class="form-control ps-0 "
                                      autocomplete="off" required>
                                </div>
@@ -1017,7 +1017,7 @@
                                         $id_feature = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))
                                     @endphp
 
-                                    <select  onchange="livewire.emit('updated_feature', [ '{{$id_feature}}', $('#{{$id_feature}}').val() , '{{$ca->type}}'])"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  class="form-control multselect" multiple="multiple" id="select2">
+                                    <select wire:ignore onchange="livewire.emit('updated_feature', [ '{{$id_feature}}', $('#{{$id_feature}}').val() , '{{$ca->type}}'])"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  class="form-control multselect" multiple="multiple" id="select2">
                                         <option value="0">Select Option</option>
                                         @foreach($ca->items as $item)
                                             <option  value="{{$item}}">{{$item}}</option>
@@ -1025,7 +1025,7 @@
                                     </select>
                                   </div>
                                   @else
-                                  <select id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" name="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:ignore onchange="loadMultSelect()"  wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
+                                  <select wire:ignore id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" name="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:ignore onchange="loadMultSelect()"  wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
                                     <option value="0">Selecione</option>
                                     @foreach($ca->items as $item)
                                         <option  value="{{$item}}">{{$item}}</option>
@@ -1368,16 +1368,15 @@
 
 
     function loadMultSelect(){
-        alert('dwdw')
-        setTimeout(() => {
+          setTimeout(() => {
             $('.multselect').select2({
                 tags: true,
                 tokenSeparators: [',', ' '],
                 createTag: function (params) {
                     var term = $.trim(params.term);
                     return null;
-            }});
-        }, 500);
+                }});
+            }, 150);
     }
 
 
