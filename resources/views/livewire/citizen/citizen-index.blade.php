@@ -1376,7 +1376,7 @@
                     var term = $.trim(params.term);
                     return null;
             }});
-        }, 300);
+        }, 500);
     }
 
 
