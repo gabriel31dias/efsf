@@ -1384,11 +1384,6 @@
         }, 1);
     }
 
-
-    window.addEventListener('reloadInputsSelect',()=>{
-        loadMultSelect()
-    })
-
     function setIntervalLimit(func, time, limit){
     var n = 0; // CRIA UM CONTADOR INTERNO
     var f = function(){ // CRIA UM FUNCAO INTERNA
