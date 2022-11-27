@@ -1381,16 +1381,13 @@
 
             }
 
-        }, 10);
+        }, 1);
     }
 
 
     window.addEventListener('reloadInputsSelect',()=>{
         loadMultSelect()
     })
-
-
-
 
     function setIntervalLimit(func, time, limit){
     var n = 0; // CRIA UM CONTADOR INTERNO
