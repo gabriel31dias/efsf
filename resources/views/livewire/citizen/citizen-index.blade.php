@@ -1368,16 +1368,24 @@
 
 
     function loadMultSelect(){
-        setIntervalLimit(function(){
-            $('.multselect').select2({
+
+
+
+        let i = setInterval(() => {
+
+            if( $('.multselect').length ) {
+                $('.multselect').select2({
                 tags: true,
                 tokenSeparators: [',', ' '],
                 createTag: function (params) {
                     var term = $.trim(params.term);
                     return null;
                 }});
+            }else{
+                clearInterval(i)
+            }
 
-        }, 150, 5);
+        }, 150);
     }
 
 
