@@ -1025,7 +1025,7 @@
                                     </select>
                                   </div>
                                   @else
-                                  <select   id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" name="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:ignore onchange="loadMultSelect()"  wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
+                                  <select onchange="loadMultSelect()" id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" name="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:ignore   wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
                                     <option value="0">Selecione</option>
                                     @foreach($ca->items as $item)
                                         <option  value="{{$item}}">{{$item}}</option>
@@ -1369,7 +1369,7 @@
 
     function loadMultSelect(){
         let i = setInterval(() => {
-            if( $('.multselect').length ) {
+            if( $('.multselect').length > 0 && $('.select2-hidden-accessible').length == 0 ) {
                 $('.multselect').select2({
                 tags: true,
                 tokenSeparators: [',', ' '],
@@ -1377,7 +1377,6 @@
                     var term = $.trim(params.term);
                     return null;
                 }});
-                clearInterval(i)
             }else{
 
             }
