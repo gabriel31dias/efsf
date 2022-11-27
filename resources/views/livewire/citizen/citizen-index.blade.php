@@ -1370,14 +1370,13 @@
     function loadMultSelect(){
         setTimeout(() => {
             $('.multselect').select2({
-            tags: true,
-            tokenSeparators: [',', ' '],
-            createTag: function (params) {
-                var term = $.trim(params.term);
-                return null;
-        }});
-
-        }, 150);
+                tags: true,
+                tokenSeparators: [',', ' '],
+                createTag: function (params) {
+                    var term = $.trim(params.term);
+                    return null;
+            }});
+        }, 300);
     }
 
     window.addEventListener('reloadInputsSelect',()=>{
