@@ -1017,7 +1017,7 @@
                                         $id_feature = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))
                                     @endphp
 
-                                    <select wire:ignore.self onchange="livewire.emit('updated_feature', [ '{{$id_feature}}', $('#{{$id_feature}}').val() , '{{$ca->type}}'])"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  class="form-control multselect" multiple="multiple" id="select2">
+                                    <select onchange="livewire.emit('updated_feature', [ '{{$id_feature}}', $('#{{$id_feature}}').val() , '{{$ca->type}}'])"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  class="form-control multselect" multiple="multiple" id="select2">
                                         <option value="0">Select Option</option>
                                         @foreach($ca->items as $item)
                                             <option  value="{{$item}}">{{$item}}</option>
@@ -1025,7 +1025,7 @@
                                     </select>
                                   </div>
                                   @else
-                                  <select wire:ignore.self onchange="loadMultSelect()" id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" name="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:ignore   wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
+                                  <select onchange="loadMultSelect()" id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" name="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:ignore   wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
                                     <option value="0">Selecione</option>
                                     @foreach($ca->items as $item)
                                         <option  value="{{$item}}">{{$item}}</option>
@@ -1383,6 +1383,7 @@
 
         }, 1);
     }
+
 
 
     function setIntervalLimit(func, time, limit){

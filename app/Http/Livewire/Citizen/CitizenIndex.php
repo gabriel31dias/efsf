@@ -266,7 +266,7 @@ class CitizenIndex extends Component
 
     public function updated_feature($object){
         $this->fieldsFeatures[$object[0]] = $object[1];
-        $this->dispatchBrowserEvent('reloadInputsSelect');
+        #$this->dispatchBrowserEvent('reloadInputsSelect');
     }
 
     public function setFaceCapture($imageBase64){
