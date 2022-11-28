@@ -68,6 +68,9 @@ class CitizenIndex extends Component
     public $searchBirth;
     public $searchFilitation;
     public $otherFiliations = [];
+    public $professionalIdentitys = [];
+    public $professionalIdentitysCount = 1;
+
     public $otherFiliationsValues = [];
     public $filiationCount = 2;
     public $imigration = false;
@@ -733,6 +736,11 @@ class CitizenIndex extends Component
     public function addNewFiliationField(){
         $this->filiationCount++;
         $this->otherFiliations[] = "Filiação ".$this->filiationCount;
+    }
+
+    public function addNewProfessionalIdentitys(){
+        $this->professionalIdentitysCount++;
+        $this->professionalIdentitys[] = "Identidade profissional".$this->filiationCount;
     }
 
     public function filtersCall(){
