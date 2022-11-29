@@ -70,7 +70,7 @@ class CitizenIndex extends Component
     public $otherFiliations = [];
     public $professionalIdentitys = [];
     public $professionalIdentitysCount = 1;
-
+    public $professionalIdentitysValues = [];
     public $otherFiliationsValues = [];
     public $filiationCount = 2;
     public $imigration = false;
