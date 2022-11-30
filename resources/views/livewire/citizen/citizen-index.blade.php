@@ -1089,6 +1089,30 @@
                                      @if($fields['migration_situation'] == 2 || $fields['migration_situation'] == 3)
                                      <option value="22">CERTIDÃO DE NASCIMENTO/CASAMENTO ESTRANGEIRA</option>
                                      @endif
+                                     @unless(in_array("23",$jaUtilizados))
+                                     <option value="23">PRONTUÁRIO CIVIL</option>
+                                     @endif
+                                     @unless(in_array("24",$jaUtilizados))
+                                     <option value="24">INDIVIDUAL DATILOSCÓPICA</option>
+                                     @endif
+                                     @unless(in_array("25",$jaUtilizados))
+                                     <option value="25">CERTIDÃO DE CASAMENTO</option>
+                                     @endif
+                                     @unless(in_array("26",$jaUtilizados))
+                                     <option value="26">CERTIDÃO DE NASCIMENTO</option>
+                                     @endif
+                                     @unless(in_array("27",$jaUtilizados))
+                                     <option value="27">DIÁRIO OFICIAL DA UNIÃO-DOU</option>
+                                     @endif
+                                     @unless(in_array("28",$jaUtilizados))
+                                     <option value="28">CERTIDÃO DE OPÇÃO DE NACIONALIDADE</option>
+                                     @endif
+                                     @unless(in_array("29",$jaUtilizados))
+                                     <option value="29">CARTEIRA DE IDENTIDADE DE ESTRAGEIRO</option>
+                                     @endif
+                                     @unless(in_array("30",$jaUtilizados))
+                                     <option value="30">CARTEIRA DE AUTISTA</option>
+                                     @endif
                                   </select>
                                   @endif
                                </div>
