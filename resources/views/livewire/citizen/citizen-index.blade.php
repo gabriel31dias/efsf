@@ -847,8 +847,10 @@
                          :customEvent="'selectedUfIdent'"
                          />
                    </div>
+
                    @foreach($professionalIdentitys as $key => $item)
-                   <div class="row">
+
+                   <div  class="row">
                       <label class="form-label ">Identidade profissional {{ $key+2 }}<span class="error_tag">*</span></label>
                       <div class="col-lg-4 mb-3">
                          <label class="form-label ">Número de identidade profissional<span class="error_tag">*</span></label>
@@ -862,13 +864,19 @@
                             class="form-control ps-0 "
                             autocomplete="off" required>
                       </div>
-                      <div class="col-lg-3 mb-3">
+                      <div wire:ignore class="col-lg-4 mb-3">
+                        <label class="form-label ">Uf identidade profissional<span class="error_tag">*</span></label>
+                        <select  class="form-control multselect" multiple="multiple" >
+                            @foreach($ufs as $uf)
+                             <option value="0">{{$uf['acronym']}}</option>
+                            @endforeach
+                         </select>
                       </div>
                    </div>
                    @endforeach
                 </div>
                 <div class="col-lg-4 mb-3">
-                   <a style="margin-bottom:30px" wire:click="addNewProfessionalIdentitys" class="btn btn-primary">
+                   <a onclick="loadMultSelect()" style="margin-bottom:30px" wire:click="addNewProfessionalIdentitys" class="btn btn-primary">
                       <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -984,7 +992,6 @@
                                         $id_feature = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))
                                         @endphp
                                         <select onchange="livewire.emit('updated_feature', [ '{{$id_feature}}', $('#{{$id_feature}}').val() , '{{$ca->type}}'])"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:model.lazy="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}"  class="form-control multselect" multiple="multiple" id="select2">
-                                           <option value="0">Select Option</option>
                                            @foreach($ca->items as $item)
                                            <option  value="{{$item}}">{{$item}}</option>
                                            @endforeach
@@ -1372,6 +1379,15 @@
 
 
     function loadMultSelect(){
+        setTimeout(() => {
+            $('.multselect').select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+                createTag: function (params) {
+                    var term = $.trim(params.term);
+                    return null;
+                }});
+        }, 200);
         let i = setInterval(() => {
             if( $('.multselect').length > 0 && $('.select2-hidden-accessible').length == 0 ) {
                 $('.multselect').select2({

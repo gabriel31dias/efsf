@@ -17,6 +17,7 @@ class UfSelect extends Component
     public $selectedValue;
     public $defaultValue;
     public $ufs = [];
+    public $keyItem;
 
     public $customEvent;
 
@@ -28,7 +29,7 @@ class UfSelect extends Component
 
         $this->currentUf();
 
-        if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->acronym);
+        if($this->defaultValue) $this->selectItem($this->defaultValue->id, $this->defaultValue->acronym);
     }
 
     public function currentUf(){

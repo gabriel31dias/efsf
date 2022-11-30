@@ -26,7 +26,7 @@ class CitizenIndex extends Component
 
     use WithFileUploads;
     public $searchTerm = null;
-
+    public $ufs;
     public $file_capture_image_string;
     public $genre_name;
     public $traceErrorsMatriculation;
@@ -505,10 +505,16 @@ class CitizenIndex extends Component
         return $documents[$index];
     }
 
+    public function getUfs(){
+        $this->ufs = Uf::get();
+    }
+
     public function setCitizen($id){
         if(!$id){
             return false;
         }
+
+
 
         $citizen = Citizen::find($id);
         $this->citizen = $citizen;
@@ -687,6 +693,7 @@ class CitizenIndex extends Component
     }
 
     public function mount(){
+        $this->getUfs();
         if(isset($this->citizen->id)){
             $this->setCitizen($this->citizen->id);
         }else{

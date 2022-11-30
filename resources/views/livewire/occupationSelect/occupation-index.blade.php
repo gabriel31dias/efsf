@@ -7,7 +7,6 @@
           placeholder="Pesquisar Profissão..."
           wire:model="query"
           wire:keydown.escape="reset1"
-          wire:keydown.tab="reset1"
           wire:keydown.arrow-up="decrementHighlight"
           wire:keydown.arrow-down="incrementHighlight"
           wire:keydown.enter="selectContact"

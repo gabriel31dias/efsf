@@ -8,7 +8,6 @@
           placeholder="Pesquisar cartorio..."
           wire:model="query"
           wire:keydown.escape="  "
-          wire:keydown.tab="resetValue"
           wire:keydown.arrow-up="decrementHighlight"
           wire:keydown.arrow-down="incrementHighlight"
           wire:keydown.enter="selectContact"

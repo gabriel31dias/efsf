@@ -7,7 +7,6 @@
           placeholder="Pesquisar Uf..."
           wire:model="query"
           wire:keydown.escape="resetValue"
-          wire:keydown.tab="resetValue"
           wire:keydown.arrow-up="decrementHighlight"
           wire:keydown.arrow-down="incrementHighlight"
           wire:keydown.enter="selectContact"
