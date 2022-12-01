@@ -252,7 +252,7 @@ class CitizenIndex extends Component
     public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus',
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
-        'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature'
+        'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident'
     ];
 
     public $citizen;
@@ -273,6 +273,12 @@ class CitizenIndex extends Component
     public function selectedUfCert($id){
         $this->fields['uf_certificate'] = $id;
         $this->currentUfCert = Uf::find($id);
+    }
+
+    public function updated_uf_ident($obj){
+        $index = $obj[0];
+        $value = $obj[1];
+        $this->professionalIdentitysValues[$index]['uf_identy'] = $value;
     }
 
     public function updated_feature($object){
@@ -564,7 +570,13 @@ class CitizenIndex extends Component
 
         $this->zone = $citizen->zone;
 
+        $this->professionalIdentitysValues = \json_decode($citizen['professional_identitis']);
 
+
+
+        foreach ($this->professionalIdentitysValues as $key => $item) {
+            $this->professionalIdentitys[] = "Identidade profissional".$key;
+        }
 
         if(isset($citizen['country_type_street_id'])){
             $type_street = CountryTypeStreat::find($citizen['country_type_street_id']);
@@ -664,10 +676,6 @@ class CitizenIndex extends Component
                 "professional_identity_1" => $citizen->professional_identity_1,
                 "professional_id_number_1" => $citizen->professional_id_number_1,
                 "professional_identity_acronym_1" => $citizen->professional_identity_acronym_1,
-
-                "professional_identity_2" => $citizen->professional_identity_2,
-                "professional_id_number_2" => $citizen->professional_id_number_2,
-                "professional_identity_acronym_2" => $citizen->professional_identity_acronym_2,
                 "uf_professional_identity" => $citizen->uf_professional_identity,
                 "social_security_work_card" => $citizen->social_security_work_card,
                 "ctps_number" => $citizen->ctps_number,
@@ -1045,6 +1053,7 @@ class CitizenIndex extends Component
             "via_rg" =>  $this->fields["via_rg"],
             "marital_status_id" => $this->fields["marital_status_id"],
             "genre_biologic_id" => $this->fields["genre_biologic_id"],
+            "professional_identitis" => \json_encode($this->professionalIdentitysValues),
 
             "country_id" => $this->fields["country_id"],
             "service_station_id" => $this->fields["service_station_id"],
@@ -1099,10 +1108,7 @@ class CitizenIndex extends Component
             "professional_identity_1" => $this->fields["professional_identity_1"] ?? null,
             "professional_id_number_1" => $this->fields["professional_id_number_1"] ?? null,
             "professional_identity_acronym_1" => $this->fields["professional_identity_acronym_1"] ?? null,
-            "professional_identity_2" => $this->fields["professional_identity_2"] ?? null,
-            "professional_id_number_2" => $this->fields["professional_id_number_2"] ?? null,
-            "professional_identity_acronym_2" => $this->fields["professional_identity_acronym_2"] ?? null,
-            "uf_professional_identity" => $this->fields["uf_professional_identity"] ?? null,
+
             "social_security_work_card" => $this->fields["social_security_work_card"] ?? null,
             "ctps_number" => $this->fields["ctps_number"] ?? null,
             "serie_wallet" => $this->fields["serie_wallet"] ?? null,

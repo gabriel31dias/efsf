@@ -98,10 +98,11 @@ return new class extends Migration
             $table->string('professional_identity_1')->nullable();
             $table->string('professional_id_number_1')->nullable();
             $table->string('professional_identity_acronym_1')->nullable();
-            $table->string('professional_identity_2')->nullable();
-            $table->string('professional_id_number_2')->nullable();
-            $table->string('professional_identity_acronym_2')->nullable();
             $table->string('uf_professional_identity')->nullable();
+            $table->string('professional_identity_2')->nullable();
+            $table->json('professional_identitis')->nullable();
+
+
             $table->string('social_security_work_card')->nullable();
             $table->string('ctps_number')->nullable();
             $table->string('serie_wallet')->nullable();

@@ -86,7 +86,7 @@
           role="tab" tabindex="-1">Outros documentos</a>
        </li>
        <li class="nav-item" role="presentation">
-          <a wire:click="setSelectedTab('caracteristicas');" onclick="loadMultSelect()"  data-bs-toggle="tab" aria-selected="false"
+          <a wire:click="setSelectedTab('caracteristicas');" onclick="loadMultSelectCaracteristicas()"  data-bs-toggle="tab" aria-selected="false"
           class="nav-link @if($selectedTab == "caracteristicas") active @else   @endif"
           role="tab" tabindex="-1">Características</a>
        </li>
@@ -850,6 +850,10 @@
 
                    @foreach($professionalIdentitys as $key => $item)
 
+                   @php
+                        $id_uf_profissional_identy = "uf_profissional_identy_".$key
+                   @endphp
+
                    <div  class="row">
                       <label class="form-label ">Identidade profissional {{ $key+2 }}<span class="error_tag">*</span></label>
                       <div class="col-lg-4 mb-3">
@@ -866,9 +870,9 @@
                       </div>
                       <div wire:ignore class="col-lg-4 mb-3">
                         <label class="form-label ">Uf identidade profissional<span class="error_tag">*</span></label>
-                        <select  class="form-control multselect" multiple="multiple" >
+                        <select id="{{$id_uf_profissional_identy}}" wire:model="professionalIdentitysValues.{{$key}}.uf_identy" onchange="livewire.emit('updated_uf_ident', ['{{$key}}', $('#{{$id_uf_profissional_identy}}').val()])" class="form-control multselectx"  >
                             @foreach($ufs as $uf)
-                             <option value="0">{{$uf['acronym']}}</option>
+                             <option value="{{$uf['acronym']}}">{{$uf['acronym']}}</option>
                             @endforeach
                          </select>
                       </div>
@@ -876,7 +880,7 @@
                    @endforeach
                 </div>
                 <div class="col-lg-4 mb-3">
-                   <a onclick="loadMultSelect()" style="margin-bottom:30px" wire:click="addNewProfessionalIdentitys" class="btn btn-primary">
+                   <a onclick="loadMultSelectOutrosDocumentos()" style="margin-bottom:30px" wire:click="addNewProfessionalIdentitys" class="btn btn-primary">
                       <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -979,7 +983,7 @@
                                   @if($ca->type == "Amputação")
                                   <div class="col-lg-3 mb-3">
                                      <label   label class="form-label ">Altura<span class="error_tag">*</span></label>
-                                     <input  onchange="loadMultSelect()" wire:model="fields.height" maxlength="70" type="text"
+                                     <input  onchange="loadMultSelectCaracteristicas()" wire:model="fields.height" maxlength="70" type="text"
                                         class="form-control ps-0 "
                                         autocomplete="off" required>
                                   </div>
@@ -998,7 +1002,7 @@
                                         </select>
                                      </div>
                                      @else
-                                     <select onchange="loadMultSelect()" id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" name="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:ignore   wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
+                                     <select onchange="loadMultSelectCaracteristicas()" id="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" name="{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" wire:ignore   wire:model="fieldsFeatures.{{ strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $ca->type)))}}" class="form-control ps-0" name="select">
                                         <option value="0">Selecione</option>
                                         @foreach($ca->items as $item)
                                         <option  value="{{$item}}">{{$item}}</option>
@@ -1398,11 +1402,11 @@
             $('#date').val(today.toISOString().substring(0, 10));
         }
 
-        loadMultSelect()
+        loadMultSelectCaracteristicas()
     })
 
 
-    function loadMultSelect(){
+    function loadMultSelectCaracteristicas(){
         setTimeout(() => {
             $('.multselect').select2({
                 tags: true,
@@ -1416,6 +1420,30 @@
             if( $('.multselect').length > 0 && $('.select2-hidden-accessible').length == 0 ) {
                 $('.multselect').select2({
                 tags: true,
+                tokenSeparators: [',', ' '],
+                createTag: function (params) {
+                    var term = $.trim(params.term);
+                    return null;
+                }});
+            }else{
+
+            }
+
+        }, 1);
+    }
+
+    function loadMultSelectOutrosDocumentos(){
+        setTimeout(() => {
+            $('.multselectx').select2({
+                tokenSeparators: [',', ' '],
+                createTag: function (params) {
+                    var term = $.trim(params.term);
+                    return null;
+                }});
+        }, 200);
+        let i = setInterval(() => {
+            if( $('.multselectx').length > 0 && $('.select2-hidden-accessible').length == 0 ) {
+                $('.multselectx').select2({
                 tokenSeparators: [',', ' '],
                 createTag: function (params) {
                     var term = $.trim(params.term);
