@@ -21,7 +21,7 @@
          @foreach($type_streets as $i => $type_street)
          <a
             wire:click="selectItem({{$type_street['id']}}, '{{$type_street['name_type_street']}}')"
-            class="text-decoration-none  hover:cursor-pointer hover:bg-sky-600 rounded hover:text-white p-2 list-item list-none {{ $highlightIndex === $i ? 'highlight' : '' }}"
+            class="text-decoration-none hover:cursor-pointer hover:bg-sky-600 rounded hover:text-white p-2 list-item list-none {{ $highlightIndex === $i ? 'bg-sky-600 text-white' : '' }}"
             >{{ $type_street['name_type_street'] }}</a>
          @endforeach
          @else

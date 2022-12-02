@@ -20,8 +20,10 @@
           @foreach($maritalStatus as $i => $item)
           <a
              wire:click="selectItem({{$item['id']}}, '{{$item['name']}}')"
-             class="text-decoration-none  hover:cursor-pointer hover:bg-sky-600 rounded hover:text-white p-2 list-item list-none {{ $highlightIndex === $i ? 'bg-sky-600 text-white' : '' }}"
+             class="text-decoration-none hover:cursor-pointer hover:bg-sky-600 rounded hover:text-white p-2 list-item list-none {{ $highlightIndex === $i ? 'bg-sky-600 text-white' : '' }}"
              >{{ $item['name'] }}</a>
+
+
           @endforeach
           @else
 

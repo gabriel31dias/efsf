@@ -47,7 +47,7 @@ class TypestreetsSelect extends Component
     public function incrementHighlight()
     {
         $this->closed = false;
-        if ($this->highlightIndex === count($this->contacts) - 1) {
+        if ($this->highlightIndex === count($this->type_streets) - 1) {
             $this->highlightIndex = 0;
             return;
         }
@@ -59,7 +59,7 @@ class TypestreetsSelect extends Component
 
         $this->selectedId = '';
         if ($this->highlightIndex === 0) {
-            $this->highlightIndex = count($this->contacts) - 1;
+            $this->highlightIndex = count($this->type_streets) - 1;
             return;
         }
         $this->highlightIndex--;
@@ -67,9 +67,9 @@ class TypestreetsSelect extends Component
 
     public function selectContact()
     {
-        $contact = $this->type_streets[$this->highlightIndex] ?? null;
-        if ($contact) {
-            $this->redirect(route('show-contact', $contact['id']));
+        $type_streets = $this->type_streets[$this->highlightIndex] ?? null;
+        if ($type_streets) {
+            $this->selectItem($type_streets['id'], $type_streets['name_type_street']);
         }
     }
 

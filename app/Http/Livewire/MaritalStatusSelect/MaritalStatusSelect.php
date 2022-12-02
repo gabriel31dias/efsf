@@ -49,6 +49,7 @@ class MaritalStatusSelect extends Component
 
     public function incrementHighlight()
     {
+        dd('wwd');
         $this->closed = false;
         if ($this->highlightIndex === count($this->maritalStatus) - 1) {
             $this->highlightIndex = 0;
@@ -59,6 +60,7 @@ class MaritalStatusSelect extends Component
 
     public function decrementHighlight()
     {
+        dd('wwd');
 
         $this->selectedId = '';
         if ($this->highlightIndex === 0) {
@@ -70,9 +72,10 @@ class MaritalStatusSelect extends Component
 
     public function selectContact()
     {
-        $contact = $this->stations[$this->highlightIndex] ?? null;
-        if ($contact) {
-            $this->redirect(route('show-contact', $contact['id']));
+        $MaritalStatus = $this->maritalStatus[$this->highlightIndex] ?? null;
+
+        if ($MaritalStatus) {
+           $this->selectItem($MaritalStatus['id'], $MaritalStatus['name']) ;
         }
     }
 
@@ -85,7 +88,6 @@ class MaritalStatusSelect extends Component
     }
 
     public function selectItem($id, $value){
-
         $this->query = $value;
         $this->selectedId = $id;
         $this->selectedValue = $value;

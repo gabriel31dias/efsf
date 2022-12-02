@@ -81,7 +81,7 @@
           role="tab" tabindex="-1">Outros dados</a>
        </li>
        <li class="nav-item" role="presentation">
-          <a wire:click="setSelectedTab('outros_documentos')"  data-bs-toggle="tab" aria-selected="false"
+          <a onclick="loadMultSelectOutrosDocumentos()" wire:click="setSelectedTab('outros_documentos')"  data-bs-toggle="tab" aria-selected="false"
           class="nav-link @if($selectedTab == "outros_documentos") active @else   @endif"
           role="tab" tabindex="-1">Outros documentos</a>
        </li>
