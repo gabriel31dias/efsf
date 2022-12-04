@@ -24,6 +24,7 @@
       <script type="text/javascript" src="{{ asset('dist/js/cep.js') }}"></script>
       <script type="text/javascript" src="{{ asset('dist/js/password_chang.js') }}"></script>
 
+
       <script type="text/javascript" src="{{ asset('dist/js/modal_chang_expired_pass.js') }}"></script>
 
       <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -45,6 +46,10 @@
       <meta name="turbolinks-visit-control" content="reload">
       <script src="//unpkg.com/alpinejs" defer></script>
 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
 
       @livewireScripts
       <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.js" integrity="sha512-P3/SDm/poyPMRBbZ4chns8St8nky2t8aeG09fRjunEaKMNEDKjK3BuAstmLKqM7f6L1j0JBYcIRL4h2G6K6Lew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

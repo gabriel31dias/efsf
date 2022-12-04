@@ -130,8 +130,85 @@
    </div>
 </div>
 
+<style>
+    .modal .modal-dialog { width: 100%; }
+</style>
+
+
+<div data-keyboard="false" data-backdrop="static" wire:ignore.self
+class="modal modal-blur fade" id="modal-captura-biometrica" tabindex="-1"
+role="dialog"  aria-hidden="true">
+<div data-backdrop="static" style="width:1250px;"
+   class="modal-dialog modal-xl modal-dialog-centered"
+   role="document">
+   <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title">Captura biométrica</h5>
+         <button type="button" class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <table style="
+            width: 100%;
+            height: 100%;" border="1" cellpadding="100" cellspacing="10">
+            <caption>Table Caption</caption>
+            <thead>
+                <tr>
+                    <th class="border">Polegar esquerdo</th>
+                    <th  class="border">Indicador esquerdo</th>
+                    <th  class="border">Médio esquerdo</th>
+                    <th  class="border">Anelar esquerdo</th>
+                    <th  class="border">Minimo esquerdo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td style="height:100px"  class="select-biometri border context-menu-one" ></td>
+                  <td style="height:100px"   class="select-biometri border context-menu-one"></td>
+                  <td style="height:100px"  class="select-biometri border context-menu-one " ></td>
+                  <td style="height:100px"   class="select-biometri border context-menu-one"  ></td>
+                  <td style="height:100px"  class="select-biometri border context-menu-one"  ></td>
+                </tr>
+                <thead>
+                    <tr>
+                        <th class="border">Polegar direito</th>
+                        <th  class="border">Indicador direito</th>
+                        <th  class="border">Médio direito</th>
+                        <th  class="border">Anelar direito</th>
+                        <th  class="border">Minimo direito</th>
+                    </tr>
+                </thead>
+                <tr >
+                  <td style="height:100px" class="select-biometri border context-menu-one"  ></td>
+                  <td style="height:100px"  class="select-biometri border context-menu-one"  ></td>
+                  <td style="height:100px"  class="select-biometri border context-menu-one" ></td>
+                  <td style="height:100px"  class="select-biometri border context-menu-one " ></td>
+                  <td style="height:100px"  class="select-biometri border context-menu-one"  ></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+      </div>
+   </div>
+</div>
+</div>
+
 
  <style>
+    .border{
+        border: 1px solid black !important
+    }
+    .select-biometri{
+        line-height: 300px; width: 10%  !important;   overflow: hidden; max-width:10% ;background-color: white;color:black;  border: 1px solid black !important;
+    }
+
+    .select-biometri:hover{
+        background-color: #206bc4 !important;
+        color: white !important
+
+    }
  </style>
  <form>
     <div class="container-fluid">
@@ -152,6 +229,17 @@
                 <div class="btn-list">
                    <span class="d-none d-sm-inline">
                    </span>
+                   <a onclick="$('#modal-captura-biometrica').modal('show');"  class="btn btn-primary inline-flex">
+                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hand-ring-finger" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M8 13v-2.5a1.5 1.5 0 0 1 3 0v1.5"></path>
+                        <path d="M17 11.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47"></path>
+                        <path d="M11 11.5v-2a1.5 1.5 0 1 1 3 0v2.5"></path>
+                        <path d="M14 12v-6.5a1.5 1.5 0 0 1 3 0v6.5"></path>
+                     </svg>
+                     Captura Biométrica
+                  </a>
                    <a onclick="$('#modal-captura-facial').modal('show');"  class="btn btn-primary inline-flex">
                       <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                       <svg xmlns="http://www.w3.org/2000/svg"  class="icon icon-tabler icon-tabler-face-id" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -182,6 +270,7 @@
           </div>
        </div>
     </div>
+
     <div class="col-md-12">
     <div>
     <ul class="nav nav-tabs" data-bs-toggle="tabs" role="tablist">
@@ -1528,6 +1617,25 @@
         }
 
         loadMultSelectCaracteristicas()
+
+        $(function() {
+            $.contextMenu({
+                selector: '.context-menu-one',
+                callback: function(key, options) {
+                    var m = "clicked: " + key;
+                    window.console && console.log(m) || alert(m);
+
+                },
+                items: {
+                    "file": {name: "Anexar", icon: "edit"},
+                    "cut": {name: "Deletar", icon: "delete"}
+                }
+            });
+
+            $('.context-menu-one').on('click', function(e){
+                console.log('clicked', this);
+            })
+        });
     })
 
 
