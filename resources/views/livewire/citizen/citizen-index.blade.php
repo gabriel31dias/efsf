@@ -6,6 +6,13 @@
     }" class="card page-wrapper">
  @include('livewire.citizen.dialogs.dialog-capture')
 
+ <style>
+    .context-menu-icon-facebook {
+  /* Source: http://icons.iconarchive.com/icons/yootheme/social-bookmark/16/social-facebook-box-blue-icon.png */
+  background-image: url("http://i.imgur.com/EVcCwyZ.png");
+}
+ </style>
+
  <div data-keyboard="false" data-backdrop="static" wire:ignore.self
    class="modal modal-blur fade" id="modal-search" tabindex="-1"
    role="dialog" aria-hidden="true">
@@ -1624,11 +1631,10 @@ role="dialog"  aria-hidden="true">
                 callback: function(key, options) {
                     var m = "clicked: " + key;
                     window.console && console.log(m) || alert(m);
-
                 },
                 items: {
-                    "file": {name: "Anexar", icon: "edit"},
-                    "cut": {name: "Deletar", icon: "delete"}
+                    "file": {name: "Anexar", icon: ""},
+                    "UNABLE": {name: "Impossibilidado", icon: ""},
                 }
             });
 
