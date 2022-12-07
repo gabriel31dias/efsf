@@ -6,13 +6,6 @@
     }" class="card page-wrapper">
  @include('livewire.citizen.dialogs.dialog-capture')
 
- <style>
-    .context-menu-icon-facebook {
-  /* Source: http://icons.iconarchive.com/icons/yootheme/social-bookmark/16/social-facebook-box-blue-icon.png */
-  background-image: url("http://i.imgur.com/EVcCwyZ.png");
-}
- </style>
-
  <div data-keyboard="false" data-backdrop="static" wire:ignore.self
    class="modal modal-blur fade" id="modal-search" tabindex="-1"
    role="dialog" aria-hidden="true">
@@ -202,21 +195,6 @@ role="dialog"  aria-hidden="true">
 </div>
 </div>
 
-
- <style>
-    .border{
-        border: 1px solid black !important
-    }
-    .select-biometri{
-        line-height: 300px; width: 10%  !important;   overflow: hidden; max-width:10% ;background-color: white;color:black;  border: 1px solid black !important;
-    }
-
-    .select-biometri:hover{
-        background-color: #206bc4 !important;
-        color: white !important
-
-    }
- </style>
  <form>
     <div class="container-fluid">
        <!-- Page title -->

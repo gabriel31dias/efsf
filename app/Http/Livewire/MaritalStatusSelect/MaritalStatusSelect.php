@@ -49,7 +49,6 @@ class MaritalStatusSelect extends Component
 
     public function incrementHighlight()
     {
-        dd('wwd');
         $this->closed = false;
         if ($this->highlightIndex === count($this->maritalStatus) - 1) {
             $this->highlightIndex = 0;
@@ -60,8 +59,6 @@ class MaritalStatusSelect extends Component
 
     public function decrementHighlight()
     {
-        dd('wwd');
-
         $this->selectedId = '';
         if ($this->highlightIndex === 0) {
             $this->highlightIndex = count($this->maritalStatus) - 1;

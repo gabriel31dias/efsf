@@ -21,3 +21,11 @@ canvas {
     border: none !important;
     border-radius: 3px !important;
 }
+
+.context-menu-icon-facebook {
+    /* Source: http://icons.iconarchive.com/icons/yootheme/social-bookmark/16/social-facebook-box-blue-icon.png */
+    background-image: url("http://i.imgur.com/EVcCwyZ.png");
+  }
+
+
+

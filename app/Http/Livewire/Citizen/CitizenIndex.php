@@ -528,8 +528,6 @@ class CitizenIndex extends Component
             return false;
         }
 
-
-
         $citizen = Citizen::find($id);
         $this->citizen = $citizen;
         $this->action = "update";
@@ -545,6 +543,7 @@ class CitizenIndex extends Component
         $dou_certificate_date = $this->formateDateBR($citizen['dou_certificate_date']);
         $birth_date = $this->formateDateBR($citizen['birth_date']);
         $certificate_entry_date = $this->formateDateBR($citizen['certificate_entry_date']);
+
 
         if($citizen['uf_professional_identity']){
             $this->currentUfIdent = Uf::find($citizen['uf_professional_identity']);
@@ -1116,7 +1115,8 @@ class CitizenIndex extends Component
             "cid_wallet" => $this->fields["cid_wallet"] ?? null,
             "height" => $this->fields["height"] ?? null,
             "features" => \json_encode($this->fieldsFeatures) ?? null,
-            "digitalized_documents" => \json_encode($documents) ?? null
+            "digitalized_documents" => \json_encode($documents) ?? null,
+            "uf_professional_identity" => $this->currentUfIdent->id ?? null
          ]);
 
         $this->messageSuccess();
