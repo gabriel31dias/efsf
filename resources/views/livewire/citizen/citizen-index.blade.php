@@ -132,6 +132,18 @@
 
 <style>
     .modal .modal-dialog { width: 100%; }
+
+    td
+{
+    height: 50px;
+    width: 50px;
+}
+
+#cssTable td
+{
+    text-align: center;
+    vertical-align: middle;
+}
 </style>
 
 
@@ -164,11 +176,11 @@ role="dialog"  aria-hidden="true">
             </thead>
             <tbody>
                 <tr>
-                  <td style="height:100px"  class="select-biometri border context-menu-one" ></td>
-                  <td style="height:100px"   class="select-biometri border context-menu-one"></td>
-                  <td style="height:100px"  class="select-biometri border context-menu-one " ></td>
-                  <td style="height:100px"   class="select-biometri border context-menu-one"  ></td>
-                  <td style="height:100px"  class="select-biometri border context-menu-one"  ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one" ></td>
+                  <td style="height:100px;"   class="select-biometri border context-menu-one"></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one " ></td>
+                  <td style="height:100px;"   class="select-biometri border context-menu-one"  ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one"  ></td>
                 </tr>
                 <thead>
                     <tr>
@@ -180,11 +192,13 @@ role="dialog"  aria-hidden="true">
                     </tr>
                 </thead>
                 <tr >
-                  <td style="height:100px" class="select-biometri border context-menu-one"  ></td>
-                  <td style="height:100px"  class="select-biometri border context-menu-one"  ></td>
-                  <td style="height:100px"  class="select-biometri border context-menu-one" ></td>
-                  <td style="height:100px"  class="select-biometri border context-menu-one " ></td>
-                  <td style="height:100px"  class="select-biometri border context-menu-one"  ></td>
+                  <td style="height:100px; " class="select-biometri border context-menu-one"  >
+
+                  </td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one"  ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one" ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one " ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one"  ></td>
                 </tr>
             </tbody>
         </table>
@@ -1607,8 +1621,18 @@ role="dialog"  aria-hidden="true">
             $.contextMenu({
                 selector: '.context-menu-one',
                 callback: function(key, options) {
-                    var m = "clicked: " + key;
-                    window.console && console.log(m) || alert(m);
+                    if(key == 'UNABLE'){
+                        options.$trigger[0].style.backgroundColor = '#206bc4';
+                        options.$trigger[0].insertAdjacentHTML("beforeend",
+                        ` <div  style="text-align:center;  display: flex;color:white;
+                        justify-content: center;"><svg style="text-align:center;" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hand-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <line x1="3" y1="3" x2="21" y2="21"></line>
+                        <path d="M8 13.5v-5.5m.44 -3.562a1.5 1.5 0 0 1 2.56 1.062v1.5m0 4.008v.992m0 -6.5v-2a1.5 1.5 0 1 1 3 0v6.5m0 -4.5a1.5 1.5 0 0 1 3 0v6.5m0 -4.5a1.5 1.5 0 0 1 3 0v8.5a6 6 0 0 1 -6 6h-2c-2.114 -.292 -3.956 -1.397 -5 -3l-2.7 -5.25a1.7 1.7 0 0 1 2.75 -2l.9 1.75"></path>
+                        </svg>
+                        <label style="color:white">Impossibilidado</label>
+                        </div>`);
+                    }
                 },
                 items: {
                     "file": {name: "Anexar", icon: ""},
@@ -1616,11 +1640,14 @@ role="dialog"  aria-hidden="true">
                 }
             });
 
-            $('.context-menu-one').on('click', function(e){
-                console.log('clicked', this);
-            })
+
         });
     })
+
+    function setUnableDigital(){
+
+
+    }
 
 
     function loadMultSelectCaracteristicas(){

@@ -6,7 +6,7 @@
     border: 1px solid black !important
 }
 .select-biometri{
-    line-height: 300px; width: 10%  !important;   overflow: hidden; max-width:10% ;background-color: white;color:black;  border: 1px solid black !important;
+   width: 10%  !important;   overflow: hidden; max-width:10% ;background-color: white;color:black;  border: 1px solid black !important;
 }
 
 .select-biometri:hover{
