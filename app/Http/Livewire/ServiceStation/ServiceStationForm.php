@@ -73,8 +73,14 @@ class ServiceStationForm extends Component
         "fieldsEvent.*.required_if" => "Campo obrigatório para postos de evento."
     ];
 
-    protected $listeners = ['selectedTypeStreat', 'selectedServiceStation'];
+    protected $listeners = ['selectedTypeStreat', 'selectedServiceStation', 'updateInfoIbge'];
 
+    public function updateInfoIbge($request){
+        $this->fields['address'] = $request['logradouro'];
+        $this->fields['district'] = $request['bairro'];
+        $this->fields['city'] = $request['cidade'];
+        $this->fields['uf'] = $request['uf'];
+    }
 
     public function selectedTypeStreat($idTypeStreat)
     {
