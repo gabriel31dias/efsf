@@ -54,7 +54,7 @@ class ServiceStationForm extends Component
             "fields.type_of_street" => "required",
             "fields.address" => "required",
             "fields.number" => "required",
-            "fields.complement" => "required",
+            "fields.complement" => "",
             "fields.district" => "required",
             "fields.uf" => "required",
             "fields.start_hour" => "required",

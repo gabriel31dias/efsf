@@ -165,7 +165,7 @@
                      </div>
                      <div class="col-lg-4">
                         <div class="mb-3">
-                           <label class="form-label">Complemento<span class="error_tag"> *</span></label>
+                           <label class="form-label">Complemento<span class="error_tag"> </span></label>
                            <div class="input-group input-group-flat">
                               <input id="bairro" wire:model="fields.complement" type="text" class="form-control"
                                  autocomplete="off">

@@ -112,7 +112,10 @@ class UserForm extends Component
     {
         if($this->user){
             $this->getUser();
+        }else{
+            $this->fields['senha'] = "@SICweb123";
         }
+
     }
 
     public function getUser(){
