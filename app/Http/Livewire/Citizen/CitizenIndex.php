@@ -105,7 +105,6 @@ class CitizenIndex extends Component
     ];
 
     public $obrigatory_filds = [
-        "rg",
         "cpf",
         "name",
         "celular",
@@ -235,6 +234,7 @@ class CitizenIndex extends Component
         "serie_wallet" => "",
         "uf_wallet" => "",
         "cid_wallet" => "",
+        "district" => "",
         "height" => "",
         "features" => "",
         "digitalized_documents" => ""
@@ -606,6 +606,7 @@ class CitizenIndex extends Component
         if (isset($citizen->id)) {
             $this->fields = [
                 "name" => $citizen->name,
+                "district" => $citizen->district,
                 "id" => $citizen->id,
                 "cpf" => $citizen->cpf,
                 "rg" => $citizen->rg,
@@ -1031,6 +1032,7 @@ class CitizenIndex extends Component
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
             "cpf" => $this->fields["cpf"],
+            "district" => $this->fields["district"],
             "rg" => $this->fields["rg"],
             "filiation1" => $this->fields["filiation1"],
             "filiation2" => $this->fields["filiation2"],

@@ -320,17 +320,12 @@ role="dialog"  aria-hidden="true">
                    <div class="row">
                       <div class="col-lg-2">
                          <div class="mb-3">
-                            <label class="form-label">Rg<span class="error_tag">*</span></label>
+                            <label class="form-label">Rg</label>
                             <div class="input-group input-group-flat">
                                <input wire:model="fields.rg" maxlength="70" type="text"
                                   class="form-control ps-0" autocomplete="off"
                                   required>
                             </div>
-                            @if (in_array("rg", $errorsKeys))
-                            <div class="error_tag" role="alert">
-                               O campo Rg é obrigatório
-                            </div>
-                            @endif
                          </div>
                       </div>
                       <div class="col-lg-3">
@@ -774,7 +769,7 @@ role="dialog"  aria-hidden="true">
           <div class="container-fluid">
              <div class="row">
                 <div class="col-lg-3 mb-3">
-                   <label class="form-label ">Zona {{$zone}}<span class="error_tag">*</span></label>
+                   <label class="form-label ">Zona<span class="error_tag">*</span></label>
                    <div wire:ignore class="input-group input-group-flat">
                       <select wire:model="zone"  class="form-control ps-0" wire:ignore>
                          <option value="0">Selecione</option>
@@ -826,6 +821,18 @@ role="dialog"  aria-hidden="true">
                    </div>
                    @endif
                 </div>
+                <div class="col-lg-4 mb-3">
+                    <label class="form-label">Bairro<span
+                       class="error_tag">*</span></label>
+                    <input wire:model="fields.district" maxlength="70" type="text"
+                       class="form-control ps-0"
+                       autocomplete="off" required>
+                    @if (in_array("address", $errorsKeys))
+                    <div class="error_tag" role="alert">
+                       O campo Bairro é obrigatório
+                    </div>
+                    @endif
+                 </div>
                 <div class="col-lg-4 mb-3">
                    <label class="form-label">Nº<span class="error_tag">*</span></label>
                    <input wire:model="fields.number" maxlength="70" type="text"

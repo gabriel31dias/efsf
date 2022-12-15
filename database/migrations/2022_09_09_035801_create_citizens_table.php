@@ -84,7 +84,7 @@ return new class extends Migration
             $table->integer('social_name_visible')->nullable();
             $table->string('names_previous', 300)->nullable();
             $table->string('filitions_previous', 300)->nullable();
-
+            $table->string('district')->nullable();
             $table->string('cni')->nullable();
             $table->string('national_card_sus')->nullable();
             $table->string('voter_registration')->nullable();
