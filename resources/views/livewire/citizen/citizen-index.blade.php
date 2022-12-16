@@ -1200,7 +1200,7 @@ role="dialog"  aria-hidden="true">
                             <div id="gemeo" role="tabpanel">
                                <div class="row">
                                   @foreach($caracteristics as $ca)
-                                  @if($ca->type == "Amputação")
+                                  @if($ca->type == "Cútis")
                                   <div class="col-lg-3 mb-3">
                                      <label   label class="form-label ">Altura<span class="error_tag">*</span></label>
                                      <input  onchange="loadMultSelectCaracteristicas()" wire:model="fields.height" maxlength="70" type="text"
@@ -1243,7 +1243,7 @@ role="dialog"  aria-hidden="true">
                             <div class="row">
                                <div class="col-lg-5 mb-3">
                                   @if(isset($fieldsDigitalizedDocuments[$key]['file']) && $fieldsDigitalizedDocuments[$key]['file'] != '' )
-                                  <input  value="{{$this->getDocument($fieldsDigitalizedDocuments[$key]['type'])}}"   maxlength="70" type="text" class="form-control ps-0 " autocomplete="off" readonly>
+                                  <input value="{{$this->getDocument($fieldsDigitalizedDocuments[$key]['type'])}}"   maxlength="70" type="text" class="form-control ps-0 " autocomplete="off" readonly>
                                   @else
                                   <select  wire:model="fieldsDigitalizedDocuments.{{$key}}.type" class="form-control ps-0" wire:ignore>
                                      <option value="0">Selecione</option>

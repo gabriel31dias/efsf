@@ -117,7 +117,6 @@ class CitizenIndex extends Component
         "service_station_id",
         "via_rg",
         "cell",
-        "telephone",
         "email",
         "zip_code",
         "zone"
@@ -513,7 +512,15 @@ class CitizenIndex extends Component
             "19" => "CERTIDÃO DE NASCIMENTO",
             "20" => "Certidão de casamento/COM AVERBAÇÃO DE SEPARAÇÃO",
             "21" => "Certidão de casamento/CASAMENTO COM AVERBAÇÃO DE ÓBITO",
-            "22" => "CERTIDÃO DE NASCIMENTO/CASAMENTO ESTRANGEIRA"
+            "22" => "CERTIDÃO DE NASCIMENTO/CASAMENTO ESTRANGEIRA",
+            "23" => "PRONTUÁRIO CIVIL",
+            "24" => "INDIVIDUAL DATILOSCÓPICA",
+            "25" => "CERTIDÃO DE CASAMENTO",
+            "26" => "CERTIDÃO DE NASCIMENTO",
+            "27" => "DIÁRIO OFICIAL DA UNIÃO-DOU",
+            "28" => "CERTIDÃO DE OPÇÃO DE NACIONALIDADE",
+            "29" => "CARTEIRA DE IDENTIDADE DE ESTRAGEIRO",
+            "30" => "CARTEIRA DE AUTISTA"
         ];
 
         return $documents[$index];
@@ -855,7 +862,7 @@ class CitizenIndex extends Component
 
 
         if($this->zone == $ZONE_URBANA){
-            $fileds_validation = ["provenance", "number", "address", "complement"];
+            $fileds_validation = ["provenance", "number", "address"];
 
             foreach ($fileds_validation as $value) {
                 if(empty($this->fields[$value])){
