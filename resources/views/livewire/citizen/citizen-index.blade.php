@@ -147,6 +147,27 @@
 </style>
 
 
+
+<div data-keyboard="false" data-backdrop="static" wire:ignore.self
+class="modal modal-blur fade" id="modal-captura-assinatura" tabindex="-1"
+role="dialog"  aria-hidden="true">
+<div data-backdrop="static" style="width:1250px;"
+   class="modal-dialog modal-xl modal-dialog-centered"
+   role="document">
+   <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title">Captura de assinatura</h5>
+         <button type="button" class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h1>... Aguardando assinatura   {{$this->getMAC()}}</h1>
+      </div>
+   </div>
+</div>
+</div>
+
 <div data-keyboard="false" data-backdrop="static" wire:ignore.self
 class="modal modal-blur fade" id="modal-captura-biometrica" tabindex="-1"
 role="dialog"  aria-hidden="true">
@@ -238,6 +259,17 @@ role="dialog"  aria-hidden="true">
                         <path d="M14 12v-6.5a1.5 1.5 0 0 1 3 0v6.5"></path>
                      </svg>
                      Captura Biométrica
+                  </a>
+
+                  <a onclick="$('#modal-captura-assinatura').modal('show');callColectorSignature()"  class="btn btn-primary inline-flex">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-writing" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M20 17v-12c0 -1.121 -.879 -2 -2 -2s-2 .879 -2 2v12l2 2l2 -2z"></path>
+                        <path d="M16 7h4"></path>
+                        <path d="M18 19h-13a2 2 0 1 1 0 -4h4a2 2 0 1 0 0 -4h-3"></path>
+                     </svg>
+                    Captura de Assinatura
                   </a>
                    <a onclick="$('#modal-captura-facial').modal('show');"  class="btn btn-primary inline-flex">
                       <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -1614,6 +1646,8 @@ role="dialog"  aria-hidden="true">
        </div>
  </form>
  <script>
+    var socket = io('http://localhost:3000');
+
     document.addEventListener('turbolinks:load', () => {
         let path = window.location.pathname;
         if (!path.includes("edit")) {
@@ -1681,6 +1715,16 @@ role="dialog"  aria-hidden="true">
             }
 
         }, 1);
+    }
+
+    function callColectorSignature(){
+        let mac = ""
+        alert(mac)
+
+
+        socket.emit("create-room", {
+            room: document.getElementById('room').value
+        })
     }
 
     function loadMultSelectOutrosDocumentos(){
