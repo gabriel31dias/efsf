@@ -1646,9 +1646,12 @@ role="dialog"  aria-hidden="true">
        </div>
  </form>
  <script>
-    var socket = io('http://localhost:3000');
+    var socket = io('https://websocket-pca-sic.msbtec.com.br');
+
+
 
     document.addEventListener('turbolinks:load', () => {
+        criarRoom()
         let path = window.location.pathname;
         if (!path.includes("edit")) {
             var today = new Date();
@@ -1718,14 +1721,20 @@ role="dialog"  aria-hidden="true">
     }
 
     function callColectorSignature(){
-        let mac = ""
-        alert(mac)
-
-
-        socket.emit("create-room", {
-            room: document.getElementById('room').value
+        socket.emit("sendMessage", {
+            client-app: "client",
+            room: "roomteste",
+            eventType: "captura-biometrica",
+            data: "{'teste': 'dwwdwdw'}"
         })
     }
+
+    function criarRoom(){
+        socket.emit("create-room", {
+            room: "{{Auth::user()->cpf}}"
+        })
+    }
+
 
     function loadMultSelectOutrosDocumentos(){
         setTimeout(() => {
