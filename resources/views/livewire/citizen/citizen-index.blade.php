@@ -1646,11 +1646,13 @@ role="dialog"  aria-hidden="true">
        </div>
  </form>
  <script>
-    var socket = io('https://websocket-pca-sic.msbtec.com.br');
 
 
+var socket = io('https://websocket-pca-sic.msbtec.com.br');
 
     document.addEventListener('turbolinks:load', () => {
+
+        var socket = io('https://websocket-pca-sic.msbtec.com.br');
         criarRoom()
         let path = window.location.pathname;
         if (!path.includes("edit")) {
@@ -1722,7 +1724,7 @@ role="dialog"  aria-hidden="true">
 
     function callColectorSignature(){
         socket.emit("sendMessage", {
-            client-app: "client",
+            clientapp: "client",
             room: "roomteste",
             eventType: "captura-biometrica",
             data: "{'teste': 'dwwdwdw'}"
