@@ -1648,12 +1648,20 @@ role="dialog"  aria-hidden="true">
  <script>
 
 
-var socket = io('https://websocket-pca-sic.msbtec.com.br');
+    var socket = io('https://websocket-pca-sic.msbtec.com.br');
 
     document.addEventListener('turbolinks:load', () => {
 
         var socket = io('https://websocket-pca-sic.msbtec.com.br');
         criarRoom()
+
+        socket.on('receiveMessage', function (data) {
+            if (data.eventType == "teste"){
+               alert("teste recebido")
+               alert(JSON.stringify(data))
+            }
+        });
+
         let path = window.location.pathname;
         if (!path.includes("edit")) {
             var today = new Date();
