@@ -162,7 +162,43 @@ role="dialog"  aria-hidden="true">
             aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h1>... Aguardando assinatura   {{$this->getMAC()}}</h1>
+        <h1></h1>
+        <a id="start-camera"   onclick="callColectorSignature()" class="btn btn-primary inline-flex">
+            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+             <circle cx="12" cy="12" r="9"></circle>
+             <line x1="9" y1="10" x2="9.01" y2="10"></line>
+             <line x1="15" y1="10" x2="15.01" y2="10"></line>
+             <path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path>
+          </svg>
+            Capturar Assinatura
+         </a>
+
+         <a id="anexar-assinatura" class="btn btn-primary inline-flex">
+            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+             <circle cx="12" cy="12" r="9"></circle>
+             <line x1="9" y1="10" x2="9.01" y2="10"></line>
+             <line x1="15" y1="10" x2="15.01" y2="10"></line>
+             <path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path>
+          </svg>
+            Anexar Assinatura
+         </a>
+
+         <a   id="salvar-assinatura"  class="btn btn-success" class="btn btn-primary inline-flex">
+             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                 <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
+                 <circle cx="12" cy="14" r="2"></circle>
+                 <polyline points="14 4 14 8 8 8 8 4"></polyline>
+              </svg>
+             Salvar assinatura
+         </a>
+
+
       </div>
    </div>
 </div>
@@ -261,7 +297,7 @@ role="dialog"  aria-hidden="true">
                      Captura Biométrica
                   </a>
 
-                  <a onclick="$('#modal-captura-assinatura').modal('show');callColectorSignature()"  class="btn btn-primary inline-flex">
+                  <a onclick="$('#modal-captura-assinatura').modal('show');"  class="btn btn-primary inline-flex">
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-writing" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -1645,6 +1681,7 @@ role="dialog"  aria-hidden="true">
           </div>
        </div>
  </form>
+
  <script>
 
 
@@ -1732,11 +1769,15 @@ role="dialog"  aria-hidden="true">
 
     function callColectorSignature(){
         socket.emit("sendMessage", {
-            clientapp: "client",
-            room: "roomteste",
-            eventType: "captura-biometrica",
+            clientapp: "server",
+            room: "{{Auth::user()->cpf}}",
+            eventType: "captura-",
             data: "{'teste': 'dwwdwdw'}"
         })
+    }
+
+    function saveSignature(){
+
     }
 
     function criarRoom(){
