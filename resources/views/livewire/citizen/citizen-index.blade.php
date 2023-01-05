@@ -1769,7 +1769,7 @@ role="dialog"  aria-hidden="true">
 
     function callColectorSignature(){
         socket.emit("sendMessage", {
-            clientapp: "client",
+            clientapp: "server",
             room: "{{Auth::user()->cpf}}",
             eventType: "captura-",
             data: "{'teste': 'dwwdwdw'}"
