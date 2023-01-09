@@ -163,7 +163,29 @@ role="dialog"  aria-hidden="true">
       </div>
       <div class="modal-body">
         <h1></h1>
-        <a id="start-camera"   onclick="callColectorSignature()" class="btn btn-primary inline-flex">
+        <img style="margin: 1%" wire:ignore id="image-sign" style="width: 100%; height: 100%" >
+
+        @if($justificationSign)
+            <div class="alert alert-danger" role="alert">
+                {{$justificationSign}}
+            </div>
+        @endif
+
+        <a id="cartorio-assinatura"   onclick="callColectorSignature()" class="btn btn-primary inline-flex">
+            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-certificate" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+               <circle cx="15" cy="15" r="3"></circle>
+               <path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5"></path>
+               <path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73"></path>
+               <line x1="6" y1="9" x2="18" y2="9"></line>
+               <line x1="6" y1="12" x2="9" y2="12"></line>
+               <line x1="6" y1="15" x2="8" y2="15"></line>
+            </svg>
+          CARTÓRIO
+         </a>
+
+         <a id="normal-assinatura" class="btn btn-primary inline-flex">
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -172,32 +194,68 @@ role="dialog"  aria-hidden="true">
              <line x1="15" y1="10" x2="15.01" y2="10"></line>
              <path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path>
           </svg>
-            Capturar Assinatura
+          NORMAL
          </a>
 
-         <a id="anexar-assinatura" class="btn btn-primary inline-flex">
+         <a  onclick="$('#justificativa-text').toggle();$('#salvar-jus').toggle();$('#justificar-assinatura').toggle();" id="justificar-assinatura"  class="btn btn-warning" class="btn btn-primary inline-flex">
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-             <circle cx="12" cy="12" r="9"></circle>
-             <line x1="9" y1="10" x2="9.01" y2="10"></line>
-             <line x1="15" y1="10" x2="15.01" y2="10"></line>
-             <path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path>
-          </svg>
-            Anexar Assinatura
-         </a>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-align-justified" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <line x1="4" y1="6" x2="20" y2="6"></line>
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <line x1="4" y1="18" x2="16" y2="18"></line>
+             </svg>
+             JUSTIFICAR ASSINATURA
+        </a>
 
-         <a   id="salvar-assinatura"  class="btn btn-success" class="btn btn-primary inline-flex">
-             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                 <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
-                 <circle cx="12" cy="14" r="2"></circle>
-                 <polyline points="14 4 14 8 8 8 8 4"></polyline>
-              </svg>
-             Salvar assinatura
-         </a>
+        <a style="display: none" id="salvar-jus"  onclick="saveJus()" class="btn btn-success" class="btn btn-primary inline-flex">
+            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
+                <circle cx="12" cy="14" r="2"></circle>
+                <polyline points="14 4 14 8 8 8 8 4"></polyline>
+            </svg>
+             SALVAR JUSTIFICATIVA
+        </a>
 
+        <a   id="anexar-assinatura" onclick="triggerFileSign()" class="btn btn-primary" class="btn btn-primary inline-flex">
+         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+         </svg>
+          ANEXAR ASSINATURA
+        </a>
+
+        <a  id="salvar-assinatura"  wire:click="createAttachmentSignature()" class="btn btn-success" class="btn btn-primary inline-flex">
+            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
+                <circle cx="12" cy="14" r="2"></circle>
+                <polyline points="14 4 14 8 8 8 8 4"></polyline>
+            </svg>
+             SALVAR ASSINATURA
+        </a>
+
+
+
+        <div id="justificativa-text" style="margin: 1%;display:none" class="form-group">
+            <label for="exampleFormControlTextarea1">Descreva a justificativa</label>
+            <textarea id="justificativa-text-input" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+
+
+
+
+
+        <form style="display: none" wire:submit.prevent="save">
+            <input id="fileSign" onchange="onFileSelectedSign(event)" type="file" wire:model="signFile">
+            @error('photo') <span class="error">{{ $message }}</span> @enderror
+            <button type="submit">Save Photo</button>
+        </form>
 
       </div>
    </div>
@@ -1780,6 +1838,32 @@ role="dialog"  aria-hidden="true">
 
     }
 
+    function triggerFileSign(){
+        document.getElementById("fileSign").click();
+    }
+
+    let justificativa;
+
+    function saveJus(){
+        justificativa = document.getElementById('justificativa-text-input').value
+        Livewire.emit('justificativaEvent', justificativa)
+    }
+
+
+    function onFileSelectedSign(event) {
+        var selectedFile = event.target.files[0];
+        var reader = new FileReader();
+
+        var imgtag = document.getElementById("image-sign");
+        imgtag.title = selectedFile.name;
+
+        reader.onload = function(event) {
+            imgtag.src = event.target.result;
+        };
+
+        reader.readAsDataURL(selectedFile);
+    }
+
     function criarRoom(){
         socket.emit("create-room", {
             room: "{{Auth::user()->cpf}}"
@@ -1815,6 +1899,10 @@ role="dialog"  aria-hidden="true">
 
     window.addEventListener('closeModalSearch', ({detail: {user}}) => {
         $('#modal-search').modal('hide');
+    })
+
+    window.addEventListener('closeModalSign', ({detail: {user}}) => {
+        $('#modal-captura-assinatura').modal('hide');
     })
 
     window.addEventListener('closeModalList', ({detail: {user}}) => {

@@ -31,6 +31,9 @@ return new class extends Migration
             $table->string('reference_point')->nullable();
             $table->string('cell')->nullable();
             $table->string('telephone')->nullable();
+            $table->string('file_sign')->nullable();
+            $table->string('justification_sign')->nullable();
+
             $table->string('email')->nullable();
             $table->string('filiation1')->nullable();
             $table->string('filiation2')->nullable();

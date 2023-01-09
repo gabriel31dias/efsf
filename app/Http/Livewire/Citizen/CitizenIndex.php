@@ -40,6 +40,9 @@ class CitizenIndex extends Component
     public $searchEndereco;
     public $citizensItems;
     public $searchDistrict;
+    public $signFile;
+    public $justificationSign;
+    public $fileSign;
     public $searchCity;
     public $jaUtilizados = [];
     public $other_genre;
@@ -248,7 +251,7 @@ class CitizenIndex extends Component
 
     public $naturalized = false;
 
-    public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus',
+    public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus','justificativaEvent',
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
         'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident'
@@ -745,6 +748,30 @@ class CitizenIndex extends Component
 
     }
 
+    public function justificativaEvent($justificativa){
+        $this->justificationSign = $justificativa;
+
+    }
+
+    public function createAttachmentSignature(){
+        $this->validate([
+            'signFile' => 'image|max:1024', // 1MB Max
+        ]);
+        $result = $this->signFile->store('assinaturas');
+        $this->fileSign = $result;
+
+        $this->dispatchBrowserEvent('alert',[
+            'type'=> 'success',
+            'message'=> "Assinatura salva com sucesso !"
+        ]);
+
+        $this->dispatchBrowserEvent('closeModalSign',[
+            'type'=> 'success'
+        ]);
+
+
+    }
+
     public function mount(){
         $this->getUfs();
         if(isset($this->citizen->id)){
@@ -1092,7 +1119,8 @@ class CitizenIndex extends Component
             "marital_status_id" => $this->fields["marital_status_id"],
             "genre_biologic_id" => $this->fields["genre_biologic_id"],
             "professional_identitis" => \json_encode($this->professionalIdentitysValues),
-
+            "file_sign" => $this->fileSign,
+            "justification_sign" => $this->justificationSign,
             "country_id" => $this->fields["country_id"],
             "service_station_id" => $this->fields["service_station_id"],
             "uf_id" => $this->fields["uf_id"],
