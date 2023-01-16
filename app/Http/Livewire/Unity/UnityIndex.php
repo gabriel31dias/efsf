@@ -40,14 +40,14 @@ class UnityIndex extends Component
 
         if($this->searchTerm){
             $searchTerm = '%'. $this->searchTerm .'%';
-            $profiles = Unit::where('name','ilike', '%'. $searchTerm .'%' );
+            $units = Unit::where('name','ilike', '%'. $searchTerm .'%' );
         }
 
         if(!$searchTerm){
-            $profiles = Unit::orderBy('id','desc');
+            $units = Unit::orderBy('id','desc');
         }
 
-        return $profiles;
+        return $units;
     }
 
     public function mount(){

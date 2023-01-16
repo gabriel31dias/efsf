@@ -4,7 +4,9 @@ namespace App\Http\Livewire\Unity;
 
 use App\Http\Repositories\UnityRepository;
 use Livewire\Component;
-use App\Models\Unity;
+use App\Models\Unit;
+use App\Models\Profession;
+
 use App\Http\Repositories\ProfileRepository;
 class UnityForm extends Component
 {
@@ -12,13 +14,19 @@ class UnityForm extends Component
     public $errorsKeys = [];
     public $errors = [];
 
+    public $currentEditValue = "";
+    public $functions = [];
+    public $textFunction = "";
+
+    public $rowEdit = "";
+
     public $perfilName;
     public $daysToAccessInspiration;
     public $daysToActivityLock;
     public $obrigatory_filds = [
       "name"
     ];
-    public $profile;
+    public $unit;
     public $action;
     public $fields = [
         "name" => "",
@@ -26,20 +34,88 @@ class UnityForm extends Component
     ];
     public function render()
     {
-        return view('livewire.profiles.profile-form');
+        return view('livewire.unity.unity-form');
+    }
+
+    public function saveNewValue($item, $unit_id){
+        $index = array_search($item, $this->functions);
+
+        $this->functions[$index] = $this->currentEditValue;
+        $backup = $this->currentEditValue;
+        $this->currentEditValue = "";
+
+        if($unit_id == null){
+            return false;
+        }
+
+
+        $profission = Profession::where(['unit_id' => $unit_id])->where(['name' => $item])->first();
+        if(isset($profission->id)){
+            $profission->update(["name" => $backup]);
+        }
+
+        $this->rowEdit = "";
+
+        $this->dispatchBrowserEvent('alert',[
+            'type'=> 'success',
+            'message'=> "Item atualizado com sucesso."
+        ]);
     }
 
     public function mount()
     {
-        if($this->profile){
+        if($this->unit){
             $this->fields = [
-                "name" => $this->profile->name,
-                "protocol_unit" => $this->profile->protocol_unit
+                "id" => $this->unit->id,
+                "name" => $this->unit->name,
+                "protocol_unit" => $this->unit->protocol_unit
             ];
+            $this->functions = Profession::where(['unit_id' => $this->unit->id])->get('name')->map(function ($item) {
+                return $item->name;
+            })->toArray();
         }
     }
 
-    public function saveProfile(){
+    public function setEditingRow($item){
+        $this->rowEdit = $item;
+    }
+
+    public function createOrUpdateFunctions($unit_id){
+        foreach($this->functions as $item){
+            $profission = Profession::where(['unit_id' => $unit_id])->where(['name' => $item ])->first();
+            if(isset($profission->id)){
+
+            }else{
+                Profession::create([
+                    'name' => $item,
+                    'unit_id' => $unit_id
+                ]);
+            }
+        }
+    }
+
+    public function destroy_unit($profission, $unit_id){
+
+        $index = array_search($profission, $this->functions);
+
+        unset($this->functions[$index]);
+
+        if($profission == null || $unit_id == null){
+            return false;
+        }
+
+        $p = Profession::where(["unit_id" => $unit_id])->where(["name" => $profission])->first();
+        if(isset($p->id)){
+            $p->delete();
+        }
+
+        $this->dispatchBrowserEvent('alert',[
+            'type'=> 'success',
+            'message'=> "Item excluido com sucesso."
+        ]);
+    }
+
+    public function save(){
         $validation = $this->validation($this->fields);
 
         if(count($validation) > 0){
@@ -52,30 +128,68 @@ class UnityForm extends Component
             return false;
         }
 
-        $profile = Unity::updateOrCreate(['id' => $this->profile->id ?? 0],[
-            'name' => $this->fields["name"],
-            'protocol_unit' => $this->fields["protocol_unit"]
-        ]);
 
-        if($profile){
+        if($this->action == "create"){
+            $unit = Unit::create(['name'=> $this->fields['name']]);
+        } else {
+            $unit = Unit::updateOrCreate(['id' => $this->unit->id ?? 0],[
+                'name' => $this->fields["name"]
+            ]);
+        }
+
+        if(isset($unit->id)){
+            $this->createOrUpdateFunctions($unit->id);
+        }
+
+        if($unit){
             $this->messageSuccess();
             $this->dispatchBrowserEvent('redirect',[
-                'url'=> '/profile',
+                'url'=> '/unit',
                 'delay' => 1000
             ]);
         }
+    }
+
+    public function AddFunction(){
+        if($this->textFunction == ""){
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> "Descreva o nome da função"
+            ]);
+            return false;
+        }
+
+        $ex = false;
+
+        foreach($this->functions as $item){
+            if ($this->textFunction == $item) {
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=> 'error',
+                    'message'=> "Já existe uma função com esse descritivo"
+                ]);
+                $ex = true;
+                break;
+            }
+        }
+
+        if($ex == true){
+            return false;
+        }
+
+        $this->functions[] = $this->textFunction;
+        $this->textFunction = "";
     }
 
     public function messageSuccess(){
         if($this->action == "create"){
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'success',
-                'message'=> "Perfil criado com sucesso."
+                'message'=> "Unidade criado com sucesso."
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'success',
-                'message'=> "Perfil foi atualizado com sucesso."
+                'message'=> "Unidade foi atualizado com sucesso."
             ]);
         }
     }
@@ -103,13 +217,13 @@ class UnityForm extends Component
     }
 
     public function enableDisableRegister(){
-        $result = (new UnityRepository)->toggleStatus($this->profile->id);
+        $result = (new UnityRepository)->toggleStatus($this->unit->id);
         if($result){
-            $this->profile->status = ! $this->profile->status;
+            $this->unit->status = ! $this->unit->status;
 
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'success',
-                'message'=> "Perfil desabilitado com sucesso."
+                'message'=> "Unidade desabilitado com sucesso."
             ]);
         }
     }

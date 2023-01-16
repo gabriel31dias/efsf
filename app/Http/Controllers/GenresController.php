@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Citizen;
+use App\Models\Genre;
 
 class GenresController extends Controller
 {
@@ -15,7 +15,7 @@ class GenresController extends Controller
 
     public function index(Request $request)
     {
-        $genres = Citizen::all();
+        $genres = Genre::all();
 
         return view('genres.index', compact('genres'));
     }
@@ -26,19 +26,19 @@ class GenresController extends Controller
     }
 
 
-    public function show(Request $request, Citizen $genre)
+    public function show(Request $request, Genre $genre)
     {
         return view('genres.show', compact('genre'));
     }
 
 
-    public function edit(Request $request, Citizen $genre)
+    public function edit(Request $request, Genre $genre)
     {
         return view('genres.edit', compact('genre'));
     }
 
 
-    public function destroy(Request $request, Citizen $genre)
+    public function destroy(Request $request, Genre $genre)
     {
         $genre->delete();
 

@@ -29,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('units', function (Blueprint $table) {
-            $table->dropColumn('code');
-        });
+        Schema::dropIfExists('units');
     }
 };

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Citizen;
+use App\Models\Unit;
 
 class UnityController extends Controller
 {
@@ -15,7 +15,7 @@ class UnityController extends Controller
 
     public function index(Request $request)
     {
-        $citizen = Citizen::find($request->id);
+        $citizen = Unit::find($request->id);
 
         return view('unit.index', compact('citizen'));
     }
@@ -25,20 +25,19 @@ class UnityController extends Controller
         return view('unit.create');
     }
 
-
-    public function show(Request $request, Citizen $profile)
+    public function show(Request $request, Unit $profile)
     {
         return view('unit.show', compact('profile'));
     }
 
 
-    public function edit(Request $request, Citizen $citizen)
+    public function edit(Request $request, Unit $unit)
     {
-        return view('unit.edit', compact('citizen'));
+        return view('unit.edit', compact('unit'));
     }
 
 
-    public function destroy(Request $request, Citizen $profile)
+    public function destroy(Request $request, Unit $profile)
     {
         $profile->delete();
 

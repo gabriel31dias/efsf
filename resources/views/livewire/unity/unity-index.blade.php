@@ -6,6 +6,7 @@
              <div class="col">
                 <h2 class="page-title">
                     Unidades
+
                 </h2>
              </div>
           </div>
@@ -22,7 +23,7 @@
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
              </svg>
-             Cadastrar Unidade
+             Criar unidade
           </a>
        </div>
     </div>
@@ -48,16 +49,15 @@
                    <table class="table">
                       <thead>
                          <tr>
-                            <th><button class="table-sort" >Nome</button></th>
-                            <th><button class="table-sort" >UF</button></th>
+                            <th><button class="table-sort" >Nome unidade</button></th>
                          </tr>
                       </thead>
                       <tbody class="table-tbody">
+
                          @foreach ($units as $unity)
-                         <tr wire:click="clickUpdate({{$unity->id}})">
-
-
-                         </tr>
+                            <tr wire:click="clickUpdate({{$unity->id}})">
+                                <td>{{ $unity->name }}</td>
+                            </tr>
                          @endforeach
                       </tbody>
                    </table>

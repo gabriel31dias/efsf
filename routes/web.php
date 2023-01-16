@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 
-Route::apiResource('unit', App\Http\Controllers\UnityController::class);
+Route::resource('unit', App\Http\Controllers\UnityController::class);
 
 
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'index'])->name('login');
