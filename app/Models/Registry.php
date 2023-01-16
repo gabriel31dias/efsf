@@ -15,7 +15,7 @@ class Registry extends Model
     ];
 
     public function opening_dates() { 
-        return $this->hasMany(RegistryDate::class);
+        return $this->hasMany(RegistryDate::class)->orderBy('created_date', 'DESC');
     }
 
     public function uf(){ 

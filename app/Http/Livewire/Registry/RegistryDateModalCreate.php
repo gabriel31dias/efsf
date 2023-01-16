@@ -56,6 +56,20 @@ class RegistryDateModalCreate extends Component
         $this->emit('refreshRegistryForm');
     }
 
+    public function valideteCreate(){ 
+        $this->clearRegistry();
+        $exists_open_date = RegistryDate::where('registry_id', $this->registry_id)->whereNull('closing_date')->exists(); 
+        if($exists_open_date){ 
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> "Nao e possivel realizar o cadastro de uma nova data de abertura sem cadastrar a data de fechamento anterior."
+            ]);
+        } else { 
+            $this->modal = true;
+        }
+ 
+    }
+
     public function clearRegistry() { 
         $this->fieldsCreateDate = [
             'created_date' => null, 

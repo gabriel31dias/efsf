@@ -1,5 +1,5 @@
 <div>
-    <button wire:click="clearRegistry" type="button" class="h-4 text-blue-500 border-2 border-blue-500 hover:bg-blue-600 
+    <button wire:click="valideteCreate" type="button" class="h-4 text-blue-500 border-2 border-blue-500 hover:bg-blue-600 
     hover:text-white focus:ring-4 font-medium rounded-lg 
       text-sm p-2.5 text-center inline-flex items-center mr-2 " x-data="{id:'modal-edit-registry'}"
         x-on:click="$dispatch('modal-overlay',{id})">
@@ -9,7 +9,6 @@
     <section :class="{'h-screen flex items-center justify-center': modal}">
         <div class="fixed inset-0 z-10 flex flex-col items-center justify-end overflow-y-auto bg-gray-600 bg-opacity-50 sm:justify-start"
             x-data="{modal: @entangle('modal')}" x-show="modal"
-            x-on:modal-overlay.window="if ($event.detail.id == 'modal-edit-registry') modal=true"
             x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-500"
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
