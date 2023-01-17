@@ -61,7 +61,7 @@
                         <div class="container-fluid card">
                             <div class="col-sm-6 mt-3">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" wire:model="textFunction" placeholder="Nome" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                                    <input type="text" class="form-control" wire:model="textFunction" placeholder="Digite a função/cargo" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                                     <div class="input-group-append">
                                         <a wire:click="AddFunction" class="btn btn-primary items-center inline-flex">
                                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -90,17 +90,15 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th><button class="table-sort" data-sort="sort-name">Função</button></th>
+                                        <th><button class="table-sort" data-sort="sort-name">Função/cargo</button></th>
                                     </tr>
-
-
                                 </thead>
                                 <tbody class="table-tbody">
                                     @foreach ($functions as $item)
                                         <tr>
                                             <td class="sort-name">
                                                 @if($rowEdit == $item)
-                                                    <input type="text" class="form-control" wire:model="currentEditValue" placeholder="Nome">
+                                                    <input type="text" class="form-control" wire:model="currentEditValue" placeholder="Digite a função/cargo">
                                                 @else
                                                     {{$item}}
                                                 @endif
