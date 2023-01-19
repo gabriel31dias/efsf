@@ -252,6 +252,18 @@
                      <livewire:users.profile-select :perfil_name="$perfil_namex"/>
                   </div>
                </div>
+               <div class="col-lg-4">
+                <div class="mb-3">
+                   <label class="form-label">Unidade</label>
+                   <livewire:unit-select.unit-select :fuction="1"/>
+                </div>
+             </div>
+             <div class="col-lg-4">
+                <div class="mb-3">
+                   <label class="form-label">Função/Cargo {{$fields['unit_id'] ?? ''}}</label>
+                   <livewire:function-select.function-select  :unit="$fields['unit_id'] ?? ''" />
+                </div>
+             </div>
              </div>
              <div class="row">
              </div>

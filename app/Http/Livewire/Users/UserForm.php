@@ -68,7 +68,8 @@ class UserForm extends Component
      * listeners de eventos disparados por outros componentes
      */
 
-    protected $listeners = ['selectedTypeStreat', 'selectedProfile', 'selectedServiceStation', 'updatePassword', 'updateInfoIbge'];
+    protected $listeners = ['selectedTypeStreat', 'selectedProfile',
+    'selectedServiceStation', 'updatePassword', 'updateInfoIbge', 'selectedUnit', 'selectedProfession'];
 
     public function updateInfoIbge($request){
         $this->fields['endereco'] = $request['logradouro'];
@@ -86,6 +87,15 @@ class UserForm extends Component
             'type'=> 'success',
             'message'=> "Senha do Usuário foi atualizada com sucesso."
         ]);
+    }
+
+    public function selectedUnit($unit_id){
+
+        $this->fields['unit_id'] = $unit_id;
+    }
+
+    public function selectedProfession($profession_id){
+        $this->fields['profession_id'] = $profession_id;
     }
 
     public function selectedTypeStreat($idTypeStreat)
