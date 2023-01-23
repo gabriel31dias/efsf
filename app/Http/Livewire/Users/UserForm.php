@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Livewire\Users;
+use App\Models\Profession;
+use App\Models\Unit;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use App\Models\User;
@@ -26,7 +28,13 @@ class UserForm extends Component
     public $perfil_namex;
     public $type_street;
 
+    public $unit_id;
+
     public $user_id;
+
+    public $unit;
+
+    public $function;
     public $action ;
     public $profiles = [];
     public $errorsKeys = [];
@@ -92,10 +100,14 @@ class UserForm extends Component
     public function selectedUnit($unit_id){
 
         $this->fields['unit_id'] = $unit_id;
+        $this->unit_id = $unit_id;
+        $this->emit('selectedUnit', $unit_id);
+
     }
 
     public function selectedProfession($profession_id){
         $this->fields['profession_id'] = $profession_id;
+
     }
 
     public function selectedTypeStreat($idTypeStreat)
@@ -135,9 +147,14 @@ class UserForm extends Component
         $profile = (new ProfileRepository())->findProfile($this->user->profile_id);
         $type_street = (new TypeStreetRepository())->findTypeStreet($this->user->type_street);
 
+        $this->unit = Unit::find($this->user->unit_id);
+        $this->function = Profession::find($this->user->profession_id);
+
         $this->type_street = $type_street->name_type_street ?? null;
         $this->perfil_namex = $profile->name_profile ?? null;
         $this->user_id = $this->user->id;
+
+
 
         $this->fields = [
             "id" => $this->user->id,
@@ -158,8 +175,11 @@ class UserForm extends Component
             "type_street" => $this->user->type_street,
             "profile_id" => $this->user->profile_id,
             "status" => $this->user->status,
-            "blocked" => $this->user->blocked
+            "blocked" => $this->user->blocked,
+            "unit_id" => $this->user->unit_id,
+            "profession_id" => $this->user->profession_id,
         ];
+
         $this->servicesPoints = (new ServiceStationsRepository)->findServiceStations($this->user->id);
     }
 
@@ -241,7 +261,9 @@ class UserForm extends Component
             'city' => $this->fields["cidade"],
             'profile_id' => $this->fields["profile_id"],
             'services_points' => $this->servicesPoints,
-            'activate_date_time' => now()
+            'activate_date_time' => now(),
+            "unit_id" => $this->fields["unit_id"],
+            "profession_id" => $this->fields["profession_id"],
         ]);
 
         $this->messageSuccess();

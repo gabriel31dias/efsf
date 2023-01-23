@@ -37,8 +37,12 @@ class User extends Model implements Authenticatable
         'city',
         'type_street',
         'blocked',
-        'first_acess'
+        'first_acess',
+        'unit_id',
+        'profession_id'
     ];
+
+
 
     /**
      * The attributes that should be hidden for serialization.

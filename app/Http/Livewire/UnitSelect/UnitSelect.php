@@ -86,6 +86,14 @@ class UnitSelect extends Component
             ->toArray();
     }
 
+    public function updatedUnit()
+    {
+        dd('dwd');
+    }
+
+
+
+
     public function selectItem($id, $value){
         $this->query = $value;
         $this->selectedId = $id;

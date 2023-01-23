@@ -58,6 +58,7 @@ class CitizenRepository {
         $obj['migration_situation'] = $obj['migration_situation'] == "" ? null : $obj['migration_situation'];
         $obj['social_indicator_id'] = $obj['social_indicator_id'] == "" ? null : $obj['social_indicator_id'];
 
+
         $citizen = Citizen::find($id);
 
         if(isset($citizen->id)){

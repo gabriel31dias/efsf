@@ -23,10 +23,11 @@ class FunctionSelect extends Component
     public $defaultValue;
     public $customEvent;
 
-    protected $listeners = ['clearServiceStationField', 'setCounty'];
+    protected $listeners = ['clearServiceStationField', 'setCounty', 'selectedUnit'];
 
     public function mount()
     {
+
         $this->resetValue();
         $this->currentCounty();
         if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->name);
@@ -34,6 +35,10 @@ class FunctionSelect extends Component
 
     public function setCounty($value){
         $this->query = $value;
+    }
+
+    public function selectedUnit($unit){
+        $this->unit = $unit;
     }
 
     public function currentCounty()
@@ -84,7 +89,9 @@ class FunctionSelect extends Component
     public function updatedQuery()
     {
         $this->closed = false;
+
         if($this->unit){
+
             $this->functions = Profession::where('name', 'ilike', '%' . $this->query . '%')->where('unit_id', $this->unit)
             ->get()
             ->toArray();
