@@ -25,6 +25,37 @@ class CitizenController extends Controller
         return view('citizen.create');
     }
 
+    public function generateProtuario($id)
+    {
+        $citizen = Citizen::find($id);
+
+        $filiations = [];
+
+        array_push($filiations, $citizen->filiation1);
+        array_push($filiations, $citizen->filiation2);
+
+        $filiationsPlus = \json_decode($citizen->other_filiations);
+
+        foreach ($filiationsPlus as $filiation) {
+            array_push($filiations, $filiation);
+        }
+
+        $professional_idents = [];
+
+        $features = \json_decode($citizen->features);
+
+        $professional_identitis =  \json_decode($citizen->professional_identitis) ;
+
+        foreach ($professional_identitis as $professional_ident) {
+            array_push($professional_idents, $professional_ident->professional_id_number_1);
+        }
+
+
+
+        return \PDF::loadView('citizen.file', compact('filiations'), compact('features'), compact('professional_idents'))
+            ->stream('prontuario.pdf');
+    }
+
 
     public function show(Request $request, Citizen $profile)
     {
