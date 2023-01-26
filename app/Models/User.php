@@ -69,4 +69,8 @@ class User extends Model implements Authenticatable
     {
         return $this->hasMany(UserServiceStation::class);
     }
+
+    public function getProfilePermissionAttribute(){ 
+        return $this->profile->permissions->pluck('permission')->toArray();
+    }
 }

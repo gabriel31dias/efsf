@@ -5,11 +5,15 @@ namespace App\Http\Livewire\Profiles;
 use Livewire\Component;
 use App\Models\Profile;
 use App\Http\Repositories\ProfileRepository;
+use App\Models\Permission;
+
 class ProfileForm extends Component
 {
 
     public $errorsKeys = [];
     public $errors = [];
+    public $permissions = []; 
+    public $profile_permissions = []; 
 
     public $perfilName;
     public $daysToAccessInspiration;
@@ -33,7 +37,9 @@ class ProfileForm extends Component
 
     public function mount()
     {
+        $this->permissions = Permission::orderBy('id', 'asc')->get()->groupBy('group')->toArray();
         if($this->profile){
+            $this->profile_permissions = $this->profile->permissions->pluck('id')->toArray();
             $this->fields = [
                 "nome_perfil" => $this->profile->name_profile,
                 "prazo_expiração" => $this->profile->days_to_access_inspiration,
@@ -61,6 +67,8 @@ class ProfileForm extends Component
             'days_to_access_inspiration' => $this->fields["prazo_expiração"],
             'days_to_activity_lock' => $this->fields["prazo_expiração_inatividade"]
         ]);
+
+        $profile->permissions()->sync($this->profile_permissions);
 
         if($profile){
             $this->messageSuccess();

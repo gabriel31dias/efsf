@@ -96,5 +96,31 @@
                 </div>
              </div>
           </div>
-    </form>
+
+          <div class="row m-4">
+            <div class="col-lg-12">
+                <div class="card shadow-md">
+                    <div class="font-bold p-4 mb-0">Permissões</div>
+                    <div class="px-4 pb-2">
+                        <div class="row">
+                            @foreach($permissions as $group => $p)
+                                <div class="col-sm-3 py-2 divide-x divide-slate-400">
+                                    <span class="font-bold">{{ $group }}</span>
+                                    <ul class="mt-2">
+                                        @foreach($p as $permission)
+                                        <li>
+                                          <input type="checkbox" wire:model='profile_permissions' value="{{ $permission['id'] }}" id="">
+                                          <label for="permissions" class="text-sm">{{ $permission['name'] }}</label>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+        
+                                </div>
+                            @endforeach
+                        </div>
+                </div>
+            </div>
+        </div>
+        </div>
+      </form>
     </div>
