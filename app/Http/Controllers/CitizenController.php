@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Citizen;
+use Mpdf\Mpdf;
+use Dompdf\Dompdf;
+use Illuminate\Support\Facades\Storage;
+
 
 class CitizenController extends Controller
 {
@@ -50,10 +54,17 @@ class CitizenController extends Controller
             array_push($professional_idents, $professional_ident->professional_id_number_1);
         }
 
+        $html = view('citizen.file', compact('citizen'),  compact('filiations') );
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        // (Opcional) Tipo do papel e orientação
+        $dompdf->setPaper('A4');
+        // Render HTML para PDF
+        $dompdf->render();
+        // Download do arquivo
+        $file = $dompdf->output();
+        Storage::put('public/testx.pdf', $file);
 
-
-        return \PDF::loadView('citizen.file', compact('filiations'), compact('features'), compact('professional_idents'))
-            ->stream('prontuario.pdf');
     }
 
 

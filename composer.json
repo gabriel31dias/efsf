@@ -8,6 +8,8 @@
         "php": "^8.0.2",
         "asantibanez/livewire-select": "^2.1",
         "barryvdh/laravel-dompdf": "^2.0",
+        "carlos-meneses/laravel-mpdf": "^2.1",
+        "chrome-php/chrome": "^1.7",
         "guzzlehttp/guzzle": "^7.2",
         "joshhanley/livewire-autocomplete": "^0.1.7",
         "laravel/framework": "^9.19",
@@ -16,6 +18,7 @@
         "laravel/ui": "^4.0",
         "livewire/livewire": "^2.10",
         "maatwebsite/excel": "^3.1",
+        "mpdf/mpdf": "v8.1.2",
         "nesbot/carbon": "^2.62",
         "owen-it/laravel-auditing": "^13.0",
         "psr/simple-cache": "^2.0"
@@ -23,6 +26,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel-shift/blueprint": "^2.4",
+        "laravel/dusk": "^7.4",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
