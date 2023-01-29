@@ -315,7 +315,7 @@
                   'title' => 'Cadastro de Gêneros',
                   'classIcon' => 'ti ti-gender-transgender',
                   'href' => route('genres.index'),
-                  'can' => 'genres.index'
+                  'can' => 'genre.index'
                   ])
 
 

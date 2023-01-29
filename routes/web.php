@@ -32,24 +32,24 @@ Route::post('/savepassword', [App\Http\Controllers\Auth\LoginController::class, 
 Route::get('/citizen/{id}', [App\Http\Controllers\CitizenController::class, 'index'])->name('citizen');
 
 
-Route::resource('citizen', App\Http\Controllers\CitizenController::class);
+Route::resource('citizen', App\Http\Controllers\CitizenController::class)->middleware('can:permission,"citizen.index"');
 
-Route::resource('genres', App\Http\Controllers\GenresController::class);
+Route::resource('genres', App\Http\Controllers\GenresController::class)->middleware('can:permission,"genre.index"');;
 
-Route::resource('users', App\Http\Controllers\UserController::class);
+Route::resource('users', App\Http\Controllers\UserController::class)->middleware('can:permission,"users.index"');
 
-Route::resource('profile', App\Http\Controllers\ProfileController::class);
+Route::resource('profile', App\Http\Controllers\ProfileController::class)->middleware('can:permission,"profile.index"');
 
-Route::resource('service-station', App\Http\Controllers\ServiceStationController::class);
-Route::resource('blocked-certificate', App\Http\Controllers\BlockedCertificateController::class);
+Route::resource('service-station', App\Http\Controllers\ServiceStationController::class)->middleware('can:permission,"station.index"');
+Route::resource('blocked-certificate', App\Http\Controllers\BlockedCertificateController::class)->middleware('can:permission,"blocked.index"');
 
-Route::resource('registry', App\Http\Controllers\RegistryController::class);
-Route::resource('registry-interdiction', App\Http\Controllers\RegistryInterdictionController::class);
-Route::resource('registry-suspension', App\Http\Controllers\RegistrySuspensionController::class);
-Route::resource('registry-transfer', App\Http\Controllers\RegistryTransferController::class);
-Route::resource('feature', App\Http\Controllers\FeatureController::class);
-Route::resource('county', App\Http\Controllers\CountyController::class);
-Route::resource('uf', App\Http\Controllers\UfController::class);
+Route::resource('registry', App\Http\Controllers\RegistryController::class)->middleware('can:permission,"registry.index"');
+Route::resource('registry-interdiction', App\Http\Controllers\RegistryInterdictionController::class)->middleware('can:permission,"interdiction.index"');
+Route::resource('registry-suspension', App\Http\Controllers\RegistrySuspensionController::class)->middleware('can:permission,"suspension.index"');
+Route::resource('registry-transfer', App\Http\Controllers\RegistryTransferController::class)->middleware('can:permission,"transfer.index"');
+Route::resource('feature', App\Http\Controllers\FeatureController::class)->middleware('can:permission,"feature.index"');
+Route::resource('county', App\Http\Controllers\CountyController::class)->middleware('can:permission,"locale.index"');
+Route::resource('uf', App\Http\Controllers\UfController::class)->middleware('can:permission,"locale.index"');
 
 
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
