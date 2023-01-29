@@ -13,6 +13,7 @@
     </div>
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
+         @can('permission', 'transfer.create')
           <a wire:click="addTransfer" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
              data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -24,6 +25,7 @@
              </svg>
              Cadastrar Transferência
           </a>
+         @endcan
        </div>
     </div>
     <div class="page-body">

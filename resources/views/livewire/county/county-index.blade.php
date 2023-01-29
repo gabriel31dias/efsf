@@ -13,6 +13,8 @@
     </div>
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
+         @can('permission', 'locale.create')
+             
           <a wire:click="addCounty" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
              data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -24,6 +26,8 @@
              </svg>
              Cadastrar Município
           </a>
+         @endcan
+
        </div>
     </div>
     <div class="page-body">
@@ -56,7 +60,7 @@
                       </thead>
                       <tbody class="table-tbody">
                          @foreach ($counties as $county)
-                         <tr wire:click="clickUpdate({{$county->id}})">
+                         <tr @can('permission', 'locale.edit') wire:click="clickUpdate({{$county->id}}) @endcan">
                             <td>{{ $county->name }}</td>
                             <td>{{ $county->uf->name }}</td>
                            <td>{{ $county->is_district ? 'Sim' : 'Não' }}</td>

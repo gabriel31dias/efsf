@@ -17,6 +17,7 @@
                 <div class="col-12 col-md-auto ms-auto d-print-none">
                    <div class="btn-list">
                       <span class="d-none d-sm-inline">
+                     @can('permission', 'profile.delete')
                       @if(isset($profile->id))
                       @if($profile->status == false)
                       <a wire:click="enableDisableRegister" class="btn btn-white">
@@ -28,6 +29,7 @@
                       </a>
                       @endif
                       @endif
+                      @endcan
                       </span>
                       <a wire:click="saveProfile" class="btn btn-primary inline-flex">
                          <!-- Download SVG icon from http://tabler-icons.io/i/plus -->

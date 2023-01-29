@@ -13,6 +13,7 @@
     </div>
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
+         @can('permission', 'interdiction.create')
           <a wire:click="addInterdiction" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
              data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -24,6 +25,7 @@
              </svg>
              Cadastrar Interdição
           </a>
+         @endcan
        </div>
     </div>
     <div class="page-body">
@@ -57,7 +59,7 @@
                       </thead>
                       <tbody class="table-tbody">
                          @foreach ($interdictions as $interdiction)
-                         <tr wire:click="clickUpdate({{$interdiction->id}})">
+                         <tr @can('permission', 'interdiction.edit') wire:click="clickUpdate({{$interdiction->id}}) @endcan">
                             <td class="">{{$interdiction->registry->name}}</td>
                             <td class="">{{$interdiction->registry->uf->name}}</td>
                             <td class="">{{$interdiction->registry->county->name}}</td>

@@ -15,6 +15,8 @@
                     <!-- Page title actions -->
                     <div class="col-12 col-md-auto ms-auto d-print-none">
                         <div class="btn-list">
+                            @can('permission', 'feature.enable')
+                                
                             <span class="d-none d-sm-inline">
                                 @if(isset($feature->id))
                                 @if($feature->status == false)
@@ -28,6 +30,8 @@
                                 @endif
                                 @endif
                             </span>
+                            @endcan
+
                             <a wire:click="saveFeature" class="btn btn-primary items-center inline-flex">
                                 <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -132,7 +136,7 @@
                                     <tr class="hover:bg-gray-100 hover:text-black">
                                         <td class="sort-name">{{ $option->name }}</td>
                                         <td class="">
-                                            @livewire('global.delete-button', ['objectModel' => $option, 'redirectBack' => false, 'type' => 'table', 'deleteEvent' => 'refreshFeatureForm'], key('delete' . $option->id))
+                                            @livewire('global.delete-button', ['objectModel' => $option, 'redirectBack' => false, 'type' => 'table', 'deleteEvent' => 'refreshFeatureForm', 'permission' => 'feature.delete'], key('delete' . $option->id))
                                         </td>
                                     </tr>
                                     @endforeach

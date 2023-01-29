@@ -18,6 +18,7 @@
                 <div class="col-12 col-md-auto ms-auto d-print-none">
                    <div class="btn-list">
                       <span class="d-none d-sm-inline">
+                        @can('permission', 'users.enable')
                       @if(isset($user->id))
                       @if($user->status == false)
                       <a wire:click="enableDisableRegister" class="btn btn-white">
@@ -29,6 +30,7 @@
                       </a>
                       @endif
                       @endif
+                      @endcan
                       @if(isset($user->id))
                       @if($user->blocked == false)
                       <a wire:click="blockUnblockRegister" class="btn btn-danger">

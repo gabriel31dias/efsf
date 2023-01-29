@@ -13,6 +13,7 @@
     </div>
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
+         @can('permission', 'blocked.create')
           <a wire:click="addBlockedCertificate" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
              data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -24,6 +25,7 @@
              </svg>
              Cadastrar Bloqueio
           </a>
+          @endcan
        </div>
     </div>
     <div class="page-body">
@@ -56,7 +58,7 @@
                       </thead>
                       <tbody class="table-tbody">
                          @foreach ($blockedCertificates as $blockedCertificate)
-                         <tr wire:click="clickUpdate({{$blockedCertificate->id}})">
+                         <tr @can('permission', 'blocked.edit') wire:click="clickUpdate({{$blockedCertificate->id}}) @endcan">
                             <td class="">{{$blockedCertificate->registry->name}}</td>
                             <td class="">{{$blockedCertificate->registry->uf->name}}</td>
                             <td class="">{{$blockedCertificate->registry->county->name}}</td>

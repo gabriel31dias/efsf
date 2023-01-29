@@ -16,6 +16,7 @@
                <!-- Page title actions -->
                <div class="col-12 col-md-auto ms-auto d-print-none">
                   <div class="btn-list">
+                     @can('permission', 'station.enable')
                      <span class="d-none d-sm-inline">
                         @if(isset($serviceStation->id))
                         @if($serviceStation->status == false)
@@ -29,6 +30,8 @@
                         @endif
                         @endif
                      </span>
+                     @endcan
+
                      <a wire:click="saveStation" class="btn btn-primary items-center inline-flex">
                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"

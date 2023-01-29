@@ -13,7 +13,8 @@
     </div>
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
-          <a wire:click="addRegistry" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
+         @can('permission', 'registry.create')
+         <a wire:click="addRegistry" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
              data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
              <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
@@ -24,6 +25,7 @@
              </svg>
              Cadastrar Cartório
           </a>
+         @endcan
        </div>
     </div>
     <div class="page-body">
@@ -60,7 +62,7 @@
                       </thead>
                       <tbody class="table-tbody">
                          @foreach ($registries as $registry)
-                         <tr wire:click="clickUpdate({{$registry->id}})">
+                         <tr @can('permission', 'registry.edit') wire:click="clickUpdate({{$registry->id}}) @endcan">
                             <td class="">{{$registry->sic_code}}</td>
                             <td class="">{{$registry->cns}}</td>
                             <td class="">{{$registry->name}}</td>

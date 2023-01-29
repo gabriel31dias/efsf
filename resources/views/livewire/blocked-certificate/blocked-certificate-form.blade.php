@@ -16,7 +16,7 @@
              <div class="col-12 col-md-auto  ms-auto d-print-none">
                 <div class="btn-list">
                @if ($action == 'update')
-                  @livewire('global.delete-button', ['objectModel' => $blockedCertificate, 'redirectBack' => true])
+                  @livewire('global.delete-button', ['objectModel' => $blockedCertificate, 'redirectBack' => true, 'permission' => 'blocked.delete'])
                 @endif
                    <a wire:click="saveRegistry" class="btn btn-primary items-center inline-flex  ">
                       <!-- Download SVG icon from http://tabler-icons.io/i/plus -->

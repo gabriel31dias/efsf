@@ -27,6 +27,7 @@
     </div>
 
       </span>
+      @can('permission','users.create')
       <a  wire:click="addUser" class="btn btn-primary inline-flex" data-bs-toggle="modal" data-bs-target="#modal-report">
          <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -36,6 +37,7 @@
          </svg>
          Criar novo servidor
       </a>
+      @endcan
    </div>
 </div>
 <div class="page-body">
@@ -92,7 +94,7 @@
                   </thead>
                   <tbody class="table-tbody">
                     @foreach ($users as $user)
-                     <tr  wire:click="clickUpdate({{$user->id}})">
+                     <tr @can('permission','users.edit') wire:click="clickUpdate({{$user->id}}) @endcan">
                         <td class="sort-name">{{$user->name}}</td>
                         <td class="sort-city">{{$user->cpf}}</td>
                         <td class="sort-type">{{$user->cell}}</td>

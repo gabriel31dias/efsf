@@ -28,6 +28,7 @@
                </div>
             </div>
          </span>
+         @can('permission', 'station.create')
          <a wire:click="addStation" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
             data-bs-target="#modal-report">
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -39,6 +40,8 @@
             </svg>
             Cadastrar Posto de Atendimento
          </a>
+         @endcan
+
       </div>
    </div>
    <div class="page-body">
@@ -70,7 +73,7 @@
                      </thead>
                      <tbody class="table-tbody">
                         @foreach ($stations as $station)
-                        <tr wire:click="clickUpdate({{$station['id']}})">
+                        <tr @can('permission', 'station.edit') wire:click="clickUpdate({{$station['id']}}) @endcan">
                            <td class="sort-name">{{$station['service_station_name']}}</td>
                            <td class="sort-city">{{$station['acronym_post']}}</td>
                            <td class="sort-city">
