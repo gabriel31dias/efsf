@@ -34,6 +34,8 @@ class CreateUsersTable extends Migration
             $table->string('user_name')->nullable();
             $table->string('profile_id')->nullable();
             $table->string('password');
+            $table->integer('unit_id')->nullable();
+            $table->integer('profession_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

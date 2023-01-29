@@ -563,6 +563,10 @@ class CitizenIndex extends Component
         $this->ufs = Uf::get();
     }
 
+    public function generatePdf(){
+
+    }
+
     public function setCitizen($id){
         if(!$id){
             return false;

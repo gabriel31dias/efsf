@@ -40,6 +40,12 @@ class UserRepository {
             unset($obj['profile_id']);
         }
         unset($obj['services_points']);
+
+
+        $obj['unit_id'] = $obj['unit_id'] == "" ? null : $obj['unit_id'];
+        $obj['profession_id'] = $obj['profession_id'] == "" ? null : $obj['profession_id'];
+
+
         $user = User::updateOrCreate(['id' => $id ?? 0], $obj);
 
         if(isset($servicePoints) && count($servicePoints) > 0){
