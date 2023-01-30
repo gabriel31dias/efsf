@@ -24,6 +24,7 @@
                 </div>
             </div>
           </span>
+          @can('permission', 'profile.create')
           <a  wire:click="addUser" class="btn btn-primary inline-flex" data-bs-toggle="modal" data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -33,6 +34,7 @@
              </svg>
              Criar novo perfil
           </a>
+          @endcan
        </div>
     </div>
     <div class="page-body">
@@ -66,7 +68,7 @@
                       </thead>
                       <tbody class="table-tbody">
                         @foreach ($profiles as $profile)
-                         <tr  wire:click="clickUpdate({{$profile['id']}})">
+                         <tr @can('permission', 'profile.edit') wire:click="clickUpdate({{$profile['id']}}) @endcan">
                             <td class="sort-name">{{$profile['name_profile']}}</td>
                             <td class="sort-city">{{$profile['days_to_access_inspiration']}}</td>
                             <td class="sort-city">{{$profile['days_to_activity_lock']}}</td>

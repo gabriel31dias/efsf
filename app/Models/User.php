@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 
-class User extends Model implements Authenticatable
+class User extends Model implements Authenticatable, AuthorizableContract
 {
     use AuthenticableTrait;
     use HasFactory;
+    use Authorizable;
 
     /**
      * The attributes that are mass assignable.
@@ -72,5 +75,9 @@ class User extends Model implements Authenticatable
     public function userStations()
     {
         return $this->hasMany(UserServiceStation::class);
+    }
+
+    public function getProfilePermissionAttribute(){ 
+        return $this->profile->permissions->pluck('permission')->toArray();
     }
 }

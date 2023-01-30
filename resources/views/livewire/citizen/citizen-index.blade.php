@@ -88,6 +88,7 @@
             </div>
          </div>
          <div class="modal-footer">
+            @can('permission', 'citizen.create')
             <a style="margin-bottom:30px"
                wire:click="goSearch()"
                onclick="$('#modal-list').modal('hide');"
@@ -106,6 +107,7 @@
                </svg>
                Cadastrar
             </a>
+            @endcan
             <a style="margin-bottom:30px"
                wire:click="goSearch()"
                onclick="$('#modal-list').modal('show');"
@@ -394,8 +396,7 @@ role="dialog"  aria-hidden="true">
                     </svg>
                    gerar
                  </a>
-
-
+                 @if(Auth::user()->can('permission', 'citizen.create') || Auth::user()->can('permission', 'citizen.edit'))
                    <a wire:click="createCitizen" class="btn btn-primary inline-flex">
                       <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -407,6 +408,7 @@ role="dialog"  aria-hidden="true">
                       </svg>
                       Salvar
                    </a>
+                   @endif
                 </div>
              </div>
           </div>

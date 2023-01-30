@@ -13,6 +13,7 @@
    </div>
    <div class="col-12 col-md-auto ms-auto d-print-none">
       <div class="btn-list">
+         @can('permission', 'suspension.create')
          <a wire:click="addSuspension" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
             data-bs-target="#modal-report">
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -25,6 +26,7 @@
             Cadastrar Suspensão
 
          </a>
+         @endcan
       </div>
    </div>
    <div class="page-body">
@@ -58,7 +60,7 @@
                      </thead>
                      <tbody class="table-tbody">
                         @foreach ($suspensions as $suspension)
-                        <tr wire:click="clickUpdate({{$suspension->id}})">
+                        <tr @can('permission', 'suspension.edit') wire:click="clickUpdate({{$suspension->id}}) @endcan">
                            <td class="">{{$suspension->registry->name}}</td>
                            <td class="">{{$suspension->registry->uf->name}}</td>
                            <td class="">{{$suspension->registry->county->name}}</td>

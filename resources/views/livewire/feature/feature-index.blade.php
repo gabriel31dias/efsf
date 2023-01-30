@@ -28,6 +28,8 @@
                </div>
             </div>
          </span>
+         @can('permission', 'feature.create')
+             
           <a wire:click="addFeature" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
              data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -39,6 +41,8 @@
              </svg>
              Cadastrar Característica
           </a>
+         @endcan
+
        </div>
     </div>
     <div class="page-body">
@@ -69,7 +73,7 @@
                       </thead>
                       <tbody class="table-tbody">
                          @foreach ($features as $feature)
-                         <tr wire:click="clickUpdate({{$feature->id}})">
+                         <tr @can('permission', 'feature.create') wire:click="clickUpdate({{$feature->id}}) @endcan">
                             <td>{{ $feature->name }}</td>
                             <td class="">
                                 @if ($feature->status)

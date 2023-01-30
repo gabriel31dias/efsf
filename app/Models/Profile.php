@@ -30,4 +30,9 @@ class Profile extends Model
         'id' => 'integer',
         'status' => 'boolean',
     ];
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'profile_permission');
+    }
 }

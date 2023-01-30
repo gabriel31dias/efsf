@@ -13,6 +13,8 @@ class DeleteButton extends Component
     public $previous; 
     public $redirectBack = false; 
     public $deleteEvent = null;
+    public $permission = null;
+    
     public function render()
     {
         switch($this->type){ 
