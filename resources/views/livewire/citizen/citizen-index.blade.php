@@ -380,7 +380,7 @@ role="dialog"  aria-hidden="true">
                       Captura Facial
                    </a>
 
-                   <a  wire:click="generatePdf" class="btn btn-primary inline-flex">
+                   <a wire:click="openModalProntuarioPrint()"  class="btn btn-primary inline-flex">
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <svg xmlns="http://www.w3.org/2000/svg"  class="icon icon-tabler icon-tabler-face-id" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -1916,6 +1916,16 @@ role="dialog"  aria-hidden="true">
 
     window.addEventListener('closeModalSearch', ({detail: {user}}) => {
         $('#modal-search').modal('hide');
+    })
+
+    window.addEventListener('openModalProntuarioPrint', ({detail: {id}}) => {
+        alert(JSON.stringify(id))
+
+
+        var left = (screen.width/2)-(500/2);
+        var top = (screen.height/2)-(500/2);
+        window.open('/generate-prontuario/'+id, 'title', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=+w'+', height='+'h, top='+top+', left='+left);
+
     })
 
     window.addEventListener('closeModalSign', ({detail: {user}}) => {

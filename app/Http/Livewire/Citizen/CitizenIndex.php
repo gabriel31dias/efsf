@@ -288,6 +288,12 @@ class CitizenIndex extends Component
         #$this->dispatchBrowserEvent('reloadInputsSelect');
     }
 
+    public function openModalProntuarioPrint($id){
+        $this->dispatchBrowserEvent('openModalProntuarioPrint', [
+            'id' => $id
+        ]);
+    }
+
     public function setFaceCapture($imageBase64){
         $this->file_capture_image_string = $imageBase64;
     }
@@ -1189,6 +1195,11 @@ class CitizenIndex extends Component
             "digitalized_documents" => \json_encode($documents) ?? null,
             "uf_professional_identity" => $this->currentUfIdent->id ?? null
          ]);
+
+
+        if($user){
+            $this->openModalProntuarioPrint($user->id);
+        }
 
         $this->messageSuccess();
 

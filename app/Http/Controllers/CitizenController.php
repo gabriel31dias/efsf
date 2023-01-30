@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\County;
+use App\Models\Feature;
+use App\Models\Genre;
+use App\Models\MaritalStatus;
+use App\Models\Uf;
 use Illuminate\Http\Request;
 use App\Models\Citizen;
+use App\Models\Occupation;
 use Mpdf\Mpdf;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Storage;
@@ -54,18 +60,55 @@ class CitizenController extends Controller
             array_push($professional_idents, $professional_ident->professional_id_number_1);
         }
 
-        $html = view('citizen.file', compact('citizen'),  compact('filiations') );
+        $birthCity = $this->getBirthCity($citizen->county_id);
+        $uf = $this->getState($citizen->uf_id);
+        $maritalStatus = $this->getMaritalStatus($citizen->marital_status_id);
+
+        $profession = $this->getProfession($citizen->occupation_id);
+
+        $genre = $this->getGender($citizen->genre_id);
+
+        $featuresx = $this->getFeautures();
+
+        $html = view('citizen.file', ['citizen' => $citizen,  'filiations' => $filiations,
+            'birthCity' => $birthCity, 'uf' => $uf, 'maritalStatus' =>  $maritalStatus, 'profession' => $profession,
+            'genre' => $genre, 'features' => $features, 'featuresx' => $featuresx
+        ]);
+
         $dompdf = new Dompdf(array('enable_remote' => true));
         $dompdf->loadHtml($html);
-        // (Opcional) Tipo do papel e orientação
         $dompdf->setPaper('A4');
-        // Render HTML para PDF
         $dompdf->render();
-        // Download do arquivo
         $file = $dompdf->output();
         Storage::put('public/testx.pdf', $file);
-
+        $dompdf->stream('prontuario', array('Attachment' => 0));
     }
+
+    public function getBirthCity($county_id){
+       return County::where(['id' => $county_id])->first();
+    }
+
+    public function getFeautures(){
+        return Feature::all();
+    }
+
+    public function getProfession($occupation_id){
+        return Occupation::where(['id' => $occupation_id])->first();
+    }
+
+    public function getGender($gender_id){
+        return Genre::where(['id' => $gender_id])->first();
+    }
+
+    public function getState($uf_id){
+        return Uf::where(['id' => $uf_id])->first();
+    }
+
+    public function getMaritalStatus($id_marital){
+        return MaritalStatus::where(['id' => $id_marital])->first();
+    }
+
+
 
 
     public function show(Request $request, Citizen $profile)

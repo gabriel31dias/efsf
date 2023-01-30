@@ -63,6 +63,7 @@ class CitizenRepository {
 
         if(isset($citizen->id)){
             $user = $citizen->update($obj);
+            $user = Citizen::find($citizen->id);
         }else{
             $user = Citizen::create($obj);
         }
