@@ -28,9 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        return true;
-
         Gate::define('permission', function (User $user, $permission) {
+            if($user->is_admin || env('SKIP_PERMISSION_VALIDATION', false)) return true;
             return in_array($permission, $user->profile_permission);
         });
 
