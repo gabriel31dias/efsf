@@ -30,7 +30,8 @@ class UnityForm extends Component
     public $action;
     public $fields = [
         "name" => "",
-        "protocol_unit" => ""
+        "protocol_unit" => "",
+        "acronym" => ""
     ];
     public function render()
     {
@@ -68,7 +69,8 @@ class UnityForm extends Component
             $this->fields = [
                 "id" => $this->unit->id,
                 "name" => $this->unit->name,
-                "protocol_unit" => $this->unit->protocol_unit
+                "protocol_unit" => $this->unit->protocol_unit,
+                "acronym"  => $this->unit->acronym,
             ];
             $this->functions = Profession::where(['unit_id' => $this->unit->id])->get('name')->map(function ($item) {
                 return $item->name;
@@ -130,7 +132,7 @@ class UnityForm extends Component
 
 
         if($this->action == "create"){
-            $unit = Unit::create(['name'=> $this->fields['name']]);
+            $unit = Unit::create(['name'=> $this->fields['name'], "acronym" => $this->fields['acronym'] ]);
         } else {
             $unit = Unit::updateOrCreate(['id' => $this->unit->id ?? 0],[
                 'name' => $this->fields["name"]

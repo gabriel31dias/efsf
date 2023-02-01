@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->boolean('protocol_unit')->default(0);
+            $table->string('acronym', 100);
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

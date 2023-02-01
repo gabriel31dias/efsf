@@ -58,6 +58,13 @@
                             </div>
                         </div>
 
+                        <div  class="col-lg-3">
+                            <label class="form-label">Sigla<span class="error_tag"> *</span></label>
+                            <div class="input-group input-group-flat">
+                                <input wire:model="fields.acronym" maxlength="70" type="text" class="form-control" autocomplete="off" />
+                            </div>
+                        </div>
+
                         <div class="container-fluid card">
                             <div class="col-sm-6 mt-3">
                                 <div class="input-group mb-3">

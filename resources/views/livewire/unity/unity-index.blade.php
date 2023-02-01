@@ -50,6 +50,7 @@
                       <thead>
                          <tr>
                             <th><button class="table-sort" >Nome unidade</button></th>
+                            <th><button class="table-sort" >Sigla</button></th>
                          </tr>
                       </thead>
                       <tbody class="table-tbody">
@@ -57,6 +58,7 @@
                          @foreach ($units as $unity)
                             <tr wire:click="clickUpdate({{$unity->id}})">
                                 <td>{{ $unity->name }}</td>
+                                <td>{{ $unity->acronym }}</td>
                             </tr>
                          @endforeach
                       </tbody>
