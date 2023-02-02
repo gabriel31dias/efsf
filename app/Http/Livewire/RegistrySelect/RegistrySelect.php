@@ -69,7 +69,7 @@ class RegistrySelect extends Component
     public function updatedQuery()
     {
         $this->closed = false;
-        $this->registries = Registry::where('name', 'ilike', '%' . $this->query . '%')->take(10)
+        $this->registries = Registry::where('name', 'ilike', '%' . $this->query . '%')->take(30)
             ->get()
             ->toArray();
     }
