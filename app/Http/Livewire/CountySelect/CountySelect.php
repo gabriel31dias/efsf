@@ -81,7 +81,7 @@ class CountySelect extends Component
     public function updatedQuery()
     {
         $this->closed = false;
-        $this->counties = County::where('name', 'ilike', '%' . $this->query . '%')
+        $this->counties = County::where('name', 'ilike', '%' . $this->query . '%')->take(30)
             ->get()
             ->toArray();
     }
