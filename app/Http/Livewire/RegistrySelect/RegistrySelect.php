@@ -69,7 +69,7 @@ class RegistrySelect extends Component
     public function updatedQuery()
     {
         $this->closed = false;
-        $this->registries = Registry::where('name', 'ilike', '%' . $this->query . '%')
+        $this->registries = Registry::where('name', 'ilike', '%' . $this->query . '%')->take(10)
             ->get()
             ->toArray();
     }
@@ -80,9 +80,9 @@ class RegistrySelect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
-        if(isset($this->customEventSelect)){ 
+        if(isset($this->customEventSelect)){
             $this->emitUp($this->customEventSelect, $id);
-        } else { 
+        } else {
             $this->emitUp('selectedRegistry', $id);
         }
     }
