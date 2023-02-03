@@ -15,7 +15,8 @@
           <div class="">Searching...</div>
        </div>
        @if(!empty($query))
-       <div class="absolute z-10 w-full bg-white rounded-t-none shadow-lg list-group">
+       <div  style="max-height: 200px;
+       overflow-y: scroll;"  class="absolute z-10 w-full bg-white rounded-t-none shadow-lg list-group">
           @if(!empty($occupations) && $closed == false)
           @foreach($occupations as $i => $item)
           <a
