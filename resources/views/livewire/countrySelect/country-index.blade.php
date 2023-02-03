@@ -1,6 +1,5 @@
 <div>
-    <div  style=" height: 200px;
-    overflow-y: scroll;" class="relative">
+    <div   class="relative">
        <input
        class="form-control"
           type="text"
@@ -16,7 +15,8 @@
           <div class="">Searching...</div>
        </div>
        @if(!empty($query))
-       <div class="absolute z-10 w-full bg-white rounded-t-none shadow-lg list-group">
+       <div style=" height: 200px;
+       overflow-y: scroll;" class="absolute z-10 w-full bg-white rounded-t-none shadow-lg list-group">
           @if(!empty($countries) && $closed == false)
           @foreach($countries as $i => $item)
           <a
