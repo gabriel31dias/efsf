@@ -210,9 +210,9 @@
                      <span style="margin-left: 9px;">O nº social</span>
                   </p>
                   <p>Sexo <b>{{$genre->name}}</b>
-                     <b style="margin-left: 40px;">CÚTIS:<span style="margin-left: 15px;">{{ strtolower($features->{'c-tis'}) ?? ''}}</span></b>
-                     <b style="margin-left: 40px;">CABELO:<span style="margin-left: 15px;">{{ strtolower($features->{'cor-do-cabelo-'}) ?? ''}}</span></b>
-                     <b style="margin-left: 40px;">OLHOS:<span style="margin-left: 15px;">{{ strtolower($features->{'cor-dos-olhos'}) ?? ''}}</span></b>
+                     <b style="margin-left: 40px;">CÚTIS:<span style="margin-left: 15px;">{{ strtolower($features->{'c-tis'} ?? '') ?? ''}}</span></b>
+                     <b style="margin-left: 40px;">CABELO:<span style="margin-left: 15px;">{{ strtolower($features->{'cor-do-cabelo-'} ?? '') ?? ''}}</span></b>
+                     <b style="margin-left: 40px;">OLHOS:<span style="margin-left: 15px;">{{ strtolower($features->{'cor-dos-olhos'} ?? '') ?? ''}}</span></b>
                      <b style="margin-left: 40px;">ALTURA:<span style="margin-left: 15px;">{{$citizen->height}}</span></b>
                   </p>
                </div>

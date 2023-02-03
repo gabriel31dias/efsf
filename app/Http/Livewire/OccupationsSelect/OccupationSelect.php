@@ -77,7 +77,7 @@ class OccupationSelect extends Component
     public function updatedQuery()
     {
         $this->closed = false;
-        $this->occupations = Occupation::where('name', 'ilike', '%' . $this->query . '%')
+        $this->occupations = Occupation::where('name', 'ilike', '%' . $this->query . '%')->take(30)
             ->get()
             ->toArray();
     }
