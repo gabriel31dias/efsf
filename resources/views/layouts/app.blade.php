@@ -393,6 +393,7 @@
                   'can' => 'station.index'
                   ])
 
+
                   <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
@@ -457,6 +458,15 @@
                         </div>
                      </div>
                   </li>
+
+
+                  @livewire('global.menu-item',
+                   [
+                    'title' => 'Processos',
+                    'classIcon' => 'ti ti-building-arch',
+                    'href' => route('service-station.index'),
+                    'can' => 'station.index'
+                   ])
                </ul>
             </div>
          </div>
