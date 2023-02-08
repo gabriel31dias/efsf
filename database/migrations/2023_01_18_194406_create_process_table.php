@@ -13,14 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('process', function (Blueprint $table) {
+        Schema::create('processes', function (Blueprint $table) {
             $table->id();
             $table->string('process');
             $table->integer('citizen_id');
             $table->integer('posto');
-            $table->string('biometrics_status');//Pendente, válido, Processando
-            $table->string('situation');
+            $table->integer('biometrics_status');//Pendente, válido, Processando
+            $table->integer('situation');
+            $table->integer('service_station_id');
             $table->integer('payment');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('process');
+        Schema::dropIfExists('processes');
     }
 };

@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::resource('unit', App\Http\Controllers\UnityController::class);
+Route::resource('process', App\Http\Controllers\ProcessController::class);
 
 Route::get('/generate-prontuario/{id}', [App\Http\Controllers\CitizenController::class, 'generateProtuario'])->name('generateProtuario');
 
