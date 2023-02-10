@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Citizen;
+use App\Http\Services\GenerateProcess;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Services\CheckRegistration;
 use App\Models\CountryTypeStreat;
@@ -20,6 +21,8 @@ use Livewire\WithFileUploads;
 use PHPUnit\Framework\Constraint\Count;
 use App\Models\BlockedCertificate;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+
 
 class CitizenIndex extends Component
 {
@@ -1075,9 +1078,6 @@ class CitizenIndex extends Component
     }
 
     public function createCitizen(){
-
-
-
         $this->fields["zone"] = $this->zone;
         $validation = $this->validation($this->fields);
 
@@ -1201,12 +1201,27 @@ class CitizenIndex extends Component
             $this->openModalProntuarioPrint($user->id);
         }
 
+
+
+        $process = new GenerateProcess();
+        $resultProcess = $process->call([
+            "user_id" =>  Auth::user()->id,
+            "process" => date('m')."/".date('Y'),
+            "citizen_id" => $user->id,
+            "service_station" => $user->service_station_id,
+            "biometrics_status" => 1,
+            "situation" => 1,
+            "payment" => 1,
+        ]);
+
         $this->messageSuccess();
 
         $this->dispatchBrowserEvent('redirect',[
             'url'=> '/citizen',
             'delay' => 1000
         ]);
+
+
     }
 
     public function messageSuccess(){
