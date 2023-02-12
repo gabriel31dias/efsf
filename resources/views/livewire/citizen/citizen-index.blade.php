@@ -911,7 +911,10 @@ role="dialog"  aria-hidden="true">
                 <div class="col-lg-4 mb-3">
                    <label class="form-label">CEP<span class="error_tag">*</span></label>
                    <div class="input-group input-group-flat">
-                      <input wire:model="fields.zip_code" maxlength="70" type="text"
+                      <input onclick="IMask(
+                        this, {
+                        mask: '00.000-000'
+                        });" wire:model="fields.zip_code" maxlength="70" type="text"
                          class="form-control ps-0"
                          autocomplete="off" required>
                    </div>
@@ -1081,12 +1084,12 @@ role="dialog"  aria-hidden="true">
              <div class="container-fluid">
                 <div class="row">
                    <div class="col-lg-2 mb-3">
-                      <label class="form-label ">CNI<span class="error_tag">*</span></label>
+                      <label class="form-label ">CNI</label>
                       <input wire:model="fields.cni"  maxlength="70" type="text"
                          class="form-control ps-0 " autocomplete="off" required>
                    </div>
                    <div class="col-lg-3 mb-3">
-                      <label class="form-label ">Carteira nacional do sus<span class="error_tag">*</span></label>
+                      <label class="form-label ">Carteira nacional do sus</label>
                       <input wire:model="fields.national_card_sus"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
@@ -1103,95 +1106,83 @@ role="dialog"  aria-hidden="true">
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
-                   <div class="col-lg-3 mb-3">
-                      <label class="form-label ">CID<span class="error_tag">*</span></label>
-                      <div class="input-group input-group-flat">
-                         <select  wire:model="fields.cid_wallet"  class="form-control ps-0" wire:ignore>
-                            <option value="0">Selecione</option>
-                            <option value="1">Deficiente Físico</option>
-                            <option value="2">Deficiente Visual</option>
-                            <option value="3">Deficiente Intelectual</option>
-                            <option value="4">Deficiente Auditivo</option>
-                            <option value="5">Autista</option>
-                         </select>
-                      </div>
-                   </div>
+                   
                    <div class="col-lg-4 mb-3">
-                      <label class="form-label ">Titulo de eleitor<span class="error_tag">*</span></label>
+                      <label class="form-label ">Título de eleitor (nº)</label>
                       <input wire:model="fields.voter_registration"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
-                   <div class="col-lg-2 mb-3">
+{{--                    <div class="col-lg-2 mb-3">
                       <label class="form-label ">Nº<span class="error_tag">*</span></label>
                       <input wire:model="fields.number_voter"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
-                   </div>
+                   </div> --}}
                    <div class="col-lg-3 mb-3">
-                      <label class="form-label ">Zona<span class="error_tag">*</span></label>
+                      <label class="form-label ">Zona</label>
                       <input wire:model="fields.zone_voter"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
                    <div class="col-lg-3 mb-3">
-                      <label class="form-label ">Seção<span class="error_tag">*</span></label>
+                      <label class="form-label ">Seção</label>
                       <input wire:model="fields.section"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
                    <div class="col-lg-4 mb-4">
-                      <label class="form-label ">Carteira nacional habilitação<span class="error_tag">*</span></label>
+                      <label class="form-label ">Carteira nacional habilitação</label>
                       <input wire:model="fields.national_drivers_license"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
                    <div class="col-lg-4 mb-3">
-                      <label class="form-label ">Certificado de reservista<span class="error_tag">*</span></label>
+                      <label class="form-label ">Certificado de reservista</label>
                       <input wire:model="fields.reservist_certificate"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
-                   <div class="col-lg-4 mb-4">
-                      <label class="form-label ">Carteira trabalho providência social<span class="error_tag">*</span></label>
+{{--                    <div class="col-lg-4 mb-4">
+                      <label class="form-label ">Carteira trabalho providência social</label>
                       <input wire:model="fields.social_security_work_card"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
-                   </div>
+                   </div> --}}
                    <div class="col-lg-4 mb-3">
-                      <label class="form-label ">Numero Ctps<span class="error_tag">*</span></label>
+                      <label class="form-label ">CTPS nº</label>
                       <input wire:model="fields.ctps_number"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
                    <div class="col-lg-4 mb-3">
-                      <label class="form-label ">Serie<span class="error_tag">*</span></label>
+                      <label class="form-label ">Serie</label>
                       <input wire:model="fields.serie_wallet"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
                    <div class="col-lg-4 mb-3">
-                      <label class="form-label ">Uf carteira<span class="error_tag">*</span></label>
+                      <label class="form-label ">Uf carteira</label>
                       <livewire:uf-select.uf-select
                          :defaultValue="$currentUfCarteira"
                          :customEvent="'selectedUfCarteira'"
                          />
                    </div>
-                   <label class="form-label ">Identidade profissional 1<span class="error_tag">*</span></label>
+                   <label class="form-label ">Identidade profissional 1</label>
                    <div class="col-lg-4 mb-3">
-                      <label class="form-label ">Número de identidade profissional<span class="error_tag">*</span></label>
+                      <label class="form-label ">Número de identidade profissional</label>
                       <input wire:model="fields.professional_id_number_1"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
                    <div class="col-lg-4 mb-3">
-                      <label class="form-label ">Sigla de identidade profissional<span class="error_tag">*</span></label>
+                      <label class="form-label ">Sigla de identidade profissional</label>
                       <input wire:model="fields.professional_identity_acronym_1"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
                    <div class="col-lg-3 mb-3">
-                      <label class="form-label ">Uf identidade profissional<span class="error_tag">*</span></label>
+                      <label class="form-label ">Uf identidade profissional</label>
                       <livewire:uf-select.uf-select
                          :defaultValue="$currentUfIdent"
                          :customEvent="'selectedUfIdent'"
@@ -1253,7 +1244,7 @@ role="dialog"  aria-hidden="true">
                             <div class="card-body row">
                                <label class="mb-3" >Nome social</label>
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label ">Inclusão do nome social<span class="error_tag">*</span></label>
+                                  <label class="form-label ">Inclusão do nome social</label>
                                   <div class="input-group input-group-flat">
                                      <select  wire:model="fields.social_name_visible"  class="form-control ps-0" wire:ignore>
                                         <option value="0">Selecione</option>
@@ -1268,7 +1259,7 @@ role="dialog"  aria-hidden="true">
                                   @endif
                                </div>
                                <div class="col-lg-6 mb-3">
-                                  <label class="form-label ">Nome social<span class="error_tag">*</span></label>
+                                  <label class="form-label ">Nome social</label>
                                   <input wire:model="fields.name_social"  maxlength="70" type="text"
                                      class="form-control ps-0 "
                                      autocomplete="off" required>
@@ -1281,7 +1272,7 @@ role="dialog"  aria-hidden="true">
                                   <div class="row">
                                      <label class="mb-3" >Gemeos</label>
                                      <div class="col-lg-3 mb-3">
-                                        <label class="form-label ">Nº de RG de irmão gêmeo<span class="error_tag">*</span></label>
+                                        <label class="form-label ">Nº de RG de irmão gêmeo</label>
                                         <input wire:model="fields.rg_gemeo"  maxlength="70" type="text"
                                            class="form-control ps-0 "
                                            autocomplete="off" required>
@@ -1292,7 +1283,7 @@ role="dialog"  aria-hidden="true">
                                         @endif
                                      </div>
                                      <div class="col-lg-6 mb-3">
-                                        <label class="form-label ">Nome de irmão gêmeo<span class="error_tag">*</span></label>
+                                        <label class="form-label ">Nome de irmão gêmeo</label>
                                         <input wire:model="fields.name_gemeo"  maxlength="70" type="text"
                                            class="form-control ps-0 "
                                            autocomplete="off" required>
@@ -1307,13 +1298,13 @@ role="dialog"  aria-hidden="true">
                                   <div class="row">
                                      <label class="mb-3" >Nomes anteriores</label>
                                      <div class="col-lg-6 mb-3">
-                                        <label class="form-label ">Nomes anteriores<span class="error_tag">*</span></label>
+                                        <label class="form-label ">Nomes anteriores</label>
                                         <input wire:model="fields.names_previous"  maxlength="70" type="text"
                                            class="form-control ps-0 "
                                            autocomplete="off" required>
                                      </div>
                                      <div class="col-lg-6 mb-3">
-                                        <label class="form-label ">Filiações anteriores<span class="error_tag">*</span></label>
+                                        <label class="form-label ">Filiações anteriores</label>
                                         <input wire:model="fields.filitions_previous"  maxlength="70" type="text"
                                            class="form-control ps-0 "
                                            autocomplete="off" required>
@@ -1339,7 +1330,7 @@ role="dialog"  aria-hidden="true">
                                   </div>
                                   @endif
                                   <div class="col-lg-3 mb-3">
-                                     <label class="form-label ">{{$ca->type}}<span class="error_tag">*</span></label>
+                                     <label class="form-label ">{{$ca->type}}</label>
                                      @if($ca->multiple == true)
                                      <div class="input-group ">
                                         @php

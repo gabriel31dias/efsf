@@ -900,7 +900,7 @@ class CitizenIndex extends Component
         }
 
 
-        if(trim($this->fields['filiation1']) == "" || $this->fields['filiation2'] == "" ){
+        if(trim($this->fields['filiation1']) == "" && $this->fields['filiation2'] == "" ){
             array_push($errors, [
                 "message" => "O Cidadão deve ter pelo menos um dos campos de filiação preenchido",
                 "valid" => false,
@@ -932,7 +932,7 @@ class CitizenIndex extends Component
 
 
         if($this->zone == $ZONE_URBANA){
-            $fileds_validation = ["provenance", "number", "address"];
+            $fileds_validation = [/* "provenance", */ "number", "address"];
 
             foreach ($fileds_validation as $value) {
                 if(empty($this->fields[$value])){
@@ -991,7 +991,7 @@ class CitizenIndex extends Component
 
         if(count($documents) == 0){
             array_push($errors, [
-                "message" => "Adicione pelomenos certidão como anexo, na aba documentos",
+                "message" => "Adicione pelo menos certidão como anexo, na aba documentos",
                 "valid" => false,
             ]);
         }
@@ -1196,11 +1196,16 @@ class CitizenIndex extends Component
             "uf_professional_identity" => $this->currentUfIdent->id ?? null
          ]);
 
-
-        if($user){
+        if(is_array($user)){ 
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> $user[0]["message"]
+            ]);
+            return false;
+        }  else { 
             $this->openModalProntuarioPrint($user->id);
         }
-
+ 
 
 
         $process = new GenerateProcess();
