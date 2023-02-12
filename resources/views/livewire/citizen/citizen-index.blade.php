@@ -345,6 +345,9 @@ role="dialog"  aria-hidden="true">
                 <div class="btn-list">
                    <span class="d-none d-sm-inline">
                    </span>
+                   @if ($this->action == 'update')
+                     @livewire('citizen.modal-change-state', ['citizen' => $citizen])
+                   @endif 
                    <a onclick="$('#modal-captura-biometrica').modal('show');"  class="btn btn-primary inline-flex">
                      <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hand-ring-finger" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -381,7 +384,7 @@ role="dialog"  aria-hidden="true">
                       </svg>
                       Captura Facial
                    </a>
-                 @if(Auth::user()->can('permission', 'citizen.create') || Auth::user()->can('permission', 'citizen.edit'))
+                 @if((Auth::user()->can('permission', 'citizen.create') || Auth::user()->can('permission', 'citizen.edit')) && (isset($citizen) && $this->citizen->state == \App\Models\Citizen::STATE_ACTIVE))
                    <a wire:click="createCitizen" class="btn btn-primary inline-flex">
                       <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"

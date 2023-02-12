@@ -21,4 +21,21 @@ class Citizen extends Model
         'id' => 'integer'
     ];
 
+    const STATE_ACTIVE = 1; 
+    const STATE_INACTIVE = 2; 
+    const STATE_DECEASED = 3; 
+
+    const STATE_LABELS = [ 
+        self::STATE_ACTIVE => 'ATIVO', 
+        self::STATE_INACTIVE => 'INATIVO', 
+        self::STATE_DECEASED => 'FALECIDO'
+    ];
+
+    const STATE_BADGE = [ 
+        self::STATE_ACTIVE => 'bg-success', 
+        self::STATE_INACTIVE => 'bg-warning', 
+        self::STATE_DECEASED => 'bg-danger'
+    ];
+
+
 }
