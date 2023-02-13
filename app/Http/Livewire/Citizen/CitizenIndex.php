@@ -257,7 +257,8 @@ class CitizenIndex extends Component
     public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus','justificativaEvent',
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
-        'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident'
+        'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident',
+        'changeCitizenStatus'
     ];
 
     public $citizen;
@@ -284,6 +285,10 @@ class CitizenIndex extends Component
         $index = $obj[0];
         $value = $obj[1];
         $this->professionalIdentitysValues[$index]['uf_identy'] = $value;
+    }
+
+    public function changeCitizenStatus(Citizen $citizen){ 
+        $this->citizen = $citizen; 
     }
 
     public function updated_feature($object){
