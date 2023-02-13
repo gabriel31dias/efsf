@@ -82,7 +82,7 @@ class CitizenController extends Controller
         $file = $dompdf->output();
         $prontuario = Storage::put('public/prontuarios/'.$uuid.'.pdf', $file);
         $this->saveProntuario($uuid, $id, $citizen);
-        //$dompdf->stream('prontuario', array('Attachment' => 0));
+        $dompdf->stream('prontuario', array('Attachment' => 0));
     }
 
     function generateUUID() {
