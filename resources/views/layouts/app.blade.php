@@ -283,7 +283,7 @@
                         </span>
                      </a>
                   </li>
-
+                @if(Auth::user()->profile_id && App\Models\Profile::find(Auth::user()->profile_id)->name_profile !== 'analista' )
 
                   @livewire('global.menu-item',
                   [
@@ -458,15 +458,17 @@
                         </div>
                      </div>
                   </li>
+                  @endif
 
-
-                  @livewire('global.menu-item',
-                   [
-                    'title' => 'Processos',
-                    'classIcon' => 'ti ti-building-arch',
-                    'href' => route('service-station.index'),
-                    'can' => 'station.index'
-                   ])
+                  @if(Auth::user()->profile_id && App\Models\Profile::find(Auth::user()->profile_id)->name_profile == 'analista' )
+                    @livewire('global.menu-item',
+                    [
+                        'title' => 'Processos',
+                        'classIcon' => 'ti  ti-timeline-event-text',
+                        'href' => route('process.index'),
+                        'can' => 'station.index'
+                    ])
+                  @endif
                </ul>
             </div>
          </div>

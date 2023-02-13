@@ -74,14 +74,54 @@ class CitizenController extends Controller
             'birthCity' => $birthCity, 'uf' => $uf, 'maritalStatus' =>  $maritalStatus, 'profession' => $profession,
             'genre' => $genre, 'features' => $features, 'featuresx' => $featuresx
         ]);
-
+        $uuid = $this->generateUUID();
         $dompdf = new Dompdf(array('enable_remote' => true));
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4');
         $dompdf->render();
         $file = $dompdf->output();
-        Storage::put('public/testx.pdf', $file);
-        $dompdf->stream('prontuario', array('Attachment' => 0));
+        $prontuario = Storage::put('public/prontuarios/'.$uuid.'.pdf', $file);
+        $this->saveProntuario($uuid, $id, $citizen);
+        //$dompdf->stream('prontuario', array('Attachment' => 0));
+    }
+
+    function generateUUID() {
+        return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0x0fff ) | 0x4000,
+            mt_rand( 0, 0x3fff ) | 0x8000,
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+        );
+    }
+
+    public function saveProntuario($uuiName, $id, $citizen){
+        $digitalized_document = json_decode($citizen->digitalized_documents, true) ;
+        $firstDocument = count($digitalized_document);
+
+        $notFiltered = array_filter($digitalized_document, function ($item) {
+            return $item['type'] != '23';
+        });
+
+        $filtered = array_filter($digitalized_document, function ($item) {
+            return $item['type'] === '23';
+        });
+
+        foreach ($filtered as &$item) {
+            $item['type'] = "23";
+            $item['file'] = "public/prontuarios/".$uuiName.".pdf";
+        }
+
+        if($filtered){
+            $digitalized_document = array_merge($filtered, $notFiltered);
+        }else{
+            $docObj = ["file" => "public/prontuarios/".$uuiName.".pdf", "type" => '23'];
+            $digitalized_document["file". $firstDocument] = $docObj;
+        }
+
+        $citizen->update([
+            'digitalized_documents' => json_encode($digitalized_document) ,
+        ]);
     }
 
     public function getBirthCity($county_id){

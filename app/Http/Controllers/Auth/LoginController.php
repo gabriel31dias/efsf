@@ -29,6 +29,7 @@ class LoginController extends Controller
     }
 
     public function saveNewPassword(Request $req){
+
         $user = User::where('id', $req->user_id)->first();
         $result = $user->update(['password' => Hash::make($req->password), "first_acess" => 0]);
         Session::put('updatePass', 'false');
@@ -37,13 +38,16 @@ class LoginController extends Controller
     }
 
     public function login(Request $req){
+
         $user = User::where('user_name', $req->user_name)->first();
+
+
 
         if(!isset($user->id)){
             return redirect()->route('login')->with('message', 'Usuário não encontrado.');
         }
 
-        $this->checkExpiration($user);
+        //$this->checkExpiration($user);
 
         if($user->first_acess == 1){
             Session::put('firstAccess', 'true');
@@ -60,6 +64,7 @@ class LoginController extends Controller
         if(!isset($user->id)){
             return redirect()->route('login')->with('message', 'Usuário não encontrado.');
         }
+
         if(isset($user->id) && Hash::check($req->password, $user->password) && $user->status == true ){
             Auth::login($user);
             return redirect()->route('home');

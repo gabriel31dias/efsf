@@ -59,6 +59,8 @@ class ProcessIndex extends Component
         $this->dispatchBrowserEvent('openFilters', []);
     }
 
+
+
     public function addUnity()
     {
         $this->dispatchBrowserEvent('redirect',[
@@ -68,7 +70,7 @@ class ProcessIndex extends Component
 
     public function clickUpdate($id){
         $this->dispatchBrowserEvent('redirect',[
-            'url'=> '/unit/'.$id.'/edit',
+            'url'=> '/monitor/'.$id.'/edit',
         ]);
     }
 }

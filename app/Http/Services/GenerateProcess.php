@@ -15,6 +15,7 @@ class GenerateProcess
 
         $lastProcessCitizen = Process::where(['citizen_id' => $objectProcess['citizen_id']])->first();
 
+
         $code = '';
         $status = '';
 
@@ -26,6 +27,7 @@ class GenerateProcess
             Process::create([
                 "code" => $code,
                 "user_id" => $objectProcess['user_id'],
+                "name" => $objectProcess['name'],
                 "process" => date('m')."/".date('Y'),
                 "citizen_id" => $objectProcess["citizen_id"],
                 "service_station_id" => $objectProcess["service_station"],

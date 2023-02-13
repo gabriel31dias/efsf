@@ -107,7 +107,7 @@ class CitizenIndex extends Component
        "DIÁRIO OFICIAL DA UNIÃO-DOU",
        "CERTIDÃO DE OPÇÃO DE NACIONALIDADE",
        "CARTEIRA DE IDENTIDADE DE ESTRAGEIRO",
-       "CARTEIRA DE AUTISTA"
+       "CARTEIRA DE AUTISTA",
     ];
 
     public $obrigatory_filds = [
@@ -646,6 +646,8 @@ class CitizenIndex extends Component
         $this->fieldsFeatures = \json_decode($citizen->features, true);
 
         $this->fieldsDigitalizedDocuments = \json_decode($citizen->digitalized_documents, true);
+
+        //dd($this->fieldsDigitalizedDocuments);
 
         foreach ($this->fieldsDigitalizedDocuments  as $item) {
             $this->jaUtilizados[] = $item['type'];
@@ -1201,8 +1203,6 @@ class CitizenIndex extends Component
             $this->openModalProntuarioPrint($user->id);
         }
 
-
-
         $process = new GenerateProcess();
         $resultProcess = $process->call([
             "user_id" =>  Auth::user()->id,
@@ -1212,6 +1212,12 @@ class CitizenIndex extends Component
             "biometrics_status" => 1,
             "situation" => 1,
             "payment" => 1,
+            "name" => $this->fields["name"]
+        ]);
+
+        $citizen = Citizen::find($user->id);
+        $citizen->update([
+            'process' => $resultProcess['code']
         ]);
 
         $this->messageSuccess();
@@ -1220,8 +1226,6 @@ class CitizenIndex extends Component
             'url'=> '/citizen',
             'delay' => 1000
         ]);
-
-
     }
 
     public function messageSuccess(){

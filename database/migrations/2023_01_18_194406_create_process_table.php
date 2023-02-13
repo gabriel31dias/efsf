@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->string('process');
+            $table->string('name');
             $table->integer('citizen_id');
             $table->integer('user_id');
             $table->integer('biometrics_status');//Pendente, válido, Processando

@@ -243,6 +243,8 @@ class UserForm extends Component
             return false;
         }
 
+        $pass = $this->fields["senha"] ? $this->fields["senha"] : $this->user->password ;
+
         $user = (new UserRepository())->createOrUpdateUser($this->user->id ?? 0, [
             'cpf' => $this->fields["cpf"],
             'name' => $this->fields["nome"],

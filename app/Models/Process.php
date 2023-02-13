@@ -10,58 +10,96 @@ class Process extends Model
     use HasFactory;
     protected $guarded = [];
 
-    const SENT_TO_PCA = 0;
-    const IN_REVIEW = 1;
-    const DOCUMENT_PENDING = 1;
-    const TYPO = 1;
-    const DUPLICITY_OF_REGISTRATION = 1;
-    const DOCUMENT_DISCREPANCY = 1;
-    const APPLICANT_WITH_DUPLICATE_CERTIFICATE = 1;
-    const RG_WITH_DUPLICATE_CERTIFICATES = 1;
-    const CPF_DUPLICATE = 1;
-    const AWAITING_OP_RESPONSA_EXTERNAL = 1;
-    const RELEASED_FOR_PRINTING = 1;
-    const ISSUED = 1;
-    const SENT_TO_POST = 1;
-    const HAND_OVER_TO_PERSON = 1;
-    const FINISHED = 1;
-    const CANCELED = 1;
 
-    const SITUATION_TYPES = [
+    const SENT_TO_PCA = 1;
+    const IN_REVIEW = 2;
+    const PENDING_DOCUMENT = 3;
+    const TYPO = 4;
+    const DUPLICATION_OF_REGISTRATION_RG = 4;
+    const DOCUMENT_DISCRPANCY = 5;
+    const APPLICANT_WITH_DUPLICATE_CERTIFICATE = 6;
+    const RGS_WITH_DUPLICATE_CERTIFICATES= 7;
+    const CPF_DUPLICATE = 8;
+    const AWAITING_REPOSE_FROM_OF_EXTERNAL= 9;
+    const RELEASED_FOR_PRINTING = 10;
+    const RELEASED_FOR_REPRINT = 11;
+    const ISSUED = 12;
+    const SENT_TO_THE_POST = 13;
+    const DELIVERED_AT_THE_POST = 14;
+    const HAND_OVER_TO_THE_POST_PERSON_IN_CHARGE = 14;
+    const RECEIVED_BY_THE_POST_RESPONSIBLE_AND_FINALIZED_DELIVERED = 15;
+    const CANCELED = 16;
+
+    const SITUATION_TYPES_LABELS = [
         self::SENT_TO_PCA => 'Enviado para PCA',
         self::IN_REVIEW => 'Em analise',
-        self::DOCUMENT_PENDING => 'Pendente de documento(s)',
+        self::PENDING_DOCUMENT => 'Pendente de documento(s)',
         self::TYPO => 'Erro de digitação',
-        self::DUPLICITY_OF_REGISTRATION => 'Duplicidade de cadastro',
-        self::DOCUMENT_DISCREPANCY => '',
-        self::APPLICANT_WITH_DUPLICATE_CERTIFICATE => '',
-        self::RG_WITH_DUPLICATE_CERTIFICATES => '',
-        self::CPF_DUPLICATE => '',
-        self::AWAITING_OP_RESPONSA_EXTERNAL => '',
-        self::RELEASED_FOR_PRINTING => '',
-        self::ISSUED => '',
-        self::SENT_TO_POST => '',
-        self::HAND_OVER_TO_PERSON => '',
-        self::FINISHED => '',
-        self::CANCELED => '',
-
+        self::DUPLICATION_OF_REGISTRATION_RG => 'Duplicidade de cadastro-RG',
+        self::DOCUMENT_DISCRPANCY  => 'Divergência de documento',
+        self::APPLICANT_WITH_DUPLICATE_CERTIFICATE => 'Requerente com duplicidade de certidão',
+        self::RGS_WITH_DUPLICATE_CERTIFICATES => 'RG’s com duplicidades de certidão',
+        self::CPF_DUPLICATE => 'Duplicidade de CPF',
+        self::AWAITING_REPOSE_FROM_OF_EXTERNAL => 'aguardando resposta de OF. externo',
+        self::RELEASED_FOR_PRINTING => 'liberado para impressão',
+        self::RELEASED_FOR_REPRINT => 'liberado para reimpressão',
+        self::ISSUED => 'emitido',
+        self::SENT_TO_THE_POST => 'enviado para o posto',
+        self::DELIVERED_AT_THE_POST => 'entregue no posto',
+        self::HAND_OVER_TO_THE_POST_PERSON_IN_CHARGE => 'Entregue ao posto/responsável',
+        self::RECEIVED_BY_THE_POST_RESPONSIBLE_AND_FINALIZED_DELIVERED => 'recebido pelo posto/responsável e finalizado(entregue)',
+        self::CANCELED => 'Anulado',
     ];
 
-    const FIXED_TYPE = 1;
-    const EVENTS_TYPE = 2;
+
+    const PENDING = 1;
+    const VALID = 2;
+
+    const PROCESSING = 3;
 
     const BIOMETRICS_STATUS_TYPES = [
-        self::FIXED_TYPE => 'FIXO',
-        self::EVENTS_TYPE => 'EVENTOS'
+        self::PENDING => 'Pendente',
+        self::VALID => 'Válido',
+        self::PROCESSING => 'Processando'
     ];
+
+
+    const PAYMENT_FREE = 1;
+    const PAYMENT_PENDING = 2;
+
+    const PAYMENT_PAID_OUT = 3;
+
+    const PAYMENT_STATUS = [
+        self::PAYMENT_FREE => 'Isento',
+        self::PAYMENT_PENDING => 'pendente',
+        self::PAYMENT_PAID_OUT => 'pago'
+    ];
+
 
     public function citizen()
     {
-        return $this->belongsToMany(Citizen::class);
+        return $this->belongsTo(Citizen::class);
+    }
+
+    public function getSituation()
+    {
+        return self::SITUATION_TYPES_LABELS[$this->situation];
+    }
+
+    public function getBiometriStatus()
+    {
+        return self::BIOMETRICS_STATUS_TYPES[$this->biometrics_status];
+    }
+
+    public function getPaymentStatus()
+    {
+        return self::BIOMETRICS_STATUS_TYPES[$this->biometrics_status];
     }
 
     public function serviceStation()
     {
-        return $this->belongsToMany(ServiceStation::class);
+
+        return $this->belongsTo(ServiceStation::class, 'service_station_id');
+
     }
 }

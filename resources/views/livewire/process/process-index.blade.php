@@ -43,14 +43,20 @@
                             <th><button class="table-sort" >Pagamento</button></th>
                          </tr>
                       </thead>
+
                       <tbody class="table-tbody">
 
                          @foreach ($process as $pr)
                             <tr wire:click="clickUpdate({{$pr->id}})">
                                 <td>{{ $pr->process }}</td>
-                                <td>{{ $pr->process }}</td>
-                                <td>{{ $pr->process }}</td>
+                                <td>{{ $pr->citizen->name }}</td>
+                                <td>{{
+                                    $pr->serviceStation->service_station_name
+                                 }}</td>
                                 <td>{{ $pr->created_at }}</td>
+                                <td>{{ $pr->getBiometriStatus() }}</td>
+                                <td>{{ $pr->getSituation() }}</td>
+                                <td>{{ $pr->getPaymentStatus() }}</td>
                             </tr>
                          @endforeach
                       </tbody>
