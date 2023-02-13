@@ -465,7 +465,7 @@
 
                   @if( App\Models\Profile::find(Auth::user()->profile_id)->name_profile == 'analista' )
                   <li class="nav-item">
-                    <a class="nav-link" href="/">
+                    <a class="nav-link" href="/process">
                        <span class="nav-link-icon d-md-none d-lg-inline-block">
                           <!-- Download SVG icon from http://tabler-icons.io/i/home -->
                           <i class="ti  ti-timeline-event-text"></i>
