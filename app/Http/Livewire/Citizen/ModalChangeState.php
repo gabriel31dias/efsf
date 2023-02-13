@@ -24,7 +24,7 @@ class ModalChangeState extends Component
         $this->citizen->state = $this->state; 
         $this->citizen->save();
         $this->modal = false;
-        
+        $this->emit('changeCitizenStatus', $this->citizen);
         $this->dispatchBrowserEvent('alert',[
             'type'=> 'success',
             'message'=> "Condição atualizada com sucesso! "

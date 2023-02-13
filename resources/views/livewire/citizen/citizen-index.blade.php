@@ -384,7 +384,7 @@ role="dialog"  aria-hidden="true">
                       </svg>
                       Captura Facial
                    </a>
-                 @if((Auth::user()->can('permission', 'citizen.create') || Auth::user()->can('permission', 'citizen.edit')) && (isset($citizen) && $this->citizen->state == \App\Models\Citizen::STATE_ACTIVE))
+                 @if((Auth::user()->can('permission', 'citizen.create') || Auth::user()->can('permission', 'citizen.edit')) && ($this->action == 'create' || $this->citizen->state == \App\Models\Citizen::STATE_ACTIVE))
                    <a wire:click="createCitizen" class="btn btn-primary inline-flex">
                       <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
