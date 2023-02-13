@@ -1220,10 +1220,11 @@ class CitizenIndex extends Component
             "name" => $this->fields["name"]
         ]);
 
-        $citizen = Citizen::find($user->id);
-        $citizen->update([
-            'process' => $resultProcess['code']
-        ]);
+        ##$citizen = Citizen::find($user->id);
+       ## $citizen->update([
+
+        ##'process' => $resultProcess['code']
+       ## ]);
 
         $this->messageSuccess();
 
