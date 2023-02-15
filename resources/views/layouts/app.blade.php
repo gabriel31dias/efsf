@@ -284,8 +284,6 @@
                      </a>
                   </li>
 
-                @if(Auth::user()->profile_id && App\Models\Profile::find(Auth::user()->profile_id)->name_profile !== 'analista' )
-
                   @livewire('global.menu-item',
                   [
                   'title' => 'Cadastro de Servidores',
@@ -459,28 +457,22 @@
                         </div>
                      </div>
                   </li>
+
+                  @livewire('global.menu-item',
+                  [
+                    'title' => 'Processos',
+                    'classIcon' => 'ti  ti-timeline-event-text',
+                    'href' => route('process.index'),
+                    'can' => 'process.index',
+
+                  ])
                   @endif
 
-
-
-                  @if( App\Models\Profile::find(Auth::user()->profile_id)->name_profile == 'analista' )
-                  <li class="nav-item">
-                    <a class="nav-link" href="/process">
-                       <span class="nav-link-icon d-md-none d-lg-inline-block">
-                          <!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                          <i class="ti  ti-timeline-event-text"></i>
-                       </span>
-                       <span class="nav-link-title">
-                          Processos
-                       </span>
-                    </a>
-                   </li>
-                  @endif
                </ul>
             </div>
          </div>
 
-         @endif
+
       </aside>
       @yield('content')
    </div>
@@ -489,11 +481,11 @@
    <script>
       @if(Auth::check())
 
-    if("{{session('updatePass')}}" == "true" || "{{session('firstAccess')}}" == "true"){
-        passwordExpiredChangModal('{{Auth::user()->id ?? ""}}')
-    }
+        if("{{session('updatePass')}}" == "true" || "{{session('firstAccess')}}" == "true"){
+            passwordExpiredChangModal('{{Auth::user()->id ?? ""}}')
+        }
 
-  @endif
+       @endif
 
     const Toast = Swal.mixin({
         toast: true,

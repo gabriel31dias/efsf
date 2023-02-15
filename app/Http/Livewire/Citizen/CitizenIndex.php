@@ -287,8 +287,8 @@ class CitizenIndex extends Component
         $this->professionalIdentitysValues[$index]['uf_identy'] = $value;
     }
 
-    public function changeCitizenStatus(Citizen $citizen){ 
-        $this->citizen = $citizen; 
+    public function changeCitizenStatus(Citizen $citizen){
+        $this->citizen = $citizen;
     }
 
     public function updated_feature($object){
@@ -1225,11 +1225,10 @@ class CitizenIndex extends Component
             "name" => $this->fields["name"]
         ]);
 
-        ##$citizen = Citizen::find($user->id);
-       ## $citizen->update([
-
-        ##'process' => $resultProcess['code']
-       ## ]);
+        $citizen = Citizen::find($user->id);
+        $citizen->update([
+            'process' => $resultProcess['code']
+        ]);
 
         $this->messageSuccess();
 

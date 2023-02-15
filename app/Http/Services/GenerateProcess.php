@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 use App\Models\Process;
 use App\Models\Registry;
+use App\Models\Dispatch;
 use App\Models\RegistryDate;
 use Carbon\Carbon;
 
@@ -14,7 +15,6 @@ class GenerateProcess
         $objectProcess = $obj;
 
         $lastProcessCitizen = Process::where(['citizen_id' => $objectProcess['citizen_id']])->first();
-
 
         $code = '';
         $status = '';
@@ -36,6 +36,12 @@ class GenerateProcess
                 "payment" => $objectProcess["payment"],
             ]);
             $status = "created";
+
+            Dispatch::create([
+                'user_id' => $objectProcess['user_id'],
+                'type' => 1,
+                'comment' => "Primeiro despacho é enviado automaticamente pelo usuário do atendimento ao setor de triagem"
+            ]);
         }
 
         return [
@@ -45,9 +51,6 @@ class GenerateProcess
     }
 
     private function generateCode(){
-        $numero_de_bytes = 6;
-        $restultado_bytes = random_bytes($numero_de_bytes);
-        $resultado_final = bin2hex($restultado_bytes);
-        return $resultado_final;
+        return str_pad(mt_rand(1, 9999999), 7, '0', STR_PAD_LEFT);
     }
 }

@@ -161,7 +161,7 @@
                </div>
                <div style="margin-left:460pt;">
                   <div style="float: rigth;" >
-                     <label style="display: flex;color:#004aad">Processo: <span>xxxxxxxxx</span></label>
+                     <label style="display: flex;color:#004aad">Processo: <span>{{$citizen->process}}</span></label>
                      <br>
                      <div style="position: relative;
                         top: 1%;

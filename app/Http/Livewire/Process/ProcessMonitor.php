@@ -7,6 +7,8 @@ use Livewire\Component;
 use App\Models\Profile;
 use App\Http\Repositories\ProfileRepository;
 use App\Models\Permission;
+use App\Models\Dispatch;
+
 
 class ProcessMonitor extends Component
 {
@@ -17,6 +19,8 @@ class ProcessMonitor extends Component
     public $documents = [];
     public $permissions = [];
     public $profile_permissions = [];
+
+    public $dispatchs = [];
 
     public $perfilName;
     public $daysToAccessInspiration;
@@ -69,6 +73,8 @@ class ProcessMonitor extends Component
     public $process;
     public function render()
     {
+        $this->dispatchs = Dispatch::where(['id' => $this->process->id])->get();
+
 
         if($this->process->situation == 1){
             $this->process->update(['situation' => 2]);

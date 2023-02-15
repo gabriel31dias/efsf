@@ -56,7 +56,10 @@ class UserForm extends Component
         "senha" => "",
         "cidade" => "",
         "type_street" => "",
-        "profile_id" => ""
+        "profile_id" => "",
+        "unit_id" => "",
+        "profession_id" => "",
+
     ];
 
     public $obrigatory_filds = [
@@ -67,7 +70,7 @@ class UserForm extends Component
         "senha",
         "endereco",
         "login",
-        "senha"
+        "senha",
     ];
 
     public $errors = [];
@@ -98,16 +101,13 @@ class UserForm extends Component
     }
 
     public function selectedUnit($unit_id){
-
         $this->fields['unit_id'] = $unit_id;
         $this->unit_id = $unit_id;
         $this->emit('selectedUnit', $unit_id);
-
     }
 
     public function selectedProfession($profession_id){
         $this->fields['profession_id'] = $profession_id;
-
     }
 
     public function selectedTypeStreat($idTypeStreat)
@@ -207,6 +207,23 @@ class UserForm extends Component
                 $this->errorsKeys[] = $field;
             }
         }
+
+
+
+        if (isset($this->fields['unit_id']) && $this->fields['unit_id'] == "") {
+            array_push($errors, [
+                "message" => "Unidade é obrigatoria",
+                "valid" => false,
+            ]);
+        }
+
+        if (isset($this->fields['profession_id']) && $this->fields['profession_id'] == "") {
+            array_push($errors, [
+                "message" => "Função é obrigatoria",
+                "valid" => false,
+            ]);
+        }
+
 
         if($fields['email'] != $fields['email_confirm']){
             array_push($errors, [

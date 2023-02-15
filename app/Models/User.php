@@ -72,12 +72,20 @@ class User extends Model implements Authenticatable, AuthorizableContract
         return $this->belongsTo(Profile::class);
     }
 
+    public function getUnit(){
+        return Unit::find($this->unit_id);
+    }
+
+    public function getFunction(){
+        return Profession::find($this->profession_id);
+    }
+
     public function userStations()
     {
         return $this->hasMany(UserServiceStation::class);
     }
 
-    public function getProfilePermissionAttribute(){ 
+    public function getProfilePermissionAttribute(){
         return $this->profile->permissions->pluck('permission')->toArray();
     }
 }

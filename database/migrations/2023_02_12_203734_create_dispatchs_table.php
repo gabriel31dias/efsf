@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('citizens', function (Blueprint $table) {
-            $table->string('process')->nullable();
+        Schema::create('dispatches', function (Blueprint $table) {
+            $table->id();
+            $table->integer('user_id');
+            $table->integer('type');
+            $table->text('comment')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('citizens', function (Blueprint $table) {
-            $table->dropColumn('process');
-        });
+        Schema::dropIfExists('processes');
     }
 };
