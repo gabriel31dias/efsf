@@ -1126,17 +1126,12 @@ class CitizenIndex extends Component
 
         $documents = $this->storeDocuments($this->fieldsDigitalizedDocuments);
 
-        if(file_capture_image_string){
+        if($this->file_capture_image_string){
             $this->saveImageFacial();
-            dd('st');
         } else {
-           $this->saveImageFacialString();
+            $this->saveImageFacialString();
+           
         }
-
-        
-        //
-
-
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
