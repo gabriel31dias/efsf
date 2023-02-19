@@ -1743,6 +1743,8 @@ role="dialog"  aria-hidden="true">
 
     var socket = io('https://websocket-pca-sic.msbtec.com.br');
 
+    let imgSelectedCapture = ''
+
     document.addEventListener('turbolinks:load', () => {
 
         var socket = io('https://websocket-pca-sic.msbtec.com.br');
@@ -1944,13 +1946,17 @@ role="dialog"  aria-hidden="true">
     let tipeCaputure = ''
 
     function saveImageFacial(){
+     
         if(isImageSelected == false){
             Swal.fire('Antes de salvar capture, ou insira um anexo.', '', 'warning')
             return false
         }
         if (tipeCaputure == 1){
             Swal.fire('Foto salva com sucesso.', '', 'success')
+            //Livewire.emit('setFaceCapture', imgSelectedCapture)
+            
         }else{
+       
             let canvas = document.querySelector("#canvas");
             const base64Canvas = canvas.toDataURL("image/jpeg").split(';base64,')[1];
             $("#file-capture-image_string").val(base64Canvas);
@@ -1983,8 +1989,8 @@ role="dialog"  aria-hidden="true">
             if (target.files && target.files.length) {
                 const imagePreviewBase64 = await convertFileToBase64(target.files[0]);
                 Livewire.emit('setImagePreview', imagePreviewBase64)
+                imgSelectedCapture = imagePreviewBase64
                 document.getElementById("salvar-captura").style.display = "flex";
-
             }
         })
 

@@ -70,10 +70,13 @@ class CitizenController extends Controller
 
         $featuresx = $this->getFeautures();
 
-        $html = view('citizen.file', ['citizen' => $citizen,  'filiations' => $filiations,
+        $photo ='data:image/' . 'png' . ';base64,' . base64_encode(\Illuminate\Support\Facades\File::get(storage_path('app/public/face_captures/'. $citizen->file_capture_image)));
+        
+        $html = view('citizen.file', ['citizen' => $citizen,  'filiations' => $filiations,'photo' => $photo,
             'birthCity' => $birthCity, 'uf' => $uf, 'maritalStatus' =>  $maritalStatus, 'profession' => $profession,
             'genre' => $genre, 'features' => $features, 'featuresx' => $featuresx
         ]);
+
         $uuid = $this->generateUUID();
         $dompdf = new Dompdf(array('enable_remote' => true));
         $dompdf->loadHtml($html);

@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('telephone')->nullable();
             $table->string('file_sign')->nullable();
             $table->string('justification_sign')->nullable();
-
+            $table->text('file_capture_image')->nullable();
             $table->string('email')->nullable();
             $table->string('filiation1')->nullable();
             $table->string('filiation2')->nullable();

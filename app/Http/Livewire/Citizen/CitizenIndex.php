@@ -24,6 +24,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 
+
 class CitizenIndex extends Component
 {
 
@@ -163,6 +164,7 @@ class CitizenIndex extends Component
 
     public $fields = [
         "name" => "",
+        "file_capture_image" => "",
         "cpf" => "",
         "rg" => "",
         "filiation1" => "",
@@ -870,10 +872,20 @@ class CitizenIndex extends Component
 
     public function saveImageFacial(){
         $image = $this->file_capture_image_string;
+
+       
+        $directory = storage_path(). '/app/public/face_captures/';
+        if (!Storage::exists($directory)) {
+            Storage::makeDirectory($directory);
+        }
         $imageName = Str::random(12).'.'.'png';
-        \File::put(storage_path(). '/app/face_captures/' . $imageName, base64_decode($image));
+        \File::put(storage_path(). '/app/public/face_captures/' . $imageName, $image);
+        $this->fields["file_capture_image"] =  $imageName;
     }
 
+   
+
+    
     private function validation($fields){
 
         $errors = [];
@@ -1078,11 +1090,20 @@ class CitizenIndex extends Component
         if(!$this->file_capture_image){
             return false;
         }
+        
         $this->validate([
             'file_capture_image' => 'image|max:1024', // 1MB Max
         ]);
-        $this->file_capture_image->store('face_captures');
+
+        $filename = $this->file_capture_image->store('public/face_captures');
+
+        $filename = basename($filename);
+
+
+        $this->fields["file_capture_image"] = $filename;
     }
+
+     
 
     public function createCitizen(){
         $this->fields["zone"] = $this->zone;
@@ -1105,13 +1126,22 @@ class CitizenIndex extends Component
 
         $documents = $this->storeDocuments($this->fieldsDigitalizedDocuments);
 
-        $this->saveImageFacialString();
-        $this->saveImageFacial();
+        if(file_capture_image_string){
+            $this->saveImageFacial();
+            dd('st');
+        } else {
+           $this->saveImageFacialString();
+        }
+
+        
+        //
 
 
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
+            "file_capture_image" => $this->fields["file_capture_image"],
+
             "cpf" => $this->fields["cpf"],
             "district" => $this->fields["district"],
             "rg" => $this->fields["rg"],

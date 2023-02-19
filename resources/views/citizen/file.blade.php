@@ -13,14 +13,10 @@
          box-sizing: border-box;
          page-break-after: always;
          }
-
          body { background: #e0e0e0 }
          @media screen {
-
-
          }
          /** Fix for Chrome issue #273306 **/
-
          * {
          margin: 0;
          padding: 0;
@@ -169,8 +165,9 @@
                         height: 130px;
                         flex: 1;
                         margin-right: 8px;
-                        background-color: #fff;" class="foto-pessoa">
-                        <p>foto do cidadão</p>
+                        background-size: cover;
+                        background-image: url('{{$photo}}');" class="foto-pessoa">
+                        <img style="width: 90px;z-index:10000px"   scr="https://pca-sic.msbtec.com.br/politec.png"/>
                      </div>
                   </div>
                </div>
@@ -199,8 +196,8 @@
                   <p>Nome Anterior:
                      <span style="margin-left: 9px;">{{ $citizen->names_previous ?? ''}}</span>
                      <b style="margin-left: 80px;">Estado Civil <span style="margin-left: 15px;">
-                       {{$maritalStatus->name ?? '' }} (a)
-                    </span></b>
+                     {{$maritalStatus->name ?? '' }} (a)
+                     </span></b>
                   </p>
                   <p>Profissão
                      <span style="margin-left: 9px;">{{ $profession->name ?? '' }}</span>
@@ -215,22 +212,22 @@
                      <b style="margin-left: 40px;">OLHOS:<span style="margin-left: 15px;">{{ strtolower($features->{'cor-dos-olhos'} ?? '') ?? ''}}</span></b>
                      <b style="margin-left: 40px;">ALTURA:<span style="margin-left: 15px;">{{$citizen->height}}</span></b>
                   </p>
+                  @php
+                  $featuresSelected = ['c-ti', 'cor-do-cabelo-', 'cor-dos-olhos']
+                  @endphp
+                  <p class="info-complementar"> Outras Características:
+                     <br>
+                     @foreach ($features as $key => $item)
+                     @foreach ($featuresx as  $itemx)
+                     @if(strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $itemx->name))) == $key && in_array($key, $featuresSelected) !==  1 )
+                     <b >{{$itemx->name}}:</b><span style="margin-left: 3px;"> {{ strtolower($features->{$key})}},</span>
+                     @endif
+                     @endforeach
+                     @endforeach
+                  </p>
                </div>
             </div>
          </div>
-         @php
-            $featuresSelected = ['c-ti', 'cor-do-cabelo-', 'cor-dos-olhos']
-         @endphp
-         <p class="caracteristicas"> Outras Características:
-            <span style="margin-left: 10px; font-weight: normal; text-transform: uppercase;">
-             @foreach ($features as $key => $item)
-               @foreach ($featuresx as  $itemx)
-                    @if(strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $itemx->name))) == $key && in_array($key, $featuresSelected) !==  1 )
-                        <b style="margin-left: 5px;">{{$itemx->name}}:</b><span style="margin-left: 3px;"> {{ strtolower($features->{$key})}},</span>
-                    @endif
-               @endforeach
-             @endforeach</span>
-
          <div class="assinatura">
             <div style="clear:both; position:relative;">
                <div style="position:absolute; left:0pt; width:260pt;">
@@ -243,7 +240,8 @@
                      <p style="margin-bottom: 5px; font-weight: bold; text-transform: uppercase; font-size: 12px;">Posto de atendimento<span style="margin-left: 10px; font-weight: normal; text-transform: uppercase; font-size: 11px;">SUPER FÁCIL ZONA OESTE</span></p>
                      <p style="margin-bottom: 5px; font-weight: bold; text-transform: uppercase; font-size: 12px;">Qualificado (a) em: <span style="margin-left: 10px; font-weight: normal; text-transform: uppercase; font-size: 11px;">{{ date("d/m/Y", strtotime($citizen->updated_at))  ?? ''}}</span></p>
                      <p style="margin-bottom: 5px; font-weight: bold; text-transform: uppercase; font-size: 12px;">Atendente (a) em: <span style="margin-left: 10px; font-weight: normal; text-transform: uppercase; font-size: 11px;">{{ Auth::user()->name }}
-                    </span></p>
+                        </span>
+                     </p>
                      <p style="margin-bottom: 5px; font-weight: bold; text-transform: uppercase; font-size: 12px;">CPF<span style="margin-left: 10px; font-weight: normal; text-transform: uppercase; font-size: 11px;">SUPER FÁCIL ZONA OESTE</span></p>
                   </div>
                </div>
@@ -265,28 +263,23 @@
                <p style="margin-bottom: 10px; font-weight: bold; text-transform: uppercase; font-size: 12px;">CERTIFICADO MILITAR:<span style="font-weight: normal; margin-left: 25px;">{{ $citizen->reservist_certificate }}</span></p>
                <p style="margin-bottom: 10px; font-weight: bold; text-transform: uppercase; font-size: 12px;">TIPO SANGUÍNEO E O FATOR RH: <span style="font-weight: normal; margin-left: 25px;">{{ $citizen->blood_type }}</span></p>
                <p style="margin-bottom: 10px; font-weight: bold; text-transform: uppercase; font-size: 12px;">CONDIÇÕES ESPECÍFICAS DE SAÚDE: <span style="font-weight: normal; margin-left: 25px;">
-
-                @if($citizen->cid == '1')
-                    <img style="width:15px;height:16px" id="fisico" src="https://pca-sic.msbtec.com.br/3.png"/>
-                @endif
-
-                @if($citizen->cid == '2')
-                    <img style="width:15px;height:16px" id="cego" src="https://pca-sic.msbtec.com.br/2.png"/>
-                @endif
-
-                @if($citizen->cid == '4')
-                    <img style="width:15px;height:16px" id="surdo" src="https://pca-sic.msbtec.com.br/4.png"/>
-                @endif
-
-                @if($citizen->cid == '3')
-                    <img style="width:15px;height:16px" id="intelect" src="https://pca-sic.msbtec.com.br/1.png" />
-                @endif
-
-                @if($citizen->cid == '5')
-                    <img style="width:15px;height:16px" id="autista" src="https://pca-sic.msbtec.com.br/5.png"/>
-                @endif
-
-            </span></p>
+                  @if($citizen->cid == '1')
+                  <img style="width:15px;height:16px" id="fisico" src="https://pca-sic.msbtec.com.br/3.png"/>
+                  @endif
+                  @if($citizen->cid == '2')
+                  <img style="width:15px;height:16px" id="cego" src="https://pca-sic.msbtec.com.br/2.png"/>
+                  @endif
+                  @if($citizen->cid == '4')
+                  <img style="width:15px;height:16px" id="surdo" src="https://pca-sic.msbtec.com.br/4.png"/>
+                  @endif
+                  @if($citizen->cid == '3')
+                  <img style="width:15px;height:16px" id="intelect" src="https://pca-sic.msbtec.com.br/1.png" />
+                  @endif
+                  @if($citizen->cid == '5')
+                  <img style="width:15px;height:16px" id="autista" src="https://pca-sic.msbtec.com.br/5.png"/>
+                  @endif
+                  </span>
+               </p>
             </div>
          </div>
          <div style="margin-top: 5px;" class="box-anotacoes box-tables">
