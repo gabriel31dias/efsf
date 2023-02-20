@@ -19,6 +19,7 @@ class GenerateNotifications
             'user_id_emiter' => $obj['user_id_emiter'],
             'user_id_receive' => $obj['user_receive'],
             'visualized' => false,
+            'citizen_id' => $obj['citizen_id'] ?? ''
         ]);
 
         return $notf;   

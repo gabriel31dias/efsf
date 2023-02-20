@@ -1869,6 +1869,33 @@ role="dialog"  aria-hidden="true">
         })
     }
 
+    function showLoadingPhoto(){ 
+      let timerInterval
+      Swal.fire({
+         title: 'Carregando imagem',
+         html: '',
+         timer: 6000,
+         timerProgressBar: true,
+         allowOutsideClick: false,
+
+         didOpen: () => {
+          Swal.showLoading()
+          const b = Swal.getHtmlContainer().querySelector('b')
+          timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft()
+          }, 100)
+         },
+         willClose: () => {
+            clearInterval(timerInterval)
+         }
+         }).then((result) => {
+         /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer')
+          }
+      })
+     }
+
 
     function loadMultSelectOutrosDocumentos(){
         setTimeout(() => {
@@ -1945,7 +1972,7 @@ role="dialog"  aria-hidden="true">
     let tipeCaputure = ''
 
     function saveImageFacial(){
-     
+      
         if(isImageSelected == false){
             Swal.fire('Antes de salvar capture, ou insira um anexo.', '', 'warning')
             return false
@@ -1983,20 +2010,13 @@ role="dialog"  aria-hidden="true">
         });
 
         document.getElementById("file-capture-image").addEventListener("change",async ({target}) => {
+         showLoadingPhoto()
          isImageSelected = true
             tipeCaputure = 1
             if (target.files && target.files.length) {
                 const imagePreviewBase64 = await convertFileToBase64(target.files[0]);
-              
                 @this.setImagePreview(imagePreviewBase64);
-
-             
                 isImageSelected = true
-
-                alert('set')
-
-                
-
                 imgSelectedCapture = imagePreviewBase64
                 document.getElementById("salvar-captura").style.display = "flex";
             }

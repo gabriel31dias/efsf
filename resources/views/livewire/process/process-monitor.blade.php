@@ -172,7 +172,7 @@
             </div>
          </div>
          @endforeach
-         <div    tabindex="-1"
+         <div wire:ignore.self  tabindex="-1"
             role="dialog"  aria-hidden="true"  class="modal " id="modal-mensagem">
             <div class="modal-dialog">
                <div class="modal-content">
@@ -197,7 +197,7 @@
                         </div>
                         <div style="display: flex" class="form-group">
                            <label  for="recipient-name" class="col-form-label">Comentario:&nbsp;</label>
-                           <textarea  class="form-control" ></textarea>
+                           <textarea wire:model="content"  class="form-control" ></textarea>
                         </div>
 
                         <div style="display: flex" class="form-group">

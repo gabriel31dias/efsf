@@ -70,9 +70,13 @@ class CitizenController extends Controller
 
         $featuresx = $this->getFeautures();
 
-        $photo ='data:image/' . 'png' . ';base64,' . base64_encode(\Illuminate\Support\Facades\File::get(storage_path('app/public/face_captures/'. $citizen->file_capture_image)));
         
-        $html = view('citizen.file', ['citizen' => $citizen,  'filiations' => $filiations,'photo' => $photo,
+
+        if($citizen->file_capture_image){
+            $photo ='data:image/' . 'png' . ';base64,' . base64_encode(\Illuminate\Support\Facades\File::get(storage_path('app/public/face_captures/'. $citizen->file_capture_image ?? '')));
+        }
+
+        $html = view('citizen.file', ['citizen' => $citizen,  'filiations' => $filiations,'photo' => $photo ?? '',
             'birthCity' => $birthCity, 'uf' => $uf, 'maritalStatus' =>  $maritalStatus, 'profession' => $profession,
             'genre' => $genre, 'features' => $features, 'featuresx' => $featuresx
         ]);

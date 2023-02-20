@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id_receive');
             $table->boolean('visualized')->default(false);
             $table->string('resolution_url');
+            $table->integer('citizen_id');
             $table->timestamps();
 
             $table->foreign('user_id_emiter')->references('id')->on('users')->onDelete('cascade');

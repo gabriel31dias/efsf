@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Process;
 
 use App\Http\Services\GenerateNotifications;
 use App\Models\Process;
+use App\Models\ServiceStation;
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Profile;
 use App\Models\Notification;
@@ -21,8 +23,10 @@ class ProcessMonitor extends Component
     public $content = "";
 
     public $user;
+    public $user_name;
 
     public $service_station;
+    public $service_station_name = "";
 
     public $documents = [];
     public $permissions = [];
@@ -38,6 +42,7 @@ class ProcessMonitor extends Component
       "prazo_expiração",
       "prazo_expiração_inatividade"
     ];
+    public $listeners = ['selectedServiceStation', 'selectedSelectedUser'];
     public $profile;
     public $action;
     public $fields = [
@@ -99,15 +104,37 @@ class ProcessMonitor extends Component
     public function sendForwarding(){
         $sended = new GenerateNotifications();
         $res = $sended->call(['content' => $this->content, 
-        'title' =>  'teste', 
-        'resolution_url' => '/', 
-        'user_id_emiter'=> 1 , 
-        'user_receive' => 1, 
-        'visualized' => true]);
+            'title' =>  'Atendente alterou o status do processo 443434' , 
+            'resolution_url' => '/', 
+            'user_id_emiter'=> 1 , 
+            'user_receive' => 1, 
+            'visualized' => true,
+            'citizen' => true,
+            'citizen_id' => 1
+        ]);
+
+
+        $this->dispatchBrowserEvent('alert',[
+            'type'=> 'success',
+            'message'=> 'Atualização encaminhada'
+        ]);
     }
 
     public function getDocumentByType($typeDocuments){
         return $this->typeDocuments[$typeDocuments];
+    }
+
+    public function selectedServiceStation($id)
+    {
+        $this->service_station = $id;
+        $this->service_station_name = ServiceStation::find($id)->service_station_name;
+        return true;
+    }
+
+    public function selectedSelectedUser($id){
+        $this->user = $id;
+        $this->user_name = User::find($id)->name;
+        return true;
     }
 
     public function saveProfile(){

@@ -78,7 +78,7 @@ class UsersSelect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
-        $this->emitUp('selectedProfile', $id);
+        $this->emitUp('selectedUser', $id);
     }
 
     public function render()
