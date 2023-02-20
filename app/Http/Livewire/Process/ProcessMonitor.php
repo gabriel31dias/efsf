@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Process;
 
+use App\Http\Services\GenerateNotifications;
 use App\Models\Process;
 use Livewire\Component;
 use App\Models\Profile;
+use App\Models\Notification;
 use App\Http\Repositories\ProfileRepository;
 use App\Models\Permission;
 use App\Models\Dispatch;
@@ -15,6 +17,12 @@ class ProcessMonitor extends Component
 
     public $errorsKeys = [];
     public $errors = [];
+
+    public $content = "";
+
+    public $user;
+
+    public $service_station;
 
     public $documents = [];
     public $permissions = [];
@@ -80,12 +88,22 @@ class ProcessMonitor extends Component
             $this->process->update(['situation' => 2]);
         }
 
-        return view('livewire.process.process-monitor');
+        return view('livewire.process.process-monitor', []);
     }
 
     public function mount()
     {
 
+    }
+
+    public function sendForwarding(){
+        $sended = new GenerateNotifications();
+        $res = $sended->call(['content' => $this->content, 
+        'title' =>  'teste', 
+        'resolution_url' => '/', 
+        'user_id_emiter'=> 1 , 
+        'user_receive' => 1, 
+        'visualized' => true]);
     }
 
     public function getDocumentByType($typeDocuments){

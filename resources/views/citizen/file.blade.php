@@ -286,26 +286,20 @@
             <table class="gn-seletable">
                <tbody>
                   <tr>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
+                    <td >Polegar esquerdo</td>
+                    <td >Indicador esquerdo</td>
+                    <td  >Médio esquerdo</td>
+                    <td >Anelar esquerdo</td>
+                    <td >Minimo esquerdo</td>
                   </tr>
                   <tr>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
+                  <td >Polegar direito</td>
+                    <td >Indicador direito</td>
+                    <td  >Médio direito</td>
+                    <td >Anelar direito</td>
+                    <td >Minimo direito</td>
                   </tr>
-                  <tr>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
-                     <td>Polegar Direito</td>
-                  </tr>
+                 
                </tbody>
             </table>
          </div>

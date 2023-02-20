@@ -1,4 +1,4 @@
-<div data-keyboard="false" data-backdrop="static" wire:ignore.self
+<div wire:ignore.self data-keyboard="false" data-backdrop="static" wire:ignore.self
    class="modal modal-blur fade" id="modal-captura-facial" tabindex="-1"
    role="dialog" aria-hidden="true">
    <div data-backdrop="static"

@@ -1740,7 +1740,6 @@ role="dialog"  aria-hidden="true">
 
  <script>
 
-
     var socket = io('https://websocket-pca-sic.msbtec.com.br');
 
     let imgSelectedCapture = ''
@@ -1846,7 +1845,7 @@ role="dialog"  aria-hidden="true">
 
     function saveJus(){
         justificativa = document.getElementById('justificativa-text-input').value
-        Livewire.emit('justificativaEvent', justificativa)
+       Livewire.emit('justificativaEvent', justificativa)
     }
 
 
@@ -1983,15 +1982,25 @@ role="dialog"  aria-hidden="true">
          video.srcObject = stream;
         });
 
-        document.getElementById("file-capture-image").addEventListener("change",async function({target}){
-            isImageSelected = true
+        document.getElementById("file-capture-image").addEventListener("change",async ({target}) => {
+         isImageSelected = true
             tipeCaputure = 1
             if (target.files && target.files.length) {
                 const imagePreviewBase64 = await convertFileToBase64(target.files[0]);
-                Livewire.emit('setImagePreview', imagePreviewBase64)
+              
+                @this.setImagePreview(imagePreviewBase64);
+
+             
+                isImageSelected = true
+
+                alert('set')
+
+                
+
                 imgSelectedCapture = imagePreviewBase64
                 document.getElementById("salvar-captura").style.display = "flex";
             }
+
         })
 
 
@@ -2019,6 +2028,8 @@ role="dialog"  aria-hidden="true">
             console.log(image_data_url);
         });
     }
+
+ 
 
 
 
