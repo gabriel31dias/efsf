@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Process;
 
 use App\Http\Services\GenerateNotifications;
+use App\Models\Citizen;
 use App\Models\Process;
 use App\Models\ServiceStation;
 use App\Models\User;
@@ -25,6 +26,8 @@ class ProcessMonitor extends Component
     public $user;
     public $user_name;
 
+    public $status;
+
     public $service_station;
     public $service_station_name = "";
 
@@ -42,7 +45,7 @@ class ProcessMonitor extends Component
       "prazo_expiração",
       "prazo_expiração_inatividade"
     ];
-    public $listeners = ['selectedServiceStation', 'selectedSelectedUser'];
+    public $listeners = ['selectedServiceStation', 'selectedUser'];
     public $profile;
     public $action;
     public $fields = [
@@ -86,7 +89,7 @@ class ProcessMonitor extends Component
     public $process;
     public function render()
     {
-        $this->dispatchs = Dispatch::where(['id' => $this->process->id])->get();
+        $this->dispatchs = Dispatch::where(['process_id' => $this->process->id])->get();
 
 
         if($this->process->situation == 1){
@@ -103,21 +106,35 @@ class ProcessMonitor extends Component
 
     public function sendForwarding(){
         $sended = new GenerateNotifications();
+        $user = auth()->user();
+
+        $citizen = Citizen::where(['process' => $this->process->code ])->first();
+      
         $res = $sended->call(['content' => $this->content, 
-            'title' =>  'Atendente alterou o status do processo 443434' , 
-            'resolution_url' => '/', 
-            'user_id_emiter'=> 1 , 
-            'user_receive' => 1, 
-            'visualized' => true,
-            'citizen' => true,
-            'citizen_id' => 1
+            'title' => '556655 Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? '')  , 
+            'resolution_url' => '/monitor/'.$this->process->id.'/edit', 
+            'user_id_emiter'=> $user->id, 
+            'user_receive' => $this->user, 
+            'type' => 1, 
+            'visualized' => false,
+            'citizen_id' => $citizen->id,
+           
         ]);
 
+        $newDespatch = Dispatch::create([
+            'user_id' =>  $user->id,
+            'type' => 2,
+            'process_id' => $this->process->id,
+            'comment' => $this->content,
+            'statusString' => Process::SITUATION_TYPES_LABELS[$this->status]
+        ]);
 
         $this->dispatchBrowserEvent('alert',[
             'type'=> 'success',
             'message'=> 'Atualização encaminhada'
         ]);
+
+
     }
 
     public function getDocumentByType($typeDocuments){
@@ -131,7 +148,7 @@ class ProcessMonitor extends Component
         return true;
     }
 
-    public function selectedSelectedUser($id){
+    public function selectedUser($id){
         $this->user = $id;
         $this->user_name = User::find($id)->name;
         return true;

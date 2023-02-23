@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('type');
+            $table->integer('process_id');
             $table->text('comment')->nullable();
+            $table->text('statusString')->nullable();
             $table->timestamps();
         });
     }

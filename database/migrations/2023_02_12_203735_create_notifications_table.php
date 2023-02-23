@@ -22,8 +22,8 @@ return new class extends Migration
             $table->boolean('visualized')->default(false);
             $table->string('resolution_url');
             $table->integer('citizen_id');
+            $table->integer('type');
             $table->timestamps();
-
             $table->foreign('user_id_emiter')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('user_id_receive')->references('id')->on('users')->onDelete('cascade');
         });

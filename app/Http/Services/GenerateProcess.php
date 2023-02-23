@@ -24,7 +24,7 @@ class GenerateProcess
             $status = "updated";
         }else{
             $code = $this->generateCode();
-            Process::create([
+            $p = Process::create([
                 "code" => $code,
                 "user_id" => $objectProcess['user_id'],
                 "name" => $objectProcess['name'],
@@ -39,8 +39,10 @@ class GenerateProcess
 
             Dispatch::create([
                 'user_id' => $objectProcess['user_id'],
+                'process_id' => $p->id,
                 'type' => 1,
-                'comment' => "Primeiro despacho é enviado automaticamente pelo usuário do atendimento ao setor de triagem"
+                'comment' => "Primeiro despacho é enviado automaticamente pelo usuário do atendimento ao setor de triagem",
+                'statusString' => Process::SITUATION_TYPES_LABELS[1]
             ]);
         }
 

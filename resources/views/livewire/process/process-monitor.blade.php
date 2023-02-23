@@ -153,19 +153,16 @@
          </div>
          @foreach ($dispatchs as $key => $item)
          <div  class="box-despacho">
-            <div onclick="modalInfoUser('{{json_encode($item->user)}}')" onmouseover="this.style.backgroundColor='#206bc4'; this.style.color='white';" onmouseout="this.style.backgroundColor='#a0bee6'; this.style.color='black';" class="info-despacho">
-               <h1 style="font-size: 17px;"><b>Despacho {{ $key + 1 }}</b></h1>
-               <h3 style="font-size: 17px;">@if($item->type == 1)SERVIDOR:@endif {{$item->user->name}}</h3>
-               <p>Unidade: <span>{{$item->user->getUnit()->name ?? ''}}</span></p>
-               <p>Função: <span>{{$item->user->getFunction()->name ?? ''}}</span></p>
+            <div onclick="modalInfoUser('{{json_encode($item->user)}}','{{$item->user->getUnit()->name ?? ''}}', '{{$item->user->getFunction()->name ?? ''}}')" onmouseover="this.style.backgroundColor='#206bc4'; this.style.color='white';" onmouseout="this.style.backgroundColor='#a0bee6'; this.style.color='black';" class="info-despacho">
+               <h1 style="font-size: 17px;"><b>Despacho {{ $key + 1 }}, Status: {{$item->statusString}}</b></h1>
+               <h3 style="font-size: 17px;">@if($item->type == 1)SERVIDOR:@else USUÁRIO: @endif {{$item->user->name}}</h3>
                <p>Data: <span>{{date('d/m/Y H:i:s', strtotime($item->created_at))}}</span></p>
                <p>Hora: <span>{{date('H:i:s', strtotime($item->created_at))}}</span></p>
             </div>
             <div class="emissao-despacho">
                <div class="bloco-two">
                   <div style="flex: 20%; margin-top: 40px;">
-                     <p>Primeiro despacho é enviado automaticamente pelo usuário do atendimento ao setor
-                        de triagem
+                     <p>{{$item->comment}}
                      </p>
                   </div>
                </div>
@@ -200,11 +197,11 @@
                            <textarea wire:model="content"  class="form-control" ></textarea>
                         </div>
 
-                        <div style="display: flex" class="form-group">
+                        <div style="display: flex" class="form-group"> 
                         <label  for="recipient-name" class="col-form-label">Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                            <select class="form-control" name="cars" id="cars">
+                            <select wire:model="status" class="form-control" name="cars" id="cars">
                                 @foreach (App\Models\Process::SITUATION_TYPES_LABELS as $key => $item)
-                                 <option value="{{ $key }}">{{ $item }}</option>
+                                 <option value="{{ $key }}">{{ $item }}{{ $key }}</option> 
                                 @endforeach
                             </select>
                         </div>
@@ -232,13 +229,15 @@
          
          });
          
-         function modalInfoUser(userString){
+         function modalInfoUser(userString, unity, func){
           
            let userObject = JSON.parse(userString)
            Swal.fire({
                title: 'Info Usuario '+ userObject.name,
                icon: 'info',
                html: `
+                   <strong>Unidade:</strong> ${unity}<br>
+                   <strong>Função:</strong> ${func}<br>
                    <strong>Cpf:</strong> ${userObject.cpf}<br>
                    <strong>Rg:</strong> ${userObject.rg}
                `,

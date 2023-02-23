@@ -142,7 +142,17 @@
                      @if($item->visualid == false)
                       <div  class="list-group-item">
                         <div class="row align-items-center">
-                          <div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span></div>
+                          <div class="col-auto">
+                         
+                          @if($item->type == 1)
+                              <span class="status-dot status-dot-animated bg-red d-block">
+                          @endif
+
+                          @if($item->type == 2)
+                              <span class="status-dot status-dot-animated bg-green d-block">
+                          @endif
+                          
+                          </span></div>
                           <div class="col text-truncate">
                             <a href="#" class="text-body d-block">{{$item->title}}</a>
                             <div class="d-block text-muted text-truncate mt-n1">
