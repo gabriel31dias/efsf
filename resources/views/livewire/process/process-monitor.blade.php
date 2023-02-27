@@ -123,12 +123,14 @@
                </p>
             </div>
             <div class="emissao-registro">
+            
                <div class="bloco-one">
-                  <p>Emissão de registro civil</p>
-                  <a id="btn-mensagem" style="font-weight: 600;" class="btn btn-primary" 
-                     >
-                  Encaminhar ▶️
-                  </a>
+                  @can('permission', 'process.edit')
+                     <p>Emissão de registro civil</p>
+                     <a id="btn-mensagem" style="font-weight: 600;" class="btn btn-primary" >
+                     Encaminhar ▶️
+                     </a>
+                  @endcan
                </div>
                <div class="bloco-two">
                   <div style="flex: 20%; margin-top: 40px;">
@@ -152,8 +154,10 @@
             </div>
          </div>
          @foreach ($dispatchs as $key => $item)
-         <div  class="box-despacho">
-            <div onclick="modalInfoUser('{{json_encode($item->user)}}','{{$item->user->getUnit()->name ?? ''}}', '{{$item->user->getFunction()->name ?? ''}}')" onmouseover="this.style.backgroundColor='#206bc4'; this.style.color='white';" onmouseout="this.style.backgroundColor='#a0bee6'; this.style.color='black';" class="info-despacho">
+            @if($item->type == 1 || $item->type == 2)
+
+         <div class="box-despacho">
+            <div   onclick="modalInfoUser('{{json_encode($item->user)}}','{{$item->user->getUnit()->name ?? ''}}', '{{$item->user->getFunction()->name ?? ''}}')" onmouseover="this.style.backgroundColor='#206bc4'; this.style.color='white';" onmouseout="this.style.backgroundColor='#a0bee6'; this.style.color='black';" class="info-despacho">
                <h1 style="font-size: 17px;"><b>Despacho {{ $key + 1 }}, Status: {{$item->statusString}}</b></h1>
                <h3 style="font-size: 17px;">@if($item->type == 1)SERVIDOR:@else USUÁRIO: @endif {{$item->user->name}}</h3>
                <p>Data: <span>{{date('d/m/Y H:i:s', strtotime($item->created_at))}}</span></p>
@@ -168,6 +172,29 @@
                </div>
             </div>
          </div>
+         @endif
+
+            @if($item->type == 3)
+               <div  class="box-despacho">
+                  <div style="background-color: lawngreen;" onclick="modalInfoUser('{{json_encode($item->user)}}','{{$item->user->getUnit()->name ?? ''}}', '{{$item->user->getFunction()->name ?? ''}}')" onmouseover="this.style.backgroundColor='#206bc4'; this.style.color='white';" onmouseout="this.style.backgroundColor='lawngreen'; this.style.color='black';" class="info-despacho">
+                     <h1 style="font-size: 17px;"><b>Despacho {{ $key + 1 }}, Status: {{$item->statusString}}</b></h1>
+                     <h3 style="font-size: 17px;">@if($item->type == 1)SERVIDOR:@else USUÁRIO: @endif {{$item->user->name}}</h3>
+                     <p>Data: <span>{{date('d/m/Y H:i:s', strtotime($item->created_at))}}</span></p>
+                     <p>Hora: <span>{{date('H:i:s', strtotime($item->created_at))}}</span></p>
+                  </div>
+               <div class="emissao-despacho">
+                  <div class="bloco-two">
+                     <div style="flex: 20%; margin-top: 40px;">
+                        <p>{{$item->comment}}
+                     </p>
+                     </div>
+                  </div>
+               </div>
+               </div>
+               
+            @endif
+
+
          @endforeach
          <div wire:ignore.self  tabindex="-1"
             role="dialog"  aria-hidden="true"  class="modal " id="modal-mensagem">
@@ -228,6 +255,11 @@
                });
          
          });
+
+         window.addEventListener('closeModal', ({detail: {user}}) => {
+            $('#modal-mensagem').modal('hide');
+         })
+
          
          function modalInfoUser(userString, unity, func){
           

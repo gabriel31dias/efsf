@@ -47,6 +47,8 @@ class ProcessMonitor extends Component
     ];
     public $listeners = ['selectedServiceStation', 'selectedUser'];
     public $profile;
+
+    public $currentStatus;
     public $action;
     public $fields = [
         "nome_perfil" => "",
@@ -90,10 +92,18 @@ class ProcessMonitor extends Component
     public function render()
     {
         $this->dispatchs = Dispatch::where(['process_id' => $this->process->id])->get();
-
+        $this->currentStatus = $this->process->situation;
+        $user = auth()->user();
 
         if($this->process->situation == 1){
-            $this->process->update(['situation' => 2]);
+            $this->process->update(['situation' => Process::IN_REVIEW]);
+            $newDespatch = Dispatch::create([
+                'user_id' => $user->id,
+                'type' => 2,
+                'process_id' => $this->process->id,
+                'comment' => $this->content,
+                'statusString' => Process::IN_REVIEW
+            ]);
         }
 
         return view('livewire.process.process-monitor', []);
@@ -101,24 +111,53 @@ class ProcessMonitor extends Component
 
     public function mount()
     {
+        
 
+    }
+
+    public function validation(){
+        if(!$this->user){
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> 'Por favor selecione o usuário a ser notificado.'
+            ]);
+
+            return false;
+        }
+
+        if($this->currentStatus == $this->status){
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> 'O novo status tem que ser diferente do anterior.'
+            ]);
+
+            return false;
+        }
+
+        return true;    
     }
 
     public function sendForwarding(){
         $sended = new GenerateNotifications();
         $user = auth()->user();
 
+        $divergenceStatus = [3, 4, 5, 6, 7, 8];
+
+        if (!$this->validation()) {
+          return false;
+        }
+
         $citizen = Citizen::where(['process' => $this->process->code ])->first();
-      
+       
         $res = $sended->call(['content' => $this->content, 
-            'title' => '556655 Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? '')  , 
+            'title' => $this->process->code .' Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? '')  , 
             'resolution_url' => '/monitor/'.$this->process->id.'/edit', 
             'user_id_emiter'=> $user->id, 
             'user_receive' => $this->user, 
             'type' => 1, 
             'visualized' => false,
             'citizen_id' => $citizen->id,
-           
+            
         ]);
 
         $newDespatch = Dispatch::create([
@@ -129,11 +168,31 @@ class ProcessMonitor extends Component
             'statusString' => Process::SITUATION_TYPES_LABELS[$this->status]
         ]);
 
+
+        if(in_array((int) $this->status, $divergenceStatus)){           
+            $process = Process::find($this->process->id);
+
+            $process->update([
+                'divergence' => true,
+                'last_message' => $this->content,
+                'situation' => $this->status
+            ]);
+        }else{
+            $process = Process::find($this->process->id);
+
+            $process->update([
+                'divergence' => false,
+                'last_message' => $this->content,
+                'situation' => $this->status
+            ]);
+        }
+
         $this->dispatchBrowserEvent('alert',[
             'type'=> 'success',
             'message'=> 'Atualização encaminhada'
         ]);
 
+        $this->dispatchBrowserEvent('closeModal', []);
 
     }
 
@@ -199,23 +258,7 @@ class ProcessMonitor extends Component
         }
     }
 
-    private function validation($fields){
-        $errors = [];
-        $this->errorsKeys = [];
-        $this->errors = [];
-        foreach ($fields as $field => $value)
-        {
-            if($this->checkMandatory($field) && empty(trim($value))){
-                array_push($errors, [
-                    "message" => "O campo {$field} é obrigatorio",
-                    "valid" => false,
-                ]);
-                $this->errorsKeys[] = $field;
-            }
-        }
-
-        return $errors;
-    }
+  
 
     public function checkMandatory($field){
         return in_array($field, $this->obrigatory_filds);

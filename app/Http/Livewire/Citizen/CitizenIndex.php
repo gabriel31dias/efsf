@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Citizen;
 use App\Http\Services\GenerateProcess;
+use App\Models\Dispatch;
+use App\Models\Process;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Services\CheckRegistration;
 use App\Models\CountryTypeStreat;
@@ -31,6 +33,8 @@ class CitizenIndex extends Component
     use WithFileUploads;
     public $searchTerm = null;
     public $ufs;
+
+   
     public $file_capture_image_string;
     public $genre_name;
     public $traceErrorsMatriculation;
@@ -68,6 +72,8 @@ class CitizenIndex extends Component
     public $searchNumber;
     public $searchNrCedula;
     public $searchName;
+
+    public $process;
 
     public $currentUfIdent;
 
@@ -278,9 +284,39 @@ class CitizenIndex extends Component
     public $currentServiceStation;
     public $currentTypeStreet;
 
+
+    public function viewCurrentProcess(){
+        $this->dispatchBrowserEvent('redirect',[
+            'url'=> '/monitor/'.$this->process->id.'/edit',
+        ]);
+    }
+
     public function selectedUfCert($id){
         $this->fields['uf_certificate'] = $id;
         $this->currentUfCert = Uf::find($id);
+    }
+
+    public function setAdjusted(){
+        $user = auth()->user();
+
+        $newDespatch = Dispatch::create([
+            'user_id' =>  $user->id,
+            'type' => 3,
+            'process_id' => $this->process->id,
+            'comment' => 'Ajuste da situação '.Process::SITUATION_TYPES_LABELS[$this->process->situation].' realizado. ',
+            'statusString' => Process::SITUATION_TYPES_LABELS[$this->process->situation]
+        ]);
+
+        $this->process->update([
+            'divergence' => false
+        ]);
+
+        $this->dispatchBrowserEvent('alert',[
+            'type'=> 'success',
+            'message'=> "Ajuste realizado com sucesso !"
+        ]);
+
+
     }
 
     public function updated_uf_ident($obj){
@@ -579,9 +615,6 @@ class CitizenIndex extends Component
         $this->ufs = Uf::get();
     }
 
-    public function generatePdf(){
-
-    }
 
     public function setCitizen($id){
         if(!$id){
@@ -611,6 +644,12 @@ class CitizenIndex extends Component
 
         if($citizen['cid_wallet']){
             $this->currentUfCarteira = Uf::find($citizen['cid_wallet']);
+        }
+
+        $process = \App\Models\Process::where('citizen_id', $this->citizen->id )->where('situation','!=', \App\Models\Process::RECEIVED_BY_THE_POST_RESPONSIBLE_AND_FINALIZED_DELIVERED)->where('situation','!=', \App\Models\Process::CANCELED)->first();
+        $this->process = $process;
+        if(isset($process->id)){
+           $this->process =  $process;
         }
 
         $this->other_genre = $genre->id == 3 ? true : false;
@@ -1135,7 +1174,7 @@ class CitizenIndex extends Component
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
-            "file_capture_image" => $this->fields["file_capture_image"],
+            "file_capture_image" => $this->fields["file_capture_image"] ?? $this->citizen->file_capture_image,
 
             "cpf" => $this->fields["cpf"],
             "district" => $this->fields["district"],

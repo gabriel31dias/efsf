@@ -330,6 +330,24 @@ class PermissionSeeder extends Seeder
         ]);
 
 
-    
+         /* PERMISSOES Processos */
+         Permission::firstOrCreate([ 
+            'name' => 'Visualizar Processos ',
+            'permission' => 'process.index',
+            'group' => 'Processos ' ,
+        ]);
+
+        Permission::firstOrCreate([ 
+            'name' => 'Editar Processos ',
+            'permission' => 'process.edit',
+            'group' => 'Processos ' ,
+        ]);
+
+        Permission::firstOrCreate([ 
+            'name' => 'Monitorar Processos ',
+            'permission' => 'monitor.view',
+            'group' => 'Processos ' ,
+        ]);
+
     }
 }

@@ -5,6 +5,23 @@
     }
     }" class="card page-wrapper">
  @include('livewire.citizen.dialogs.dialog-capture')
+  
+ @if($process)
+   @if($process->divergence == true)
+      <div class="alert animated flipInX alert-danger alert-dismissible flipOutX"><strong>
+       Status: {{ App\Models\Process::SITUATION_TYPES_LABELS[$process->situation]}} </strong>
+      <p> Comentário: {{ $process->last_message }}.</p>
+      <br>
+      <button wire:click="setAdjusted()" type="button" class=" bg-success  focus:ring-4 rounded-lg  
+          text-sm p-2.5 text-center text-white" x-data="{id:'modal-change-state'}" x-on:click="modal=true">
+            Marcar como corrigido
+      </button>
+      
+      <span class="close" data-dismiss="alert"><i class="fa fa-times-circle"></i></span>
+      
+    </div>   
+   @endif
+ @endif
 
  <div data-keyboard="false" data-backdrop="static" wire:ignore.self
    class="modal modal-blur fade" id="modal-search" tabindex="-1"
@@ -348,6 +365,19 @@ role="dialog"  aria-hidden="true">
                    @if ($this->action == 'update')
                      @livewire('citizen.modal-change-state', ['citizen' => $citizen])
                    @endif 
+
+                   @if($process)
+                   <a  wire:click="viewCurrentProcess()"  class="btn btn-primary inline-flex">
+                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                        <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7"></path>
+                     </svg>
+                     Visualizar processo atual
+                   </a>
+                   @endif 
+
                    <a onclick="$('#modal-captura-biometrica').modal('show');"  class="btn btn-primary inline-flex">
                      <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hand-ring-finger" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -1895,6 +1925,13 @@ role="dialog"  aria-hidden="true">
           }
       })
      }
+
+     window.addEventListener('redirect',({detail:{url, delay}})=>{
+        setTimeout(() => {
+            Turbolinks.visit(url)
+        }, delay);
+    })
+
 
 
     function loadMultSelectOutrosDocumentos(){

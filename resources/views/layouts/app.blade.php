@@ -534,7 +534,6 @@
                     'classIcon' => 'ti  ti-timeline-event-text',
                     'href' => route('process.index'),
                     'can' => 'process.index',
-
                   ])
                   @endif
 
