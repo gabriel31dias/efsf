@@ -646,11 +646,7 @@ class CitizenIndex extends Component
             $this->currentUfCarteira = Uf::find($citizen['cid_wallet']);
         }
 
-        $process = \App\Models\Process::where('citizen_id', $this->citizen->id )->where('situation','!=', \App\Models\Process::RECEIVED_BY_THE_POST_RESPONSIBLE_AND_FINALIZED_DELIVERED)->where('situation','!=', \App\Models\Process::CANCELED)->first();
-        $this->process = $process;
-        if(isset($process->id)){
-           $this->process =  $process;
-        }
+        $this->callProcess();
 
         $this->other_genre = $genre->id == 3 ? true : false;
 
@@ -802,6 +798,18 @@ class CitizenIndex extends Component
 
         $this->dispatchBrowserEvent('closeModalList');
         $this->dispatchBrowserEvent('closeModalSearch');
+    }
+
+    public function callProcess(){
+        $process = \App\Models\Process::where('citizen_id', $this->citizen->id )
+        ->where('situation','!=', \App\Models\Process::RECEIVED_BY_THE_POST_RESPONSIBLE_AND_FINALIZED_DELIVERED)
+        ->where('situation','!=', \App\Models\Process::HAND_OVER_TO_THE_POST_PERSON_IN_CHARGE)
+        ->where('situation','!=', \App\Models\Process::RECEIVED_BY_THE_POST_RESPONSIBLE_AND_FINALIZED_DELIVERED)
+        ->where('situation','!=', \App\Models\Process::CANCELED)->first();
+        $this->process = $process;
+        if(isset($process->id)){
+           $this->process =  $process;
+        }
     }
 
     public function getCharacteristics(){

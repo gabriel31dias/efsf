@@ -209,14 +209,17 @@
                   <div class="modal-body">
                      <form>
                         <div class="form-group">
-                           <label for="recipient-name" class="col-form-label">Encaminhar: {{$service_station}}</label>
-                           <livewire:users.servicestation-select />
+                           <label for="recipient-name" class="col-form-label">Encaminhar: </label>
+                           <livewire:users.servicestation-select 
+                              :defaultValue="$service_station"
+                           />
                         </div>
                         <div class="form-group">
+                           
                            <label for="recipient-name" class="col-form-label">Atribuir:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                            <livewire:users.users-select
                               :defaultValue="$user"
-                              :customEvent="'selectedUfIdent'"
+                             
                               />
                         </div>
                         <div style="display: flex" class="form-group">
@@ -235,7 +238,7 @@
                      </form>
                   </div>
                   <div class="modal-footer">
-                    
+                  
                         <a wire:click="sendForwarding()" style="background-color: #a0bee6; font-weight: 500" type="button"
                            class="btn-modal btn btn-default" >
                         Enviar

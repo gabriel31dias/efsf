@@ -111,8 +111,8 @@ class ProcessMonitor extends Component
 
     public function mount()
     {
-        
-
+        $this->user = User::find($this->process->user_id);
+        $this->service_station = ServiceStation::find($this->process->user_id); 
     }
 
     public function validation(){
@@ -153,7 +153,7 @@ class ProcessMonitor extends Component
             'title' => $this->process->code .' Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? '')  , 
             'resolution_url' => '/monitor/'.$this->process->id.'/edit', 
             'user_id_emiter'=> $user->id, 
-            'user_receive' => $this->user, 
+            'user_receive' => $this->user->id, 
             'type' => 1, 
             'visualized' => false,
             'citizen_id' => $citizen->id,
@@ -169,7 +169,8 @@ class ProcessMonitor extends Component
         ]);
 
 
-        if(in_array((int) $this->status, $divergenceStatus)){           
+        if(in_array((int) $this->status, $divergenceStatus)){        
+             
             $process = Process::find($this->process->id);
 
             $process->update([

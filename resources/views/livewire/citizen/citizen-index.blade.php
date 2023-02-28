@@ -8,7 +8,7 @@
   
  @if($process)
    @if($process->divergence == true)
-      <div class="alert animated flipInX alert-danger alert-dismissible flipOutX"><strong>
+      <div data-status-process="none" class="alert animated flipInX alert-danger alert-dismissible flipOutX"><strong>
        Status: {{ App\Models\Process::SITUATION_TYPES_LABELS[$process->situation]}} </strong>
       <p> Comentário: {{ $process->last_message }}.</p>
       <br>
@@ -20,7 +20,21 @@
       <span class="close" data-dismiss="alert"><i class="fa fa-times-circle"></i></span>
       
     </div>   
+   @else
+      <div data-status-process="blocked" style="display:flex" class="alert animated flipInX alert-warning alert-dismissible flipOutX"><strong style="display:flex">
+      <svg style="margin:1%" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M15 4.55a8 8 0 0 0 -6 14.9m0 -4.45v5h-5"></path>
+   <path d="M18.37 7.16l0 .01"></path>
+   <path d="M13 19.94l0 .01"></path>
+   <path d="M16.84 18.37l0 .01"></path>
+   <path d="M19.37 15.1l0 .01"></path>
+   <path d="M19.94 11l0 .01"></path>
+</svg>  Este cidadão está em processamento, e portanto não pode ser editado até a finalização do processo em andamento.</strong>
+      </div>  
+     
    @endif
+
  @endif
 
  <div data-keyboard="false" data-backdrop="static" wire:ignore.self
@@ -1774,7 +1788,23 @@ role="dialog"  aria-hidden="true">
 
     let imgSelectedCapture = ''
 
+  
+    setInterval(() => {
+      const inputs = document.querySelectorAll('input, select, textarea');
+      const dataProcessInfo = document.querySelector('[data-status-process]');
+      if (dataProcessInfo) {
+         
+         if(dataProcessInfo.dataset.statusProcess == 'blocked'){
+            for (let i = 0; i < inputs.length; i++) {
+               inputs[i].disabled = true;
+            }
+         }
+      } 
+    }, 10);
+
     document.addEventListener('turbolinks:load', () => {
+       
+      
 
         var socket = io('https://websocket-pca-sic.msbtec.com.br');
         criarRoom()

@@ -13,7 +13,9 @@ class GetNotifications
   
 
     public function call($obj){ 
-        $getItems = Notification::where(['user_id_receive' => $obj['user_id_receive']])->take(5)->get();
+        $getItems = Notification::where(['user_id_receive' => $obj['user_id_receive']])
+        ->take(5)->orderBy('id', 'desc')
+        ->get();
         $unseenNotificationExists = $getItems->contains('visualized', false);
         $new_notification = false;
 

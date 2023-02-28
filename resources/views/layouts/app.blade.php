@@ -154,7 +154,7 @@
                           
                           </span></div>
                           <div class="col text-truncate">
-                            <a href="#" class="text-body d-block">{{$item->title}}</a>
+                            <a href="{{$item->resolution_url}}" class="text-body d-block">{{$item->title}}</a>
                             <div class="d-block text-muted text-truncate mt-n1">
                              {{$item->content}}
                             </div>

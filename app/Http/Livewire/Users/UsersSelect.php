@@ -8,23 +8,27 @@ use Livewire\Component;
 class UsersSelect extends Component
 {
     public $query;
-    public $perfil_name;
+    public $name;
     public $users;
     public $selectedId;
     public $closed = false;
     public $highlightIndex;
     public $selectedValue;
 
-    protected $listeners = ['curretProfile'];
+    public $defaultValue;
 
-    public function curretProfile(){
-        $this->query = $this->perfil_name;
+    protected $listeners = ['curretUsert'];
+    
+
+    public function curretUser(){
+        $this->query = $this->name;
     }
 
     public function mount()
     {
         $this->reset1();
-        $this->curretProfile();
+       
+        if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->name);
     }
 
     public function reset1()
@@ -75,6 +79,7 @@ class UsersSelect extends Component
 
     public function selectItem($id, $value){
         $this->query = $value;
+       
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
