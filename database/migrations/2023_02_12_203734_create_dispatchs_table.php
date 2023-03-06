@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('type');
             $table->integer('process_id');
+            $table->integer('to_service_station_id')->nullable();
+            $table->integer('to_user_id')->nullable();
             $table->text('comment')->nullable();
             $table->text('statusString')->nullable();
             $table->timestamps();

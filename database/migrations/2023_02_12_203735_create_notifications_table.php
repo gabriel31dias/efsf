@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->unsignedBigInteger('user_id_emiter');
-            $table->unsignedBigInteger('user_id_receive');
+            $table->unsignedBigInteger('user_id_receive')->nullable();
             $table->boolean('visualized')->default(false);
             $table->string('resolution_url');
             $table->integer('citizen_id');
+            $table->integer('service_station_id')->nullable();
             $table->integer('type');
             $table->timestamps();
             $table->foreign('user_id_emiter')->references('id')->on('users')->onDelete('cascade');

@@ -805,7 +805,28 @@ class CitizenIndex extends Component
         ->where('situation','!=', \App\Models\Process::RECEIVED_BY_THE_POST_RESPONSIBLE_AND_FINALIZED_DELIVERED)
         ->where('situation','!=', \App\Models\Process::HAND_OVER_TO_THE_POST_PERSON_IN_CHARGE)
         ->where('situation','!=', \App\Models\Process::RECEIVED_BY_THE_POST_RESPONSIBLE_AND_FINALIZED_DELIVERED)
-        ->where('situation','!=', \App\Models\Process::CANCELED)->first();
+        ->where('situation','!=', \App\Models\Process::CANCELED)
+        ->where(function ($query) {
+            $query->where('user_id', Auth::user()->id)
+            ->orWhere('to_user_id', Auth::user()->id);
+        })
+        ->first();
+
+        // Se não existir um usuario ele verificar a existencia de um status vinculado ao service station
+        if (!$process) {
+            $meServiceStations = auth()->user()->userStations->toArray();
+
+            $serviceStationIds = array_map(function ($item) {
+                return $item['service_station_id'];
+            }, $meServiceStations);
+
+            $process = \App\Models\Process::where('citizen_id', $this->citizen->id )
+            ->where('situation','!=', \App\Models\Process::RECEIVED_BY_THE_POST_RESPONSIBLE_AND_FINALIZED_DELIVERED)
+            ->where('situation','!=', \App\Models\Process::HAND_OVER_TO_THE_POST_PERSON_IN_CHARGE)
+            ->where('situation','!=', \App\Models\Process::RECEIVED_BY_THE_POST_RESPONSIBLE_AND_FINALIZED_DELIVERED)
+            ->where('situation','!=', \App\Models\Process::CANCELED)->whereIn('to_service_station_id', $serviceStationIds)->first();
+        }
+
         $this->process = $process;
         if(isset($process->id)){
            $this->process =  $process;

@@ -42,7 +42,7 @@ class GenerateProcess
                 'process_id' => $p->id,
                 'type' => 1,
                 'comment' => "Primeiro despacho é enviado automaticamente pelo usuário do atendimento ao setor de triagem",
-                'statusString' => Process::SITUATION_TYPES_LABELS[1]
+                'statusString' => Process::SITUATION_TYPES_LABELS[1],
             ]);
         }
 

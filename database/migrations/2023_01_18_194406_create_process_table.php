@@ -26,6 +26,8 @@ return new class extends Migration
             $table->integer('payment');
             $table->boolean('status')->default(1);
             $table->boolean('divergence')->default(0);
+            $table->integer('to_user_id')->nullable();
+            $table->integer('to_service_station_id')->nullable();
             $table->timestamps();
         });
     }
