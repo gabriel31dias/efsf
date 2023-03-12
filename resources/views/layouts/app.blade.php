@@ -129,12 +129,15 @@
                   <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card " data-bs-popper="static">
                   <div class="card">
                     <div class="card-header">
-                      <h3 class="card-title">Notificações</h3>
+                    
+                      <h3 class="card-title">Notificações {{ auth()->user()->userStations }}</h3>
                     </div>
                     <div class="list-group list-group-flush list-group-hoverable">
 
+                  
+
                     @php
-                      $notifications = (new App\Http\Services\GetNotifications())->call(['user_id_receive' =>  Auth::user()->id ])['notifications']
+                      $notifications = (new App\Http\Services\GetNotifications())->call(['user_id_receive' =>  Auth::user()->id, 'service_stations' => auth()->user()->userStations->toArray() ])['notifications']
                     @endphp
 
                     @foreach($notifications as $item)

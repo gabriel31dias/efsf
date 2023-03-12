@@ -102,7 +102,7 @@ class ProcessMonitor extends Component
                 'type' => 2,
                 'process_id' => $this->process->id,
                 'comment' => $this->content,
-                'statusString' => Process::IN_REVIEW
+                'statusString' => Process::SITUATION_TYPES_LABELS[Process::IN_REVIEW] 
             ]);
         }
 
@@ -111,20 +111,14 @@ class ProcessMonitor extends Component
 
     public function mount()
     {
-        $this->user = User::find($this->process->user_id);
+        //$this->user = User::find($this->process->user_id);
         $this->service_station = ServiceStation::find($this->process->user_id); 
+
+
     }
 
     public function validation(){
-        if(!$this->user){
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'error',
-                'message'=> 'Por favor selecione o usuário a ser notificado.'
-            ]);
-
-            return false;
-        }
-
+        
         if($this->currentStatus == $this->status){
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'error',
@@ -153,19 +147,22 @@ class ProcessMonitor extends Component
             'title' => $this->process->code .' Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? '')  , 
             'resolution_url' => '/monitor/'.$this->process->id.'/edit', 
             'user_id_emiter'=> $user->id, 
-            'user_receive' => $this->user->id, 
+            'user_receive' => $this->user->id ?? null, 
             'type' => 1, 
             'visualized' => false,
             'citizen_id' => $citizen->id,
-            
+            'service_station_id' => $this->service_station->id ?? $this->service_station
         ]);
 
+        
         $newDespatch = Dispatch::create([
             'user_id' =>  $user->id,
             'type' => 2,
             'process_id' => $this->process->id,
             'comment' => $this->content,
-            'statusString' => Process::SITUATION_TYPES_LABELS[$this->status]
+            'statusString' => Process::SITUATION_TYPES_LABELS[$this->status],
+            'to_user_id' => $this->user->id ?? null,
+            'to_service_station_id' => $this->service_station->id ?? $this->service_station,
         ]);
 
 
@@ -176,7 +173,9 @@ class ProcessMonitor extends Component
             $process->update([
                 'divergence' => true,
                 'last_message' => $this->content,
-                'situation' => $this->status
+                'situation' => $this->status,
+                'to_user_id' => $this->user->id ?? null,
+                'to_service_station_id' => $this->service_station->id ?? $this->service_station,
             ]);
         }else{
             $process = Process::find($this->process->id);
@@ -184,7 +183,9 @@ class ProcessMonitor extends Component
             $process->update([
                 'divergence' => false,
                 'last_message' => $this->content,
-                'situation' => $this->status
+                'situation' => $this->status,
+                'to_user_id' => $this->user->id ?? null,
+                'to_service_station_id' => $this->service_station->id ?? $this->service_station,
             ]);
         }
 
