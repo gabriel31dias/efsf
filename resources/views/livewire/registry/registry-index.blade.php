@@ -63,12 +63,12 @@
                       <tbody class="table-tbody">
                          @foreach ($registries as $registry)
                          <tr @can('permission', 'registry.edit') wire:click="clickUpdate({{$registry->id}}) @endcan">
-                            <td class="">{{$registry->sic_code}}</td>
+                            <td class="">{{$registry->id}}</td>
                             <td class="">{{$registry->cns}}</td>
                             <td class="">{{$registry->name}}</td>
                             <td class="">{{$registry->fantasy_name}}</td>
                             <td class="">{{$registry->uf->name}}</td>
-                            <td class="">{{$registry->county_id}}</td>
+                            <td class="">{{$registry->county->name}}</td>
                             <td class="">{{isset($registry->updated_at) ? $registry->updated_at->format('d/m/Y h:i') : ''}}</td>
 
                          </tr>

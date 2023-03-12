@@ -16,11 +16,13 @@ class CountySelect extends Component
     public $selectedValue;
     public $counties = [];
     public $county;
+    public $uf;
+    public $is_transfer; 
 
     public $defaultValue;
     public $customEvent;
 
-    protected $listeners = ['clearServiceStationField', 'setCounty'];
+    protected $listeners = ['clearServiceStationField', 'setCounty', 'filterUf', 'filterUfTransfer'];
 
     public function mount()
     {
@@ -81,7 +83,11 @@ class CountySelect extends Component
     public function updatedQuery()
     {
         $this->closed = false;
-        $this->counties = County::where('name', 'ilike', '%' . $this->query . '%')->take(30)
+        $this->counties = County::where('name', 'ilike', '%' . $this->query . '%')->where(function($query) {
+            if($this->uf) { 
+                $query->where('uf_id', $this->uf);
+            }
+        })->take(30)
             ->get()
             ->toArray();
     }
@@ -94,9 +100,21 @@ class CountySelect extends Component
 
         if($this->customEvent){
             $this->emitUp($this->customEvent, $id);
+            $this->emit($this->customEvent, $id);
         }else{
             $this->emitUp('selectedCounty', $id);
+            $this->emit('filterCounty', $id);
         }
+    }
+
+    public function filterUf($uf_id){
+        if($this->is_transfer) return; 
+        $this->uf = $uf_id;
+    }
+
+    public function filterUfTransfer($uf_id){ 
+        if(!$this->is_transfer) return; 
+        $this->uf = $uf_id;
     }
 
 

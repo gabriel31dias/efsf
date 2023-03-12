@@ -39,18 +39,19 @@
              <div class="card">
                 <div class="card-body">
                    <div class="row">
+                     @if ($action == 'update')
 
                      <div class="col-lg-2">
                         <div class="mb-3">
-                           <label class="form-label">Codigo SIC<span class="error_tag"> *</span></label>
+                           <label class="form-label">Codigo SIC</label>
                            <div class="input-group input-group-flat">
-                              <input wire:model="fields.sic_code" type="text"
-                                 class="form-control" autocomplete="off" required>
+                              <input type="text" value="{{ $this->registry->id }}"
+                                 class="form-control" autocomplete="off" disabled>
                            </div>
                            @error('fields.sic_code') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
-
+                     @endif
                      <div class="col-lg-4">
                         <div class="mb-3">
                            <label class="form-label">Nome do Cartório<span class="error_tag"> *</span></label>

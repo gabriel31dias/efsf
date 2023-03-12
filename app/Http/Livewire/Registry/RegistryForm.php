@@ -11,7 +11,6 @@ class RegistryForm extends Component
     public $registry;
     public $showCreate; 
     public $fields = [
-        'sic_code' => '',
         'cns' => '',
         'name' => '',
         'fantasy_name' => '',
@@ -20,7 +19,7 @@ class RegistryForm extends Component
         'support_name' => '',
         'judge_name' => '',
         'note' => '',
-        'allow_digit' => true,
+        'allow_digit' => 0,
         'uf_id' => '',
         'county_id' => '',
     ];
@@ -32,7 +31,6 @@ class RegistryForm extends Component
     ];
 
     protected $rules = [
-        'fields.sic_code' => 'required',
         'fields.cns' => 'required',
         'fields.name' => 'required',
         'fields.uf_id' => 'required',

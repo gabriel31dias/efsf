@@ -104,7 +104,7 @@
 
                      <div class="col-lg-3">
                         <div class="mb-3">
-                           <label class="form-label">Nº do registro<span class="error_tag"> *</span></label>
+                           <label class="form-label">Nº do termo<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
                               <input wire:model="fields.registry_number" type="text" min="0" class="form-control" autocomplete="off">
                            </div>

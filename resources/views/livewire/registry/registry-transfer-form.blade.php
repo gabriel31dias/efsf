@@ -40,6 +40,20 @@
              <div class="card-body">
                 <div class="row">
                     
+                  <div class="col-lg-3">
+                     <div class="mb-3">
+                        <label class="form-label">UF Origem</label>
+                        @livewire('uf-select.uf-select', ['defaultValue' => null])
+                     </div>
+                  </div>
+
+                  <div class="col-lg-3">
+                     <div class="mb-3">
+                        <label class="form-label">Município Origem</label>
+                        @livewire('county-select.county-select', ['defaultValue' => null])
+                     </div>
+                  </div>
+
                     <div class="col-lg-6">
                         <div class="mb-3">
                            <label class="form-label">Cartório Origem<span class="error_tag">*</span></label>
@@ -49,10 +63,24 @@
                      </div>
 
 
+                     <div class="col-lg-3">
+                        <div class="mb-3">
+                           <label class="form-label">UF Destino</label>
+                           @livewire('uf-select.uf-select', ['defaultValue' => null, 'customEvent' => 'filterUfTransfer'])
+                        </div>
+                     </div>
+   
+                     <div class="col-lg-3">
+                        <div class="mb-3">
+                           <label class="form-label">Município Destino</label>
+                           @livewire('county-select.county-select', ['defaultValue' => null, 'customEvent' => 'filterCountyTransfer', 'is_transfer' => true])
+                        </div>
+                     </div>
+
                      <div class="col-lg-6">
                         <div class="mb-3">
                            <label class="form-label">Cartório Destino<span class="error_tag">*</span></label>
-                            @livewire('registry-select.registry-select', ['defaultValue' => $registryTransfer, 'customEventSelect' => 'selectedDestination'])
+                            @livewire('registry-select.registry-select', ['defaultValue' => $registryTransfer, 'customEventSelect' => 'selectedDestination', 'is_transfer' => true])
                            @error('fields.registry_destination_id') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
                      </div>
