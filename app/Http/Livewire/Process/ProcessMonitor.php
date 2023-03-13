@@ -22,6 +22,7 @@ class ProcessMonitor extends Component
     public $errors = [];
 
     public $content = "";
+    public $viewBox = "";
 
     public $user;
     public $user_name;
@@ -91,6 +92,7 @@ class ProcessMonitor extends Component
     public $process;
     public function render()
     {
+
         $this->dispatchs = Dispatch::where(['process_id' => $this->process->id])->get();
         $this->currentStatus = $this->process->situation;
         $user = auth()->user();
@@ -102,7 +104,7 @@ class ProcessMonitor extends Component
                 'type' => 2,
                 'process_id' => $this->process->id,
                 'comment' => $this->content,
-                'statusString' => Process::SITUATION_TYPES_LABELS[Process::IN_REVIEW] 
+                'statusString' => Process::SITUATION_TYPES_LABELS[Process::IN_REVIEW]
             ]);
         }
 
@@ -111,14 +113,15 @@ class ProcessMonitor extends Component
 
     public function mount()
     {
+        $this->viewBox = 'despachs';
         //$this->user = User::find($this->process->user_id);
-        $this->service_station = ServiceStation::find($this->process->user_id); 
-
+        $this->service_station = ServiceStation::find($this->process->user_id);
+        $this->status = $this->process->status;
 
     }
 
     public function validation(){
-        
+
         if($this->currentStatus == $this->status){
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'error',
@@ -128,7 +131,7 @@ class ProcessMonitor extends Component
             return false;
         }
 
-        return true;    
+        return true;
     }
 
     public function sendForwarding(){
@@ -142,19 +145,19 @@ class ProcessMonitor extends Component
         }
 
         $citizen = Citizen::where(['process' => $this->process->code ])->first();
-       
-        $res = $sended->call(['content' => $this->content, 
-            'title' => $this->process->code .' Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? '')  , 
-            'resolution_url' => '/monitor/'.$this->process->id.'/edit', 
-            'user_id_emiter'=> $user->id, 
-            'user_receive' => $this->user->id ?? null, 
-            'type' => 1, 
+
+        $res = $sended->call(['content' => $this->content,
+            'title' => $this->process->code .' Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? '')  ,
+            'resolution_url' => '/monitor/'.$this->process->id.'/edit',
+            'user_id_emiter'=> $user->id,
+            'user_receive' => $this->user->id ?? null,
+            'type' => 1,
             'visualized' => false,
             'citizen_id' => $citizen->id,
             'service_station_id' => $this->service_station->id ?? $this->service_station
         ]);
 
-        
+
         $newDespatch = Dispatch::create([
             'user_id' =>  $user->id,
             'type' => 2,
@@ -166,8 +169,8 @@ class ProcessMonitor extends Component
         ]);
 
 
-        if(in_array((int) $this->status, $divergenceStatus)){        
-             
+        if(in_array((int) $this->status, $divergenceStatus)){
+
             $process = Process::find($this->process->id);
 
             $process->update([
@@ -260,7 +263,7 @@ class ProcessMonitor extends Component
         }
     }
 
-  
+
 
     public function checkMandatory($field){
         return in_array($field, $this->obrigatory_filds);
