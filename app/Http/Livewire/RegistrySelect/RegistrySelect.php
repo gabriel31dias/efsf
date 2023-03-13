@@ -17,8 +17,10 @@ class RegistrySelect extends Component
     public $registries = [];
     public $defaultValue = null;
     public $customEventSelect = null;
+    public $county;
+    public $is_transfer; 
 
-    protected $listeners = [];
+    protected $listeners = ['filterCounty', 'filterCountyTransfer'];
 
     public function mount()
     {
@@ -69,9 +71,23 @@ class RegistrySelect extends Component
     public function updatedQuery()
     {
         $this->closed = false;
-        $this->registries = Registry::where('name', 'ilike', '%' . $this->query . '%')->take(30)
+        $this->registries = Registry::where('name', 'ilike', '%' . $this->query . '%')->where(function($query) {
+            if($this->county) { 
+                $query->where('county_id', $this->county);
+            }
+        })->take(30)
             ->get()
             ->toArray();
+    }
+
+    public function filterCounty($county_id){ 
+        if($this->is_transfer) return; 
+        $this->county = $county_id;
+    }
+
+    public function filterCountyTransfer($county_id){ 
+        if(!$this->is_transfer) return; 
+        $this->county = $county_id;
     }
 
     public function selectItem($id, $value){

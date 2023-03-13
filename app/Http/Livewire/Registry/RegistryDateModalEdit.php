@@ -4,11 +4,15 @@ namespace App\Http\Livewire\Registry;
 
 use App\Models\RegistryDate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class RegistryDateModalEdit extends Component
 {
+    use WithFileUploads; 
     public $modal = false;
     public $registryDate;
+    public $documents = null; 
+    public $document = null; 
     public $fieldsUpdateDate = [
         'created_date' => null, 
         'closing_date' => null,
@@ -49,11 +53,23 @@ class RegistryDateModalEdit extends Component
         $this->fieldsUpdateDate['incorporated_registry_id'] = $this->registryDate->incorporated_registry_id;
         $this->fieldsUpdateDate['collection_number'] = $this->registryDate->collection_number;
         $this->fieldsUpdateDate['note'] = $this->registryDate->note;
+        $this->documents = json_decode($this->registryDate->documents, 1) ?? [];
         $this->ignore_number = RegistryDate::where('incorporated_registry_id', $this->registryDate->incorporated_registry_id)
                                 ->where('registry_id', $this->registryDate->registry_id)
                                 ->where('id', '<>', $this->registryDate->id )
                                 ->pluck('collection_number')->toArray();
     }
+
+    public function storeDocument(){ 
+        if(isset($this->document['file'])){ 
+            $path = $this->document['file']->store('public');
+            $this->documents[] = ['path' => $path, 'description' => $this->document['description']];
+            $this->registryDate->documents = json_encode($this->documents); 
+            $this->registryDate->save();
+        }
+        $this->document = null; 
+    }
+
 
     public function saveRegistry(){
         

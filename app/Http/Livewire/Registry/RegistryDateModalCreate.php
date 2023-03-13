@@ -4,11 +4,15 @@ namespace App\Http\Livewire\Registry;
 
 use App\Models\RegistryDate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class RegistryDateModalCreate extends Component
 {
+    use WithFileUploads; 
+
     public $modal = false;
     public $registry_id;
+    public $document = null; 
     public $fieldsCreateDate = [
         'created_date' => null, 
         'closing_date' => null,
@@ -25,6 +29,7 @@ class RegistryDateModalCreate extends Component
 
     protected $rules = [
         'fieldsCreateDate.created_date' => 'required',
+        'document.file' => 'mimes:pdf|max:2048'
     ];
 
     protected $messages = [ 
@@ -45,9 +50,11 @@ class RegistryDateModalCreate extends Component
 
     public function saveRegistry(){
         
-        $this->validate(); 
+        $this->validate();
+        $documents = $this->storeDocument();
+        $this->fieldsCreateDate['documents'] = $documents;
         $this->fieldsCreateDate['registry_id'] = $this->registry_id;
-        RegistryDate::create($this->fieldsCreateDate);
+        RegistryDate::firstOrCreate($this->fieldsCreateDate);
         $this->dispatchBrowserEvent('alert',[
             'type'=> 'success',
             'message'=> "Data foi criada com sucesso."
@@ -68,6 +75,14 @@ class RegistryDateModalCreate extends Component
             $this->modal = true;
         }
  
+    }
+
+    public function storeDocument(){ 
+        if(isset($this->document['file'])){ 
+            $path = $this->document['file']->store('public');
+            return json_encode([['path' => $path, 'description' => $this->document['description']]]);
+        }
+        return json_encode([]);
     }
 
     public function clearRegistry() { 

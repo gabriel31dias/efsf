@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('registries', function (Blueprint $table) {
             $table->id();
-            $table->string('sic_code'); 
             $table->string('cns');
             $table->string('name'); 
             $table->string('fantasy_name')->nullable();

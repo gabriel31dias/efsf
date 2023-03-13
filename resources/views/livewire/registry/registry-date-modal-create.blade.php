@@ -45,25 +45,17 @@
                                    </div>
                                 </div>
 
-                                <div class="col-lg-6">
-                                 <div class="mb-3">
-                                    <label class="form-label">Data da Incorporação</label>
-                                    <div class="input-group input-group-flat">
-                                       <input wire:model="fieldsCreateDate.incorporated_date" type="date"
-                                          class="form-control" autocomplete="off" required>
-                                    </div>
-                                    @error('fieldsCreateDate.incorporated_date') <span class="text-danger"> {{ $message }}</span> @enderror
-                                 </div>
-                              </div>
-      
                               <div class="col-lg-6">
                                  <div class="mb-3">
-                                    <label class="form-label">Data de Desincorporação</label>
-                                    <div class="input-group input-group-flat">
-                                       <input wire:model="fieldsCreateDate.unincorporated_date" type="date"
-                                          class="form-control" autocomplete="off" required>
-                                    </div>
-                                    @error('fieldsCreateDate.unincorporated_date') <span class="text-danger"> {{ $message }}</span> @enderror
+                                    <label class="form-label">UF</label>
+                                    @livewire('uf-select.uf-select', ['defaultValue' => null])
+                                 </div>
+                              </div>
+
+                              <div class="col-lg-6">
+                                 <div class="mb-3">
+                                    <label class="form-label">Município</label>
+                                    @livewire('county-select.county-select', ['defaultValue' => null])
                                  </div>
                               </div>
 
@@ -90,6 +82,28 @@
                                     @error('fieldsCreateDate.collection_number') <span class="text-danger"> {{ $message }}</span> @enderror
                                  </div>
                               </div>
+
+                              <div class="col-lg-6">
+                                 <div class="mb-3">
+                                    <label class="form-label">Data da Incorporação</label>
+                                    <div class="input-group input-group-flat">
+                                       <input wire:model="fieldsCreateDate.incorporated_date" type="date"
+                                          class="form-control" autocomplete="off" required>
+                                    </div>
+                                    @error('fieldsCreateDate.incorporated_date') <span class="text-danger"> {{ $message }}</span> @enderror
+                                 </div>
+                              </div>
+      
+                              <div class="col-lg-6">
+                                 <div class="mb-3">
+                                    <label class="form-label">Data de Desincorporação</label>
+                                    <div class="input-group input-group-flat">
+                                       <input wire:model="fieldsCreateDate.unincorporated_date" type="date"
+                                          class="form-control" autocomplete="off" required>
+                                    </div>
+                                    @error('fieldsCreateDate.unincorporated_date') <span class="text-danger"> {{ $message }}</span> @enderror
+                                 </div>
+                              </div>
         
                                 <div class="col-lg-12">
                                    <div class="mb-3">
@@ -103,6 +117,28 @@
                                 </div>
                              </div>
 
+                             <div class="col-lg-12">
+                              <div class="row">
+                                    <div class="col-lg-7">
+                                       <label class="form-label">Arquivo</label>
+
+                                    <input class="block w-full text-sm file:text-white 
+                                    file:bg-gradient-to-r from-sky-700 to-sky-900
+                                    bg-gray-50 border-none shadow-md border file:border-none file:p-2 rounded-lg file:cursor-pointer cursor-pointer focus:outline-none" wire:model="document.file" type="file">
+                                    @error('document.file') <span class="text-danger">{{ $message }}</span> @enderror
+                                 </div>
+                                    
+                                    <div class="col-lg-5">
+                                       <label class="form-label">Descrição</label>
+                                      <div class="input-group input-group-flat">
+                                         <input wire:model="document.description" type="text"
+                                            class="form-control" autocomplete="off" required>
+                                      </div>
+                                      @error('document.description') <span class="text-danger"> {{ $message }}</span> @enderror
+                                    </div>
+                              </div>
+                             </div>
+                             
 
                              <div class="flex justify-end mt-4">
                                 <button x-on:click="modal = false" class="text-white bg-gray-500 hover:bg-gray-600 

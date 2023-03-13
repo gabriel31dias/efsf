@@ -170,27 +170,27 @@ class PermissionSeeder extends Seeder
         
         /* PERMISSOES DE Suspensao */
             Permission::firstOrCreate([ 
-            'name' => 'Visualizar Suspensão de Cartório',
+            'name' => 'Visualizar Suspensão de Certidão',
             'permission' => 'suspension.index',
-            'group' => 'Suspensão de Cartório' ,
+            'group' => 'Suspensão de Certidão' ,
         ]);
 
         Permission::firstOrCreate([ 
-            'name' => 'Cadastrar Suspensão de Cartório',
+            'name' => 'Cadastrar Suspensão de Certidão',
             'permission' => 'suspension.create',
-            'group' => 'Suspensão de Cartório' ,
+            'group' => 'Suspensão de Certidão' ,
         ]);
 
         Permission::firstOrCreate([ 
-            'name' => 'Editar Suspensão de Cartório',
+            'name' => 'Editar Suspensão de Certidão',
             'permission' => 'suspension.edit',
-            'group' => 'Suspensão de Cartório' ,
+            'group' => 'Suspensão de Certidão' ,
         ]);
 
         Permission::firstOrCreate([ 
-            'name' => 'Excluir Suspensão de Cartório',
+            'name' => 'Excluir Suspensão de Certidão',
             'permission' => 'suspension.delete',
-            'group' => 'Suspensão de Cartório' ,
+            'group' => 'Suspensão de Certidão' ,
         ]);
 
 

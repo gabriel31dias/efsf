@@ -97,8 +97,11 @@ class UfSelect extends Component
         $this->closed = true;
         if($this->customEvent){
             $this->emitUp($this->customEvent, $id);
+            $this->emit($this->customEvent, $id);
+
         }else{
             $this->emitUp('selectedUf', $id);
+            $this->emit('filterUf', $id);
         }
     }
 

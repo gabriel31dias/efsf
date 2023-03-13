@@ -510,7 +510,7 @@
 
                               @livewire('global.menu-item',
                               [
-                              'title' => 'Suspensão de Cartório',
+                              'title' => 'Suspensão de Certidão',
                               'classIcon' => 'ti ti-ban',
                               'href' => route('registry-suspension.index'),
                               'can' => 'suspension.index',
