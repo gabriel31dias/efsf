@@ -13,17 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('dispatches', function (Blueprint $table) {
+        Schema::create('access_dispatches', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('type');
-            $table->integer('process_id');
-            $table->integer('to_service_station_id')->nullable();
-            $table->integer('to_user_id')->nullable();
-            $table->text('comment')->nullable();
-            $table->text('statusString')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('process_id')->nullable();
             $table->timestamps();
         });
+
+
     }
 
     /**
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dispatches');
+        Schema::dropIfExists('access_dispatches');
     }
 };
