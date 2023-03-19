@@ -423,8 +423,8 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap"
             rel="stylesheet" />
         </head>
-        <div class="container">
-            <header class="cabecalho">
+        <div >
+            <header class="cabecalho container">
                 <h1>Histórico de Tramitação e Visualização do Processo</h1>
                 <a href="#">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -512,8 +512,8 @@
                     <p style="margin-top:10px">Nome: <span>{{ strtoupper($process->name) }}</span></p>
                     <p style="margin-top:10px">Cpf: <span>{{ $process->citizen->cpf }}</span></p>
                     <p style="margin-top:10px">Rg: <span>{{ $process->citizen->rg }}</span></p>
-                    <p style="margin-top:10px">Último acesso: <span></span></p>
-                    <p style="margin-top:10px">Hora: <span>00:00</span></p>
+                    <p style="margin-top:10px">Último acesso: <span>{{ $this->getLastAcessUser()->name }}</span></p>
+                    <p style="margin-top:10px">Hora: <span> {{ $this->getLastAcessHour() }} </span></p>
                     <br />
                     <hr>
                 </div>
@@ -612,6 +612,7 @@
                                 </div>
                                 <div class="col-xs-7 box-processo-doc">
                                     <p>
+                                         {{ $item->comment }}
 
                                     </p>
                                 </div>

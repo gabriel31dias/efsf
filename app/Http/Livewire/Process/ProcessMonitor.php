@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Process;
 
 use App\Http\Services\GenerateNotifications;
+use App\Models\AccessDispatch;
 use App\Models\Citizen;
 use App\Models\Process;
 use App\Models\ServiceStation;
@@ -103,7 +104,7 @@ class ProcessMonitor extends Component
                 'user_id' => $user->id,
                 'type' => 2,
                 'process_id' => $this->process->id,
-                'comment' => $this->content,
+                'comment' => "O analista está analisando o processo.",
                 'statusString' => Process::SITUATION_TYPES_LABELS[Process::IN_REVIEW]
             ]);
         }
@@ -113,11 +114,28 @@ class ProcessMonitor extends Component
 
     public function mount()
     {
+
         $this->viewBox = 'despachs';
         //$this->user = User::find($this->process->user_id);
         $this->service_station = ServiceStation::find($this->process->user_id);
         $this->status = $this->process->status;
 
+        $dispatch = AccessDispatch::create([
+            'user_id' => auth()->user()->id,
+            'process_id' => $this->process->id
+        ]);
+
+
+    }
+
+    public function getLastAcessUser(){
+        $process = AccessDispatch::where(['process_id' => $this->process->id ])->first();
+        return User::find($process->id);
+    }
+
+    public function getLastAcessHour(){
+        $process = AccessDispatch::where(['process_id' => $this->process->id])->first();
+        return date('H:i', strtotime($process->created_at));
     }
 
     public function validation(){
@@ -134,32 +152,33 @@ class ProcessMonitor extends Component
         return true;
     }
 
-    public function sendForwarding(){
+    public function sendForwarding()
+    {
         $sended = new GenerateNotifications();
         $user = auth()->user();
 
         $divergenceStatus = [3, 4, 5, 6, 7, 8];
 
         if (!$this->validation()) {
-          return false;
+            return false;
         }
 
-        $citizen = Citizen::where(['process' => $this->process->code ])->first();
+        $citizen = Citizen::where(['process' => $this->process->code])->first();
 
-        $res = $sended->call(['content' => $this->content,
-            'title' => $this->process->code .' Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? '')  ,
+        $res = $sended->call([
+            'content' => $this->content,
+            'title' => $this->process->code .' Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? ''),
             'resolution_url' => '/monitor/'.$this->process->id.'/edit',
-            'user_id_emiter'=> $user->id,
+            'user_id_emiter' => $user->id,
             'user_receive' => $this->user->id ?? null,
             'type' => 1,
             'visualized' => false,
             'citizen_id' => $citizen->id,
-            'service_station_id' => $this->service_station->id ?? $this->service_station
+            'service_station_id' => $this->service_station->id ?? $this->service_station,
         ]);
 
-
         $newDespatch = Dispatch::create([
-            'user_id' =>  $user->id,
+            'user_id' => $user->id,
             'type' => 2,
             'process_id' => $this->process->id,
             'comment' => $this->content,
@@ -168,37 +187,28 @@ class ProcessMonitor extends Component
             'to_service_station_id' => $this->service_station->id ?? $this->service_station,
         ]);
 
+        $process = Process::find($this->process->id);
+        $processData = [
+            'last_message' => $this->content,
+            'situation' => $this->status,
+            'to_user_id' => $this->user->id ?? null,
+            'to_service_station_id' => $this->service_station->id ?? $this->service_station,
+        ];
 
-        if(in_array((int) $this->status, $divergenceStatus)){
-
-            $process = Process::find($this->process->id);
-
-            $process->update([
-                'divergence' => true,
-                'last_message' => $this->content,
-                'situation' => $this->status,
-                'to_user_id' => $this->user->id ?? null,
-                'to_service_station_id' => $this->service_station->id ?? $this->service_station,
-            ]);
-        }else{
-            $process = Process::find($this->process->id);
-
-            $process->update([
-                'divergence' => false,
-                'last_message' => $this->content,
-                'situation' => $this->status,
-                'to_user_id' => $this->user->id ?? null,
-                'to_service_station_id' => $this->service_station->id ?? $this->service_station,
-            ]);
+        if (in_array((int) $this->status, $divergenceStatus)) {
+            $processData['divergence'] = true;
+        } else {
+            $processData['divergence'] = false;
         }
 
-        $this->dispatchBrowserEvent('alert',[
-            'type'=> 'success',
-            'message'=> 'Atualização encaminhada'
+        $process->update($processData);
+
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => 'Atualização encaminhada',
         ]);
 
         $this->dispatchBrowserEvent('closeModal', []);
-
     }
 
     public function getDocumentByType($typeDocuments){
@@ -218,37 +228,6 @@ class ProcessMonitor extends Component
         return true;
     }
 
-    public function saveProfile(){
-        $validation = $this->validation($this->fields);
-
-        if(count($validation) > 0){
-            $this->errors = $validation;
-
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'error',
-                'message'=> $validation[0]["message"]
-            ]);
-            return false;
-        }
-
-        $process = Profile::updateOrCreate(['id' => $this->profile->id ?? 0],[
-            'name_profile' => $this->fields["nome_perfil"],
-            'status' => true,
-            'days_to_access_inspiration' => $this->fields["prazo_expiração"],
-            'days_to_activity_lock' => $this->fields["prazo_expiração_inatividade"]
-        ]);
-
-
-
-        if($process){
-            $this->messageSuccess();
-            $this->dispatchBrowserEvent('redirect',[
-                'url'=> '/profile',
-                'delay' => 1000
-            ]);
-        }
-    }
-
     public function messageSuccess(){
         if($this->action == "create"){
             $this->dispatchBrowserEvent('alert',[
@@ -263,21 +242,4 @@ class ProcessMonitor extends Component
         }
     }
 
-
-
-    public function checkMandatory($field){
-        return in_array($field, $this->obrigatory_filds);
-    }
-
-    public function enableDisableRegister(){
-        $result = (new ProfileRepository)->toggleStatus($this->profile->id);
-        if($result){
-            $this->profile->status = ! $this->profile->status;
-
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'success',
-                'message'=> "Perfil desabilitado com sucesso."
-            ]);
-        }
-    }
 }
