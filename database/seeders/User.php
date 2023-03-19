@@ -30,7 +30,7 @@ class User extends Seeder
             'status' => true,
             'cell' => "55995",
             'is_admin' => true,
-            'email' => "dwdwa@cdaawd.com",
+            'email' => "admin@admin.com",
             'user_name' => "admin",
             'password' => Hash::make("003001"),
             'city' => "andradina",

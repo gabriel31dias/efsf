@@ -38,8 +38,10 @@ if (cep != "") {
 
         document.getElementById('rua').value="...";
         document.getElementById('bairro').value="...";
-        document.getElementById('cidade').value="...";
-        document.getElementById('uf').value="...";
+        cidade = document.getElementById('cidade');
+        if (cidade) cidade.value = "..."; 
+        uf = document.getElementById('uf');
+        if (uf) uf.value = "..."; 
 
         var script = document.createElement('script');
 

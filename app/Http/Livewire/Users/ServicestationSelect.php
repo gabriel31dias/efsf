@@ -3,17 +3,20 @@
 namespace App\Http\Livewire\Users;
 
 use App\Models\ServiceStation;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
 class ServicestationSelect extends Component
 {
-    public $query;
+    public $query = '';
     public $stations;
     public $station;
     public $selectedId;
     public $closed = false;
     public $highlightIndex;
     public $selectedValue;
+    public $readonly = false;
+    public $user_stations_only = false;
     public $servicesPoints = [];
 
     public $defaultValue;
@@ -81,7 +84,11 @@ class ServicestationSelect extends Component
     public function updatedQuery()
     {
         $this->closed = false;
-        $this->stations = ServiceStation::where('service_station_name', 'like', '%' . $this->query . '%')
+        $this->stations = ServiceStation::where('service_station_name', 'ilike', '%' . $this->query . '%')
+            ->where(function (Builder $query) { 
+                if($this->user_stations_only)
+                $query->whereIn('id', auth()->user()->userStations->pluck('service_station_id')->toArray());
+            })
             ->get()
             ->toArray();
     }
