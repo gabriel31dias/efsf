@@ -116,25 +116,24 @@ class ProcessMonitor extends Component
     {
 
         $this->viewBox = 'despachs';
-        //$this->user = User::find($this->process->user_id);
+        $this->user = User::find($this->process->user_id);
+
         $this->service_station = ServiceStation::find($this->process->user_id);
-        $this->status = $this->process->status;
+        $this->status = $this->process->situation;
 
         $dispatch = AccessDispatch::create([
             'user_id' => auth()->user()->id,
             'process_id' => $this->process->id
         ]);
-
-
     }
 
     public function getLastAcessUser(){
-        $process = AccessDispatch::where(['process_id' => $this->process->id ])->first();
-        return User::find($process->id);
+        $process = AccessDispatch::where(['process_id' => $this->process->id ])->latest()->first();
+        return User::find($process->user_id);
     }
 
     public function getLastAcessHour(){
-        $process = AccessDispatch::where(['process_id' => $this->process->id])->first();
+        $process = AccessDispatch::where(['process_id' => $this->process->id])->latest()->first();
         return date('H:i', strtotime($process->created_at));
     }
 
@@ -163,6 +162,7 @@ class ProcessMonitor extends Component
             return false;
         }
 
+
         $citizen = Citizen::where(['process' => $this->process->code])->first();
 
         $res = $sended->call([
@@ -170,7 +170,7 @@ class ProcessMonitor extends Component
             'title' => $this->process->code .' Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? ''),
             'resolution_url' => '/monitor/'.$this->process->id.'/edit',
             'user_id_emiter' => $user->id,
-            'user_receive' => $this->user->id ?? null,
+            'user_receive' => $this->user['id'] ?? null,
             'type' => 1,
             'visualized' => false,
             'citizen_id' => $citizen->id,
@@ -223,8 +223,10 @@ class ProcessMonitor extends Component
     }
 
     public function selectedUser($id){
+
         $this->user = $id;
         $this->user_name = User::find($id)->name;
+
         return true;
     }
 

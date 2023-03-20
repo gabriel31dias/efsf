@@ -489,16 +489,22 @@
                           ">
 
 
+
+
                                     <button type="button" class="btn-modal btn btn-default btn-cancel"
                                         data-dismiss="modal">
                                         Cancelar
                                     </button>
                                 </div>
 
+
+
+
                                 <button type="button" wire:click="sendForwarding()"
                                     class="btn-modal btn btn-default btn-sucess" data-dismiss="modal">
                                     Enviar
                                 </button>
+
                             </div>
                         </div>
                     </div>
@@ -559,6 +565,7 @@
 
                 </div>
                 <div style="display:flex !important">
+                    @can('permission', 'process.edit')
                     <a href="#" class="green-btn" id="#btn-mensagem" data-toggle="modal"
                         data-target="#modal-mensagem">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -569,6 +576,7 @@
                         </svg>
                         Emitir
                     </a>
+                    @endif
                      <!--
                     <a href="#" class="blue-btn">
                         <svg width="20" height="20" viewBox="0 0 18 18" fill="none"

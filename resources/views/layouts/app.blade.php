@@ -129,24 +129,24 @@
                   <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card " data-bs-popper="static">
                   <div class="card">
                     <div class="card-header">
-                    
+
                       <h3 class="card-title">Notificações {{ auth()->user()->userStations }}</h3>
                     </div>
                     <div class="list-group list-group-flush list-group-hoverable">
 
-                  
+
 
                     @php
                       $notifications = (new App\Http\Services\GetNotifications())->call(['user_id_receive' =>  Auth::user()->id, 'service_stations' => auth()->user()->userStations->toArray() ])['notifications']
                     @endphp
 
                     @foreach($notifications as $item)
-                    
+
                      @if($item->visualid == false)
                       <div  class="list-group-item">
                         <div class="row align-items-center">
                           <div class="col-auto">
-                         
+
                           @if($item->type == 1)
                               <span class="status-dot status-dot-animated bg-red d-block">
                           @endif
@@ -154,7 +154,7 @@
                           @if($item->type == 2)
                               <span class="status-dot status-dot-animated bg-green d-block">
                           @endif
-                          
+
                           </span></div>
                           <div class="col text-truncate">
                             <a href="{{$item->resolution_url}}" class="text-body d-block">{{$item->title}}</a>
@@ -170,7 +170,7 @@
                           </div>
                         </div>
                       </div>
-                      @else  
+                      @else
                       <div  class="list-group-item">
                         <div class="row align-items-center">
                           <div class="col-auto"><span class="status-dot "></span></div>
@@ -191,10 +191,10 @@
                      @endif
 
 
-                    
-                    
+
+
                      @endforeach
-  
+
                     </div>
                   </div>
                 </div>
@@ -443,18 +443,13 @@
                   ])
 
 
-                  <li class="nav-item">
-                     <a class="nav-link" href='{{ route('unit.index') }}'>
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                           <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                           <i class="ti ti-home-2"></i>
-                        </span>
-
-                        <span class="nav-link-title">
-                           Cadastro de unidades
-                        </span>
-                     </a>
-                  </li>
+                  @livewire('global.menu-item',
+                  [
+                  'title' => 'Cadastro de unidades',
+                  'classIcon' => 'ti ti-home-2',
+                  'href' => route('unit.index'),
+                  'can' => 'station.index'
+                  ])
 
 
                   @livewire('global.menu-item',
@@ -466,6 +461,7 @@
                   ])
 
 
+                @if(Auth::user()->is_admin == true)
                   <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
@@ -530,6 +526,7 @@
                         </div>
                      </div>
                   </li>
+                  @endif
 
                   @livewire('global.menu-item',
                   [

@@ -36,5 +36,45 @@ class User extends Seeder
             'city' => "andradina",
             'profile_id' => 1
         ]);
+
+        DB::table('users')->insert([
+            'cpf' => "84888484343484",
+            'name' => "analista",
+            'zip_code' => "16903065",
+            'address' => "rua passeio 834",
+            'type_street' => "555959559",
+            'number' => "959559595",
+            'complement' => "dwwdadawdawd",
+            'district' => "DWdwdwddw",
+            'uf' => "sp",
+            'status' => true,
+            'cell' => "55995",
+            'is_admin' => false,
+            'email' => "email.analista@emaill.com",
+            'user_name' => "analista",
+            'password' => Hash::make("Rrr=003001"),
+            'city' => "andradina",
+            'profile_id' => 2
+        ]);
+
+        DB::table('users')->insert([
+            'cpf' => "8488848484434343",
+            'name' => "atendente",
+            'zip_code' => "16903065",
+            'address' => "rua passeio 834",
+            'type_street' => "555959559",
+            'number' => "959559595",
+            'complement' => "dwwdadawdawd",
+            'district' => "DWdwdwddw",
+            'uf' => "sp",
+            'status' => true,
+            'cell' => "55995",
+            'is_admin' => false,
+            'email' => "email.atendente@emaill.com",
+            'user_name' => "atendente",
+            'password' => Hash::make("Rrr=003001"),
+            'city' => "andradina",
+            'profile_id' => 3
+        ]);
     }
 }

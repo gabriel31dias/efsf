@@ -34,7 +34,7 @@ class CitizenIndex extends Component
     public $searchTerm = null;
     public $ufs;
 
-   
+
     public $file_capture_image_string;
     public $genre_name;
     public $traceErrorsMatriculation;
@@ -290,6 +290,42 @@ class CitizenIndex extends Component
             'url'=> '/monitor/'.$this->process->id.'/edit',
         ]);
     }
+
+    public function deleteDoc($urlbase){
+        $base = $this->getFileNameAndExtension($urlbase);
+        $fileName =  $base[0] .'.'. $base[1];
+
+        $reformuledArray = $this->removeFileFromArray($urlbase, $this->fieldsDigitalizedDocuments);
+
+        $citizen = Citizen::find($this->citizen->id);
+        $citizen->update(['digitalized_documents' => \json_encode($reformuledArray) ]);
+
+        $this->fieldsDigitalizedDocuments = $reformuledArray;
+
+        $this->dispatchBrowserEvent('alert',[
+            'type'=> 'success',
+            'message'=> "Documento removido com sucesso !"
+        ]);
+    }
+
+    public function removeFileFromArray($filePath, $array) {
+        $array = array_map(function($item) use ($filePath) {
+          if ($item['file'] !== $filePath) {
+            return $item;
+          }
+        }, $array);
+
+        return array_filter($array); // remove valores nulos do array
+    }
+
+    public function getFileNameAndExtension($filePath) {
+        $fileNameWithExtension = basename($filePath); // obtem o nome do arquivo com extensão
+        $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME); // obtem o nome do arquivo sem extensão
+        $fileExtension = pathinfo($fileNameWithExtension, PATHINFO_EXTENSION); // obtem a extensão do arquivo
+
+        return [$fileName, $fileExtension];
+    }
+
 
     public function selectedUfCert($id){
         $this->fields['uf_certificate'] = $id;
@@ -941,7 +977,7 @@ class CitizenIndex extends Component
     public function saveImageFacial(){
         $image = $this->file_capture_image_string;
 
-       
+
         $directory = storage_path(). '/app/public/face_captures/';
         if (!Storage::exists($directory)) {
             Storage::makeDirectory($directory);
@@ -951,9 +987,9 @@ class CitizenIndex extends Component
         $this->fields["file_capture_image"] =  $imageName;
     }
 
-   
 
-    
+
+
     private function validation($fields){
 
         $errors = [];
@@ -1158,7 +1194,7 @@ class CitizenIndex extends Component
         if(!$this->file_capture_image){
             return false;
         }
-        
+
         $this->validate([
             'file_capture_image' => 'image|max:1024', // 1MB Max
         ]);
@@ -1171,7 +1207,7 @@ class CitizenIndex extends Component
         $this->fields["file_capture_image"] = $filename;
     }
 
-     
+
 
     public function createCitizen(){
         $this->fields["zone"] = $this->zone;
@@ -1198,7 +1234,7 @@ class CitizenIndex extends Component
             $this->saveImageFacial();
         } else {
             $this->saveImageFacialString();
-           
+
         }
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [

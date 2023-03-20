@@ -23,17 +23,58 @@ class Profile extends Seeder
         ]);
 
         DB::table('profiles')->insert([
-            'name_profile' => "Teste perfil2",
+            'name_profile' => "analista",
             'status' => true,
-            'days_to_access_inspiration' => 1,
-            'days_to_activity_lock' => 1
+            'days_to_access_inspiration' => 100000,
+            'days_to_activity_lock' => 10000
         ]);
 
+
         DB::table('profiles')->insert([
-            'name_profile' => "Teste perfil3",
+            'name_profile' => "atendente",
             'status' => true,
-            'days_to_access_inspiration' => 1,
-            'days_to_activity_lock' => 1
+            'days_to_access_inspiration' => 10000,
+            'days_to_activity_lock' => 100000
         ]);
+
+
+        DB::table('profile_permission')->insert([
+            'profile_id' => 3,
+            'permission_id' => 39
+        ]);
+
+
+        DB::table('profile_permission')->insert([
+            'profile_id' => 3,
+            'permission_id' => 40
+        ]);
+
+
+        DB::table('profile_permission')->insert([
+            'profile_id' => 3,
+            'permission_id' => 41
+        ]);
+
+        DB::table('profile_permission')->insert([
+            'profile_id' => 2,
+            'permission_id' => 50,
+        ]);
+
+
+        DB::table('profile_permission')->insert([
+            'profile_id' => 2,
+            'permission_id' => 51,
+        ]);
+
+
+        DB::table('profile_permission')->insert([
+            'profile_id' => 2,
+            'permission_id' => 52,
+        ]);
+
+
+
+
+
     }
 }

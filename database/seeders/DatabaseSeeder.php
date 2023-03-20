@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            PermissionSeeder::class,
             Profile::class,
             TypeStreet::class,
             FeatureSeeder::class,
@@ -26,7 +27,6 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             CountySeeder::class,
             UfSeeder::class,
-            RegistrySeeder::class,
             CountryTypeStreetSeeder::class
         ]);
     }

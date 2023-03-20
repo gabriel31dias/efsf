@@ -41,8 +41,6 @@ class LoginController extends Controller
 
         $user = User::where('user_name', $req->user_name)->first();
 
-
-
         if(!isset($user->id)){
             return redirect()->route('login')->with('message', 'Usuário não encontrado.');
         }
@@ -61,9 +59,7 @@ class LoginController extends Controller
             return redirect()->route('login')->with('message', 'Usuário bloqueado.');
         }
 
-        if(!isset($user->id)){
-            return redirect()->route('login')->with('message', 'Usuário não encontrado.');
-        }
+
 
         if(isset($user->id) && Hash::check($req->password, $user->password) && $user->status == true ){
             Auth::login($user);

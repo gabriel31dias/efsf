@@ -5,21 +5,21 @@
     }
     }" class="card page-wrapper">
  @include('livewire.citizen.dialogs.dialog-capture')
-  
+
  @if($process)
    @if($process->divergence == true)
       <div data-status-process="none" class="alert animated flipInX alert-danger alert-dismissible flipOutX"><strong>
        Status: {{ App\Models\Process::SITUATION_TYPES_LABELS[$process->situation]}} </strong>
       <p> Comentário: {{ $process->last_message }}.</p>
       <br>
-      <button wire:click="setAdjusted()" type="button" class=" bg-success  focus:ring-4 rounded-lg  
+      <button wire:click="setAdjusted()" type="button" class=" bg-success  focus:ring-4 rounded-lg
           text-sm p-2.5 text-center text-white" x-data="{id:'modal-change-state'}" x-on:click="modal=true">
             Marcar como corrigido
       </button>
-      
+
       <span class="close" data-dismiss="alert"><i class="fa fa-times-circle"></i></span>
-      
-    </div>   
+
+    </div>
    @else
       <div data-status-process="blocked" style="display:flex" class="alert animated flipInX alert-warning alert-dismissible flipOutX"><strong style="display:flex">
       <svg style="margin:1%" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -31,8 +31,8 @@
    <path d="M19.37 15.1l0 .01"></path>
    <path d="M19.94 11l0 .01"></path>
 </svg>  Este cidadão está em processamento, e portanto não pode ser editado até a finalização do processo em andamento.</strong>
-      </div>  
-     
+      </div>
+
    @endif
 
  @endif
@@ -378,7 +378,7 @@ role="dialog"  aria-hidden="true">
                    </span>
                    @if ($this->action == 'update')
                      @livewire('citizen.modal-change-state', ['citizen' => $citizen])
-                   @endif 
+                   @endif
 
                    @if($process)
                    <a  wire:click="viewCurrentProcess()"  class="btn btn-primary inline-flex">
@@ -390,7 +390,7 @@ role="dialog"  aria-hidden="true">
                      </svg>
                      Visualizar processo atual
                    </a>
-                   @endif 
+                   @endif
 
                    <a onclick="$('#modal-captura-biometrica').modal('show');"  class="btn btn-primary inline-flex">
                      <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -1153,7 +1153,7 @@ role="dialog"  aria-hidden="true">
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
-                   
+
                    <div class="col-lg-4 mb-3">
                       <label class="form-label ">Título de eleitor (nº)</label>
                       <input wire:model="fields.voter_registration"  maxlength="70" type="text"
@@ -1508,7 +1508,7 @@ role="dialog"  aria-hidden="true">
                                   </select>
                                   @endif
                                </div>
-                               <div class="col-lg-3 mb-3">
+                               <div class="col-lg-5 mb-3">
                                   @if(isset($fieldsDigitalizedDocuments[$key]['file'] ) && $fieldsDigitalizedDocuments[$key]['file'] != '' && strpos( $fieldsDigitalizedDocuments[$key]['file'], "tmp") == false)
                                   <a href="" target="_blank" >
                                      <a onclick="window.open('/{{ str_replace("public","storage", $fieldsDigitalizedDocuments[$key]['file']) }}', '_blank')" class="btn btn-primary inline-flex">
@@ -1531,6 +1531,15 @@ role="dialog"  aria-hidden="true">
                                   </svg>
                                   Download
                                   </a>
+                                  <a wire:click="deleteDoc('{{$fieldsDigitalizedDocuments[$key]['file']}}')" download  class="btn btn-danger inline-flex">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M10 10l4 4m0 -4l-4 4"></path>
+                                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
+                                     </svg>
+                                     Remover
+                                    </a>
                                   </a>
                                   @else
                                   @if(isset($fieldsDigitalizedDocuments[$key]['type']) && $fieldsDigitalizedDocuments[$key]['type'])
@@ -1788,23 +1797,23 @@ role="dialog"  aria-hidden="true">
 
     let imgSelectedCapture = ''
 
-  
+
     setInterval(() => {
       const inputs = document.querySelectorAll('input, select, textarea');
       const dataProcessInfo = document.querySelector('[data-status-process]');
       if (dataProcessInfo) {
-         
+
          if(dataProcessInfo.dataset.statusProcess == 'blocked'){
             for (let i = 0; i < inputs.length; i++) {
                inputs[i].disabled = true;
             }
          }
-      } 
+      }
     }, 10);
 
     document.addEventListener('turbolinks:load', () => {
-       
-      
+
+
 
         var socket = io('https://websocket-pca-sic.msbtec.com.br');
         criarRoom()
@@ -1929,7 +1938,7 @@ role="dialog"  aria-hidden="true">
         })
     }
 
-    function showLoadingPhoto(){ 
+    function showLoadingPhoto(){
       let timerInterval
       Swal.fire({
          title: 'Carregando imagem',
@@ -2039,7 +2048,7 @@ role="dialog"  aria-hidden="true">
     let tipeCaputure = ''
 
     function saveImageFacial(){
-      
+
         if(isImageSelected == false){
             Swal.fire('Antes de salvar capture, ou insira um anexo.', '', 'warning')
             return false
@@ -2047,9 +2056,9 @@ role="dialog"  aria-hidden="true">
         if (tipeCaputure == 1){
             Swal.fire('Foto salva com sucesso.', '', 'success')
             //Livewire.emit('setFaceCapture', imgSelectedCapture)
-            
+
         }else{
-       
+
             let canvas = document.querySelector("#canvas");
             const base64Canvas = canvas.toDataURL("image/jpeg").split(';base64,')[1];
             $("#file-capture-image_string").val(base64Canvas);
@@ -2116,7 +2125,7 @@ role="dialog"  aria-hidden="true">
         });
     }
 
- 
+
 
 
 
