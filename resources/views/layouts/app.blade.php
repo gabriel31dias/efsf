@@ -110,6 +110,8 @@
                      </path>
                   </svg>
                </a>
+            @livewire('global.modal-select-service-station')
+
                <div class="nav-item dropdown d-none d-md-flex me-3">
                   <a  onclick="setVisualizedItems()" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
                      aria-label="Show notifications">

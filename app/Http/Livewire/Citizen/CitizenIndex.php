@@ -60,6 +60,7 @@ class CitizenIndex extends Component
     public $genres;
     public $searchCpf;
     public $searchRg;
+    public $is_payment_free;
 
     public $file_capture_image_preview;
     public $file_capture_image;
@@ -266,7 +267,7 @@ class CitizenIndex extends Component
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
         'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident',
-        'changeCitizenStatus'
+        'changeCitizenStatus', 'updateInfoIbge'
     ];
 
     public $citizen;
@@ -426,8 +427,7 @@ class CitizenIndex extends Component
         $birth_date = $this->citizen->birth_date ?? $this->fields['birth_date'];
 
         $check = new CheckRegistration();
-        $tempRegistry = Registry::where('cns', $CnsString)->first();
-
+        $tempRegistry = Registry::where('cns', ltrim($CnsString, "0") )->first();
         if(isset($tempRegistry->id)){
             $this->registrySelected =  $tempRegistry;
         }
@@ -446,7 +446,7 @@ class CitizenIndex extends Component
             "typeofcertificate" => $typeOfCertificate,
             "booknumber" => $bookNumber
         ]);
-
+        $this->fields['type_of_certificate_new'] = $typeOfCertificate;
         $this->registrationError = $resultValidation["result"];
         $this->traceErrorsMatriculation = $resultValidation["debug"];
     }
@@ -903,6 +903,9 @@ class CitizenIndex extends Component
         if(isset($this->citizen->id)){
             $this->setCitizen($this->citizen->id);
         }else{
+            $service_station_session = session('service_station');
+            $this->fields['service_station_id'] = $service_station_session->id;
+            $this->currentServiceStation = $service_station_session->service_station_name;
             $this->dispatchBrowserEvent("openModalSearch");
         }
     }
@@ -1343,6 +1346,7 @@ class CitizenIndex extends Component
         }
 
         $process = new GenerateProcess();
+        $payment_situation = $this->is_payment_free || ($user->via_rg == 1) ? Process::PAYMENT_FREE : Process::PAYMENT_PENDING ;
         $resultProcess = $process->call([
             "user_id" =>  Auth::user()->id,
             "process" => date('m')."/".date('Y'),
@@ -1350,7 +1354,7 @@ class CitizenIndex extends Component
             "service_station" => $user->service_station_id,
             "biometrics_status" => 1,
             "situation" => 1,
-            "payment" => 1,
+            "payment" => $payment_situation,
             "name" => $this->fields["name"]
         ]);
 
@@ -1397,5 +1401,10 @@ class CitizenIndex extends Component
         ]);
     }
 
+    public function updateInfoIbge($request)
+    { 
+        $this->fields['address'] = $request['logradouro'];
+        $this->fields['district'] = $request['bairro'];
+    }
 
 }

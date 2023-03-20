@@ -543,7 +543,7 @@ role="dialog"  aria-hidden="true">
                          <div class="row">
                             <div class="col-lg-6">
                                <div class="mb-3">
-                                  <label class="form-label">Filiação 1</label>
+                                  <label class="form-label">Filiação (Paterno) </label>
                                   <div class="input-group input-group-flat">
                                      <input wire:model="fields.filiation1"
                                         type="text"
@@ -554,7 +554,7 @@ role="dialog"  aria-hidden="true">
                             </div>
                             <div class="col-lg-6">
                                <div class="mb-3">
-                                  <label class="form-label">Filiação 2</label>
+                                  <label class="form-label">Filiação (Materna)</label>
                                   <div class="input-group input-group-flat">
                                      <input wire:model="fields.filiation2"
                                         type="text"
@@ -638,7 +638,6 @@ role="dialog"  aria-hidden="true">
                          </div>
                          @endif
                       </div>
-                      @if($other_genre == true)
                       <div class="col-lg-2">
                          <label class="form-label">Sexo Biológico<span
                             class="error_tag">*</span></label>
@@ -651,11 +650,10 @@ role="dialog"  aria-hidden="true">
                          </div>
                          @if (in_array("genre_biologic_id", $errorsKeys))
                          <div class="error_tag" role="alert">
-                            O campo Data de Nascimento é obrigatório
+                            O campo Sexo Biológico é obrigatório
                          </div>
                          @endif
                       </div>
-                      @endif
                       <div class="col-lg-2">
                          <div class="mb-3">
                             <label class="form-label">Estado Civil<span
@@ -774,8 +772,7 @@ role="dialog"  aria-hidden="true">
                       </div>
                       <div class="col-lg-4">
                          <div class="mb-3">
-                            <label class="form-label">Indicador Social<span
-                               class="error_tag">*</span></label>
+                            <label class="form-label">Indicador Social</label>
                             <div class="input-group input-group-flat">
                                <select @change="select($event.target.options[$event.target.selectedIndex].value)
                                   " wire:model="fields.social_indicator_id" class="form-control ps-0"
@@ -790,8 +787,7 @@ role="dialog"  aria-hidden="true">
                       </div>
                       <div class="col-lg-4">
                          <div class="mb-3">
-                            <label class="form-label">Nº Social<span
-                               class="error_tag">*</span></label>
+                            <label class="form-label">Nº Social</label>
                             <div class="input-group input-group-flat">
                                <input x-show="isOpen == 1 || isOpen == 2" id='1'
                                   wire:model="fields.n_social" type="text"
@@ -815,6 +811,7 @@ role="dialog"  aria-hidden="true">
                                class="error_tag">*</span></label>
                             <livewire:users.servicestation-select
                                :station="$currentServiceStation"
+                               readonly="true"
                                />
                             @if (in_array("service_station_id", $errorsKeys))
                             <div class="error_tag" role="alert">
@@ -823,7 +820,7 @@ role="dialog"  aria-hidden="true">
                             @endif
                          </div>
                       </div>
-                      <div class="col-lg-4">
+                      <div class="col-lg-2">
                          <div class="mb-3">
                             <label class="form-label">Via do RG<span
                                class="error_tag">*</span></label>
@@ -846,6 +843,18 @@ role="dialog"  aria-hidden="true">
                          </div>
                          @endif
                       </div>
+
+                      <div class="col-lg-2">
+                        <div class="mb-3">
+                           <label class="form-label">Isenção<span
+                              class="error_tag">*</span></label>
+                           <select wire:model="is_payment_free" class="form-control ps-0"
+                              name="select">
+                              <option value="0">NÃO ISENTO</option>
+                              <option value="1">ISENTO</option>
+                           </select>
+                        </div>
+                     </div>
                       @if(isset($citizen['updated_at']) && $citizen['updated_at'])
                       <div class="col-lg-4">
                          <div class="mb-3">
@@ -963,6 +972,7 @@ role="dialog"  aria-hidden="true">
                         mask: '00.000-000'
                         });" wire:model="fields.zip_code" maxlength="70" type="text"
                          class="form-control ps-0"
+                         onblur="pesquisacep(this.value);"
                          autocomplete="off" required>
                    </div>
                    @if (in_array("zip_code", $errorsKeys))
@@ -978,7 +988,7 @@ role="dialog"  aria-hidden="true">
                       :type="'country_street'"/>
                    @if (in_array("country_street", $errorsKeys))
                    <div class="error_tag" role="alert">
-                      O campo Cep é obrigatório
+                      O campo Logradouro é obrigatório
                    </div>
                    @endif
                 </div>
@@ -992,7 +1002,7 @@ role="dialog"  aria-hidden="true">
                 <div class="col-lg-4 mb-3">
                    <label class="form-label">Endereço<span
                       class="error_tag">*</span></label>
-                   <input wire:model="fields.address" maxlength="70" type="text"
+                   <input id="rua" wire:model="fields.address" maxlength="70" type="text"
                       class="form-control ps-0"
                       autocomplete="off" required>
                    @if (in_array("address", $errorsKeys))
@@ -1004,7 +1014,7 @@ role="dialog"  aria-hidden="true">
                 <div class="col-lg-4 mb-3">
                     <label class="form-label">Bairro<span
                        class="error_tag">*</span></label>
-                    <input wire:model="fields.district" maxlength="70" type="text"
+                    <input id="bairro" wire:model="fields.district" maxlength="70" type="text"
                        class="form-control ps-0"
                        autocomplete="off" required>
                     @if (in_array("address", $errorsKeys))
@@ -1025,8 +1035,7 @@ role="dialog"  aria-hidden="true">
                    @endif
                 </div>
                 <div class="col-lg-4 mb-3">
-                   <label class="form-label">Complemento<span
-                      class="error_tag">*</span></label>
+                   <label class="form-label">Complemento</label>
                    <input wire:model="fields.complement" maxlength="70" type="text"
                       class="form-control ps-0"
                       autocomplete="off" required>
@@ -1080,8 +1089,7 @@ role="dialog"  aria-hidden="true">
                    @endif
                 </div>
                 <div class="col-lg-4 mb-3">
-                   <label class="form-label">Tel. fixo<span
-                      class="error_tag">*</span></label>
+                   <label class="form-label">Tel. fixo</label>
                    <input onclick="IMask(
                       this, {
                       mask: '(00)00000-0000'
@@ -1110,13 +1118,13 @@ role="dialog"  aria-hidden="true">
     <div class="page-body">
        <div class="container-fluid">
           <div class="row">
-             <div class="col-lg-6 mb-3">
+             <div class="col-lg-12 mb-3">
                 <label class="form-label ">Nomes anteriores<span class="error_tag">*</span></label>
                 <input wire:model="fields.names_previous"  maxlength="70" type="text"
                    class="form-control ps-0 "
                    autocomplete="off" required>
              </div>
-             <div class="col-lg-6 mb-3">
+             <div class="col-lg-12 mb-3">
                 <label class="form-label ">Filiações anteriores<span class="error_tag">*</span></label>
                 <input wire:model="fields.filitions_previous"  maxlength="70" type="text"
                    class="form-control ps-0 "
@@ -1142,13 +1150,13 @@ role="dialog"  aria-hidden="true">
                          autocomplete="off" required>
                    </div>
                    <div class="col-lg-2 mb-3">
-                      <label class="form-label ">Fator Rh<span class="error_tag">*</span></label>
+                      <label class="form-label ">Fator Rh</label>
                       <input wire:model="fields.rh_factor"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
                    </div>
                    <div class="col-lg-2 mb-3">
-                      <label class="form-label ">Tipo sanguineo<span class="error_tag">*</span></label>
+                      <label class="form-label ">Tipo sanguineo</label>
                       <input wire:model="fields.blood_type"  maxlength="70" type="text"
                          class="form-control ps-0 "
                          autocomplete="off" required>
@@ -1344,13 +1352,13 @@ role="dialog"  aria-hidden="true">
                                <div id="gemeo" role="tabpanel">
                                   <div class="row">
                                      <label class="mb-3" >Nomes anteriores</label>
-                                     <div class="col-lg-6 mb-3">
+                                     <div class="col-lg-12 mb-3">
                                         <label class="form-label ">Nomes anteriores</label>
                                         <input wire:model="fields.names_previous"  maxlength="70" type="text"
                                            class="form-control ps-0 "
                                            autocomplete="off" required>
                                      </div>
-                                     <div class="col-lg-6 mb-3">
+                                     <div class="col-lg-12 mb-3">
                                         <label class="form-label ">Filiações anteriores</label>
                                         <input wire:model="fields.filitions_previous"  maxlength="70" type="text"
                                            class="form-control ps-0 "
@@ -1699,7 +1707,8 @@ role="dialog"  aria-hidden="true">
                                      class="error_tag">*</span></label>
                                   @livewire('registry-select.registry-select', ['defaultValue' => $registrySuspension])
                                </div>
-                               <div class="col-lg-3 mb-3">
+                              {{-- COMENTADO PQ TEORICAMENTE E PRA TRAZER APENAS TEXTO DO ACERVO ANTERIOR
+                                   <div class="col-lg-3 mb-3">
                                   <label class="form-label">Certidão do Cadastro Anterior<span
                                      class="error_tag">*</span></label>
                                   <input wire:model="fields.previous_registration_certificate" maxlength="70" type="text"
@@ -1710,9 +1719,25 @@ role="dialog"  aria-hidden="true">
                                      O campo Certidão do Cadastro Anterior é obrigatório
                                   </div>
                                   @endif
-                               </div>
+                               </div> --}}
                                @endif
                                @if($fields['certificate'] == 1)
+                               <div class="col-lg-3 mb-3">
+                                 <label class="form-label">Matricula<span
+                                    class="error_tag">*</span></label>
+                                 <input wire:change="changeRegistration" onclick="IMask(
+                                    this, {
+                                    mask: '000000 00 00 0000 0 00000 000 0000000 00'
+                                    });" maxlength="70" type="text"
+                                    wire:model="fields.matriculation"
+                                    class="form-control ps-0 "
+                                    autocomplete="off" required>
+                                 @if ($registrationError == false)
+                                 <div class="error_tag" role="alert">
+                                    Existe um problema ná matricula inserida por favor, verifique em seu cartório de origem.
+                                 </div>
+                                 @endif
+                              </div>
                                <div class="col-lg-3 mb-3">
                                   <label class="form-label">Data de Assentamento da Certidão<span
                                      class="error_tag">*</span></label>
@@ -1724,42 +1749,30 @@ role="dialog"  aria-hidden="true">
                                      autocomplete="off" required>
                                </div>
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Indicativo de Casamento Homoafetivo<span
+                                 <label class="form-label ">Tipo De Certidão<span class="error_tag">*</span></label>
+                                 <div  class="input-group input-group-flat">
+                                    <select wire:model="fields.type_of_certificate_new" class="form-control ps-0">
+                                       <option value="0">Selecione</option>
+                                       <option value="1">Nascimento</option>
+                                       <option value="7">Nascimento no Exterionr</option>
+                                       <option value="2">Casamento</option>
+                                    </select>
+                                 </div>
+                              </div>
+
+                               <div class="col-lg-3 mb-3">
+                                  <label class="form-label">Tipo de Casamento<span
                                      class="error_tag">*</span></label>
                                   <div  class="input-group input-group-flat">
                                      <select name="same_sex_marriage" wire:model="fields.same_sex_marriage" class="form-control ps-0" wire:ignore>
                                         <option value="0">Selecione</option>
-                                        <option value="1">Sim</option>
-                                        <option value="2">Não</option>
+                                        <option value="1">Tradicional</option>
+                                        <option value="2">Homoafetivo</option>
                                      </select>
                                   </div>
                                </div>
-                               <div class="col-lg-3 mb-3">
-                                  <label class="form-label ">Tipo De Certidão<span class="error_tag">*</span></label>
-                                  <div  class="input-group input-group-flat">
-                                     <select wire:model="fields.type_of_certificate_new" class="form-control ps-0">
-                                        <option value="0">Selecione</option>
-                                        <option value="1">Sim</option>
-                                        <option value="2">Não</option>
-                                     </select>
-                                  </div>
-                               </div>
-                               <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Matricula<span
-                                     class="error_tag">*</span></label>
-                                  <input wire:change="changeRegistration" onclick="IMask(
-                                     this, {
-                                     mask: '000000 00 00 0000 0 00000 000 0000000 00'
-                                     });" maxlength="70" type="text"
-                                     wire:model="fields.matriculation"
-                                     class="form-control ps-0 "
-                                     autocomplete="off" required>
-                                  @if ($registrationError == false)
-                                  <div class="error_tag" role="alert">
-                                     Existe um problema ná matricula inserida por favor, verifique em seu cartório de origem.
-                                  </div>
-                                  @endif
-                               </div>
+                             
+                               
                                @endif
                                <div class="col-lg-3 mb-3">
                                   <label class="form-label">Data da Certidão/DOU<span
@@ -1781,6 +1794,19 @@ role="dialog"  aria-hidden="true">
                             </div>
                          </div>
                       </div>
+                      @if (isset($registrySelected))
+                        <div class="row">
+                           <div class="col-lg-6 font-bold">
+                               <span class="text-sky-600">Cartório:</span>  {{ $registrySelected->name }} 
+                           </div>
+                           <div class="col-lg-3 font-bold">
+                              <span class="text-sky-600">UF:</span>  {{ $registrySelected->uf->name }} 
+                          </div>
+                          <div class="col-lg-3 font-bold">
+                           <span class="text-sky-600">Municipio:</span>  {{ $registrySelected->county->name }} 
+                       </div>
+                        </div>
+                      @endif
                    </div>
                    @endif
                    <div class="tab-pane" id="tabs-settings-7" role="tabpanel">

@@ -96,7 +96,7 @@ class Process extends Model implements Auditable
 
     public function getPaymentStatus()
     {
-        return self::BIOMETRICS_STATUS_TYPES[$this->biometrics_status];
+        return self::PAYMENT_STATUS[$this->payment];
     }
 
     public function serviceStation()

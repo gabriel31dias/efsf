@@ -39,7 +39,19 @@
           <div class="card">
              <div class="card-body">
                 <div class="row">
+                  <div class="col-lg-3">
+                     <div class="mb-3">
+                        <label class="form-label">UF</label>
+                        @livewire('uf-select.uf-select', ['defaultValue' => null])
+                     </div>
+                  </div>
 
+                  <div class="col-lg-3">
+                     <div class="mb-3">
+                        <label class="form-label">Município</label>
+                        @livewire('county-select.county-select', ['defaultValue' => null])
+                     </div>
+                  </div>
                     <div class="col-lg-6">
                         <div class="mb-3">
                            <label class="form-label">Cartório<span class="error_tag">*</span></label>

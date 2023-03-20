@@ -147,7 +147,7 @@ class CheckRegistration
     }
 
     public function checkCns($obj){
-        $cns = Registry::where("cns", $obj["cns"])->first();
+        $cns = Registry::where("cns", ltrim($obj["cns"], "0"))->first();
         return isset($cns->id) ? true : false;
     }
 
@@ -161,6 +161,6 @@ class CheckRegistration
     }
 
     public function checkCivilRegistration($obj){
-        return $obj['civilregistration'] == "55" ? true : false;
+        return $obj['civilregistryservice'] == "55" ? true : false;
     }
 }
