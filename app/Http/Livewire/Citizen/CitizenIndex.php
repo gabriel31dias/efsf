@@ -904,8 +904,10 @@ class CitizenIndex extends Component
             $this->setCitizen($this->citizen->id);
         }else{
             $service_station_session = session('service_station');
+            if(isset($service_station_session)){ 
             $this->fields['service_station_id'] = $service_station_session->id;
             $this->currentServiceStation = $service_station_session->service_station_name;
+            }
             $this->dispatchBrowserEvent("openModalSearch");
         }
     }

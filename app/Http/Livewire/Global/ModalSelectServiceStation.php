@@ -12,10 +12,19 @@ class ModalSelectServiceStation extends Component
     public $tmpServiceStation; 
     public $modal = false; 
 
-    protected $listeners = ['selectedServiceStation'];
+    protected $listeners = ['selectedServiceStation', 'openSelectServiceStationModal'];
 
     public function mount(){ 
         $this->serviceStation = session('service_station');
+        if(!isset($this->serviceStation)){ 
+            $service_stations = ServiceStation::whereIn('id', auth()->user()->userStations->pluck('service_station_id')->toArray())->get();
+            if(count($service_stations) > 1){ 
+                $this->modal = true;
+            } else { 
+                session()->put('service_station', $service_stations[0]);
+            }
+
+        }
     }
 
     public function render()
