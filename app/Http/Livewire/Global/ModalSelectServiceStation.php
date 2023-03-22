@@ -21,7 +21,7 @@ class ModalSelectServiceStation extends Component
             if(count($service_stations) > 1){ 
                 $this->modal = true;
             } else { 
-                session()->put('service_station', $service_stations[0]);
+                if(isset($service_stations[0])) session()->put('service_station', $service_stations[0]);
             }
 
         }
