@@ -12,8 +12,8 @@ class ProfileForm extends Component
 
     public $errorsKeys = [];
     public $errors = [];
-    public $permissions = []; 
-    public $profile_permissions = []; 
+    public $permissions = [];
+    public $profile_permissions = [];
 
     public $perfilName;
     public $daysToAccessInspiration;

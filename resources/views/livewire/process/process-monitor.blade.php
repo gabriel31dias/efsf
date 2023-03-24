@@ -425,7 +425,7 @@
         </head>
         <div >
             <header class="cabecalho container">
-                <h1>Histórico de Tramitação e Visualização do Processo</h1>
+                <h1>Histórico do Processo</h1>
                 <a href="#">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -467,7 +467,7 @@
                                     <label for="recipient-name" class="col-form-label title-label">Signatários:</label>
                                     <select wire:model="status" class="form-control" name="cars" id="cars">
                                         @foreach (App\Models\Process::SITUATION_TYPES_LABELS as $key => $item)
-                                            <option value="{{ $key }}">{{ $item }}{{ $key }}
+                                            <option value="{{ $key }}">{{ $item }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -628,6 +628,33 @@
                         @endif
 
                         @if ($item->type == 3)
+                        <div  onclick="modalInfoUser('{{ json_encode($item->user) }}','{{ $item->user->getUnit()->name ?? '' }}', '{{ $item->user->getFunction()->name ?? '' }}')"
+                            class="flex box-view-container">
+                            <div style="background-color: #04845e !important" class="col-xs-5 box-processo-nome">
+                                <div style="padding:1%">
+                                    <h3>Despacho {{ $key + 1 }}, Status: {{ $item->statusString }}</h3>
+                                    <p><strong>Data:</strong>
+                                        {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y \à\s H\hi') }}
+                                    </p>
+                                    <p>
+                                        @if ($item->type == 1)
+                                            SERVIDOR:
+                                        @else
+                                            USUÁRIO:
+                                        @endif {{ $item->user->name }}
+                                    </p>
+                                    <p><strong>Função:</strong> Teste</p>
+                                    <p><strong>Unidade:</strong> UFITASRS</p>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-7 box-processo-doc">
+                                <p>
+                                     {{ $item->comment }}
+
+                                </p>
+                            </div>
+                        </div>
                         @endif
                     @endforeach
 

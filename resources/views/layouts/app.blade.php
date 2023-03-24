@@ -132,7 +132,7 @@
                   <div class="card">
                     <div class="card-header">
 
-                      <h3 class="card-title">Notificações {{ auth()->user()->userStations }}</h3>
+                      <h3 class="card-title">Notificações</h3>
                     </div>
                     <div class="list-group list-group-flush list-group-hoverable">
 
@@ -161,7 +161,7 @@
                           <div class="col text-truncate">
                             <a href="{{$item->resolution_url}}" class="text-body d-block">{{$item->title}}</a>
                             <div class="d-block text-muted text-truncate mt-n1">
-                             {{$item->content}}
+                               Processo: {{ $item->process }} - {{$item->content}}
                             </div>
                           </div>
                           <div class="col-auto">

@@ -167,11 +167,12 @@ class ProcessMonitor extends Component
 
         $res = $sended->call([
             'content' => $this->content,
-            'title' => $this->process->code .' Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? ''),
+            'title' =>  ' Status alterado para '. (Process::SITUATION_TYPES_LABELS[$this->status] ?? ''),
             'resolution_url' => '/monitor/'.$this->process->id.'/edit',
             'user_id_emiter' => $user->id,
             'user_receive' => $this->user['id'] ?? null,
             'type' => 1,
+            'process' => $this->process->code,
             'visualized' => false,
             'citizen_id' => $citizen->id,
             'service_station_id' => $this->service_station->id ?? $this->service_station,
@@ -212,7 +213,9 @@ class ProcessMonitor extends Component
     }
 
     public function getDocumentByType($typeDocuments){
-        return $this->typeDocuments[$typeDocuments];
+        if($typeDocuments){
+            return $this->typeDocuments[$typeDocuments];
+        }
     }
 
     public function selectedServiceStation($id)

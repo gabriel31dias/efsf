@@ -128,7 +128,7 @@ class CitizenIndex extends Component
         "county_id",
         "uf_id",
         "county_id",
-        "service_station_id",
+
         "via_rg",
         "cell",
         "email",
@@ -298,10 +298,17 @@ class CitizenIndex extends Component
 
         $reformuledArray = $this->removeFileFromArray($urlbase, $this->fieldsDigitalizedDocuments);
 
-        $citizen = Citizen::find($this->citizen->id);
-        $citizen->update(['digitalized_documents' => \json_encode($reformuledArray) ]);
+        $array = array_filter($reformuledArray, function($item) use ($urlbase) {
+            if ($item['file'] !== '') {
+              return $item;
+            }
+        });
 
-        $this->fieldsDigitalizedDocuments = $reformuledArray;
+        $citizen = Citizen::find($this->citizen->id);
+        $citizen->update(['digitalized_documents' => \json_encode($array) ]);
+
+
+        $this->fieldsDigitalizedDocuments = $reformuledArray ;
 
         $this->dispatchBrowserEvent('alert',[
             'type'=> 'success',
@@ -310,13 +317,13 @@ class CitizenIndex extends Component
     }
 
     public function removeFileFromArray($filePath, $array) {
-        $array = array_map(function($item) use ($filePath) {
-          if ($item['file'] !== $filePath) {
+        $array = array_filter($array, function($item) use ($filePath) {
+          if ($item['file'] !== $filePath ) {
             return $item;
           }
-        }, $array);
+        });
 
-        return array_filter($array); // remove valores nulos do array
+        return $array; // remove valores nulos do array
     }
 
     public function getFileNameAndExtension($filePath) {
@@ -904,7 +911,7 @@ class CitizenIndex extends Component
             $this->setCitizen($this->citizen->id);
         }else{
             $service_station_session = session('service_station');
-            if(isset($service_station_session)){ 
+            if(isset($service_station_session)){
             $this->fields['service_station_id'] = $service_station_session->id;
             $this->currentServiceStation = $service_station_session->service_station_name;
             }
@@ -1273,7 +1280,7 @@ class CitizenIndex extends Component
             "file_sign" => $this->fileSign,
             "justification_sign" => $this->justificationSign,
             "country_id" => $this->fields["country_id"],
-            "service_station_id" => $this->fields["service_station_id"],
+            "service_station_id" => 1 ,
             "uf_id" => $this->fields["uf_id"],
             "zip_code" => $this->fields["zip_code"],
             "address" => $this->fields["address"],
@@ -1404,7 +1411,7 @@ class CitizenIndex extends Component
     }
 
     public function updateInfoIbge($request)
-    { 
+    {
         $this->fields['address'] = $request['logradouro'];
         $this->fields['district'] = $request['bairro'];
     }

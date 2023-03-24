@@ -23,13 +23,14 @@ return new class extends Migration
             $table->string('resolution_url');
             $table->integer('citizen_id');
             $table->integer('service_station_id')->nullable();
+            $table->string('process')->nullable();
             $table->integer('type');
             $table->timestamps();
             $table->foreign('user_id_emiter')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('user_id_receive')->references('id')->on('users')->onDelete('cascade');
         });
 
-        
+
     }
 
     /**
