@@ -267,7 +267,7 @@ class CitizenIndex extends Component
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
         'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident',
-        'changeCitizenStatus', 'updateInfoIbge'
+        'changeCitizenStatus', 'updateInfoIbge', 'setNameDocument'
     ];
 
     public $citizen;
@@ -474,11 +474,16 @@ class CitizenIndex extends Component
 
     public function addedDocument(){
 
+
+
+
         if(count($this->fieldsDigitalizedDocuments) == 1){
+
 
             $item = [];
             $item['file'] = $this->tempFile;
             $item['type'] = $this->fieldsDigitalizedDocuments['field1']['type'];
+            $item['name'] = "";
 
             $this->fieldsDigitalizedDocuments['field1'] = $item;
             $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field1']['type'];
@@ -492,10 +497,27 @@ class CitizenIndex extends Component
 
         $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field'.count($this->fieldsDigitalizedDocuments)]['type'];
 
+
+
         $item = [];
         $item['file'] = "";
         $item['type'] = "";
+        $item['name'] = "";
+
         $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
+
+    }
+
+    public function setNameDocument($data)
+    {
+        $this->fieldsDigitalizedDocuments[$data[1]]['name'] = $data[0];
+    }
+
+    public function updatedfieldsDigitalizedDocuments()
+    {
+        if($this->fieldsDigitalizedDocuments ) {
+
+        }
     }
 
     public function  selectedCountryTypeStreat($id)
@@ -1248,6 +1270,8 @@ class CitizenIndex extends Component
             $this->saveImageFacialString();
 
         }
+
+
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],

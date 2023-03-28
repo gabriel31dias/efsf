@@ -514,7 +514,7 @@
         <main class="box-processo">
             <div class="box-info-processo">
                 <div>
-                    <h4>Processo: <span>300.203.16.01.32/2023</span></h4>
+                    <h4>Processo: <span>{{$process->code}}</span></h4>
                     <p style="margin-top:10px">Nome: <span>{{ strtoupper($process->name) }}</span></p>
                     <p style="margin-top:10px">Cpf: <span>{{ $process->citizen->cpf }}</span></p>
                     <p style="margin-top:10px">Rg: <span>{{ $process->citizen->rg }}</span></p>
@@ -679,7 +679,7 @@
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path d="M4 13V7H0L7 0L14 7H10V13H4ZM0 17V15H14V17H0Z" fill="#344767" />
                                         </svg>
-                                        {{ $item->file }}
+                                        {{ $item->name ?? $item->file }}
                                     </a>
                                     <p>01/03/2023</p>
                                 </div>

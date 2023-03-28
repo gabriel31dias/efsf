@@ -1413,7 +1413,7 @@ role="dialog"  aria-hidden="true">
                       </div>
                       @endif
                       @if($selectedTab == "documentos_digitalizados")
-                      <div class=" mb-3">
+                      <div  class=" mb-3">
                          <div id="gemeo" role="tabpanel">
                             @foreach($fieldsDigitalizedDocuments as $key => $item)
                             <div class="row">
@@ -1551,9 +1551,10 @@ role="dialog"  aria-hidden="true">
                                   </a>
                                   @else
                                   @if(isset($fieldsDigitalizedDocuments[$key]['type']) && $fieldsDigitalizedDocuments[$key]['type'])
-                                  <input wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file">
+
+                                  <input id="fileInput" onchange="changedFile(event, '{{$key}}')" wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file">
                                   @else
-                                  <input wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file" disabled>
+                                  <input id="fileInput" onchange="changedFile(event, '{{$key}}')" wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file" disabled>
                                   @endif
                                   @endif
                                </div>
@@ -1841,7 +1842,12 @@ role="dialog"  aria-hidden="true">
       }
     }, 10);
 
+
+
+
+
     document.addEventListener('turbolinks:load', () => {
+
 
 
 
@@ -1895,6 +1901,17 @@ role="dialog"  aria-hidden="true">
 
 
     }
+
+    function changedFile(event, key) {
+        const file = event.target.files[0];
+        const fileName = file.name;
+        console.log( event.target.files[0])
+
+        alert('dw')
+
+        Livewire.emit('setNameDocument', [fileName, key]);
+    }
+
 
 
     function loadMultSelectCaracteristicas(){
