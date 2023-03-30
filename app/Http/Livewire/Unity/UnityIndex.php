@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Unity;
 
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Unit;
 class UnityIndex extends Component
@@ -33,6 +34,29 @@ class UnityIndex extends Component
         [
             'units' => $units->paginate(5)
         ]);
+    }
+
+
+    public function destroyUnit($idUnity)
+    {
+        $unity = Unit::find($idUnity);
+        $linkedUsers = User::where(['unit_id' => $idUnity])->first();
+
+        if(isset($linkedUsers->id)){
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> "Registro não pode ser excluído, existem usuários vinculados a essa unidade"
+            ]);
+            return false;
+        }
+
+        if(isset($unity->id)){
+            $unity->delete();
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'success',
+                'message'=> "Item excluido com sucesso."
+            ]);
+        }
     }
 
     public function filtersCall(){

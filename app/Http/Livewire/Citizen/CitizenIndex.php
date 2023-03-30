@@ -68,6 +68,8 @@ class CitizenIndex extends Component
     public $currentRegistryId = "";
 
     public $tempFile = "";
+
+    public $inProcessing = false;
     public $tempTypeFile = "";
     public $searchAnoProcesso;
     public $searchNumber;
@@ -267,7 +269,7 @@ class CitizenIndex extends Component
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
         'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident',
-        'changeCitizenStatus', 'updateInfoIbge', 'setNameDocument'
+        'changeCitizenStatus', 'updateInfoIbge', 'setNameDocument', 'addedDocument'
     ];
 
     public $citizen;
@@ -323,6 +325,7 @@ class CitizenIndex extends Component
           }
         });
 
+
         return $array; // remove valores nulos do array
     }
 
@@ -360,7 +363,7 @@ class CitizenIndex extends Component
             'message'=> "Ajuste realizado com sucesso !"
         ]);
 
-
+        $this->createCitizen();
     }
 
     public function updated_uf_ident($obj){
@@ -473,39 +476,26 @@ class CitizenIndex extends Component
     }
 
     public function addedDocument(){
-
-
-
-
-        if(count($this->fieldsDigitalizedDocuments) == 1){
-
-
-            $item = [];
-            $item['file'] = $this->tempFile;
-            $item['type'] = $this->fieldsDigitalizedDocuments['field1']['type'];
-            $item['name'] = "";
-
-            $this->fieldsDigitalizedDocuments['field1'] = $item;
-            $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field1']['type'];
-            $countDocuments = count($this->fieldsDigitalizedDocuments) + 1;
-            $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
-            return ;
-        }
+        $item = [
+            'file' => $this->tempFile,
+            'type' => $this->fieldsDigitalizedDocuments['field1']['type'],
+            'name' => '',
+        ];
 
         $countDocuments = count($this->fieldsDigitalizedDocuments) + 1;
 
+        if (count($this->fieldsDigitalizedDocuments) == 1) {
+            $this->fieldsDigitalizedDocuments['field1'] = $item;
+        } else {
+            $lastField = 'field' . count($this->fieldsDigitalizedDocuments);
+            $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments[$lastField]['type'];
+        }
 
-        $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field'.count($this->fieldsDigitalizedDocuments)]['type'];
-
-
-
-        $item = [];
-        $item['file'] = "";
-        $item['type'] = "";
-        $item['name'] = "";
-
-        $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
-
+        $this->fieldsDigitalizedDocuments['field' . $countDocuments] = [
+            'file' => '',
+            'type' => '',
+            'name' => '',
+        ];
     }
 
     public function setNameDocument($data)
@@ -892,7 +882,9 @@ class CitizenIndex extends Component
             ->where('situation','!=', \App\Models\Process::CANCELED)->whereIn('to_service_station_id', $serviceStationIds)->first();
         }
 
-        $this->process = $process;
+        $checkProcessActive = Process::where('citizen_id', $this->citizen->id )->first();
+        $this->inProcessing = isset($checkProcessActive->id) ? true : false ;
+
         if(isset($process->id)){
            $this->process =  $process;
         }

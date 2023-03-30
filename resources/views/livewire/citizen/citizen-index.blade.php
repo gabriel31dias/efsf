@@ -6,8 +6,8 @@
     }" class="card page-wrapper">
  @include('livewire.citizen.dialogs.dialog-capture')
 
- @if($process)
-   @if($process->divergence == true)
+ @if($process || $inProcessing)
+   @if(isset($process->divergence) && $process->divergence == true)
       <div data-status-process="none" class="alert animated flipInX alert-danger alert-dismissible flipOutX"><strong>
        Status: {{ App\Models\Process::SITUATION_TYPES_LABELS[$process->situation]}} </strong>
       <p> Comentário: {{ $process->last_message }}.</p>
@@ -30,7 +30,7 @@
    <path d="M16.84 18.37l0 .01"></path>
    <path d="M19.37 15.1l0 .01"></path>
    <path d="M19.94 11l0 .01"></path>
-</svg>  Este cidadão está em processamento, e portanto não pode ser editado até a finalização do processo em andamento.</strong>
+</svg>  Este cidadão está em processamento, portanto, não pode ser editado até que o processo atual seja concluído.</strong>
       </div>
 
    @endif
@@ -1539,6 +1539,7 @@ role="dialog"  aria-hidden="true">
                                   </svg>
                                   Download
                                   </a>
+                                  <input type="text" id="name_document"/>
                                   <a  wire:click="deleteDoc('{{$fieldsDigitalizedDocuments[$key]['file']}}')" download  class="removebtn btn btn-danger inline-flex">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-x " width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -1552,9 +1553,9 @@ role="dialog"  aria-hidden="true">
                                   @else
                                   @if(isset($fieldsDigitalizedDocuments[$key]['type']) && $fieldsDigitalizedDocuments[$key]['type'])
 
-                                  <input id="fileInput" onchange="changedFile(event, '{{$key}}')" wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file">
+                                  <input id="fileInput" onchange="changedFile(event, '{{$key}}')"  type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file">
                                   @else
-                                  <input id="fileInput" onchange="changedFile(event, '{{$key}}')" wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file" disabled>
+                                  <input id="fileInput" onchange="changedFile(event, '{{$key}}')" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file" disabled>
                                   @endif
                                   @endif
                                </div>
@@ -1907,8 +1908,7 @@ role="dialog"  aria-hidden="true">
         const fileName = file.name;
         console.log( event.target.files[0])
 
-        alert('dw')
-
+        Livewire.emit('addedDocument', []);
         Livewire.emit('setNameDocument', [fileName, key]);
     }
 

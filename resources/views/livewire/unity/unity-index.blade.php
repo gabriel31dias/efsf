@@ -51,14 +51,20 @@
                          <tr>
                             <th><button class="table-sort" >Nome unidade</button></th>
                             <th><button class="table-sort" >Sigla</button></th>
+                            <th><button class="table-sort" >Ações</button></th>
                          </tr>
                       </thead>
                       <tbody class="table-tbody">
 
                          @foreach ($units as $unity)
-                            <tr wire:click="clickUpdate({{$unity->id}})">
-                                <td>{{ $unity->name }}</td>
-                                <td>{{ $unity->acronym }}</td>
+                            <tr >
+                                <td wire:click="clickUpdate({{$unity->id}})" >{{ $unity->name }}</td>
+                                <td wire:click="clickUpdate({{$unity->id}})">{{ $unity->acronym }}</td>
+                                <td > <button wire:click="destroyUnit('{{$unity->id ?? null}}')"  class="text-decoration-none hover:cursor-pointer text-red-700 border-2 border-red-700 hover:bg-red-700
+                                    hover:text-white focus:ring-4 font-medium rounded-lg
+                                      text-sm p-1 text-center inline-flex items-center mr-1 ">
+                                <i class="ti ti-trash"></i>
+                                    </button></td>
                             </tr>
                          @endforeach
                       </tbody>

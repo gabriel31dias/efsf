@@ -38,6 +38,7 @@ class UnityForm extends Component
         return view('livewire.unity.unity-form');
     }
 
+
     public function saveNewValue($item, $unit_id){
         $index = array_search($item, $this->functions);
 

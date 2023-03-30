@@ -22,6 +22,7 @@ class GenerateProcess
         if (isset($lastProcessCitizen->id) && $lastProcessCitizen->divergence == true){
             $lastProcessCitizen->update(['divergence' => false]);
             $status = "updated";
+            $code =  $lastProcessCitizen->code;
         }else{
             $code = $this->generateCode();
             $p = Process::create([
