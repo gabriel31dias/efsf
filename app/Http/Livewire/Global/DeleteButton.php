@@ -8,19 +8,19 @@ use Livewire\Component;
 class DeleteButton extends Component
 {
     public $modal = false;
-    public $objectModel; 
+    public $objectModel;
     public $type = 'large';
-    public $previous; 
-    public $redirectBack = false; 
+    public $previous;
+    public $redirectBack = false;
     public $deleteEvent = null;
     public $permission = null;
-    
+
     public function render()
     {
-        switch($this->type){ 
-            case 'large': 
+        switch($this->type){
+            case 'large':
                 return view('livewire.global.delete-button-large');
-            case 'table': 
+            case 'table':
                 return view('livewire.global.delete-button-table');
         }
 
@@ -41,11 +41,11 @@ class DeleteButton extends Component
                 'message'=> "Registro deletado com sucesso!"
             ]);
 
-            if($this->deleteEvent){ 
+            if($this->deleteEvent){
                 $this->emit($this->deleteEvent);
             }
-            
-            if($this->redirectBack){ 
+
+            if($this->redirectBack){
                 $this->dispatchBrowserEvent('redirect',[
                     'url'=> $this->previous,
                     'delay' => 1000

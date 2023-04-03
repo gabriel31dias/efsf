@@ -537,6 +537,14 @@
                     'href' => route('process.index'),
                     'can' => 'process.index',
                   ])
+
+                  @livewire('global.menu-item',
+                  [
+                    'title' => 'Assinaturas Diretor',
+                    'classIcon' => 'ti ti-pencil-plus',
+                    'href' => route('director-signature.index'),
+                    'can' => 'process.index',
+                  ])
                   @endif
 
                </ul>

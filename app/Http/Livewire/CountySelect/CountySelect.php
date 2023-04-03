@@ -17,7 +17,7 @@ class CountySelect extends Component
     public $counties = [];
     public $county;
     public $uf;
-    public $is_transfer; 
+    public $is_transfer;
 
     public $defaultValue;
     public $customEvent;
@@ -84,7 +84,7 @@ class CountySelect extends Component
     {
         $this->closed = false;
         $this->counties = County::where('name', 'ilike', '%' . $this->query . '%')->where(function($query) {
-            if($this->uf) { 
+            if($this->uf) {
                 $query->where('uf_id', $this->uf);
             }
         })->take(30)
@@ -108,12 +108,12 @@ class CountySelect extends Component
     }
 
     public function filterUf($uf_id){
-        if($this->is_transfer) return; 
+        if($this->is_transfer) return;
         $this->uf = $uf_id;
     }
 
-    public function filterUfTransfer($uf_id){ 
-        if(!$this->is_transfer) return; 
+    public function filterUfTransfer($uf_id){
+        if(!$this->is_transfer) return;
         $this->uf = $uf_id;
     }
 

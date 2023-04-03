@@ -18,7 +18,7 @@ class UsersSelect extends Component
     public $defaultValue;
 
     protected $listeners = ['curretUsert'];
-    
+
 
     public function curretUser(){
         $this->query = $this->name;
@@ -27,7 +27,7 @@ class UsersSelect extends Component
     public function mount()
     {
         $this->reset1();
-       
+
         if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->name);
     }
 
@@ -65,7 +65,7 @@ class UsersSelect extends Component
     {
         $user = $this->users[$this->highlightIndex] ?? null;
         if ($user) {
-            $this->redirect(route('show-contact', $user['id']));
+            $this->selectItem($user['id'], $user['name']);
         }
     }
 
@@ -79,12 +79,14 @@ class UsersSelect extends Component
 
     public function selectItem($id, $value){
         $this->query = $value;
-       
+
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
         $this->emitUp('selectedUser', $id);
     }
+
+
 
     public function render()
     {
