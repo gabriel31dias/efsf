@@ -13,7 +13,7 @@
    <meta charset="utf-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-   <title>Dashboard - Tabler - Premium and Open Source dashboard template with responsive and high quality UI.</title>
+   <title>Dashboard - SIC</title>
    <!-- CSS files -->
    <link href="{{ asset('dist/css/tabler.min.css') }}" rel="stylesheet" />
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
@@ -41,7 +41,7 @@
    <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/js/jsvectormap.min.js" defer></script>
    <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/maps/world.js" defer></script>
    <script data-turbolinks-track="reload" src="./dist/libs/jsvectormap/dist/maps/world-merc.js" defer></script>
-   <script src="https://unpkg.com/imask"></script>
+   <script src="{{ asset('js/imask.js') }}"></script>
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
    <meta name="turbolinks-visit-control" content="reload">
