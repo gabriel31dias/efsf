@@ -5,8 +5,7 @@
           <div class="row g-2 align-items-center">
              <div class="col">
                 <h2 class="page-title">
-                  Unidades/PCA
-
+                    Assinaturas diretor
                 </h2>
              </div>
           </div>
@@ -14,7 +13,7 @@
     </div>
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
-          <a wire:click="addUnity" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
+          <a wire:click="addSignature" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
              data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
              <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
@@ -23,7 +22,7 @@
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
              </svg>
-             Criar unidade
+             Criar assinatura
           </a>
        </div>
     </div>
@@ -49,28 +48,28 @@
                    <table class="table">
                       <thead>
                          <tr>
-                            <th><button class="table-sort" >Nome unidade</button></th>
-                            <th><button class="table-sort" >Sigla</button></th>
-                            <th><button class="table-sort" >Ações</button></th>
+                            <th><button class="table-sort" >Nome Servidor</button></th>
+                            <th><button class="table-sort" >Data cadastro</button></th>
+                            <th><button class="table-sort" >Data ativação</button></th>
+                            <th><button class="table-sort" >Data inativação</button></th>
+                            <th><button class="table-sort" >Ultima atualização</button></th>
                          </tr>
                       </thead>
                       <tbody class="table-tbody">
 
-                         @foreach ($units as $unity)
+                         @foreach ($items as $item)
                             <tr >
-                                <td wire:click="clickUpdate({{$unity->id}})" >{{ $unity->name }}</td>
-                                <td wire:click="clickUpdate({{$unity->id}})">{{ $unity->acronym }}</td>
-                                <td > <button wire:click="destroyUnit('{{$unity->id ?? null}}')"  class="text-decoration-none hover:cursor-pointer text-red-700 border-2 border-red-700 hover:bg-red-700
-                                    hover:text-white focus:ring-4 font-medium rounded-lg
-                                      text-sm p-1 text-center inline-flex items-center mr-1 ">
-                                <i class="ti ti-trash"></i>
-                                    </button></td>
+                                <td wire:click="clickUpdate({{$item->id}})" >{{ $item->user->name }}</td>
+                                <td wire:click="clickUpdate({{$item->id}})">{{ $item->created_at }}</td>
+                                <td wire:click="clickUpdate({{$item->id}})">{{ $item->date_active }}</td>
+                                <td wire:click="clickUpdate({{$item->id}})">{{ $item->date_inactive }}</td>
+                                <td wire:click="clickUpdate({{$item->id}})">{{ $item->updated_at }}</td>
                             </tr>
                          @endforeach
                       </tbody>
                    </table>
                 </div>
-                {{ $units->links() }}
+                {{ $items->links() }}
              </div>
           </div>
        </div>

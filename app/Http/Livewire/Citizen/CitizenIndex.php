@@ -68,6 +68,8 @@ class CitizenIndex extends Component
     public $currentRegistryId = "";
 
     public $tempFile = "";
+
+    public $inProcessing = false;
     public $tempTypeFile = "";
     public $searchAnoProcesso;
     public $searchNumber;
@@ -128,7 +130,7 @@ class CitizenIndex extends Component
         "county_id",
         "uf_id",
         "county_id",
-        "service_station_id",
+
         "via_rg",
         "cell",
         "email",
@@ -267,7 +269,7 @@ class CitizenIndex extends Component
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
         'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident',
-        'changeCitizenStatus', 'updateInfoIbge'
+        'changeCitizenStatus', 'updateInfoIbge', 'setNameDocument', 'addedDocument'
     ];
 
     public $citizen;
@@ -298,10 +300,17 @@ class CitizenIndex extends Component
 
         $reformuledArray = $this->removeFileFromArray($urlbase, $this->fieldsDigitalizedDocuments);
 
-        $citizen = Citizen::find($this->citizen->id);
-        $citizen->update(['digitalized_documents' => \json_encode($reformuledArray) ]);
+        $array = array_filter($reformuledArray, function($item) use ($urlbase) {
+            if ($item['file'] !== '') {
+              return $item;
+            }
+        });
 
-        $this->fieldsDigitalizedDocuments = $reformuledArray;
+        $citizen = Citizen::find($this->citizen->id);
+        $citizen->update(['digitalized_documents' => \json_encode($array) ]);
+
+
+        $this->fieldsDigitalizedDocuments = $reformuledArray ;
 
         $this->dispatchBrowserEvent('alert',[
             'type'=> 'success',
@@ -310,13 +319,14 @@ class CitizenIndex extends Component
     }
 
     public function removeFileFromArray($filePath, $array) {
-        $array = array_map(function($item) use ($filePath) {
-          if ($item['file'] !== $filePath) {
+        $array = array_filter($array, function($item) use ($filePath) {
+          if ($item['file'] !== $filePath ) {
             return $item;
           }
-        }, $array);
+        });
 
-        return array_filter($array); // remove valores nulos do array
+
+        return $array; // remove valores nulos do array
     }
 
     public function getFileNameAndExtension($filePath) {
@@ -353,7 +363,7 @@ class CitizenIndex extends Component
             'message'=> "Ajuste realizado com sucesso !"
         ]);
 
-
+        $this->createCitizen();
     }
 
     public function updated_uf_ident($obj){
@@ -466,29 +476,38 @@ class CitizenIndex extends Component
     }
 
     public function addedDocument(){
-
-        if(count($this->fieldsDigitalizedDocuments) == 1){
-
-            $item = [];
-            $item['file'] = $this->tempFile;
-            $item['type'] = $this->fieldsDigitalizedDocuments['field1']['type'];
-
-            $this->fieldsDigitalizedDocuments['field1'] = $item;
-            $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field1']['type'];
-            $countDocuments = count($this->fieldsDigitalizedDocuments) + 1;
-            $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
-            return ;
-        }
+        $item = [
+            'file' => $this->tempFile,
+            'type' => $this->fieldsDigitalizedDocuments['field1']['type'],
+            'name' => '',
+        ];
 
         $countDocuments = count($this->fieldsDigitalizedDocuments) + 1;
 
+        if (count($this->fieldsDigitalizedDocuments) == 1) {
+            $this->fieldsDigitalizedDocuments['field1'] = $item;
+        } else {
+            $lastField = 'field' . count($this->fieldsDigitalizedDocuments);
+            $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments[$lastField]['type'];
+        }
 
-        $this->jaUtilizados[] = $this->fieldsDigitalizedDocuments['field'.count($this->fieldsDigitalizedDocuments)]['type'];
+        $this->fieldsDigitalizedDocuments['field' . $countDocuments] = [
+            'file' => '',
+            'type' => '',
+            'name' => '',
+        ];
+    }
 
-        $item = [];
-        $item['file'] = "";
-        $item['type'] = "";
-        $this->fieldsDigitalizedDocuments['field'.$countDocuments] = $item;
+    public function setNameDocument($data)
+    {
+        $this->fieldsDigitalizedDocuments[$data[1]]['name'] = $data[0];
+    }
+
+    public function updatedfieldsDigitalizedDocuments()
+    {
+        if($this->fieldsDigitalizedDocuments ) {
+
+        }
     }
 
     public function  selectedCountryTypeStreat($id)
@@ -863,7 +882,9 @@ class CitizenIndex extends Component
             ->where('situation','!=', \App\Models\Process::CANCELED)->whereIn('to_service_station_id', $serviceStationIds)->first();
         }
 
-        $this->process = $process;
+        $checkProcessActive = Process::where('citizen_id', $this->citizen->id )->first();
+        $this->inProcessing = isset($checkProcessActive->id) ? true : false ;
+
         if(isset($process->id)){
            $this->process =  $process;
         }
@@ -904,7 +925,7 @@ class CitizenIndex extends Component
             $this->setCitizen($this->citizen->id);
         }else{
             $service_station_session = session('service_station');
-            if(isset($service_station_session)){ 
+            if(isset($service_station_session)){
             $this->fields['service_station_id'] = $service_station_session->id;
             $this->currentServiceStation = $service_station_session->service_station_name;
             }
@@ -1242,6 +1263,8 @@ class CitizenIndex extends Component
 
         }
 
+
+
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
             "file_capture_image" => $this->fields["file_capture_image"] ?? $this->citizen->file_capture_image,
@@ -1273,7 +1296,7 @@ class CitizenIndex extends Component
             "file_sign" => $this->fileSign,
             "justification_sign" => $this->justificationSign,
             "country_id" => $this->fields["country_id"],
-            "service_station_id" => $this->fields["service_station_id"],
+            "service_station_id" => 1 ,
             "uf_id" => $this->fields["uf_id"],
             "zip_code" => $this->fields["zip_code"],
             "address" => $this->fields["address"],
@@ -1404,7 +1427,7 @@ class CitizenIndex extends Component
     }
 
     public function updateInfoIbge($request)
-    { 
+    {
         $this->fields['address'] = $request['logradouro'];
         $this->fields['district'] = $request['bairro'];
     }

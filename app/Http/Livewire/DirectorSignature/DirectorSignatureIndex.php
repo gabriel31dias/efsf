@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Unity;
+namespace App\Http\Livewire\DirectorSignature;
 
+use App\Models\DirectorSignature;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Unit;
-class UnityIndex extends Component
+class DirectorSignatureIndex extends Component
 {
     public $perfilName;
     public $daysToAccessInspiration;
@@ -16,23 +17,23 @@ class UnityIndex extends Component
 
     public function render()
     {
-        $units = $this->filtersCall();
+        $items = $this->filtersCall();
 
         if($this->filterActives || $this->filterInactives){
-            $units->where(function($query){
+            $items->where(function($query){
                 if($this->filterActives){
-                    $query->orWhere(['status' => true]);
+                    //$query->orWhere(['status' => true]);
                 }
 
                 if($this->filterInactives){
-                    $query->orWhere(['status' => false]);
+                    //$query->orWhere(['status' => false]);
                 }
             });
         }
 
-        return view('livewire.unity.unity-index',
+        return view('livewire.directorSignature.director-signature-index',
         [
-            'units' => $units->paginate(5)
+            'items' => $items->paginate(5)
         ]);
     }
 
@@ -64,14 +65,14 @@ class UnityIndex extends Component
 
         if($this->searchTerm){
             $searchTerm = '%'. $this->searchTerm .'%';
-            $units = Unit::where('name','ilike', '%'. $searchTerm .'%' );
+            $items = DirectorSignature::where('name','ilike', '%'. $searchTerm .'%' );
         }
 
         if(!$searchTerm){
-            $units = Unit::orderBy('id','desc');
+            $items = DirectorSignature::orderBy('id','desc');
         }
 
-        return $units;
+        return $items;
     }
 
     public function mount(){
@@ -82,16 +83,16 @@ class UnityIndex extends Component
         $this->dispatchBrowserEvent('openFilters', []);
     }
 
-    public function addUnity()
+    public function addSignature()
     {
         $this->dispatchBrowserEvent('redirect',[
-            'url'=> '/unit/create',
+            'url'=> '/director-signature/create',
         ]);
     }
 
     public function clickUpdate($id){
         $this->dispatchBrowserEvent('redirect',[
-            'url'=> '/unit/'.$id.'/edit',
+            'url'=> '/director-signature/'.$id.'/edit',
         ]);
     }
 }

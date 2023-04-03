@@ -6,8 +6,8 @@
     }" class="card page-wrapper">
  @include('livewire.citizen.dialogs.dialog-capture')
 
- @if($process)
-   @if($process->divergence == true)
+ @if($process || $inProcessing)
+   @if(isset($process->divergence) && $process->divergence == true)
       <div data-status-process="none" class="alert animated flipInX alert-danger alert-dismissible flipOutX"><strong>
        Status: {{ App\Models\Process::SITUATION_TYPES_LABELS[$process->situation]}} </strong>
       <p> Comentário: {{ $process->last_message }}.</p>
@@ -30,7 +30,7 @@
    <path d="M16.84 18.37l0 .01"></path>
    <path d="M19.37 15.1l0 .01"></path>
    <path d="M19.94 11l0 .01"></path>
-</svg>  Este cidadão está em processamento, e portanto não pode ser editado até a finalização do processo em andamento.</strong>
+</svg>  Este cidadão está em processamento, portanto, não pode ser editado até que o processo atual seja concluído.</strong>
       </div>
 
    @endif
@@ -1413,7 +1413,7 @@ role="dialog"  aria-hidden="true">
                       </div>
                       @endif
                       @if($selectedTab == "documentos_digitalizados")
-                      <div class=" mb-3">
+                      <div  class=" mb-3">
                          <div id="gemeo" role="tabpanel">
                             @foreach($fieldsDigitalizedDocuments as $key => $item)
                             <div class="row">
@@ -1539,9 +1539,10 @@ role="dialog"  aria-hidden="true">
                                   </svg>
                                   Download
                                   </a>
-                                  <a wire:click="deleteDoc('{{$fieldsDigitalizedDocuments[$key]['file']}}')" download  class="btn btn-danger inline-flex">
+                                  <input type="text" id="name_document"/>
+                                  <a  wire:click="deleteDoc('{{$fieldsDigitalizedDocuments[$key]['file']}}')" download  class="removebtn btn btn-danger inline-flex">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-x " width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                         <path d="M10 10l4 4m0 -4l-4 4"></path>
                                         <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
@@ -1551,9 +1552,10 @@ role="dialog"  aria-hidden="true">
                                   </a>
                                   @else
                                   @if(isset($fieldsDigitalizedDocuments[$key]['type']) && $fieldsDigitalizedDocuments[$key]['type'])
-                                  <input wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file">
+
+                                  <input id="fileInput" onchange="changedFile(event, '{{$key}}')"  type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file">
                                   @else
-                                  <input wire:change="addedDocument();" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file" disabled>
+                                  <input id="fileInput" onchange="changedFile(event, '{{$key}}')" type="file"   wire:model="fieldsDigitalizedDocuments.{{$key}}.file" disabled>
                                   @endif
                                   @endif
                                </div>
@@ -1771,8 +1773,8 @@ role="dialog"  aria-hidden="true">
                                      </select>
                                   </div>
                                </div>
-                             
-                               
+
+
                                @endif
                                <div class="col-lg-3 mb-3">
                                   <label class="form-label">Data da Certidão/DOU<span
@@ -1797,13 +1799,13 @@ role="dialog"  aria-hidden="true">
                       @if (isset($registrySelected))
                         <div class="row">
                            <div class="col-lg-6 font-bold">
-                               <span class="text-sky-600">Cartório:</span>  {{ $registrySelected->name }} 
+                               <span class="text-sky-600">Cartório:</span>  {{ $registrySelected->name }}
                            </div>
                            <div class="col-lg-3 font-bold">
-                              <span class="text-sky-600">UF:</span>  {{ $registrySelected->uf->name }} 
+                              <span class="text-sky-600">UF:</span>  {{ $registrySelected->uf->name }}
                           </div>
                           <div class="col-lg-3 font-bold">
-                           <span class="text-sky-600">Municipio:</span>  {{ $registrySelected->county->name }} 
+                           <span class="text-sky-600">Municipio:</span>  {{ $registrySelected->county->name }}
                        </div>
                         </div>
                       @endif
@@ -1833,11 +1835,20 @@ role="dialog"  aria-hidden="true">
             for (let i = 0; i < inputs.length; i++) {
                inputs[i].disabled = true;
             }
+            const removeBtns = document.querySelectorAll('.removebtn');
+            for (let i = 0; i < removeBtns.length; i++) {
+                removeBtns[i].style.display = 'none';
+            }
          }
       }
     }, 10);
 
+
+
+
+
     document.addEventListener('turbolinks:load', () => {
+
 
 
 
@@ -1891,6 +1902,16 @@ role="dialog"  aria-hidden="true">
 
 
     }
+
+    function changedFile(event, key) {
+        const file = event.target.files[0];
+        const fileName = file.name;
+        console.log( event.target.files[0])
+
+        Livewire.emit('addedDocument', []);
+        Livewire.emit('setNameDocument', [fileName, key]);
+    }
+
 
 
     function loadMultSelectCaracteristicas(){

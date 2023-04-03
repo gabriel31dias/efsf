@@ -19,6 +19,9 @@ Route::get('/', function () {
 
 Route::resource('unit', App\Http\Controllers\UnityController::class);
 Route::resource('process', App\Http\Controllers\ProcessController::class);
+Route::resource('director-signature', App\Http\Controllers\DirectorSignatureController::class);
+
+
 
 
 Route::get('/monitor/{id}/edit', [App\Http\Controllers\MonitorProcessController::class, 'edit'])->name('monitor-process');

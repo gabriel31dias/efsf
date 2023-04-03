@@ -1,16 +1,22 @@
 <?php
 
-namespace App\Http\Livewire\Unity;
+namespace App\Http\Livewire\DirectorSignature;
 
 use App\Http\Repositories\UnityRepository;
+use App\Models\DirectorSignature;
+
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Unit;
 use App\Models\Profession;
+use Livewire\WithFileUploads;
+
 
 use App\Http\Repositories\ProfileRepository;
-class UnityForm extends Component
+class DirectorSignatureForm extends Component
 {
 
+    use WithFileUploads;
     public $errorsKeys = [];
     public $errors = [];
 
@@ -18,24 +24,53 @@ class UnityForm extends Component
     public $functions = [];
     public $textFunction = "";
 
+    public $cpf;
+
     public $rowEdit = "";
+
+    public $fileSign = "";
+
+    public $directorSign;
 
     public $perfilName;
     public $daysToAccessInspiration;
     public $daysToActivityLock;
     public $obrigatory_filds = [
-      "name"
+        "user_id",
+        "unit_id"
     ];
     public $unit;
     public $action;
+
     public $fields = [
-        "name" => "",
-        "protocol_unit" => "",
-        "acronym" => ""
+        "user_id" => "",
+        "unit_id" => ""
     ];
+
+    public $user;
+
+    public $user_name;
+
+    public $listeners = ['selectedServiceStation', 'selectedUser'];
+
     public function render()
     {
-        return view('livewire.unity.unity-form');
+        return view('livewire.directorSignature.director-signature-form');
+    }
+
+    public function selectedUser($id){
+        $this->user = $id;
+        $this->user_name = User::find($id)->name;
+        $this->getAllFunctions(User::find($id));
+    }
+
+    public function getAllFunctions($user){
+        $user = User::find($user->id);
+        $this->functions = Profession::where(['unit_id' =>  $user->unit_id])->get() ?? [];
+        $this->cpf = $user->cpf ?? null;
+        $this->unit = Unit::find($user->unit_id)->name ?? null;
+        $this->fields['user_id'] = $user->id ?? null;
+        $this->fields['unit_id'] = Unit::find($user->unit_id)->id ?? null;
     }
 
 
@@ -51,9 +86,9 @@ class UnityForm extends Component
         }
 
 
-        $profission = Profession::where(['unit_id' => $unit_id])->where(['name' => $item])->first();
+        $directorSignature = DirectorSignature::where(['unit_id' => $unit_id])->where(['name' => $item])->first();
         if(isset($profission->id)){
-            $profission->update(["name" => $backup]);
+            $directorSignature->update(["name" => $backup]);
         }
 
         $this->rowEdit = "";
@@ -66,17 +101,30 @@ class UnityForm extends Component
 
     public function mount()
     {
-        if($this->unit){
+        if($this->directorSign){
             $this->fields = [
-                "id" => $this->unit->id,
-                "name" => $this->unit->name,
-                "protocol_unit" => $this->unit->protocol_unit,
-                "acronym"  => $this->unit->acronym,
+                "id" => $this->directorSign->id,
+                "user_id" => $this->directorSign->user_id,
+                "unit_id" => $this->directorSign->unit_id
             ];
-            $this->functions = Profession::where(['unit_id' => $this->unit->id])->get('name')->map(function ($item) {
-                return $item->name;
-            })->toArray();
+
+            $this->user = User::find($this->directorSign->user_id);
+            $this->cpf = $this->user->cpf;
+            $this->getAllFunctions($this->user);
+            $this->fields['file_signature'] = $this->directorSign->file_signature;
+
+
         }
+
+        $this->fields = [
+            'user_id' => '',
+            'unit_id' => ''
+        ];
+
+
+
+
+
     }
 
     public function setEditingRow($item){
@@ -85,11 +133,11 @@ class UnityForm extends Component
 
     public function createOrUpdateFunctions($unit_id){
         foreach($this->functions as $item){
-            $profission = Profession::where(['unit_id' => $unit_id])->where(['name' => $item ])->first();
-            if(isset($profission->id)){
+            $directorSignature = DirectorSignature::where(['unit_id' => $unit_id])->where(['name' => $item ])->first();
+            if(isset($directorSignature->id)){
 
             }else{
-                Profession::create([
+                DirectorSignature::create([
                     'name' => $item,
                     'unit_id' => $unit_id
                 ]);
@@ -107,7 +155,7 @@ class UnityForm extends Component
             return false;
         }
 
-        $p = Profession::where(["unit_id" => $unit_id])->where(["name" => $profission])->first();
+        $p = DirectorSignature::where(["unit_id" => $unit_id])->where(["name" => $profission])->first();
         if(isset($p->id)){
             $p->delete();
         }
@@ -119,7 +167,15 @@ class UnityForm extends Component
     }
 
     public function save(){
+
+        $this->fields['file_signature'] = $this->fileSign;
+
         $validation = $this->validation($this->fields);
+
+        $filename = $this->fileSign->store('public/signatures');
+        $this->fields['file_signature'] = basename($filename);
+
+
 
         if(count($validation) > 0){
             $this->errors = $validation;
@@ -133,24 +189,41 @@ class UnityForm extends Component
 
 
         if($this->action == "create"){
-            $unit = Unit::create(['name'=> $this->fields['name'], "acronym" => $this->fields['acronym'] ]);
+
+            $lastSign = DirectorSignature::latest()->first();
+
+            $signature = DirectorSignature::create([
+                "user_id" => $this->fields['user_id'],
+                "unit_id" => $this->fields['unit_id'],
+                "file_signature" => $this->fields['file_signature'],
+                "date_active" => now(),
+            ]);
+
+
+            $this->disableLastSignature($lastSign);
+
+
+
         } else {
-            $unit = Unit::updateOrCreate(['id' => $this->unit->id ?? 0],[
+            $signature = DirectorSignature::updateOrCreate(['id' => $this->unit->id ?? 0],[
                 'name' => $this->fields["name"]
             ]);
         }
 
-        if(isset($unit->id)){
-            $this->createOrUpdateFunctions($unit->id);
-        }
-
-        if($unit){
+        if($signature){
             $this->messageSuccess();
             $this->dispatchBrowserEvent('redirect',[
-                'url'=> '/unit',
+                'url'=> '/director-signature',
                 'delay' => 1000
             ]);
         }
+    }
+
+    public function disableLastSignature($lastSign){
+        DirectorSignature::find($lastSign->id)->update([
+            "enabled" => false,
+            "date_inactive" => now()
+        ]);
     }
 
     public function AddFunction(){
@@ -203,6 +276,7 @@ class UnityForm extends Component
         $this->errors = [];
         foreach ($fields as $field => $value)
         {
+
             if($this->checkMandatory($field) && empty(trim($value))){
                 array_push($errors, [
                     "message" => "O campo {$field} é obrigatorio",
