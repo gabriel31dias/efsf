@@ -31,7 +31,7 @@
           <div class="container-fluid" class="input-icon">
              <span class="input-icon-addon">
                 <!-- Download SVG icon from http://tabler-icons.io/i/search -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                <svg wire:click="goUnit()" xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                    <circle cx="10" cy="10" r="7"></circle>
@@ -52,7 +52,7 @@
                             <th><button class="table-sort" >Data cadastro</button></th>
                             <th><button class="table-sort" >Data ativação</button></th>
                             <th><button class="table-sort" >Data inativação</button></th>
-                            <th><button class="table-sort" >Ultima atualização</button></th>
+                            <th><button class="table-sort" >Status</button></th>
                          </tr>
                       </thead>
                       <tbody class="table-tbody">
@@ -64,6 +64,7 @@
                                 <td wire:click="clickUpdate({{$item->id}})">{{ $item->date_active }}</td>
                                 <td wire:click="clickUpdate({{$item->id}})">{{ $item->date_inactive }}</td>
                                 <td wire:click="clickUpdate({{$item->id}})">{{ $item->updated_at }}</td>
+                                <td wire:click="clickUpdate({{$item->id}})">{{ $item->active == true  ? 'Ativo' : 'Inativo' }}</td>
                             </tr>
                          @endforeach
                       </tbody>

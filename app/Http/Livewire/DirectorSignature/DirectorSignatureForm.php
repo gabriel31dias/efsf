@@ -101,6 +101,7 @@ class DirectorSignatureForm extends Component
 
     public function mount()
     {
+
         if($this->directorSign){
             $this->fields = [
                 "id" => $this->directorSign->id,
@@ -115,14 +116,6 @@ class DirectorSignatureForm extends Component
 
 
         }
-
-        $this->fields = [
-            'user_id' => '',
-            'unit_id' => ''
-        ];
-
-
-
 
 
     }
@@ -166,15 +159,27 @@ class DirectorSignatureForm extends Component
         ]);
     }
 
+    public function goUnit(){
+        $this->dispatchBrowserEvent('redirect',[
+            'url'=> '/unit/'.$this->fields['unit_id'] .'/edit',
+        ]);
+    }
+
     public function save(){
 
         $this->fields['file_signature'] = $this->fileSign;
 
         $validation = $this->validation($this->fields);
 
-        $filename = $this->fileSign->store('public/signatures');
-        $this->fields['file_signature'] = basename($filename);
-
+        if($this->fileSign){
+            $filename = $this->fileSign->store('public/signatures');
+            $this->fields['file_signature'] = basename($filename);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'success',
+                'message'=> "Item excccccluido com sucesso."
+            ]);
+        }
 
 
         if(count($validation) > 0){
@@ -192,6 +197,7 @@ class DirectorSignatureForm extends Component
 
             $lastSign = DirectorSignature::latest()->first();
 
+
             $signature = DirectorSignature::create([
                 "user_id" => $this->fields['user_id'],
                 "unit_id" => $this->fields['unit_id'],
@@ -199,14 +205,15 @@ class DirectorSignatureForm extends Component
                 "date_active" => now(),
             ]);
 
-
-            $this->disableLastSignature($lastSign);
-
-
+            if(isset($lastSign->id)){
+                $this->disableLastSignature($lastSign);
+            }
 
         } else {
-            $signature = DirectorSignature::updateOrCreate(['id' => $this->unit->id ?? 0],[
-                'name' => $this->fields["name"]
+            $signature = DirectorSignature::updateOrCreate(['id' => $this->directorSign->id ?? 0],[
+                "user_id" => $this->fields['user_id'],
+                "unit_id" => $this->fields['unit_id'],
+                "file_signature" => $this->fields['file_signature'] ?? $this->directorSign->file_signature,
             ]);
         }
 
@@ -221,7 +228,7 @@ class DirectorSignatureForm extends Component
 
     public function disableLastSignature($lastSign){
         DirectorSignature::find($lastSign->id)->update([
-            "enabled" => false,
+            "active" => false,
             "date_inactive" => now()
         ]);
     }
@@ -271,11 +278,16 @@ class DirectorSignatureForm extends Component
     }
 
     private function validation($fields){
+
+
+
         $errors = [];
         $this->errorsKeys = [];
         $this->errors = [];
         foreach ($fields as $field => $value)
         {
+
+
 
             if($this->checkMandatory($field) && empty(trim($value))){
                 array_push($errors, [

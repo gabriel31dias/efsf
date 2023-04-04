@@ -69,7 +69,7 @@
                             <div class="col-sm-6 mt-3">
                                 <div class="input-group mb-3">
                                     <div class="input-group-append">
-                                        <a wire:click="AddFunction" class="btn btn-primary items-center inline-flex">
+                                        <a wire:click="goUnit" class="btn btn-primary items-center inline-flex">
                                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -121,7 +121,7 @@
                                   Anexar assiantura</a>
                                   <input wire:model="fileSign"  style="display: none"  id="file-input" type="file">
 
-                                <a class="card-btn btn-primary "><!-- Download SVG icon from http://tabler-icons.io/i/phone -->
+                                <a onclick="downloadPreview()" class="card-btn btn-primary "><!-- Download SVG icon from http://tabler-icons.io/i/phone -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cloud-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                         <path d="M19 18a3.5 3.5 0 0 0 0 -7h-1a5 4.5 0 0 0 -11 -2a4.6 4.4 0 0 0 -2.1 8.4"></path>
@@ -159,5 +159,19 @@
 
             reader.readAsDataURL(file);
         });
+
+        function downloadPreview(){
+            var img = document.getElementById('preview-image');
+            var canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            var dataURL = canvas.toDataURL('image/jpeg', 1.0);
+            var link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'assinatura.png';
+            link.click();
+        }
     </script>
 </div>
