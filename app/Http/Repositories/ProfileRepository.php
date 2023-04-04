@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Repositories;
-use App\Models\Unit;
+
+use App\Models\Profile;
 
 class ProfileRepository {
 
@@ -14,11 +15,11 @@ class ProfileRepository {
             return false;
         }
 
-      return Unit::where('id', $idProfile)->first() ?? null;
+      return Profile::where('id', $idProfile)->first() ?? null;
     }
 
     public function toggleStatus($id){
-        $profile =  Unit::whereId($id)->first();
+        $profile =  Profile::whereId($id)->first();
         return $profile = $profile->update([
             'status' => ! $profile->status
         ]);

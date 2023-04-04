@@ -1,9 +1,13 @@
 <div>
-    <div x-data="{ modal: @entangle('modal') }">
-        <div class="nav-link px-0">
-            <button href="#" x-data="{ id: 'modal-change-service' }" x-on:click="modal=true" class="nav-link d-flex lh-1 " data-bs-toggle="dropdown" aria-label="Open user menu">
+    <div x-data="{ modal: @entangle('modal'), 'tooltip': false }">
+        <div class="nav-link px-0 relative flex flex-col items-center group">
+            <button x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false" href="#" x-data="{ id: 'modal-change-service' }" x-on:click="modal=true" class="nav-link d-flex lh-1 " data-bs-toggle="dropdown" aria-label="Open user menu">
                <i class="ti ti-building-arch text-gray-600"></i>
             </button>
+            <div class="absolute top-0 flex flex-col items-center hidden mt-10 group-hover:flex">
+                <div class="w-2 h-2 -mb-1 rotate-45 bg-gray-700"></div>
+                <span class="relative z-10 p-2 text-xs leading-none rounded  text-white whitespace-no-wrap w-36 text-center bg-gray-700 shadow-md">Posto de atendimento</span>
+            </div>
         </div>
         <section :class="{ 'absolute h-screen flex items-center justify-center': modal }">
             <div class="fixed inset-0 z-10 flex flex-col items-center justify-end overflow-y-auto bg-gray-600 bg-opacity-50 sm:justify-start"
