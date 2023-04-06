@@ -39,16 +39,8 @@ class CitizenController extends Controller
     {
         $citizen = Citizen::find($id);
 
-        $filiations = [];
-
-        array_push($filiations, $citizen->filiation1);
-        array_push($filiations, $citizen->filiation2);
-
-        $filiationsPlus = \json_decode($citizen->other_filiations);
-
-        foreach ($filiationsPlus as $filiation) {
-            array_push($filiations, $filiation);
-        }
+        $filiations = $citizen->filiations->toArray();
+        
 
         $professional_idents = [];
 

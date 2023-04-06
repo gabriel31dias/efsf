@@ -543,9 +543,9 @@ role="dialog"  aria-hidden="true">
                          <div class="row">
                             <div class="col-lg-6">
                                <div class="mb-3">
-                                  <label class="form-label">Filiação (Paterno) </label>
+                                  <label class="form-label">Filiação</label>
                                   <div class="input-group input-group-flat">
-                                     <input wire:model="fields.filiation1"
+                                     <input wire:model="filiation.name"
                                         type="text"
                                         class="form-control ps-0"
                                         autocomplete="off" required>
@@ -554,53 +554,63 @@ role="dialog"  aria-hidden="true">
                             </div>
                             <div class="col-lg-6">
                                <div class="mb-3">
-                                  <label class="form-label">Filiação (Materna)</label>
-                                  <div class="input-group input-group-flat">
-                                     <input wire:model="fields.filiation2"
-                                        type="text"
-                                        class="form-control ps-0"
-                                        autocomplete="off" required>
-                                  </div>
+                                 <label style="" class="form-label">Tipo</label>
+                                 <div class="input-group mb-1">
+                                  <select wire:model="filiation.type" class="form-control">
+                                    <option value="{{ \App\Models\Filiation::TYPE_MATERNAL }}">{{ \App\Models\Filiation::TYPE_LABEL[\App\Models\Filiation::TYPE_MATERNAL] }}</option>
+                                    <option value="{{ \App\Models\Filiation::TYPE_PATERNAL }}">{{ \App\Models\Filiation::TYPE_LABEL[\App\Models\Filiation::TYPE_PATERNAL] }}</option>
+
+                                 </select>
+                                    <div class="input-group-append">
+                                       <a style="text-align: center" wire:click="addFiliation"
+                                          class="btn btn-primary d-none d-sm-inline-block">
+                                          <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                          <div class="flex">
+                                             
+                                          <svg style="text-align: center ml-2" xmlns="http://www.w3.org/2000/svg" class=""
+                                             width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                             fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                             <line x1="12" y1="5" x2="12" y2="19" />
+                                             <line x1="5" y1="12" x2="19" y2="12" />
+                                          </svg>
+                                          Adicionar Filiação
+                                       </div>
+
+                                       </a>
+                                    </div>
+ 
+                                 </div>
                                </div>
                             </div>
-                            <div class="row">
-                               <div class="col-lg-6">
-                                  <a style="margin-bottom:30px"
-                                     wire:click="addNewFiliationField"
-                                     class="btn btn-primary inline-flex">
-                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                                     <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2"
-                                        stroke="currentColor" fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z"
-                                           fill="none"></path>
-                                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                     </svg>
-                                     Adicionar mais filiações
-                                  </a>
-                               </div>
+                            
+                            @if (!empty($fields['filiations']))
+                                
+                            <div class="p-2 rounded border-1 border-red-300">
+                              <h2 class="text-md font-bold">Filiações</h2>
+                                 <div class="card-body px-0 py-2">
+                                    <div id="table-default" class="table-responsive">
+                                       <table class="table">
+                                          <thead>
+                                             <tr>
+                                                <th>Nome</th>
+                                                <th>Tipo</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody class="table-tbody">
+                                             @foreach ($fields['filiations'] as $filiation)
+                                             <tr>
+                                                <td class="sort-name">{{  $filiation['name'] }}</td>
+                                                <td class="sort-city">{{  \App\Models\Filiation::TYPE_LABEL[$filiation['type']] }}</td>
+                                             </tr>
+                                             @endforeach
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
                             </div>
-                            <div class="row">
-                               @foreach ($otherFiliations as $index => $item)
-                               <div class="col-lg-6">
-                                  <div class="mb-3">
-                                     <label
-                                        class="form-label">{{$item}}</span></label>
-                                     <div class="input-group input-group-flat">
-                                        <input
-                                           wire:model="otherFiliationsValues.{{$index}}"
-                                           type="text"
-                                           class="form-control ps-0"
-                                           autocomplete="off" required>
-                                     </div>
-                                  </div>
-                               </div>
-                               @endforeach
-                            </div>
+                            @endif
+
                          </div>
                       </div>
                       <div></div>
@@ -855,6 +865,20 @@ role="dialog"  aria-hidden="true">
                            </select>
                         </div>
                      </div>
+                     <div class="col-lg-2">
+                        <div class="mb-3">
+                           <label class="form-label">Tipo de Isenção<span
+                              class="error_tag">*</span></label>
+                           <select wire:model="exemption_type" class="form-control ps-0"
+                              name="select">
+                              <option value="" disabled selected>Selecione</option>
+                              @foreach (App\Models\Process::PAYMENT_EXEMPTION_TYPES as $type)
+                                 <option value="{{ $type }}">{{ $type }}</option>                                  
+                              @endforeach
+                           </select>
+                        </div>
+                     </div>
+                     
                       @if(isset($citizen['updated_at']) && $citizen['updated_at'])
                       <div class="col-lg-4">
                          <div class="mb-3">
@@ -1108,6 +1132,12 @@ role="dialog"  aria-hidden="true">
                       type="text" class="form-control ps-0"
                       autocomplete="off" required>
                 </div>
+                <div class="col-lg-4 mb-3">
+                  <label class="form-label">Confirmar Email</label>
+                  <input  wire:model="confirm_email"
+                     type="text" class="form-control ps-0"
+                     autocomplete="off" required>
+               </div>
              </div>
           </div>
        </div>
@@ -1351,19 +1381,118 @@ role="dialog"  aria-hidden="true">
                             <div class="card-body row">
                                <div id="gemeo" role="tabpanel">
                                   <div class="row">
-                                     <label class="mb-3" >Nomes anteriores</label>
-                                     <div class="col-lg-12 mb-3">
-                                        <label class="form-label ">Nomes anteriores</label>
-                                        <input wire:model="fields.names_previous"  maxlength="70" type="text"
-                                           class="form-control ps-0 "
-                                           autocomplete="off" required>
-                                     </div>
-                                     <div class="col-lg-12 mb-3">
-                                        <label class="form-label ">Filiações anteriores</label>
-                                        <input wire:model="fields.filitions_previous"  maxlength="70" type="text"
-                                           class="form-control ps-0 "
-                                           autocomplete="off" required>
-                                     </div>
+                                    <div class="col-lg-6">
+                                       <div class="mb-3">
+                                          <label class="form-label ">Nomes anteriores</label>
+                                          <div class="input-group mb-1">
+                                          <input wire:model="tmpPreviousName"  maxlength="70" type="text"
+                                             class="form-control ps-0 "
+                                             autocomplete="off" required>
+                                           <div class="input-group-append">
+                                               <a style="text-align: center" wire:click="addNamesPrevious"
+                                                  class="btn btn-primary d-none d-sm-inline-block">
+                                                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                  <div class="flex">
+                                                     
+                                                  <svg style="text-align: center ml-2" xmlns="http://www.w3.org/2000/svg" class=""
+                                                     width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                     <line x1="12" y1="5" x2="12" y2="19" />
+                                                     <line x1="5" y1="12" x2="19" y2="12" />
+                                                  </svg>
+                                                  Adicionar
+                                               </div>
+                        
+                                               </a>
+                                            </div>
+                        
+                                         </div>
+                                       </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                       <div class="mb-3">
+                                          <label class="form-label ">Filiações anteriores</label>
+                                          <div class="input-group mb-1">
+                                          <input wire:model="tmpPreviousFiliation"  maxlength="70" type="text"
+                                             class="form-control ps-0 "
+                                             autocomplete="off" required>
+                                           <div class="input-group-append">
+                                               <a style="text-align: center" wire:click="addFiliationsPrevious"
+                                                  class="btn btn-primary d-none d-sm-inline-block">
+                                                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                  <div class="flex">
+                                                     
+                                                  <svg style="text-align: center ml-2" xmlns="http://www.w3.org/2000/svg" class=""
+                                                     width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                     <line x1="12" y1="5" x2="12" y2="19" />
+                                                     <line x1="5" y1="12" x2="19" y2="12" />
+                                                  </svg>
+                                                  Adicionar
+                                               </div>
+                        
+                                               </a>
+                                            </div>
+                        
+                                         </div>
+                                       </div>
+                                    </div>
+                                    
+                                    @php
+                                        $names = !empty($fields['names_previous']) ? explode(",", $fields['names_previous']) : [];
+                                        $filiacoes = !empty($fields['filitions_previous']) ? explode(",", $fields['filitions_previous']) : [];
+                                    @endphp
+
+                                    @if (!empty($names))
+                                    <div class="p-2 rounded border-1 border-red-300">
+                                      <h2 class="text-md font-bold">Nomes Anteriores</h2>
+                                         <div class="card-body px-0 py-2">
+                                            <div id="table-default" class="table-responsive">
+                                               <table class="table">
+                                                  <thead>
+                                                     <tr>
+                                                        <th>Nome</th>
+                                                     </tr>
+                                                  </thead>
+                                                  <tbody class="table-tbody">
+                                                     @foreach ($names as $name)
+                                                     <tr>
+                                                        <td class="sort-name">{{  $name }}</td>
+                                                     </tr>
+                                                     @endforeach
+                                                  </tbody>
+                                               </table>
+                                            </div>
+                                         </div>
+                                    </div>
+                                    @endif
+
+                                    @if (!empty($filiacoes))
+                                    <div class="p-2 rounded border-1 border-red-300">
+                                      <h2 class="text-md font-bold">Filiações Anteriores</h2>
+                                         <div class="card-body px-0 py-2">
+                                            <div id="table-default" class="table-responsive">
+                                               <table class="table">
+                                                  <thead>
+                                                     <tr>
+                                                        <th>Nome</th>
+                                                     </tr>
+                                                  </thead>
+                                                  <tbody class="table-tbody">
+                                                     @foreach ($filiacoes as $filiacao)
+                                                     <tr>
+                                                        <td class="sort-name">{{  $filiacao }}</td>
+                                                     </tr>
+                                                     @endforeach
+                                                  </tbody>
+                                               </table>
+                                            </div>
+                                         </div>
+                                    </div>
+                                    @endif
                                   </div>
                                </div>
                             </div>

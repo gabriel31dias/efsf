@@ -178,7 +178,7 @@
                <p>CPF<span style="margin-left: 45px;">{{$citizen->cpf}}</span></p>
                <p>Nome<span style="margin-left: 30px;">{{$citizen->name}}</span></p>
                <p style="margin-bottom: 20px;">Filiação<span style="margin-left: 15px; line-height: 25px;"> @foreach ($filiations as $item)
-                  {{$item}} e
+                  {{$item['name']}} e
                   @endforeach</span>
                </p>
                <div class="info-complementar">

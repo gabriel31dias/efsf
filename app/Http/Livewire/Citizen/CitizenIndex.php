@@ -22,6 +22,7 @@ use App\Models\ServiceStation;
 use Livewire\WithFileUploads;
 use PHPUnit\Framework\Constraint\Count;
 use App\Models\BlockedCertificate;
+use App\Models\Filiation;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,14 +84,20 @@ class CitizenIndex extends Component
     public $registrationError = true;
     public $searchBirth;
     public $searchFilitation;
-    public $otherFiliations = [];
     public $professionalIdentitys = [];
     public $professionalIdentitysCount = 1;
     public $professionalIdentitysValues = [];
-    public $otherFiliationsValues = [];
-    public $filiationCount = 2;
     public $imigration = false;
     public $marital_status;
+    public $filiation = [
+        "name" => '', 
+        "type" => Filiation::TYPE_MATERNAL
+    ]; 
+
+    public $exemption_type = "";
+    public $tmpPreviousName = "";
+    public $tmpPreviousFiliation = ""; 
+    public $confirm_email = ""; 
 
     public $registrySelected;
 
@@ -176,10 +183,7 @@ class CitizenIndex extends Component
         "file_capture_image" => "",
         "cpf" => "",
         "rg" => "",
-        "filiation1" => "",
-        "filiation2" => "",
-        "filiation3" => "",
-        "other_filiations" => "",
+        "filiations" => [],
         "birth_date" => "",
         "migration_situation" => "",
         "portaria_nr" => "",
@@ -705,13 +709,6 @@ class CitizenIndex extends Component
 
         $this->other_genre = $genre->id == 3 ? true : false;
 
-        $other_filiations = json_decode($citizen->other_filiations);
-
-        foreach ($other_filiations as  $key =>  $value) {
-            $this->otherFiliationsValues[] = $value;
-            $key = $key + 3;
-            $this->otherFiliations[] = "Filiação ".$key;
-        }
 
         //dd($citizen );
         $this->currentUfCert = Uf::find($citizen['uf_certificate']);
@@ -762,9 +759,7 @@ class CitizenIndex extends Component
                 "id" => $citizen->id,
                 "cpf" => $citizen->cpf,
                 "rg" => $citizen->rg,
-                "filiation1" => $citizen->filiation1,
-                "filiation2" => $citizen->filiation2,
-                "other_filiations" => "",
+                "filiations" => $citizen->filiations->toArray(),
                 "birth_date" => $birth_date,
                 "migration_situation" => $citizen->migration_situation,
                 "portaria_nr" => $citizen->portaria_nr,
@@ -972,10 +967,6 @@ class CitizenIndex extends Component
         ]);
     }
 
-    public function addNewFiliationField(){
-        $this->filiationCount++;
-        $this->otherFiliations[] = "Filiação ".$this->filiationCount;
-    }
 
     public function addNewProfessionalIdentitys(){
         $this->professionalIdentitysCount++;
@@ -1049,9 +1040,17 @@ class CitizenIndex extends Component
         }
 
 
-        if(trim($this->fields['filiation1']) == "" && $this->fields['filiation2'] == "" ){
+        if(empty($this->fields['filiations'])){
             array_push($errors, [
-                "message" => "O Cidadão deve ter pelo menos um dos campos de filiação preenchido",
+                "message" => "O Cidadão deve ter pelo menos uma filiação preenchida",
+                "valid" => false,
+            ]);
+            $this->errorsKeys[] = $field;
+        }
+
+        if ($this->fields['email'] !== $this->confirm_email) {
+            array_push($errors, [
+                "message" => "Os emails não são iguais.",
                 "valid" => false,
             ]);
             $this->errorsKeys[] = $field;
@@ -1171,6 +1170,36 @@ class CitizenIndex extends Component
 
     }
 
+    public function addFiliation(){ 
+        $this->fields['filiations'][] = $this->filiation;
+        $this->filiation = [
+            "name" => '', 
+            "type" => Filiation::TYPE_MATERNAL
+        ]; 
+    }
+
+    public function addNamesPrevious()
+    {
+        if(empty($this->fields['names_previous'])){ 
+            $this->fields['names_previous'] = $this->tmpPreviousName;
+        } else { 
+            $this->fields['names_previous'] .= ",$this->tmpPreviousName";
+        }
+        $this->tmpPreviousName = '';
+    }
+
+    public function addFiliationsPrevious()
+    {
+        if(empty($this->fields['filitions_previous'])){ 
+            $this->fields['filitions_previous'] = $this->tmpPreviousFiliation;
+        } else { 
+            $this->fields['filitions_previous'] .= ",$this->tmpPreviousFiliation";
+        }
+        $this->tmpPreviousFiliation = '';
+    }
+
+    
+
     public function checkDataIsValid($dateStr, $format = "Y-m-d")
     {
 	    $dateFormated = explode("/",$dateStr);
@@ -1238,7 +1267,6 @@ class CitizenIndex extends Component
     public function createCitizen(){
         $this->fields["zone"] = $this->zone;
         $validation = $this->validation($this->fields);
-
         if(count($validation) > 0){
             $this->errors = $validation;
 
@@ -1268,15 +1296,11 @@ class CitizenIndex extends Component
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
             "file_capture_image" => $this->fields["file_capture_image"] ?? $this->citizen->file_capture_image,
-
+            "filiations" => $this->fields["filiations"],
             "cpf" => $this->fields["cpf"],
             "district" => $this->fields["district"],
             "rg" => $this->fields["rg"],
-            "filiation1" => $this->fields["filiation1"],
-            "filiation2" => $this->fields["filiation2"],
-            "filiation3" => $this->fields["filiation2"],
             "birth_date" => $birth_date,
-            "other_filiations" => \json_encode($this->otherFiliationsValues),
             "migration_situation" => $this->fields["migration_situation"],
             "portaria_nr" => $this->fields["portaria_nr"],
             "dou_nr" => $this->fields["dou_nr"],
@@ -1380,6 +1404,7 @@ class CitizenIndex extends Component
             "biometrics_status" => 1,
             "situation" => 1,
             "payment" => $payment_situation,
+            "exemption_type" => $this->exemption_type,
             "name" => $this->fields["name"]
         ]);
 

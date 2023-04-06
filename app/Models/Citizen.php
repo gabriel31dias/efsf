@@ -40,5 +40,9 @@ class Citizen extends Model implements Auditable
         self::STATE_DECEASED => 'bg-danger'
     ];
 
+    public function filiations()
+    {
+        return $this->hasMany(Filiation::class);
+    }
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Repositories;
 use App\Models\Citizen;
 use App\Models\Feature;
 use App\Models\FeatureOption;
+use App\Models\Filiation;
 
 class CitizenRepository {
 
@@ -58,6 +59,8 @@ class CitizenRepository {
         $obj['migration_situation'] = $obj['migration_situation'] == "" ? null : $obj['migration_situation'];
         $obj['social_indicator_id'] = $obj['social_indicator_id'] == "" ? null : $obj['social_indicator_id'];
 
+        $filiations = $obj['filiations'];
+        unset($obj['filiations']);
 
         $citizen = Citizen::find($id);
 
@@ -68,6 +71,7 @@ class CitizenRepository {
             $user = Citizen::create($obj);
         }
 
+        $this->addFiliations($user, $filiations);
         return $user;
     }
 
@@ -99,6 +103,13 @@ class CitizenRepository {
         });
 
         return $getFeautures;
+    }
+
+    private function addFiliations($citizen, $filiations){ 
+        foreach ($filiations as $key => $value) {
+            $arrFiliation = $value + ['citizen_id' => $citizen->id];
+            Filiation::firstOrCreate($arrFiliation);
+        }
     }
 }
 

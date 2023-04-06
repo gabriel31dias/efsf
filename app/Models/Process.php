@@ -78,6 +78,15 @@ class Process extends Model implements Auditable
         self::PAYMENT_PAID_OUT => 'pago'
     ];
 
+    const PAYMENT_EXEMPTION_TYPES = [ 
+        'ALFABETIZADO',
+        'BENEFICIÁRIOS DE SERVIÇOS SOCIAIS ASSISTENCIAIS',
+        'CATASTROFE DA NATUREZA',
+        'CUSTODIA DE ORGÃOS PÚBLICOS',
+        'PORTADORES DE NECESSIDADES ESPECIAIS',
+        'ESTATUTO DO IDOSO "MAIOR DE 60 ANOS"', 
+        'ROUBO OU FURTO (30 DIAS CONTADOS DO REGISTROS POLICIAL)'
+    ];
 
     public function citizen()
     {
