@@ -52,7 +52,9 @@
                             <th><button class="table-sort" >Data cadastro</button></th>
                             <th><button class="table-sort" >Data ativação</button></th>
                             <th><button class="table-sort" >Data inativação</button></th>
+                            <th><button class="table-sort" >Data atualização</button></th>
                             <th><button class="table-sort" >Status</button></th>
+                            <th><button class="table-sort" >Ações</button></th>
                          </tr>
                       </thead>
                       <tbody class="table-tbody">
@@ -65,6 +67,11 @@
                                 <td wire:click="clickUpdate({{$item->id}})">{{ $item->date_inactive }}</td>
                                 <td wire:click="clickUpdate({{$item->id}})">{{ $item->updated_at }}</td>
                                 <td wire:click="clickUpdate({{$item->id}})">{{ $item->active == true  ? 'Ativo' : 'Inativo' }}</td>
+                                <td ><button wire:click="destroyDirectorSignature('{{$item->id ?? null}}')"  class="text-decoration-none hover:cursor-pointer text-red-700 border-2 border-red-700 hover:bg-red-700
+                                    hover:text-white focus:ring-4 font-medium rounded-lg
+                                      text-sm p-1 text-center inline-flex items-center mr-1 ">
+                                <i class="ti ti-trash"></i>
+                                    </button></td>
                             </tr>
                          @endforeach
                       </tbody>

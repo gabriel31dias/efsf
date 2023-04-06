@@ -38,27 +38,27 @@ class DirectorSignatureIndex extends Component
     }
 
 
-    public function destroyUnit($idUnity)
-    {
-        $unity = Unit::find($idUnity);
-        $linkedUsers = User::where(['unit_id' => $idUnity])->first();
+    public function destroyDirectorSignature($idDirectorSignature) {
+        $directorSig = DirectorSignature::find($idDirectorSignature);
 
-        if(isset($linkedUsers->id)){
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'error',
-                'message'=> "Registro não pode ser excluído, existem usuários vinculados a essa unidade"
-            ]);
-            return false;
-        }
+        ##if(isset($linkedUsers->id)){
+          ##  $this->dispatchBrowserEvent('alert',[
+         ##       'type'=> 'error',
+           ##     'message'=> "Registro não pode ser excluído, existem usuários vinculados a essa unidade"
+            ##]);
 
-        if(isset($unity->id)){
-            $unity->delete();
+           ## return false;
+        ##}
+
+        if(isset($directorSig->id)){
+            $directorSig->delete();
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'success',
                 'message'=> "Item excluido com sucesso."
             ]);
         }
     }
+
 
     public function filtersCall(){
         $searchTerm = "";
