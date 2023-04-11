@@ -138,25 +138,30 @@ class DirectorSignatureForm extends Component
         }
     }
 
-    public function destroy_unit($profission, $unit_id){
-
-        $index = array_search($profission, $this->functions);
-
+    public function destroy_unit($profession, $unit_id)
+    {
+        $index = array_search($profession, $this->functions);
         unset($this->functions[$index]);
 
-        if($profission == null || $unit_id == null){
+        if (empty($profession) || empty($unit_id)) {
             return false;
         }
 
-        $p = DirectorSignature::where(["unit_id" => $unit_id])->where(["name" => $profission])->first();
-        if(isset($p->id)){
-            $p->delete();
+        $signature = DirectorSignature::where('unit_id', $unit_id)
+                                   ->where('name', $profession)
+                                   ->first();
+        if ($signature) {
+            $signature->delete();
         }
 
-        $this->dispatchBrowserEvent('alert',[
-            'type'=> 'success',
-            'message'=> "Item excluido com sucesso."
+
+        $message = 'Item excluído com sucesso.';
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => $message,
         ]);
+
+        return true;
     }
 
     public function goUnit(){

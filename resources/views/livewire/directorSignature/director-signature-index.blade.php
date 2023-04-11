@@ -13,6 +13,7 @@
     </div>
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
+        @can('permission', 'director-signature.create')
           <a wire:click="addSignature" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
              data-bs-target="#modal-report">
              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -25,6 +26,7 @@
              Criar assinatura
           </a>
        </div>
+       @endcan
     </div>
     <div class="page-body">
        <div class="container_fluid">

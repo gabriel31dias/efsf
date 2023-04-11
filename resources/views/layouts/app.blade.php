@@ -543,7 +543,7 @@
                     'title' => 'Assinaturas Diretor',
                     'classIcon' => 'ti ti-pencil-plus',
                     'href' => route('director-signature.index'),
-                    'can' => 'process.index',
+                    'can' => 'director-signature.index',
                   ])
                   @endif
 

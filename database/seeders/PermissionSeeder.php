@@ -349,6 +349,28 @@ class PermissionSeeder extends Seeder
             'group' => 'Processos ' ,
         ]);
 
+        /* PERMISSOES Assinaturas diretor */
+        Permission::firstOrCreate([
+            'name' => 'Visualizar assinaturas ',
+            'permission' => 'director-signature.index',
+            'group' => 'Assinaturas Diretor' ,
+        ]);
+
+        Permission::firstOrCreate([
+            'name' => 'Editar Assinaturas ',
+            'permission' => 'director-signature.edit',
+            'group' => 'Assinaturas Diretor' ,
+        ]);
+
+        Permission::firstOrCreate([
+            'name' => 'Cadastrar Assinaturas ',
+            'permission' => 'director-signature.create',
+            'group' => 'Assinaturas Diretor' ,
+        ]);
+
+
+
+
 
 
 
