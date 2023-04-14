@@ -65,6 +65,34 @@
                             </div>
                         </div>
 
+                        <div  style="margin-bottom: 10px" class=" container-fluid card">
+                            <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tipo Anexo<span class="error_tag"> *</span></label>
+                                    <select wire:model="fieldsDigitalizedDocuments.field1.type" class="form-control ps-0" wire:ignore="">
+                                        <option value="0">Selecione</option>
+                                                                             <option value="1">OFÍCIO</option>
+                                                                                                                  <option value="2">MEMORANDO</option>
+                                                                                                                  <option value="3">REQUERIMENTO</option>
+
+                                                                          </select>
+                                    @error('fields.name') <span class="text-danger"> {{ $message }}</span> @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Arquivo<span class="error_tag"> *</span></label>
+                                    <div class="input-group input-group-flat">
+                                        <livewire:users.users-select :defaultValue="$user" />
+                                    </div>
+                                    @error('fields.name') <span class="text-danger"> {{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
                         <div class="container-fluid card">
                             <div class="col-sm-6 mt-3">
                                 <div class="input-group mb-3">

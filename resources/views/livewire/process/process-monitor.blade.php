@@ -449,8 +449,7 @@
                             <form>
 
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label title-label">Insira uma
-                                        observação:</label>
+                                    <label for="recipient-name" class="col-form-label title-label">Unidade/posto de atendimento:</label>
                                     <livewire:users.servicestation-select :defaultValue="$service_station" />
                                 </div>
                                 <div class="form-group">
@@ -459,12 +458,12 @@
                                     <livewire:users.users-select :defaultValue="$user" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label title-label">Comentario:</label>
+                                    <label for="recipient-name" class="col-form-label title-label">Observação:</label>
                                     <textarea wire:model="content" class="form-control"></textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label title-label">Signatários:</label>
+                                    <label for="recipient-name" class="col-form-label title-label">Status do processo:</label>
                                     <select wire:model="status" class="form-control" name="cars" id="cars">
                                         @foreach (App\Models\Process::SITUATION_TYPES_LABELS as $key => $item)
                                             <option value="{{ $key }}">{{ $item }}

@@ -30,6 +30,7 @@
     </div>
     <div class="page-body">
        <div class="container_fluid">
+
           <div class="container-fluid" class="input-icon">
              <span class="input-icon-addon">
                 <!-- Download SVG icon from http://tabler-icons.io/i/search -->
@@ -68,12 +69,32 @@
                                 <td wire:click="clickUpdate({{$item->id}})">{{ $item->date_active }}</td>
                                 <td wire:click="clickUpdate({{$item->id}})">{{ $item->date_inactive }}</td>
                                 <td wire:click="clickUpdate({{$item->id}})">{{ $item->updated_at }}</td>
-                                <td wire:click="clickUpdate({{$item->id}})">{{ $item->active == true  ? 'Ativo' : 'Inativo' }}</td>
+                                <td >
+
+                                    @if($item->active == true)
+                                    <label class="form-check form-check-inline">
+                                        <input wire:change="disableDirectorSignature('{{$item->id ?? null}}')" class="form-check-input" type="checkbox" disabled checked="">
+                                        <span class="form-check-label">Ativo</span>
+                                      </label>
+                                    @else
+                                    <label class="form-check form-check-inline">
+                                        <input   wire:change="enableDirectorSignature('{{$item->id ?? null}}')" class="form-check-input" type="checkbox" >
+                                        <span class="form-check-label">Inativo</span>
+                                      </label>
+
+                                    @endif
+                                </td>
                                 <td ><button wire:click="destroyDirectorSignature('{{$item->id ?? null}}')"  class="text-decoration-none hover:cursor-pointer text-red-700 border-2 border-red-700 hover:bg-red-700
                                     hover:text-white focus:ring-4 font-medium rounded-lg
                                       text-sm p-1 text-center inline-flex items-center mr-1 ">
                                 <i class="ti ti-trash"></i>
-                                    </button></td>
+                                    </button>
+
+
+
+
+                                </td>
+
                             </tr>
                          @endforeach
                       </tbody>

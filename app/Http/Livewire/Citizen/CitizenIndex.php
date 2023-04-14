@@ -90,14 +90,14 @@ class CitizenIndex extends Component
     public $imigration = false;
     public $marital_status;
     public $filiation = [
-        "name" => '', 
+        "name" => '',
         "type" => Filiation::TYPE_MATERNAL
-    ]; 
+    ];
 
     public $exemption_type = "";
     public $tmpPreviousName = "";
-    public $tmpPreviousFiliation = ""; 
-    public $confirm_email = ""; 
+    public $tmpPreviousFiliation = "";
+    public $confirm_email = "";
 
     public $registrySelected;
 
@@ -1170,19 +1170,19 @@ class CitizenIndex extends Component
 
     }
 
-    public function addFiliation(){ 
+    public function addFiliation(){
         $this->fields['filiations'][] = $this->filiation;
         $this->filiation = [
-            "name" => '', 
+            "name" => '',
             "type" => Filiation::TYPE_MATERNAL
-        ]; 
+        ];
     }
 
     public function addNamesPrevious()
     {
-        if(empty($this->fields['names_previous'])){ 
+        if(empty($this->fields['names_previous'])){
             $this->fields['names_previous'] = $this->tmpPreviousName;
-        } else { 
+        } else {
             $this->fields['names_previous'] .= ",$this->tmpPreviousName";
         }
         $this->tmpPreviousName = '';
@@ -1190,15 +1190,15 @@ class CitizenIndex extends Component
 
     public function addFiliationsPrevious()
     {
-        if(empty($this->fields['filitions_previous'])){ 
+        if(empty($this->fields['filitions_previous'])){
             $this->fields['filitions_previous'] = $this->tmpPreviousFiliation;
-        } else { 
+        } else {
             $this->fields['filitions_previous'] .= ",$this->tmpPreviousFiliation";
         }
         $this->tmpPreviousFiliation = '';
     }
 
-    
+
 
     public function checkDataIsValid($dateStr, $format = "Y-m-d")
     {

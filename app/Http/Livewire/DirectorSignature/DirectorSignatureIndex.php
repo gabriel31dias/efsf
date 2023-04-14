@@ -59,6 +59,65 @@ class DirectorSignatureIndex extends Component
         }
     }
 
+    public function disableDirectorSignature($idDirectorSignature) {
+        $directorSig = DirectorSignature::find($idDirectorSignature);
+
+
+
+        ##if(isset($linkedUsers->id)){
+          ##  $this->dispatchBrowserEvent('alert',[
+         ##       'type'=> 'error',
+           ##     'message'=> "Registro não pode ser excluído, existem usuários vinculados a essa unidade"
+            ##]);
+
+           ## return false;
+        ##}
+
+
+
+        if(isset($directorSig->id)){
+            $directorSig->update([
+                'active' => false,
+                "date_inactive" => now()
+            ]);
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'success',
+                'message'=> "Item excluido com sucesso."
+            ]);
+        }
+
+
+
+    }
+
+    public function enableDirectorSignature($idDirectorSignature) {
+        $directorSig = DirectorSignature::find($idDirectorSignature);
+
+        ##if(isset($linkedUsers->id)){
+          ##  $this->dispatchBrowserEvent('alert',[
+         ##       'type'=> 'error',
+           ##     'message'=> "Registro não pode ser excluído, existem usuários vinculados a essa unidade"
+            ##]);
+
+           ## return false;
+        ##}
+
+
+
+        DirectorSignature::query()->update(['active' => false]);
+
+
+        if(isset($directorSig->id)){
+            $directorSig->update([
+                'active' => true,
+                "date_inactive" => now()
+            ]);
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'success',
+                'message'=> "Item excluido com sucesso."
+            ]);
+        }
+    }
 
     public function filtersCall(){
         $searchTerm = "";
