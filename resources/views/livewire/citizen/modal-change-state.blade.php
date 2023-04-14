@@ -36,7 +36,51 @@
                                           </div>
                                        </div>
                                     </div>
-                
+                                    <div class="col-lg-6">
+                                        <label class="form-label">Documento Condição</label>
+
+                                        @if (isset($this->document))
+                                            <a href="" target="_blank" >
+                                                <a onclick="window.open('/{{ str_replace("public","storage", $document['path']) }}', '_blank')" class="btn btn-primary inline-flex">
+                                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <circle cx="12" cy="12" r="2"></circle>
+                                                    <path d="M12 19c-4 0 -7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7c-.42 .736 -.858 1.414 -1.311 2.033"></path>
+                                                    <path d="M15 19l2 2l4 -4"></path>
+                                                </svg>
+                                                {{ $document['description'] ?? 'Abrir Documento' }}
+                                            </a>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-12 mb-3">
+                                        <label class="form-label">Observação</label>
+                                       <div class="input-group input-group-flat">
+                                          <input wire:model="state_description" type="text"
+                                             class="form-control" autocomplete="off" required>
+                                       </div>
+                                     </div>
+                                </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                              <div class="col-lg-7">
+                                                 <label class="form-label">Arquivo</label>
+          
+                                              <input class="block w-full text-sm file:text-white 
+                                              file:bg-gradient-to-r from-sky-700 to-sky-900
+                                              bg-gray-50 border-none shadow-md border file:border-none file:p-2 rounded-lg file:cursor-pointer cursor-pointer focus:outline-none" wire:model="state_document.file" type="file">
+                                           </div>
+                                              
+                                              <div class="col-lg-5">
+                                                 <label class="form-label">Descrição Arquivo</label>
+                                                <div class="input-group input-group-flat">
+                                                   <input wire:model="state_document.description" type="text"
+                                                      class="form-control" autocomplete="off" required>
+                                                </div>
+                                              </div>
+                                        </div>
+
                                  <div class="flex justify-end mt-4">
                                     <button type="button" x-on:click="modal = false" class="text-white bg-gray-500 hover:bg-gray-600 
                                     hover:text-white focus:ring-4 font-medium rounded-lg 
@@ -47,7 +91,6 @@
                                       text-sm p-2.5 text-center inline-flex items-center mr-2">Atualizar</button>
                                  </div>
     
-                        </div>
                     </div>
                 </div>
             </div>
