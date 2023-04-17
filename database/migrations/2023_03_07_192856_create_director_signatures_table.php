@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('file_appointment_or_dismissal')->nullable();
             $table->boolean('enabled')->default(true);
             $table->integer('user_id');
+            $table->json('otherFiles')->nullable();
             $table->integer('unit_id');
             $table->timestamp('date_active')->nullable();
             $table->timestamp('date_inactive')->nullable();

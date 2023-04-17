@@ -47,7 +47,14 @@ class DirectorSignatureForm extends Component
         "unit_id" => ""
     ];
 
+    public $attachmentType;
     public $user;
+    public $file;
+
+    public $attachments = [];
+    public $oldAttachments = [];
+
+    public $typeFiles = [ "1" => "OFÍCIO", "2" => "MEMORANDO", "3" => "REQUERIMENTO"];
 
     public $user_name;
 
@@ -73,6 +80,11 @@ class DirectorSignatureForm extends Component
         $this->fields['unit_id'] = Unit::find($user->unit_id)->id ?? null;
     }
 
+    public function addNewFile(){
+        $this->attachments[] = ['type' => $this->attachmentType, 'file' => $this->file ];
+        $this->attachmentType = null;
+        $this->file = null;
+    }
 
     public function saveNewValue($item, $unit_id){
         $index = array_search($item, $this->functions);
@@ -99,6 +111,23 @@ class DirectorSignatureForm extends Component
         ]);
     }
 
+    function getNewAttachments() {
+        $newItems = array();
+        foreach ($this->attachments as $attachment) {
+            $found = false;
+            foreach ($this->oldAttachments as $oldAttachment) {
+                if ($oldAttachment['file'] == $attachment['file']) {
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                $newItems[] = $attachment;
+            }
+        }
+        return $newItems;
+    }
+
     public function mount()
     {
 
@@ -109,12 +138,12 @@ class DirectorSignatureForm extends Component
                 "unit_id" => $this->directorSign->unit_id
             ];
 
+            $this->attachments = \json_decode($this->directorSign->otherFiles, true);
+            $this->oldAttachments = \json_decode($this->directorSign->otherFiles, true);
             $this->user = User::find($this->directorSign->user_id);
             $this->cpf = $this->user->cpf;
             $this->getAllFunctions($this->user);
             $this->fields['file_signature'] = $this->directorSign->file_signature;
-
-
         }
 
 
@@ -170,8 +199,24 @@ class DirectorSignatureForm extends Component
         ]);
     }
 
+    public function storeOtherAttachments(){
+        $newAttachments = $this->getNewAttachments();
+        $filesAtachments = [];
+        foreach($newAttachments as $item) {
+            $file = $item['file']->store('public/signatures-other-attachments');
+
+        }
+
+        foreach($this->attachments as $item) {
+            array_push($filesAtachments, ['type' => $this->typeFiles[$item['type']] ?? $item['type'], 'file' => $file]);
+        }
+
+        return \json_encode($filesAtachments);
+    }
+
 
     public function save(){
+
 
         $this->fields['file_signature'] = $this->fileSign;
 
@@ -201,14 +246,16 @@ class DirectorSignatureForm extends Component
 
         if($this->action == "create"){
 
-            $lastSign = DirectorSignature::latest()->first();
+            $attchaments = $this->storeOtherAttachments();
 
+            $lastSign = DirectorSignature::latest()->first();
 
             $signature = DirectorSignature::create([
                 "user_id" => $this->fields['user_id'],
                 "unit_id" => $this->fields['unit_id'],
                 "file_signature" => $this->fields['file_signature'],
                 "date_active" => now(),
+                "otherFiles" => $attchaments
             ]);
 
             if(isset($lastSign->id)){
@@ -216,10 +263,13 @@ class DirectorSignatureForm extends Component
             }
 
         } else {
+            $attchaments = $this->storeOtherAttachments();
+
             $signature = DirectorSignature::updateOrCreate(['id' => $this->directorSign->id ?? 0],[
                 "user_id" => $this->fields['user_id'],
                 "unit_id" => $this->fields['unit_id'],
                 "file_signature" => $this->fields['file_signature'] ?? $this->directorSign->file_signature,
+                "otherFiles" => $attchaments
             ]);
         }
 
