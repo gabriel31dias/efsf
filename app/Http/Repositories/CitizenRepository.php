@@ -82,7 +82,7 @@ class CitizenRepository {
     public function getCharacteristics(){
         $characteristics = [];
 
-        $getFeautures = Feature::get();
+        $getFeautures = Feature::orderBy('order', 'asc')->get();
 
 
 

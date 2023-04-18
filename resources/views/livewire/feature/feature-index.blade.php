@@ -13,6 +13,7 @@
     </div>
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
+         @livewire('feature.modal-sortable-feature')
         <span class="d-none d-sm-inline">
             <div x-data="{ open: false }" class="dropdown">
                <button @click="$('.dropdown-menu').toggleClass('show')" class="btn btn-secondary bg-gray-600 dropdown-toggle"
@@ -92,3 +93,4 @@
           </div>
        </div>
     </div>
+</div>
