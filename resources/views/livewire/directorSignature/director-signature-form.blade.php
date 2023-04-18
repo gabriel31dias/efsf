@@ -105,9 +105,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">Tipo Anexo<span class="error_tag">
                                                *</span></label>
-                                        <select wire:model="item.{{$key}}.type" value="1" class="form-control ps-0" >
-                                            <option selected value="1">{{$typeFiles[$item['type']] ?? $item['type']}}</option>
-                                        </select>
+                                               {{$typeFiles[$item['type']] ?? $item['type']}}
                                         @error('fields.name')
                                             <span class="text-danger"> {{ $message }}</span>
                                         @enderror
@@ -120,8 +118,9 @@
                                         <div class="input-group input-group-flat">
                                             <a  wire:click="addNewFile"
                                             class="btn btn-primary items-center inline-flex">
+
                                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg wire:click='download("{{item.url}}")' xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                 <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
                                                 <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
@@ -130,7 +129,7 @@
                                              Download
                                         </a>
 
-                                        <a  wire:click="addNewFile"
+                                        <a  wire:click="destroyItemFile({{$key}})"
                                             class="btn btn-danger items-center inline-flex">
                                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
