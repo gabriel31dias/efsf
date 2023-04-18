@@ -86,6 +86,18 @@ class DirectorSignatureForm extends Component
         $this->file = null;
     }
 
+
+    public function download($item){
+        dd($item);
+        $this->dispatchBrowserEvent('redirect',[
+            'url'=> $item->url,
+            'delay' => 1000
+        ]);
+    }
+
+
+
+
     public function saveNewValue($item, $unit_id){
         $index = array_search($item, $this->functions);
 
@@ -109,6 +121,15 @@ class DirectorSignatureForm extends Component
             'type'=> 'success',
             'message'=> "Item atualizado com sucesso."
         ]);
+    }
+
+    public function destroyItemFile($index){
+
+
+
+        unset($this->attachments[$index]);
+
+
     }
 
     function getNewAttachments() {
@@ -202,16 +223,14 @@ class DirectorSignatureForm extends Component
     public function storeOtherAttachments(){
         $newAttachments = $this->getNewAttachments();
         $filesAtachments = [];
+
         foreach($newAttachments as $item) {
             $file = $item['file']->store('public/signatures-other-attachments');
-
+            //array_push($this->attachments, ['type' => $this->typeFiles[$item['type']] ?? $item['type'], 'file' => $file]);
         }
 
-        foreach($this->attachments as $item) {
-            array_push($filesAtachments, ['type' => $this->typeFiles[$item['type']] ?? $item['type'], 'file' => $file]);
-        }
 
-        return \json_encode($filesAtachments);
+        return \json_encode($this->attachments);
     }
 
 
