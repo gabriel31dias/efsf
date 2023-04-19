@@ -39,7 +39,7 @@
                                     <div class="col-lg-6">
                                         <label class="form-label">Documento Condição</label>
 
-                                        @if (isset($this->document))
+                                        @if (!empty($this->document))
                                             <a href="" target="_blank" >
                                                 <a onclick="window.open('/{{ str_replace("public","storage", $document['path']) }}', '_blank')" class="btn btn-primary inline-flex">
                                                 <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
