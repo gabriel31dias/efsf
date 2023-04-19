@@ -1040,13 +1040,7 @@ class CitizenIndex extends Component
         }
 
 
-        if(empty($this->fields['filiations'])){
-            array_push($errors, [
-                "message" => "O Cidadão deve ter pelo menos uma filiação preenchida",
-                "valid" => false,
-            ]);
-            $this->errorsKeys[] = $field;
-        }
+
 
         if ($this->fields['email'] !== $this->confirm_email) {
             array_push($errors, [
