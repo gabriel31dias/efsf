@@ -20,12 +20,10 @@ Route::get('/', function () {
 Route::resource('unit', App\Http\Controllers\UnityController::class);
 Route::resource('process', App\Http\Controllers\ProcessController::class);
 Route::resource('director-signature', App\Http\Controllers\DirectorSignatureController::class);
-
-
+Route::resource('ballots', App\Http\Controllers\BallotsController::class);
 
 
 Route::get('/monitor/{id}/edit', [App\Http\Controllers\MonitorProcessController::class, 'edit'])->name('monitor-process');
-
 
 
 Route::get('/generate-prontuario/{id}', [App\Http\Controllers\CitizenController::class, 'generateProtuario'])->name('generateProtuario');

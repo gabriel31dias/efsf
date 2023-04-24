@@ -545,8 +545,15 @@
                     'href' => route('director-signature.index'),
                     'can' => 'director-signature.index',
                   ])
-                  @endif
 
+                  @livewire('global.menu-item',
+                  [
+                    'title' => 'Cadastro de Cédulas',
+                    'classIcon' => 'ti ti-file',
+                    'href' => route('ballots.index'),
+                    'can' => 'ballots.index',
+                  ])
+                  @endif
                </ul>
             </div>
          </div>

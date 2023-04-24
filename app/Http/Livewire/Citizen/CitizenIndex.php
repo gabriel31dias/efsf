@@ -568,7 +568,6 @@ class CitizenIndex extends Component
         ]);
 
         $this->dispatchBrowserEvent('reload-masks');
-
     }
 
     public function selectedCountry($value){

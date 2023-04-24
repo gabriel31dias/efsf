@@ -85,7 +85,7 @@ class ServicestationSelect extends Component
     {
         $this->closed = false;
         $this->stations = ServiceStation::where('service_station_name', 'ilike', '%' . $this->query . '%')
-            ->where(function (Builder $query) { 
+            ->where(function (Builder $query) {
                 if($this->user_stations_only)
                 $query->whereIn('id', auth()->user()->userStations->pluck('service_station_id')->toArray());
             })
