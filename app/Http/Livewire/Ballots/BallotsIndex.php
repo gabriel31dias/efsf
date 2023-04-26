@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Ballots;
 use App\Models\Ballot;
 use App\Models\DirectorSignature;
 use App\Models\User;
+use Illuminate\Http\Request;
+
 use Livewire\Component;
 use App\Models\Unit;
 class BallotsIndex extends Component
@@ -16,11 +18,13 @@ class BallotsIndex extends Component
     public $filterActives;
     public $filterInactives;
 
-    public function render()
+    public $type;
+
+    public function render(Request $request)
     {
         $items = $this->filtersCall();
 
-
+        $this->type = $request->query('typeCreation');
 
         if($this->filterActives || $this->filterInactives){
             $items->where(function($query){
@@ -36,7 +40,7 @@ class BallotsIndex extends Component
 
         return view('livewire.ballots.ballots-index',
         [
-            'items' => $items->paginate(5)
+            'items' => $items->where('typeCreation', $this->type)->paginate(5)
         ]);
     }
 
@@ -136,6 +140,8 @@ class BallotsIndex extends Component
             $items = Ballot::orderBy('id');
 
         }
+
+
 
         return $items;
     }
