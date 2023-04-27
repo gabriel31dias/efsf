@@ -90,7 +90,7 @@
          background-color: #fff;
          }
          .info-complementar p {
-         margin-bottom: 10px;
+         margin-bottom: 5px;
          }
          .assinatura {
          display: flex;
@@ -248,7 +248,7 @@
             </div>
          </div>
          </p>
-         <div style="margin-top:90px" class="box-anotacoes">
+         <div style="margin-top:80px" class="box-anotacoes">
             <p class="title">Anotações</p>
             <div class="anotacoes">
                <p style="margin-bottom: 10px; font-weight: bold; text-transform: uppercase; font-size: 12px;">Cart. Nac. Saúde</p>
@@ -282,24 +282,31 @@
                </p>
             </div>
          </div>
-         <div style="margin-top: 5px;" class="box-anotacoes box-tables">
-            <table class="gn-seletable">
-               <tbody>
-                  <tr>
-                    <td >Polegar esquerdo</td>
-                    <td >Indicador esquerdo</td>
-                    <td  >Médio esquerdo</td>
-                    <td >Anelar esquerdo</td>
-                    <td >Minimo esquerdo</td>
+         <div style="margin-top: 5px;width: 95%" class="box-anotacoes box-tables">
+            <table >
+               <tbody style="width: 100%">
+                  <tr class="gn-seletable">
+                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Polegar esquerdo</td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;" >Indicador esquerdo</td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;" >Médio esquerdo</td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Anelar esquerdo</td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;" >Minimo esquerdo</td>
                   </tr>
-                  <tr>
-                  <td >Polegar direito</td>
-                    <td >Indicador direito</td>
-                    <td  >Médio direito</td>
-                    <td >Anelar direito</td>
-                    <td >Minimo direito</td>
+                  <tr  class="gn-seletable">
+                  <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;" >Polegar direito</td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Indicador direito</td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Médio direito</td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Anelar direito</td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;" >Minimo direito</td>
                   </tr>
-                 
+
+                  <tr class="gn-seletable">
+                      <td style="border: none"></td>
+                      <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Polegar/Indicador direito</td>
+                      <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Duplo Polegar</td>
+                      <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Anelar / Mínimo direito</td>
+                      <td style="border: none"></td>
+                  </tr>
                </tbody>
             </table>
          </div>

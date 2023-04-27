@@ -568,7 +568,6 @@ class CitizenIndex extends Component
         ]);
 
         $this->dispatchBrowserEvent('reload-masks');
-
     }
 
     public function selectedCountry($value){
@@ -1040,13 +1039,7 @@ class CitizenIndex extends Component
         }
 
 
-        if(empty($this->fields['filiations'])){
-            array_push($errors, [
-                "message" => "O Cidadão deve ter pelo menos uma filiação preenchida",
-                "valid" => false,
-            ]);
-            $this->errorsKeys[] = $field;
-        }
+
 
         if ($this->fields['email'] !== $this->confirm_email) {
             array_push($errors, [
