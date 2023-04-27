@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CitizenController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,7 @@ Route::resource('director-signature', App\Http\Controllers\DirectorSignatureCont
 
 Route::get('/monitor/{id}/edit', [App\Http\Controllers\MonitorProcessController::class, 'edit'])->name('monitor-process');
 
+Route::get('/testeFaceB', [App\Http\Controllers\CitizenController::class, 'generateFaceB']);
 
 
 Route::get('/generate-prontuario/{id}', [App\Http\Controllers\CitizenController::class, 'generateProtuario'])->name('generateProtuario');

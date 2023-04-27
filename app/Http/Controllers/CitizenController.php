@@ -13,7 +13,7 @@ use App\Models\Occupation;
 use Mpdf\Mpdf;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Storage;
-
+use App\Services\Pdf\FaceB; 
 
 class CitizenController extends Controller
 {
@@ -168,4 +168,31 @@ class CitizenController extends Controller
 
         return redirect()->route('citizen.index');
     }
+
+    public function generateFaceB()
+    {
+    
+        // Criar um novo objeto CardPDF
+        $pdf = new FaceB();
+
+        // Definir as margens da página
+        $pdf->SetMargem();
+
+        // Adicionar uma nova página
+        $pdf->AddPage();
+
+        // Definir a fonte e o tamanho do texto
+        $pdf->SetFont('Arial', '', 12);
+
+        // Renderizar os cartões
+        $pdf->renderCards();
+
+        // Gerar o PDF
+        $output = $pdf->Output("S");
+        return response($output, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="faceB.pdf"',
+        ]);
+    }
+
 }
