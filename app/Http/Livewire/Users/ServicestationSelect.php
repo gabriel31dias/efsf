@@ -19,6 +19,9 @@ class ServicestationSelect extends Component
     public $user_stations_only = false;
     public $servicesPoints = [];
 
+    public $customEvent;
+
+
     public $defaultValue;
 
     protected $listeners = ['clearServiceStationField', 'setServiceStation'];
@@ -100,7 +103,13 @@ class ServicestationSelect extends Component
         $this->selectedId = $id;
         $this->selectedValue = $value;
         $this->closed = true;
-        $this->emitUp('selectedServiceStation', $id);
+
+        if($this->customEvent){
+            $this->emitUp($this->customEvent, $id);
+        }else{
+            $this->emitUp('selectedServiceStation', $id);
+
+        }
     }
 
 

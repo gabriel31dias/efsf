@@ -157,7 +157,7 @@ class BallotsIndex extends Component
     public function create()
     {
         $this->dispatchBrowserEvent('redirect',[
-            'url'=> '/ballots/create',
+            'url'=> '/ballots/create?typeCreation='.$this->type,
         ]);
     }
 

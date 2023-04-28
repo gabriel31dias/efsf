@@ -6,6 +6,7 @@ use App\Http\Repositories\UnityRepository;
 use App\Models\Ballot;
 use App\Models\BallotItem;
 use App\Models\DirectorSignature;
+use Illuminate\Http\Request;
 
 use App\Models\ServiceStation;
 use App\Models\User;
@@ -30,6 +31,11 @@ class BallotsForm extends Component
     public $cpf;
 
     public $arrErros = [];
+
+    public $origemArr = [];
+
+    public $destinoArr = [];
+
 
     public $rowEdit = "";
 
@@ -57,6 +63,11 @@ class BallotsForm extends Component
     ];
 
     public $blockedTypeRegister = false;
+    public $selectedItemRearrange = [];
+
+    public $origemServiceStation = null;
+    public $destinoServiceStation = null;
+
 
 
     public $attachmentType;
@@ -70,11 +81,89 @@ class BallotsForm extends Component
 
     public $user_name;
 
-    public $listeners = ['selectedServiceStation', 'selectedUser'];
+    public $type;
 
-    public function render()
+    public $listeners = ['setSelectedItemToRearrange', 'selectDestino', 'selectOrigem', 'selectedServiceStation', 'selectedUser'];
+
+    public function render(Request $request)
     {
+        $this->type = $request->query('typeCreation');
+
+        if ($this->type == 1) {
+            $this->setSelectedTab('cadastro-lote');
+        }
+
+        if ($this->type == 2) {
+            $this->setSelectedTab('cadastro-avulso');
+        }
+
+        if ($this->type == 3) {
+            $this->setSelectedTab('remanejamento');
+        }
+
+        if ($this->type == 4) {
+            $this->setSelectedTab('remanejamento');
+        }
+
+        if ($this->type == 5) {
+            $this->setSelectedTab('pesquisa');
+        }
+
+        if ($this->type == 6) {
+            $this->setSelectedTab('pesquisa');
+        }
+
+        if ($this->type == 7) {
+            $this->setSelectedTab('totalizacao');
+        }
+
+        if ($this->type == 8) {
+            $this->setSelectedTab('inutilizacao');
+        }
         return view('livewire.ballots.ballots-form');
+    }
+
+    public function setSelectedItemToRearrange($idItem)
+    {
+        $this->selectedItemRearrange[] = $idItem;
+    }
+
+    public function Rearrange()
+    {
+       foreach ($this->selectedItemRearrange as  $item) {
+          $item = BallotItem::where('id', $item)->first();
+          $item->update([
+            'service_station_id' => $this->destinoServiceStation
+          ]);
+       }
+
+       $this->dispatchBrowserEvent('alert',[
+        'type'=> 'success',
+        'message'=> "Item Remajado com sucesso."
+       ]);
+
+
+
+       $this->selectOrigem($this->origemServiceStation);
+       $this->selectDestino($this->destinoServiceStation);
+    }
+
+
+
+    public function selectDestino($service_station_id){
+        $bkp =   $this->origemArr;
+        $this->destinoServiceStation = $service_station_id;
+
+        $this->destinoArr = BallotItem::where('service_station_id', $service_station_id)->get();
+        $this->origemArr =  [];
+
+        $this->origemArr = $bkp ;
+    }
+
+
+    public function selectOrigem($service_station_id){
+        $this->origemServiceStation = $service_station_id;
+        $this->origemArr  = BallotItem::where('service_station_id', $service_station_id)->get();
     }
 
     public function selectedServiceStation($id){

@@ -518,7 +518,7 @@
                                                 @livewire('global.menu-item', [
                                                     'title' => 'Novo Cartório',
                                                     'classIcon' => 'ti ti-certificate',
-                                                    'href' => route('registry.index', ['typeCreation'=> 1]),
+                                                    'href' => route('registry.index', ['typeCreation' => 1]),
                                                     'can' => 'registry.index',
                                                     'is_dropdown' => true,
                                                 ])
@@ -526,7 +526,7 @@
                                                 @livewire('global.menu-item', [
                                                     'title' => 'Transferência de Cartório',
                                                     'classIcon' => 'ti ti-arrows-left-right',
-                                                    'href' => route('registry-transfer.index',  ['typeCreation'=> 1]),
+                                                    'href' => route('registry-transfer.index', ['typeCreation' => 1]),
                                                     'can' => 'transfer.index',
                                                     'is_dropdown' => true,
                                                 ])
@@ -603,7 +603,7 @@
                                                     'title' => 'Cadastramento em lote',
                                                     'classIcon' => 'ti ti-certificate',
                                                     'href' => route('ballots.index', ['typeCreation' => '1']),
-                                                    'can' => 'registry.index',
+                                                    'can' => 'ballots.index',
                                                     'is_dropdown' => true,
                                                 ])
 
@@ -611,20 +611,20 @@
                                                     'title' => 'Cadastramento avulso',
                                                     'classIcon' => 'ti ti-arrows-left-right',
                                                     'href' => route('ballots.index', ['typeCreation' => '2']),
-                                                    'can' => 'transfer.index',
+                                                    'can' => 'ballots.index',
                                                     'is_dropdown' => true,
                                                 ])
 
                                                 @livewire('global.menu-item', [
-                                                    'title' => 'Interdição de Cartório',
+                                                    'title' => 'Remanejamento',
                                                     'classIcon' => 'ti ti-ban',
-                                                    'href' => route('ballots.index', ['typeCreation' => '3']),
-                                                    'can' => 'interdiction.index',
+                                                    'href' => route('ballots.create', ['typeCreation' => '3']),
+                                                    'can' => 'ballots.create',
                                                     'is_dropdown' => true,
                                                 ])
 
                                                 @livewire('global.menu-item', [
-                                                    'title' => 'Suspensão de Certidão',
+                                                    'title' => 'Pesquisa',
                                                     'classIcon' => 'ti ti-ban',
                                                     'href' => route('registry-suspension.index'),
                                                     'can' => 'suspension.index',
@@ -632,7 +632,23 @@
                                                 ])
 
                                                 @livewire('global.menu-item', [
-                                                    'title' => 'Bloqueio de Certidão',
+                                                    'title' => 'Totalização',
+                                                    'classIcon' => 'ti ti-ban',
+                                                    'href' => route('blocked-certificate.index'),
+                                                    'can' => 'blocked.index',
+                                                    'is_dropdown' => true,
+                                                ])
+
+                                                @livewire('global.menu-item', [
+                                                    'title' => 'Totalização',
+                                                    'classIcon' => 'ti ti-ban',
+                                                    'href' => route('blocked-certificate.index'),
+                                                    'can' => 'blocked.index',
+                                                    'is_dropdown' => true,
+                                                ])
+
+                                                @livewire('global.menu-item', [
+                                                    'title' => 'Inutilização',
                                                     'classIcon' => 'ti ti-ban',
                                                     'href' => route('blocked-certificate.index'),
                                                     'can' => 'blocked.index',
