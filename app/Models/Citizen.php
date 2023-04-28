@@ -45,4 +45,12 @@ class Citizen extends Model implements Auditable
         return $this->hasMany(Filiation::class);
     }
 
+    public function getFiliationsTextAttribute(){ 
+        $text = '';
+        foreach ($this->filiations as $key => $filiation) {
+            $text.= $filiation->name;
+        }
+        return $text;
+    }
+
 }

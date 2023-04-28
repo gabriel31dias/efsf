@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CitizenController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,7 @@ Route::resource('ballots', App\Http\Controllers\BallotsController::class);
 
 Route::get('/monitor/{id}/edit', [App\Http\Controllers\MonitorProcessController::class, 'edit'])->name('monitor-process');
 
+Route::get('/testeFaceB', [App\Http\Controllers\CitizenController::class, 'generateFaceB']);
 
 Route::get('/generate-prontuario/{id}', [App\Http\Controllers\CitizenController::class, 'generateProtuario'])->name('generateProtuario');
 
