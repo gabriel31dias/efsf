@@ -45,10 +45,25 @@ class Citizen extends Model implements Auditable
         return $this->hasMany(Filiation::class);
     }
 
+    public function uf(){ 
+        return $this->belongsTo(Uf::class);
+    }
+
+    public function county(){ 
+        return $this->belongsTo(County::class);
+    }
+
     public function getFiliationsTextAttribute(){ 
         $text = '';
         foreach ($this->filiations as $key => $filiation) {
             $text.= $filiation->name;
+        }
+        return $text;
+    }
+    public function getFiliationsTextPrintAttribute(){ 
+        $text = '';
+        foreach ($this->filiations as $key => $filiation) {
+            $text.= $filiation->name . ' \n ';
         }
         return $text;
     }

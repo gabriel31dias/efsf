@@ -19,24 +19,24 @@ class FaceB extends Fpdf {
   const CARD_HEIGHT = 67.5;
 
   // Método para renderizar os cartões
-  public function renderCards() {
+  public function renderCards($processes) {
     // Definir a posição inicial na página
     $x = self::MARGIN_LEFT;
     $y = self::MARGIN_TOP;
 
     $this->SetFontSize(7);
-    $this->SetTextColor(125,0,125);
+    //$this->SetTextColor(125,0,125);
     // Loop para renderizar os cartões
     for ($i = 1; $i <= 8; $i++) {
       // Definir a posição do cartão na página
       $column_width = ($i % 2 == 0) ? self::COLUMN_WIDTH_2 : self::COLUMN_WIDTH_1;
 
-      $this->SetXY($x, $y);
-      $this->Cell($column_width, self::CARD_HEIGHT, "", 1, 1);
-
+     /*  $this->SetXY($x, $y);
+      $this->Cell($column_width, self::CARD_HEIGHT, "", 1, 1); */
+      $citizen = $processes[$i-1]->citizen;
       /* RG */
       $this->setXY($x+25,$y+9);
-      $this->Cell($column_width, 2, "631688");
+      $this->Cell($column_width, 2, $citizen->rg);
 
       /* VIA */
       $this->setXY($x+50,$y+9);
@@ -49,24 +49,24 @@ class FaceB extends Fpdf {
 
       /* NOME SOCIAL */
       $this->setXY($x+20,$y+14);
-      $this->Cell($column_width, 2, "FULANO DE TAL SOCIAL");
+      $this->Cell($column_width, 2, $citizen->name);
 
       /* NOME */
       $this->setXY($x+15,$y+18);
-      $this->Cell($column_width, 2, "FULANO DE TAL");
+      $this->Cell($column_width, 2, $citizen->name_social);
 
       /* FILIACOES */
       $this->setXY($x+15,$y+24);
-      $this->MultiCell($column_width, 4, "SENAPE TIRIYÓ E ANGELINA PAWI TIRIYÓ ");
+      $this->MultiCell($column_width, 4, $citizen->filiations_text_print);
 
       /* NATURALIDADE */
       $this->setXY($x+15,$y+39);
-      $this->Cell($column_width, 2, "AMAPAENSE-AP");
+      $this->Cell($column_width, 2, $citizen->county->name . "-" . $citizen->uf->acronym);
 
 
       /* DATA DE NASCIMENTO */
       $this->setXY($x+82,$y+39);
-      $this->Cell($column_width, 2, date('d/m/Y'));
+      $this->Cell($column_width, 2, \Carbon\Carbon::createFromFormat('Y-d-m', $citizen->birth_date)->format('d/m/Y'));
 
       /* CERTIDAO DADOS */
       $this->setXY($x+20,$y+44);
@@ -75,17 +75,17 @@ class FaceB extends Fpdf {
           
       /* DATA DE NASCIMENTO */
       $this->setXY($x+18,$y+56);
-      $this->Cell($column_width, 2, '000.000.000-00');
+      $this->Cell($column_width, 2, $citizen->cpf);
 
       /* PIS/NIS/ETC */
       $this->setXY($x+50,$y+55);
-      $this->Cell($column_width, 2, 'PIS/PASEP 999.99999.999-9');
+      $this->Cell($column_width, 2, 'PIS/PASEP ' . $citizen->n_social);
 
 
       /* INFO QUE NAO SEI  */
       $this->setXY($x+82,$y+59);
       $this->Cell($column_width, 2,"1834841-2/443");
-  
+      
 
       // Verificar se precisa deslocar para a próxima linha
       if ($i % 2 == 0) {
