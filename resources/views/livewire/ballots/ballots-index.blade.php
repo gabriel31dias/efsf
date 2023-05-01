@@ -6,6 +6,12 @@
              <div class="col">
                 <h2 class="page-title">
                     Cédulas emitidas
+                    @if($type == 1)
+                        em lote
+                    @endif
+                    @if($type == 2)
+                     de forma avulsa
+                    @endif
                 </h2>
              </div>
           </div>

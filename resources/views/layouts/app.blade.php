@@ -617,40 +617,16 @@
 
                                                 @livewire('global.menu-item', [
                                                     'title' => 'Remanejamento',
-                                                    'classIcon' => 'ti ti-ban',
+                                                    'classIcon' => 'ti ti-edit',
                                                     'href' => route('ballots.create', ['typeCreation' => '3']),
                                                     'can' => 'ballots.create',
                                                     'is_dropdown' => true,
                                                 ])
 
                                                 @livewire('global.menu-item', [
-                                                    'title' => 'Pesquisa',
-                                                    'classIcon' => 'ti ti-ban',
-                                                    'href' => route('registry-suspension.index'),
-                                                    'can' => 'suspension.index',
-                                                    'is_dropdown' => true,
-                                                ])
-
-                                                @livewire('global.menu-item', [
-                                                    'title' => 'Totalização',
-                                                    'classIcon' => 'ti ti-ban',
-                                                    'href' => route('blocked-certificate.index'),
-                                                    'can' => 'blocked.index',
-                                                    'is_dropdown' => true,
-                                                ])
-
-                                                @livewire('global.menu-item', [
-                                                    'title' => 'Totalização',
-                                                    'classIcon' => 'ti ti-ban',
-                                                    'href' => route('blocked-certificate.index'),
-                                                    'can' => 'blocked.index',
-                                                    'is_dropdown' => true,
-                                                ])
-
-                                                @livewire('global.menu-item', [
                                                     'title' => 'Inutilização',
                                                     'classIcon' => 'ti ti-ban',
-                                                    'href' => route('blocked-certificate.index'),
+                                                    'href' => route('ballots.create', ['typeCreation' => '8']),
                                                     'can' => 'blocked.index',
                                                     'is_dropdown' => true,
                                                 ])

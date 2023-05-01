@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('cod_ballot', 100);
             $table->boolean('unused')->default(0);
             $table->integer('service_station_id')->nullable();
+            $table->string('ballot_process')->nullable();
             $table->boolean('single')->default(0);
             $table->integer('user_id')->nullable();
             $table->integer('typeCreation')->nullable()->default(0);

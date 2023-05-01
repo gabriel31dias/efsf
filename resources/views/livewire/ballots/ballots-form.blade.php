@@ -22,9 +22,10 @@
                 <div class="col-12 col-md-auto ms-auto d-print-none">
                     <div class="btn-list">
 
+
                         @unless ($ballots)
                             @if ($selectedTab == '' || $selectedTab == 'cadastro-lote')
-                                <a wire:click="saveLot" class="btn btn-primary items-center inline-flex">
+                                <a wire:click="saveLot()" class="btn btn-primary items-center inline-flex">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                     <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" input-group-append
                                         class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -38,7 +39,7 @@
                             @endif
 
                             @if ($selectedTab == 'cadastro-avulso')
-                                <a wire:click="saveAvulso" class="btn btn-primary items-center inline-flex">
+                                <a wire:click="saveAvulso()" class="btn btn-primary items-center inline-flex">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                     <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" input-group-append
                                         class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -50,6 +51,22 @@
                                     Salvar
                                 </a>
                             @endif
+
+                            @if ($selectedTab == 'inutilizacao')
+                                <a wire:click="saveUseless()" class="btn btn-primary items-center inline-flex">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                    <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" input-group-append
+                                        class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                        stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                    Salvar
+                                </a>
+                            @endif
+
+
                         @endunless
 
                     </div>
@@ -57,6 +74,7 @@
             </div>
         </div>
     </div>
+
     <div class="page-body">
         <div class="container-fluid">
             <div class="card">
@@ -71,7 +89,7 @@
 
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Posto de atendimento:<span
+                                                    <label class="form-label">Posto de atendimento :<span
                                                             class="error_tag"> *</span></label>
                                                     <div class="input-group input-group-flat">
                                                         <livewire:users.servicestation-select :defaultValue="$service_station" />
@@ -101,6 +119,40 @@
                                                         class="form-control" autocomplete="off" />
                                                 </div>
                                             </div>
+
+                                            @if ($situationCedules)
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div id="table-default" class="table-responsive">
+                                                            <label style="margin-bottom: 1%">Situações
+                                                                cédulas</label>
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th><button class="table-sort">Cédula</button>
+                                                                        </th>
+                                                                        <th><button
+                                                                                class="table-sort">Situação</button>
+                                                                        </th>
+                                                                    </tr>
+
+                                                                </thead>
+                                                                <tbody class="table-tbody">
+                                                                    @foreach ($situationCedules as $item)
+                                                                        <tr>
+                                                                            <td>{{ $item->cod_ballot }}</td>
+                                                                            <td>
+                                                                                <p>
+                                                                                    {{ $item->situation }}</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
 
                                             @if ($arrErros)
                                                 <div class="card">
@@ -162,7 +214,8 @@
                                                         <div class="card">
                                                             <div class="card-body">
                                                                 <div id="table-origim" class="table-responsive">
-                                                                    <label style="margin-bottom: 1%">Cédulas do posto de origem</label>
+                                                                    <label style="margin-bottom: 1%">Cédulas do posto
+                                                                        de origem</label>
                                                                     <table class="table">
                                                                         <thead>
                                                                             <tr>
@@ -173,7 +226,8 @@
                                                                         </thead>
                                                                         <tbody class="table-tbody">
                                                                             @foreach ($origemArr as $k => $item)
-                                                                                <tr  wire:ignore id="{{ $item->id }}"
+                                                                                <tr wire:ignore
+                                                                                    id="{{ $item->id }}"
                                                                                     onclick="selectRow('{{ $item->id }}')">
                                                                                     <td>{{ $item->cod_ballot }}</td>
                                                                                 </tr>
@@ -190,27 +244,26 @@
                                             <div class="col-lg-4">
                                                 <div class="mb-3">
                                                     <div class="input-group input-group-flat">
-                                                        @if($destinoServiceStation)
-
-                                                        <a style="margin: 30%"  wire:click="Rearrange"
-                                                            class="btn btn-primary items-center inline-flex">
-                                                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                                                            <svg class="hidden lg:block"
-
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                input-group-append="" width="24" height="24"
-                                                                viewBox="0 0 24 24" stroke-width="2"
-                                                                stroke="currentColor" fill="none"
-                                                                stroke-linecap="round" stroke-linejoin="round">
-                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                    fill="none"></path>
-                                                                <line x1="12" y1="5" x2="12"
-                                                                    y2="19"></line>
-                                                                <line x1="5" y1="12" x2="19"
-                                                                    y2="12"></line>
-                                                            </svg>
-                                                            Remanejar
-                                                        </a>
+                                                        @if ($destinoServiceStation)
+                                                            <a style="margin: 30%" wire:click="Rearrange"
+                                                                class="btn btn-primary items-center inline-flex">
+                                                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                                <svg class="hidden lg:block"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    input-group-append="" width="24"
+                                                                    height="24" viewBox="0 0 24 24"
+                                                                    stroke-width="2" stroke="currentColor"
+                                                                    fill="none" stroke-linecap="round"
+                                                                    stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none"></path>
+                                                                    <line x1="12" y1="5"
+                                                                        x2="12" y2="19"></line>
+                                                                    <line x1="5" y1="12"
+                                                                        x2="19" y2="12"></line>
+                                                                </svg>
+                                                                Remanejar
+                                                            </a>
                                                         @endif
                                                     </div>
 
@@ -231,9 +284,10 @@
                                                         <div class="card">
                                                             <div class="card-body">
                                                                 <div id="table-default" class="table-responsive">
-                                                                    <label style="margin-bottom: 1%">Cédulas do posto de destino</label>
+                                                                    <label style="margin-bottom: 1%">Cédulas do posto
+                                                                        de destino</label>
                                                                     <table class="table">
-                                                                        <thead >
+                                                                        <thead>
                                                                             <tr>
                                                                                 <th><button
                                                                                         class="table-sort">Cédula</button>
@@ -269,6 +323,90 @@
                         @endif
 
 
+                        @if ($selectedTab == 'inutilizacao')
+                            <div id="dados-basicos" role="tabpanel">
+                                <div class="page-body">
+                                    <div class="container-fluid">
+
+                                        <div class="row">
+
+
+
+                                            <div class="col-lg-12">
+                                                <label class="form-label">Cédulas para inutilizar:<span
+                                                        class="error_tag">
+                                                        *</span></label>
+                                                <div class="input-group input-group-flat">
+                                                    <input wire:model="fields.stringBallots" maxlength="70"
+                                                        type="text" class="form-control" autocomplete="off" />
+                                                </div>
+                                                <p>Pode ser informado mais de cédula utilizando virgulas</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                @if ($situationCedules)
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="table-default" class="table-responsive">
+                                                <label style="margin-bottom: 1%">Situações
+                                                    cédulas</label>
+                                                <table class="table">
+                                                    <thead>
+
+                                                        <tr>
+                                                            <th><button class="table-sort">Cédula</button></th>
+                                                            <th><button class="table-sort">Situação</button></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-tbody">
+                                                        @foreach ($situationCedules as $item)
+                                                            <tr>
+                                                                <td>{{ $item->cod_ballot }}</td>
+                                                                <td>
+                                                                    <p style="color: red">{{ $item->situation }}</p>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if ($arrErros)
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="table-default" class="table-responsive">
+                                                <label style="margin-bottom: 1%">Erros encontrados ao cadastrar
+                                                    cédulas</label>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><button class="table-sort">Cédula</button></th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-tbody">
+                                                        @foreach ($arrErros as $item)
+                                                            <tr>
+                                                                <td>{{ $item['code'] }}</td>
+                                                                <td>
+                                                                    <p style="color: gren">{{ $item['type'] }}</p>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        @endif
+
+
                         @if ($selectedTab == 'cadastro-avulso')
                             <div id="dados-basicos" role="tabpanel">
                                 <div class="page-body">
@@ -296,11 +434,41 @@
                                                     <input wire:model="fields.stringBallots" maxlength="70"
                                                         type="text" class="form-control" autocomplete="off" />
                                                 </div>
+                                                Pode ser informado mais de cédula utilizando virgulas
                                             </div>
 
                                         </div>
                                     </div>
                                 </div>
+                                @if ($situationCedules)
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="table-default" class="table-responsive">
+                                                <label style="margin-bottom: 1%">Situações
+                                                    cédulas</label>
+                                                <table class="table">
+                                                    <thead>
+
+                                                        <tr>
+                                                            <th><button class="table-sort">Cédula</button></th>
+                                                            <th><button class="table-sort">Situação</button></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-tbody">
+                                                        @foreach ($situationCedules as $item)
+                                                            <tr>
+                                                                <td>{{ $item->cod_ballot }}</td>
+                                                                <td>
+                                                                    <p style="color: gren">{{ $item->situation }}</p>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                                 @if ($arrErros)
                                     <div class="card">
                                         <div class="card-body">

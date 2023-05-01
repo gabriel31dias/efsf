@@ -42,6 +42,7 @@ class BallotsForm extends Component
     public $fileSign = "";
 
     public $selectedTab = "";
+    public $selectedTabNumber = "";
 
     public $service_station = "";
 
@@ -83,43 +84,51 @@ class BallotsForm extends Component
 
     public $type;
 
+    public $situationCedules = [];
+
+    public $currentProcessCode = '';
+
     public $listeners = ['setSelectedItemToRearrange', 'selectDestino', 'selectOrigem', 'selectedServiceStation', 'selectedUser'];
 
     public function render(Request $request)
     {
         $this->type = $request->query('typeCreation');
 
+
+
         if ($this->type == 1) {
-            $this->setSelectedTab('cadastro-lote');
+            $this->setSelectedTab('cadastro-lote', $this->type);
         }
 
         if ($this->type == 2) {
-            $this->setSelectedTab('cadastro-avulso');
+            $this->setSelectedTab('cadastro-avulso', $this->type);
         }
 
         if ($this->type == 3) {
-            $this->setSelectedTab('remanejamento');
+            $this->setSelectedTab('remanejamento', $this->type);
         }
 
         if ($this->type == 4) {
-            $this->setSelectedTab('remanejamento');
+            $this->setSelectedTab('remanejamento', $this->type);
         }
 
         if ($this->type == 5) {
-            $this->setSelectedTab('pesquisa');
+            $this->setSelectedTab('pesquisa', $this->type);
         }
 
         if ($this->type == 6) {
-            $this->setSelectedTab('pesquisa');
+            $this->setSelectedTab('pesquisa', $this->type);
         }
 
         if ($this->type == 7) {
-            $this->setSelectedTab('totalizacao');
+            $this->setSelectedTab('totalizacao', $this->type);
         }
 
         if ($this->type == 8) {
-            $this->setSelectedTab('inutilizacao');
+            $this->setSelectedTab('inutilizacao', $this->type);
         }
+
+
         return view('livewire.ballots.ballots-form');
     }
 
@@ -148,8 +157,6 @@ class BallotsForm extends Component
        $this->selectDestino($this->destinoServiceStation);
     }
 
-
-
     public function selectDestino($service_station_id){
         $bkp =   $this->origemArr;
         $this->destinoServiceStation = $service_station_id;
@@ -171,8 +178,9 @@ class BallotsForm extends Component
         $this->fields['service_station_id'] = ServiceStation::find($id)->id;
     }
 
-    public function setSelectedTab($tab){
+    public function setSelectedTab($tab, $id){
         $this->selectedTab = $tab;
+        $this->selectedTabNumber = $id;
         $this->dispatchBrowserEvent('selectedTab',[
             'tab'=> $tab
         ]);
@@ -266,11 +274,14 @@ class BallotsForm extends Component
     public function mount()
     {
 
+
         if($this->ballots){
 
             $this->service_station = ServiceStation::where('id', $this->ballots->service_station_id)->first();
 
             $this->blockedTypeRegister = true;
+
+            $this->getCedulesSituation();
 
             if($this->ballots->typeCreation == 1){
                 $this->selectedTab  = 'cadastro-lote';
@@ -300,6 +311,10 @@ class BallotsForm extends Component
 
 
 
+    }
+
+    public function getCedulesSituation(){
+       $this->situationCedules  = BallotItem::where('ballot_process', $this->ballots->ballot_process )->get();
     }
 
     public function setEditingRow($item){
@@ -369,6 +384,8 @@ class BallotsForm extends Component
     public function saveLot(){
         $batchCodes = $this->getBatchCodes($this->fields['initial'], $this->fields['final']);
 
+        $this->currentProcessCode = $this->guidv4();
+
         $this->creatBallotItems($batchCodes);
 
         $error = false;
@@ -389,11 +406,12 @@ class BallotsForm extends Component
             'stringBallots' => $this->fields['initial']."...".$this->fields['final'],
             'user_id' => auth()->user()->id,
             'error' => $error,
+            'ballot_process' => $this->currentProcessCode,
             'service_station_id' => $this->fields['service_station_id'],
             'stringBallotsErrors' => \json_encode($this->arrErros),
             'initial' => $this->fields['initial'],
             'final' => $this->fields['final'],
-            'typeCreation' => 1
+            'typeCreation' => Ballot::TYPE_BATCH_REGISTER
         ]);
 
         if($result){
@@ -403,7 +421,7 @@ class BallotsForm extends Component
                     'message'=> "Cédulas salvas com sucesso"
                 ]);
                 $this->dispatchBrowserEvent('redirect', [
-                    'url' => '/ballots',
+                    'url' => '/ballots?typeCreation='.$this->selectedTabNumber,
                     'delay' => 1000
                 ]);
             }else{
@@ -420,12 +438,14 @@ class BallotsForm extends Component
         foreach ($codes as $code) {
             $batch = BallotItem::where('cod_ballot', $code)->first();
             if ($batch == null) {
+
                 BallotItem::create([
                     'cod_ballot' => $code,
                     'user_id' => auth()->user()->id,
-                    'situation' => 'A',
+                    'ballot_process' => $this->currentProcessCode,
+                    'situation' => 'D',
                     'service_station_id' => $this->fields['service_station_id'],
-                    'typeCreation' => 1
+                    'typeCreation' => Ballot::TYPE_BATCH_REGISTER
                 ]);
             } else {
                 array_push($arrErros, ['type' => 'Está cédula já existe registrada.', 'code' => $code]);
@@ -442,10 +462,34 @@ class BallotsForm extends Component
         $this->arrErros = $arrErros;
     }
 
+    function guidv4($data = null) {
+        // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
+        $data = $data ?? random_bytes(16);
+        assert(strlen($data) == 16);
+
+        // Set version to 0100
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+        // Set bits 6-7 to 10
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+
+
+
+        // Output the 36 character UUID.
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
 
 
     public function saveAvulso(){
-        $batchCodes = explode(",", $this->fields['loose_banknotes']);
+
+
+        $batchCodes = [];
+
+        if($this->fields['stringBallots']){
+            $batchCodes = explode(",", $this->fields['stringBallots']);
+        }
+
+
+        $this->currentProcessCode = $this->guidv4();
 
         $this->creatAvulsoItems($batchCodes);
 
@@ -464,12 +508,13 @@ class BallotsForm extends Component
         }
 
         $result = Ballot::create([
-            'stringBallots' => $this->fields['loose_banknotes'] ,
+            'stringBallots' => $this->fields['stringBallots'] ,
+            'ballot_process' => $this->currentProcessCode,
             'user_id' => auth()->user()->id,
             'error' => $error,
             'service_station_id' => $this->fields['service_station_id'],
             'stringBallotsErrors' => \json_encode($this->arrErros),
-            'typeCreation' => 2
+            'typeCreation' =>  Ballot::TYPE_SINGLE_REGISTRATION
         ]);
 
 
@@ -480,7 +525,7 @@ class BallotsForm extends Component
                     'message'=> "Cédulas salvas com sucesso"
                 ]);
                 $this->dispatchBrowserEvent('redirect', [
-                    'url' => '/ballots',
+                    'url' => '/ballots?typeCreation='.$this->selectedTabNumber,
                     'delay' => 1000
                 ]);
             }else{
@@ -492,21 +537,67 @@ class BallotsForm extends Component
         }
     }
 
+
+
+    public function saveUseless(){
+        $batchCodes = [];
+
+        if($this->fields['stringBallots']){
+            $batchCodes = explode(",", $this->fields['stringBallots']);
+        }
+
+        $this->currentProcessCode = $this->guidv4();
+
+        $this->inutilizationItems($batchCodes);
+
+
+
+        $this->dispatchBrowserEvent('alert',[
+            'type'=> 'success',
+            'message'=> "Cédula inutilizada com sucesso"
+        ]);
+
+        $this->dispatchBrowserEvent('redirect', [
+            'url' => '/ballots?typeCreation=1',
+            'delay' => 1000
+        ]);
+    }
+
     public function creatAvulsoItems($codes){
         $arrErros = [];
         foreach ($codes as $code) {
             $batch = BallotItem::where('cod_ballot', $code)->first();
             if ($batch == null) {
+
                 BallotItem::create([
                     'cod_ballot' => $code,
                     'user_id' => auth()->user()->id,
-                    'situation' => 'A',
+                    'situation' => 'D',
+                    'ballot_process' => $this->currentProcessCode,
                     'service_station_id' => $this->fields['service_station_id'],
-                    'typeCreation' => 2
+                    'typeCreation' => Ballot::TYPE_SINGLE_REGISTRATION,
+
                 ]);
             } else {
                 array_push($arrErros, ['type' => 'Está cédula já existe registrada.', 'code' => $code]);
             }
+        }
+
+        if(count($arrErros) > 0){
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> "Algumas cédulas não foram registradas pois já existe no sistema."
+            ]);
+        }
+
+        $this->arrErros = $arrErros;
+    }
+
+    public function inutilizationItems($codes){
+        $arrErros = [];
+        foreach ($codes as $code) {
+            $batch = BallotItem::where('cod_ballot', $code)->first();
+            $batch->update(['situation' => 'I']);
         }
 
         if(count($arrErros) > 0){
@@ -581,16 +672,11 @@ class BallotsForm extends Component
     }
 
     private function validation($fields){
-
-
-
         $errors = [];
         $this->errorsKeys = [];
         $this->errors = [];
         foreach ($fields as $field => $value)
         {
-
-
 
             if($this->checkMandatory($field) && empty(trim($value))){
                 array_push($errors, [

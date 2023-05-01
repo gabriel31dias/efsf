@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('final')->nullable()->default(0);
             $table->json('stringBallotsErrors', 100)->nullable();
             $table->integer('service_station_id')->nullable();
+            $table->string('ballot_process')->nullable();
             $table->integer('user_id')->nullable();
             $table->json('stringBallotsUnusedJson')->nullable();
             $table->json('stringBallotsJson')->nullable();
