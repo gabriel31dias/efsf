@@ -60,6 +60,7 @@ Route::resource('feature', App\Http\Controllers\FeatureController::class)->middl
 Route::resource('county', App\Http\Controllers\CountyController::class)->middleware('can:permission,"locale.index"');
 Route::resource('uf', App\Http\Controllers\UfController::class)->middleware('can:permission,"locale.index"');
 
+Route::get('impressao', [App\Http\Controllers\PrintController::class,'index'])->name('print.index');
 
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 

@@ -569,6 +569,13 @@
                             ])
 
                             @livewire('global.menu-item', [
+                                'title' => 'Impressão de RG',
+                                'classIcon' => 'ti  ti-printer',
+                                'href' => route('print.index'),
+                                'can' => 'print.index',
+                            ])
+
+                            @livewire('global.menu-item', [
                                 'title' => 'Assinaturas Diretor',
                                 'classIcon' => 'ti ti-pencil-plus',
                                 'href' => route('director-signature.index'),
