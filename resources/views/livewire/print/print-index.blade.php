@@ -51,6 +51,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Posto de Atendimento</label>
+                            <livewire:users.servicestation-select />
+
+                        </div>
+                    </div>
                 </div>
                 <button class="btn btn-primary mb-3">Pesqusiar</button>
             </div>

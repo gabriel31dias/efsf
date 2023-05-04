@@ -1,4 +1,4 @@
-<div style="width:100%">
+<div style=" width:100%">
        <input
        class="form-control {{ $readonly ? 'bg-gray-100' : '' }}"
           type="text"
@@ -15,7 +15,7 @@
           <div class="">Searching...</div>
        </div>
        @if(!empty($query))
-       <div style=" max-height: 200px;
+       <div style=" max-height: 200px; max-width: 400px;
        overflow-y: scroll;" class="absolute z-10 w-full bg-white rounded-t-none shadow-lg list-group">
           @if(!empty($stations) && $closed == false)
           @foreach($stations as $i => $station)
