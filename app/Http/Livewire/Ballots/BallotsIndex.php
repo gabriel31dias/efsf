@@ -129,10 +129,17 @@ class BallotsIndex extends Component
     public function filtersCall(){
         $searchTerm = "";
 
-        if($this->searchTerm){
+        if ($this->searchTerm) {
             $searchTerm = '%'. $this->searchTerm .'%';
-            //$items = Ballot::where('name','ilike', '%'. $searchTerm .'%' );
+            $items = Ballot::where('face', 'ILIKE', $searchTerm)
+                           ->orWhere('created_at', 'LIKE', $searchTerm)
+                           ->join('service_stations', 'service_stations.id', '=', 'ballots.service_station_id')
+                           ->where('service_stations.service_station_name', 'LIKE', $searchTerm);
+
+
         }
+
+
 
 
 

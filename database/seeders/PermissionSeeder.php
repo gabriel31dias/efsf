@@ -369,6 +369,26 @@ class PermissionSeeder extends Seeder
         ]);
 
 
+        /* PERMISSOES CEDULAS */
+         Permission::firstOrCreate([
+            'name' => 'Visualizar cédulas ',
+            'permission' => 'ballots.index',
+            'group' => 'Cédulas' ,
+        ]);
+
+        Permission::firstOrCreate([
+            'name' => 'Editar cédulas ',
+            'permission' => 'ballots.create',
+            'group' => 'Cédulas' ,
+        ]);
+
+        Permission::firstOrCreate([
+            'name' => 'Cadastrar cédulas ',
+            'permission' => 'ballots.create',
+            'group' => 'Cédulas' ,
+        ]);
+
+
 
 
 

@@ -120,6 +120,23 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-lg-3">
+                                                <label class="form-label">Face Cédula:<span class="error_tag">
+                                                        *</span></label>
+                                                <div class="input-group input-group-flat">
+
+                                                 <div class="input-group input-group-flat">
+                                                    <select wire:model="fields.face" class="form-select"
+                                                       aria-label="Default select example">
+                                                       <option value="" selected disabled>Selecione...</option>
+                                                       <option value="A">FACE A</option>
+                                                       <option value="B">FACE B</option>
+                                                    </select>
+                                                 </div>
+                                                </div>
+                                            </div>
+
+
                                             @if ($situationCedules)
                                                 <div class="card">
                                                     <div class="card-body">
@@ -436,6 +453,8 @@
                                                 </div>
                                                 Pode ser informado mais de cédula utilizando virgulas
                                             </div>
+
+
 
                                         </div>
                                     </div>

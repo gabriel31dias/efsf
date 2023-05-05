@@ -17,6 +17,7 @@ use Livewire\WithFileUploads;
 
 
 use App\Http\Repositories\ProfileRepository;
+
 class BallotsForm extends Component
 {
 
@@ -60,7 +61,8 @@ class BallotsForm extends Component
 
     public $fields = [
         "inicial" => "",
-        "final" => ""
+        "final" => "",
+        "face" => "",
     ];
 
     public $blockedTypeRegister = false;
@@ -78,7 +80,7 @@ class BallotsForm extends Component
     public $attachments = [];
     public $oldAttachments = [];
 
-    public $typeFiles = [ "1" => "OFÍCIO", "2" => "MEMORANDO", "3" => "REQUERIMENTO"];
+    public $typeFiles = ["1" => "OFÍCIO", "2" => "MEMORANDO", "3" => "REQUERIMENTO"];
 
     public $user_name;
 
@@ -139,113 +141,123 @@ class BallotsForm extends Component
 
     public function Rearrange()
     {
-       foreach ($this->selectedItemRearrange as  $item) {
-          $item = BallotItem::where('id', $item)->first();
-          $item->update([
-            'service_station_id' => $this->destinoServiceStation
-          ]);
-       }
+        foreach ($this->selectedItemRearrange as $item) {
+            $item = BallotItem::where('id', $item)->first();
+            $item->update([
+                'service_station_id' => $this->destinoServiceStation
+            ]);
+        }
 
-       $this->dispatchBrowserEvent('alert',[
-        'type'=> 'success',
-        'message'=> "Item Remajado com sucesso."
-       ]);
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Item Remajado com sucesso."
+        ]);
 
 
 
-       $this->selectOrigem($this->origemServiceStation);
-       $this->selectDestino($this->destinoServiceStation);
+        $this->selectOrigem($this->origemServiceStation);
+        $this->selectDestino($this->destinoServiceStation);
     }
 
-    public function selectDestino($service_station_id){
-        $bkp =   $this->origemArr;
+    public function selectDestino($service_station_id)
+    {
+        $bkp = $this->origemArr;
         $this->destinoServiceStation = $service_station_id;
 
         $this->destinoArr = BallotItem::where('service_station_id', $service_station_id)->get();
-        $this->origemArr =  [];
+        $this->origemArr = [];
 
-        $this->origemArr = $bkp ;
+        $this->origemArr = $bkp;
     }
 
 
-    public function selectOrigem($service_station_id){
+    public function selectOrigem($service_station_id)
+    {
         $this->origemServiceStation = $service_station_id;
-        $this->origemArr  = BallotItem::where('service_station_id', $service_station_id)->get();
+        $this->origemArr = BallotItem::where('service_station_id', $service_station_id)->get();
     }
 
-    public function selectedServiceStation($id){
+    public function selectedServiceStation($id)
+    {
         $this->service_station = $id;
         $this->fields['service_station_id'] = ServiceStation::find($id)->id;
     }
 
-    public function setSelectedTab($tab, $id){
+    public function setSelectedTab($tab, $id)
+    {
         $this->selectedTab = $tab;
         $this->selectedTabNumber = $id;
-        $this->dispatchBrowserEvent('selectedTab',[
-            'tab'=> $tab
+        $this->dispatchBrowserEvent('selectedTab', [
+            'tab' => $tab
         ]);
 
         $this->dispatchBrowserEvent('reload-masks');
     }
 
 
-    public function selectedUser($id){
+    public function selectedUser($id)
+    {
         $this->user = $id;
         $this->user_name = User::find($id)->name;
         $this->getAllFunctions(User::find($id));
     }
 
-    public function getAllFunctions($user){
+    public function getAllFunctions($user)
+    {
         $user = User::find($user->id);
-        $this->functions = Profession::where(['unit_id' =>  $user->unit_id])->get() ?? [];
+        $this->functions = Profession::where(['unit_id' => $user->unit_id])->get() ?? [];
         $this->cpf = $user->cpf ?? null;
         $this->unit = Unit::find($user->unit_id)->name ?? null;
         $this->fields['user_id'] = $user->id ?? null;
         $this->fields['unit_id'] = Unit::find($user->unit_id)->id ?? null;
     }
 
-    public function addNewFile(){
-        $this->attachments[] = ['type' => $this->attachmentType, 'file' => $this->file ];
+    public function addNewFile()
+    {
+        $this->attachments[] = ['type' => $this->attachmentType, 'file' => $this->file];
         $this->attachmentType = null;
         $this->file = null;
     }
 
 
-    public function download($item){
+    public function download($item)
+    {
 
-        $this->dispatchBrowserEvent('redirect',[
-            'url'=> $item->url,
+        $this->dispatchBrowserEvent('redirect', [
+            'url' => $item->url,
             'delay' => 1000
         ]);
     }
 
 
-    public function saveNewValue($item, $unit_id){
+    public function saveNewValue($item, $unit_id)
+    {
         $index = array_search($item, $this->functions);
 
         $this->functions[$index] = $this->currentEditValue;
         $backup = $this->currentEditValue;
         $this->currentEditValue = "";
 
-        if($unit_id == null){
+        if ($unit_id == null) {
             return false;
         }
 
 
         $directorSignature = DirectorSignature::where(['unit_id' => $unit_id])->where(['name' => $item])->first();
-        if(isset($profission->id)){
+        if (isset($profission->id)) {
             $directorSignature->update(["name" => $backup]);
         }
 
         $this->rowEdit = "";
 
-        $this->dispatchBrowserEvent('alert',[
-            'type'=> 'success',
-            'message'=> "Item atualizado com sucesso."
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Item atualizado com sucesso."
         ]);
     }
 
-    public function destroyItemFile($index){
+    public function destroyItemFile($index)
+    {
 
 
 
@@ -254,7 +266,8 @@ class BallotsForm extends Component
 
     }
 
-    function getNewAttachments() {
+    function getNewAttachments()
+    {
         $newItems = array();
         foreach ($this->attachments as $attachment) {
             $found = false;
@@ -275,7 +288,7 @@ class BallotsForm extends Component
     {
 
 
-        if($this->ballots){
+        if ($this->ballots) {
 
             $this->service_station = ServiceStation::where('id', $this->ballots->service_station_id)->first();
 
@@ -283,17 +296,17 @@ class BallotsForm extends Component
 
             $this->getCedulesSituation();
 
-            if($this->ballots->typeCreation == 1){
-                $this->selectedTab  = 'cadastro-lote';
+            if ($this->ballots->typeCreation == 1) {
+                $this->selectedTab = 'cadastro-lote';
             }
 
 
-            if($this->ballots->typeCreation == 2){
+            if ($this->ballots->typeCreation == 2) {
                 $this->selectedTab = 'cadastro-avulso';
-                $this->fields['stringBallots'] =  $this->ballots->stringBallots;
+                $this->fields['stringBallots'] = $this->ballots->stringBallots;
             }
 
-            $data = json_decode($this->ballots->stringBallotsErrors , true);
+            $data = json_decode($this->ballots->stringBallotsErrors, true);
 
             $newArray = array();
             foreach ($data as $item) {
@@ -304,7 +317,7 @@ class BallotsForm extends Component
 
             $this->fields['initial'] = $this->ballots->initial;
             $this->fields['final'] = $this->ballots->final;
-        }else{
+        } else {
             $this->service_station = null;
         }
 
@@ -313,20 +326,23 @@ class BallotsForm extends Component
 
     }
 
-    public function getCedulesSituation(){
-       $this->situationCedules  = BallotItem::where('ballot_process', $this->ballots->ballot_process )->get();
+    public function getCedulesSituation()
+    {
+        $this->situationCedules = BallotItem::where('ballot_process', $this->ballots->ballot_process)->get();
     }
 
-    public function setEditingRow($item){
+    public function setEditingRow($item)
+    {
         $this->rowEdit = $item;
     }
 
-    public function createOrUpdateFunctions($unit_id){
-        foreach($this->functions as $item){
-            $directorSignature = DirectorSignature::where(['unit_id' => $unit_id])->where(['name' => $item ])->first();
-            if(isset($directorSignature->id)){
+    public function createOrUpdateFunctions($unit_id)
+    {
+        foreach ($this->functions as $item) {
+            $directorSignature = DirectorSignature::where(['unit_id' => $unit_id])->where(['name' => $item])->first();
+            if (isset($directorSignature->id)) {
 
-            }else{
+            } else {
                 DirectorSignature::create([
                     'name' => $item,
                     'unit_id' => $unit_id
@@ -345,8 +361,8 @@ class BallotsForm extends Component
         }
 
         $signature = DirectorSignature::where('unit_id', $unit_id)
-                                   ->where('name', $profession)
-                                   ->first();
+            ->where('name', $profession)
+            ->first();
         if ($signature) {
             $signature->delete();
         }
@@ -361,17 +377,19 @@ class BallotsForm extends Component
         return true;
     }
 
-    public function goUnit(){
-        $this->dispatchBrowserEvent('redirect',[
-            'url'=> '/unit/'.$this->fields['unit_id'] .'/edit',
+    public function goUnit()
+    {
+        $this->dispatchBrowserEvent('redirect', [
+            'url' => '/unit/' . $this->fields['unit_id'] . '/edit',
         ]);
     }
 
-    public function storeOtherAttachments(){
+    public function storeOtherAttachments()
+    {
         $newAttachments = $this->getNewAttachments();
         $filesAtachments = [];
 
-        foreach($newAttachments as $item) {
+        foreach ($newAttachments as $item) {
             $file = $item['file']->store('public/signatures-other-attachments');
             //array_push($this->attachments, ['type' => $this->typeFiles[$item['type']] ?? $item['type'], 'file' => $file]);
         }
@@ -381,7 +399,23 @@ class BallotsForm extends Component
     }
 
 
-    public function saveLot(){
+    public function saveLot()
+    {
+
+        if (
+            isset($this->fields['initial']) && $this->fields['initial'] &&
+            isset($this->fields['final']) && $this->fields['final'] &&
+            isset($this->fields['face']) && $this->fields['face']
+        ) {
+            // Todas as condições são verdadeiras
+        } else {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "Todos os campos devem ser preenchidos"
+            ]);
+            return false;
+        }
+
         $batchCodes = $this->getBatchCodes($this->fields['initial'], $this->fields['final']);
 
         $this->currentProcessCode = $this->guidv4();
@@ -390,20 +424,21 @@ class BallotsForm extends Component
 
         $error = false;
 
-        if(count($this->arrErros) > 0) {
+        if (count($this->arrErros) > 0) {
             $error = true;
         }
 
         if (count($batchCodes) == count($this->arrErros)) {
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'error',
-                'message'=> "Não foi possivel salvar as cédulas, verifique os problema abaixo e tente novamente"
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "Não foi possivel salvar as cédulas, verifique os problema abaixo e tente novamente"
             ]);
             return false;
         }
 
+
         $result = Ballot::create([
-            'stringBallots' => $this->fields['initial']."...".$this->fields['final'],
+            'stringBallots' => $this->fields['initial'] . "..." . $this->fields['final'],
             'user_id' => auth()->user()->id,
             'error' => $error,
             'ballot_process' => $this->currentProcessCode,
@@ -411,29 +446,31 @@ class BallotsForm extends Component
             'stringBallotsErrors' => \json_encode($this->arrErros),
             'initial' => $this->fields['initial'],
             'final' => $this->fields['final'],
-            'typeCreation' => Ballot::TYPE_BATCH_REGISTER
+            'typeCreation' => Ballot::TYPE_BATCH_REGISTER,
+            'face' => $this->fields['face']
         ]);
 
-        if($result){
-            if(count($this->arrErros) <= 0) {
-                $this->dispatchBrowserEvent('alert',[
-                    'type'=> 'success',
-                    'message'=> "Cédulas salvas com sucesso"
+        if ($result) {
+            if (count($this->arrErros) <= 0) {
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'success',
+                    'message' => "Cédulas salvas com sucesso"
                 ]);
                 $this->dispatchBrowserEvent('redirect', [
-                    'url' => '/ballots?typeCreation='.$this->selectedTabNumber,
+                    'url' => '/ballots?typeCreation=' . $this->selectedTabNumber,
                     'delay' => 1000
                 ]);
-            }else{
-                $this->dispatchBrowserEvent('alert',[
-                    'type'=> 'warning',
-                    'message'=> "Algumas cédulas não foram registradas pois já existe no sistema."
+            } else {
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'warning',
+                    'message' => "Algumas cédulas não foram registradas pois já existe no sistema."
                 ]);
             }
         }
     }
 
-    public function creatBallotItems($codes){
+    public function creatBallotItems($codes)
+    {
         $arrErros = [];
         foreach ($codes as $code) {
             $batch = BallotItem::where('cod_ballot', $code)->first();
@@ -452,17 +489,18 @@ class BallotsForm extends Component
             }
         }
 
-        if(count($arrErros) > 0){
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'error',
-                'message'=> "Algumas cédulas não foram registradas pois já existe no sistema."
+        if (count($arrErros) > 0) {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "Algumas cédulas não foram registradas pois já existe no sistema."
             ]);
         }
 
         $this->arrErros = $arrErros;
     }
 
-    function guidv4($data = null) {
+    function guidv4($data = null)
+    {
         // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
         $data = $data ?? random_bytes(16);
         assert(strlen($data) == 16);
@@ -479,12 +517,13 @@ class BallotsForm extends Component
     }
 
 
-    public function saveAvulso(){
+    public function saveAvulso()
+    {
 
 
         $batchCodes = [];
 
-        if($this->fields['stringBallots']){
+        if ($this->fields['stringBallots']) {
             $batchCodes = explode(",", $this->fields['stringBallots']);
         }
 
@@ -495,43 +534,43 @@ class BallotsForm extends Component
 
         $error = false;
 
-        if(count($this->arrErros) > 0) {
+        if (count($this->arrErros) > 0) {
             $error = true;
         }
 
         if (count($batchCodes) == count($this->arrErros)) {
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'error',
-                'message'=> "Não foi possivel salvar as cédulas, verifique os problema abaixo e tente novamente"
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "Não foi possivel salvar as cédulas, verifique os problema abaixo e tente novamente"
             ]);
             return false;
         }
 
         $result = Ballot::create([
-            'stringBallots' => $this->fields['stringBallots'] ,
+            'stringBallots' => $this->fields['stringBallots'],
             'ballot_process' => $this->currentProcessCode,
             'user_id' => auth()->user()->id,
             'error' => $error,
             'service_station_id' => $this->fields['service_station_id'],
             'stringBallotsErrors' => \json_encode($this->arrErros),
-            'typeCreation' =>  Ballot::TYPE_SINGLE_REGISTRATION
+            'typeCreation' => Ballot::TYPE_SINGLE_REGISTRATION
         ]);
 
 
-        if($result){
-            if(count($this->arrErros) <= 0) {
-                $this->dispatchBrowserEvent('alert',[
-                    'type'=> 'success',
-                    'message'=> "Cédulas salvas com sucesso"
+        if ($result) {
+            if (count($this->arrErros) <= 0) {
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'success',
+                    'message' => "Cédulas salvas com sucesso"
                 ]);
                 $this->dispatchBrowserEvent('redirect', [
-                    'url' => '/ballots?typeCreation='.$this->selectedTabNumber,
+                    'url' => '/ballots?typeCreation=' . $this->selectedTabNumber,
                     'delay' => 1000
                 ]);
-            }else{
-                $this->dispatchBrowserEvent('alert',[
-                    'type'=> 'warning',
-                    'message'=> "Algumas cédulas não foram registradas pois já existe no sistema."
+            } else {
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'warning',
+                    'message' => "Algumas cédulas não foram registradas pois já existe no sistema."
                 ]);
             }
         }
@@ -539,10 +578,11 @@ class BallotsForm extends Component
 
 
 
-    public function saveUseless(){
+    public function saveUseless()
+    {
         $batchCodes = [];
 
-        if($this->fields['stringBallots']){
+        if ($this->fields['stringBallots']) {
             $batchCodes = explode(",", $this->fields['stringBallots']);
         }
 
@@ -552,9 +592,9 @@ class BallotsForm extends Component
 
 
 
-        $this->dispatchBrowserEvent('alert',[
-            'type'=> 'success',
-            'message'=> "Cédula inutilizada com sucesso"
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Cédula inutilizada com sucesso"
         ]);
 
         $this->dispatchBrowserEvent('redirect', [
@@ -563,7 +603,8 @@ class BallotsForm extends Component
         ]);
     }
 
-    public function creatAvulsoItems($codes){
+    public function creatAvulsoItems($codes)
+    {
         $arrErros = [];
         foreach ($codes as $code) {
             $batch = BallotItem::where('cod_ballot', $code)->first();
@@ -583,34 +624,36 @@ class BallotsForm extends Component
             }
         }
 
-        if(count($arrErros) > 0){
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'error',
-                'message'=> "Algumas cédulas não foram registradas pois já existe no sistema."
+        if (count($arrErros) > 0) {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "Algumas cédulas não foram registradas pois já existe no sistema."
             ]);
         }
 
         $this->arrErros = $arrErros;
     }
 
-    public function inutilizationItems($codes){
+    public function inutilizationItems($codes)
+    {
         $arrErros = [];
         foreach ($codes as $code) {
             $batch = BallotItem::where('cod_ballot', $code)->first();
             $batch->update(['situation' => 'I']);
         }
 
-        if(count($arrErros) > 0){
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'error',
-                'message'=> "Algumas cédulas não foram registradas pois já existe no sistema."
+        if (count($arrErros) > 0) {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "Algumas cédulas não foram registradas pois já existe no sistema."
             ]);
         }
 
         $this->arrErros = $arrErros;
     }
 
-    public function getBatchCodes($start, $end) {
+    public function getBatchCodes($start, $end)
+    {
         $batchCodes = [];
 
         for ($i = $start; $i <= $end; $i++) {
@@ -620,36 +663,38 @@ class BallotsForm extends Component
         return $batchCodes;
     }
 
-    public function disableLastSignature($lastSign){
+    public function disableLastSignature($lastSign)
+    {
         DirectorSignature::find($lastSign->id)->update([
             "active" => false,
             "date_inactive" => now()
         ]);
     }
 
-    public function AddFunction(){
-        if($this->textFunction == ""){
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'error',
-                'message'=> "Descreva o nome da função"
+    public function AddFunction()
+    {
+        if ($this->textFunction == "") {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "Descreva o nome da função"
             ]);
             return false;
         }
 
         $ex = false;
 
-        foreach($this->functions as $item){
+        foreach ($this->functions as $item) {
             if ($this->textFunction == $item) {
-                $this->dispatchBrowserEvent('alert',[
-                    'type'=> 'error',
-                    'message'=> "Já existe uma função com esse descritivo"
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'error',
+                    'message' => "Já existe uma função com esse descritivo"
                 ]);
                 $ex = true;
                 break;
             }
         }
 
-        if($ex == true){
+        if ($ex == true) {
             return false;
         }
 
@@ -657,28 +702,29 @@ class BallotsForm extends Component
         $this->textFunction = "";
     }
 
-    public function messageSuccess(){
-        if($this->action == "create"){
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'success',
-                'message'=> "Unidade criado com sucesso."
+    public function messageSuccess()
+    {
+        if ($this->action == "create") {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'success',
+                'message' => "Unidade criado com sucesso."
             ]);
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'success',
-                'message'=> "Unidade foi atualizado com sucesso."
+        } else {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'success',
+                'message' => "Unidade foi atualizado com sucesso."
             ]);
         }
     }
 
-    private function validation($fields){
+    private function validation($fields)
+    {
         $errors = [];
         $this->errorsKeys = [];
         $this->errors = [];
-        foreach ($fields as $field => $value)
-        {
+        foreach ($fields as $field => $value) {
 
-            if($this->checkMandatory($field) && empty(trim($value))){
+            if ($this->checkMandatory($field) && empty(trim($value))) {
                 array_push($errors, [
                     "message" => "O campo {$field} é obrigatorio",
                     "valid" => false,
@@ -690,18 +736,20 @@ class BallotsForm extends Component
         return $errors;
     }
 
-    public function checkMandatory($field){
+    public function checkMandatory($field)
+    {
         return in_array($field, $this->obrigatory_filds);
     }
 
-    public function enableDisableRegister(){
+    public function enableDisableRegister()
+    {
         $result = (new UnityRepository)->toggleStatus($this->unit->id);
-        if($result){
-            $this->unit->status = ! $this->unit->status;
+        if ($result) {
+            $this->unit->status = !$this->unit->status;
 
-            $this->dispatchBrowserEvent('alert',[
-                'type'=> 'success',
-                'message'=> "Unidade desabilitado com sucesso."
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'success',
+                'message' => "Unidade desabilitado com sucesso."
             ]);
         }
     }

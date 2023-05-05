@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('typeCreation')->nullable()->default(0);
             $table->string('stringBallots', 100)->nullable();
             $table->string('stringBallotsUnused', 100)->nullable();
+            $table->string('face')->nullable();
             $table->integer('error')->nullable()->default(0);
             $table->integer('initial')->nullable()->default(0);
             $table->integer('final')->nullable()->default(0);
