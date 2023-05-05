@@ -10,8 +10,11 @@ class PrintIndex extends Component
 {
     public $filter = [
         'startDate' => null, 
-        'endDate' => null
+        'endDate' => null,
+        'station_id' => null,
     ];
+
+    protected $listeners = ['selectedServiceStation'];
 
     public $selected = [];
 
@@ -25,16 +28,19 @@ class PrintIndex extends Component
             if(!empty($filter['endDate'])){ 
                 $query->where('created_at', '<=', $filter['endDate']);
             }
+            if(!empty($filter['station_id'])){ 
+                $query->where('service_station_id', '=', $filter['station_id']);
+            }
         })
         ->where('situation', Process::RELEASED_FOR_PRINTING)->paginate(8);
         return view('livewire.print.print-index',['items' => $items]);
     }
 
     public function print(){
-        if(count($this->selected) < 8){ 
+        if((empty($this->selected)) || ((count($this->selected) % 8) != 0)){ 
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'error',
-                'message'=> 'Selecione pelo menos 8 processos.'
+                'message'=> 'O numero de processos selecionados deve ser multiplo de 8.'
             ]);
             return;
         }
@@ -52,5 +58,9 @@ class PrintIndex extends Component
         }else { 
             unset($this->selected[$id]);
         }
+    }
+
+    public function selectedServiceStation($id){ 
+        $this->filter['station_id'] = $id;
     }
 }
