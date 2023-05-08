@@ -566,7 +566,7 @@ role="dialog"  aria-hidden="true">
                                           class="btn btn-primary d-none d-sm-inline-block">
                                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                           <div class="flex">
-                                             
+
                                           <svg style="text-align: center ml-2" xmlns="http://www.w3.org/2000/svg" class=""
                                              width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                              fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -579,13 +579,13 @@ role="dialog"  aria-hidden="true">
 
                                        </a>
                                     </div>
- 
+
                                  </div>
                                </div>
                             </div>
-                            
+
                             @if (!empty($fields['filiations']))
-                                
+
                             <div class="p-2 rounded border-1 border-red-300">
                               <h2 class="text-md font-bold">Filiações</h2>
                                  <div class="card-body px-0 py-2">
@@ -873,12 +873,12 @@ role="dialog"  aria-hidden="true">
                               name="select">
                               <option value="" disabled selected>Selecione</option>
                               @foreach (App\Models\Process::PAYMENT_EXEMPTION_TYPES as $type)
-                                 <option value="{{ $type }}">{{ $type }}</option>                                  
+                                 <option value="{{ $type }}">{{ $type }}</option>
                               @endforeach
                            </select>
                         </div>
                      </div>
-                     
+
                       @if(isset($citizen['updated_at']) && $citizen['updated_at'])
                       <div class="col-lg-4">
                          <div class="mb-3">
@@ -1393,7 +1393,7 @@ role="dialog"  aria-hidden="true">
                                                   class="btn btn-primary d-none d-sm-inline-block">
                                                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                                   <div class="flex">
-                                                     
+
                                                   <svg style="text-align: center ml-2" xmlns="http://www.w3.org/2000/svg" class=""
                                                      width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                                      fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -1403,10 +1403,10 @@ role="dialog"  aria-hidden="true">
                                                   </svg>
                                                   Adicionar
                                                </div>
-                        
+
                                                </a>
                                             </div>
-                        
+
                                          </div>
                                        </div>
                                     </div>
@@ -1423,7 +1423,7 @@ role="dialog"  aria-hidden="true">
                                                   class="btn btn-primary d-none d-sm-inline-block">
                                                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                                   <div class="flex">
-                                                     
+
                                                   <svg style="text-align: center ml-2" xmlns="http://www.w3.org/2000/svg" class=""
                                                      width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                                      fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -1433,14 +1433,14 @@ role="dialog"  aria-hidden="true">
                                                   </svg>
                                                   Adicionar
                                                </div>
-                        
+
                                                </a>
                                             </div>
-                        
+
                                          </div>
                                        </div>
                                     </div>
-                                    
+
                                     @php
                                         $names = !empty($fields['names_previous']) ? explode(",", $fields['names_previous']) : [];
                                         $filiacoes = !empty($fields['filitions_previous']) ? explode(",", $fields['filitions_previous']) : [];

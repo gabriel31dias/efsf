@@ -19,12 +19,27 @@ class BallotsIndex extends Component
     public $filterInactives;
 
     public $type;
+    public $typeBk;
+
+    public $filterFaceA = false;
+
+    public $filterFaceB = false;
 
     public function render(Request $request)
     {
-        $items = $this->filtersCall();
 
         $this->type = $request->query('typeCreation');
+
+        $items = $this->filtersCall();
+
+        if ($this->type == '1') {
+            $this->setType('cadastro-lote', $this->type);
+        }
+
+
+        if ($this->type == '2') {
+            $this->setType('cadastro-avulso', $this->type);
+        }
 
         if($this->filterActives || $this->filterInactives){
             $items->where(function($query){
@@ -40,10 +55,22 @@ class BallotsIndex extends Component
 
         return view('livewire.ballots.ballots-index',
         [
-            'items' => $items->where('typeCreation', $this->type)->paginate(5)
+            'items' => $items->paginate(5)
         ]);
     }
 
+    public function setType($xx, $type){
+        $this->typeBk = $type;
+    }
+
+    public function setFilterFaceA($faceType){
+        $this->filterFaceA = !$this->filterFaceA;
+    }
+
+    public function setFilterFaceB($faceType){
+        $this->filterFaceB =  !$this->filterFaceB;
+
+    }
 
     public function destroyDirectorSignature($idDirectorSignature) {
         $directorSig = DirectorSignature::find($idDirectorSignature);
@@ -129,26 +156,37 @@ class BallotsIndex extends Component
     public function filtersCall(){
         $searchTerm = "";
 
-        if ($this->searchTerm) {
-            $searchTerm = '%'. $this->searchTerm .'%';
-            $items = Ballot::where('face', 'ILIKE', $searchTerm)
-                           ->orWhere('created_at', 'LIKE', $searchTerm)
-                           ->join('service_stations', 'service_stations.id', '=', 'ballots.service_station_id')
-                           ->where('service_stations.service_station_name', 'LIKE', $searchTerm);
-
-
-        }
-
-
-
-
-
         if(!$searchTerm){
             $items = Ballot::orderBy('id');
+        }
 
+        if ($this->searchTerm) {
+            $searchTerm = '%'. $this->searchTerm .'%';
+            $items = Ballot::where('service_stations.service_station_name', 'ILIKE', $searchTerm)
+            ->leftJoin('service_stations', 'service_stations.id', '=', 'ballots.service_station_id');
         }
 
 
+
+        if($this->typeBk == '1'   ||  $this->type == '1' ){
+            $items->where('typeCreation', 1);
+        }
+
+        if($this->typeBk == '2'   ||  $this->type == '2' ){
+            $items->where('typeCreation', 2);
+        }
+
+
+
+        if($this->filterFaceA == true ){
+
+            $items->where('face', 'A');
+        }
+
+
+        if($this->filterFaceB == true ){
+            $items->where('face', 'B');
+        }
 
         return $items;
     }

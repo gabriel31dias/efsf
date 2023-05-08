@@ -19,6 +19,21 @@
     </div>
     <div class="col-12 col-md-auto ms-auto d-print-none">
        <div class="btn-list">
+        <span class="d-none d-sm-inline">
+            <div x-data="{ open: false }" class="dropdown">
+               <button @click="$('#xx').toggleClass('show')" class="btn btn-secondary bg-gray-600 dropdown-toggle"
+                  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+                  Filtrar status
+               </button>
+               <div id="xx" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a  class="dropdown-item"><input style="margin:1%" wire:click="setFilterFaceA(true)" type="checkbox" name=""
+                        id="">Face A</a>
+                  <a class="dropdown-item"><input style="margin:1%" wire:click="setFilterFaceB(true)" type="checkbox" name=""
+                        id="">Face B</a>
+               </div>
+            </div>
+         </span>
         @can('permission', 'director-signature.create')
           <a wire:click="create" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
              data-bs-target="#modal-report">
@@ -86,5 +101,6 @@
                 {{ $items->links() }}
              </div>
           </div>
+
        </div>
     </div>

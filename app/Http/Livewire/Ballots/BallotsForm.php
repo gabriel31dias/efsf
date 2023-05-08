@@ -77,6 +77,9 @@ class BallotsForm extends Component
     public $user;
     public $file;
 
+    public $filterFace;
+
+    public $saved;
     public $attachments = [];
     public $oldAttachments = [];
 
@@ -399,6 +402,8 @@ class BallotsForm extends Component
     }
 
 
+
+
     public function saveLot()
     {
 
@@ -456,17 +461,32 @@ class BallotsForm extends Component
                     'type' => 'success',
                     'message' => "Cédulas salvas com sucesso"
                 ]);
+                $this->saved = true;
+
                 $this->dispatchBrowserEvent('redirect', [
                     'url' => '/ballots?typeCreation=' . $this->selectedTabNumber,
                     'delay' => 1000
                 ]);
+
+                $this->dispatchBrowserEvent('disableInputs');
+
             } else {
+                $this->dispatchBrowserEvent('disableInputs');
+                $this->saved = true;
+
                 $this->dispatchBrowserEvent('alert', [
                     'type' => 'warning',
                     'message' => "Algumas cédulas não foram registradas pois já existe no sistema."
                 ]);
             }
         }
+    }
+
+    public function back(){
+        $this->dispatchBrowserEvent('redirect', [
+            'url' => '/ballots?typeCreation=' . $this->selectedTabNumber,
+            'delay' => 1000
+        ]);
     }
 
     public function creatBallotItems($codes)
@@ -485,7 +505,7 @@ class BallotsForm extends Component
                     'typeCreation' => Ballot::TYPE_BATCH_REGISTER
                 ]);
             } else {
-                array_push($arrErros, ['type' => 'Está cédula já existe registrada.', 'code' => $code]);
+                array_push($arrErros, ['type' => 'Cédula não registrada, pois já existe no sistema.', 'code' => $code]);
             }
         }
 
@@ -563,6 +583,8 @@ class BallotsForm extends Component
                     'type' => 'success',
                     'message' => "Cédulas salvas com sucesso"
                 ]);
+                $this->saved = true;
+
                 $this->dispatchBrowserEvent('redirect', [
                     'url' => '/ballots?typeCreation=' . $this->selectedTabNumber,
                     'delay' => 1000
@@ -620,7 +642,7 @@ class BallotsForm extends Component
 
                 ]);
             } else {
-                array_push($arrErros, ['type' => 'Está cédula já existe registrada.', 'code' => $code]);
+                array_push($arrErros, ['type' => 'Cédula não registrada, pois já existe no sistema.', 'code' => $code]);
             }
         }
 

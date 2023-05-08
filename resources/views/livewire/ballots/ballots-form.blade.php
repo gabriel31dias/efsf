@@ -24,6 +24,7 @@
 
 
                         @unless ($ballots)
+                        @if($saved == false)
                             @if ($selectedTab == '' || $selectedTab == 'cadastro-lote')
                                 <a wire:click="saveLot()" class="btn btn-primary items-center inline-flex">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -65,9 +66,24 @@
                                     Salvar
                                 </a>
                             @endif
+                            @endif
 
 
                         @endunless
+
+                        @if($saved == true)
+                        <a wire:click="back()" class="btn btn-primary items-center inline-flex">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                            <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" input-group-append
+                                class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                            Voltar
+                        </a>
+                        @endif
 
                     </div>
                 </div>
@@ -138,7 +154,7 @@
 
 
                                             @if ($situationCedules)
-                                                <div class="card">
+                                                <div style="margin-top: 1%" class="card">
                                                     <div class="card-body">
                                                         <div id="table-default" class="table-responsive">
                                                             <label style="margin-bottom: 1%">Situações
@@ -172,7 +188,7 @@
                                             @endif
 
                                             @if ($arrErros)
-                                                <div class="card">
+                                                <div style="margin-top: 1%" class="card">
                                                     <div class="card-body">
                                                         <div id="table-default" class="table-responsive">
                                                             <label style="margin-bottom: 1%">Erros encontrados ao
@@ -228,11 +244,11 @@
                                                     </div>
 
                                                     @if ($origemArr)
-                                                        <div class="card">
+                                                        <div style="margin-top: 1%" class="card">
                                                             <div class="card-body">
                                                                 <div id="table-origim" class="table-responsive">
                                                                     <label style="margin-bottom: 1%">Cédulas do posto
-                                                                        de origem</label>
+                                                                        de origem </label>
                                                                     <table class="table">
                                                                         <thead>
                                                                             <tr>
@@ -298,7 +314,7 @@
 
 
                                                     @if ($destinoArr)
-                                                        <div class="card">
+                                                        <div style="margin-top: 1%" class="card">
                                                             <div class="card-body">
                                                                 <div id="table-default" class="table-responsive">
                                                                     <label style="margin-bottom: 1%">Cédulas do posto
@@ -364,7 +380,7 @@
                                     </div>
                                 </div>
                                 @if ($situationCedules)
-                                    <div class="card">
+                                    <div style="margin-top: 1%" class="card">
                                         <div class="card-body">
                                             <div id="table-default" class="table-responsive">
                                                 <label style="margin-bottom: 1%">Situações
@@ -392,17 +408,17 @@
                                         </div>
                                     </div>
                                 @endif
+                                <br>
                                 @if ($arrErros)
                                     <div class="card">
                                         <div class="card-body">
                                             <div id="table-default" class="table-responsive">
                                                 <label style="margin-bottom: 1%">Erros encontrados ao cadastrar
-                                                    cédulas</label>
+                                                    cédulas </label>
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
                                                             <th><button class="table-sort">Cédula</button></th>
-
                                                         </tr>
                                                     </thead>
                                                     <tbody class="table-tbody">
@@ -488,12 +504,14 @@
                                         </div>
                                     </div>
                                 @endif
+                                <br>
                                 @if ($arrErros)
-                                    <div class="card">
+                                    <div style="margin-top: 1%" class="card">
+
                                         <div class="card-body">
                                             <div id="table-default" class="table-responsive">
                                                 <label style="margin-bottom: 1%">Erros encontrados ao cadastrar
-                                                    cédulas</label>
+                                                    cédulas xxx</label>
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
@@ -534,6 +552,10 @@
         $('.nav-tabs a[href="#' + tab + '"]').tab('show');
     })
 
+    window.addEventListener('disableInputs', () => {
+        disableInputs()
+    })
+
     function selectRow(rowId) {
         var tableRows = document.getElementsByTagName('tr');
         for (var i = 0; i < tableRows.length; i++) {
@@ -546,6 +568,18 @@
 
 
     }
+
+
+
+
+    function disableInputs(){
+        const inputs = document.querySelectorAll('input, select, textarea');
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = true;
+        }
+
+    }
+
 </script>
 
 </div>
