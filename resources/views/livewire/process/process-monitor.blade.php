@@ -518,7 +518,7 @@
                     <p style="margin-top:10px">Cpf: <span>{{ $process->citizen->cpf }}</span></p>
                     <p style="margin-top:10px">Rg: <span>{{ $process->citizen->rg }}</span></p>
                     <p style="margin-top:10px">Último acesso: <span>{{ $this->getLastAcessUser()->name }}</span></p>
-                    <p style="margin-top:10px">Hora: <span> {{ $this->getLastAcessHour() }} </span></p>
+                    <p style="margin-top:10px">Horário do ultimo acesso: <span> {{ $this->getLastAcessHour() }} </span></p>
                     <br />
                     <hr>
                 </div>
@@ -601,7 +601,7 @@
                                 class="flex box-view-container">
                                 <div class="col-xs-5 box-processo-nome">
                                     <div style="padding:1%">
-                                        <h3>Despacho {{ $key + 1 }}, Status: {{ $item->statusString }}</h3>
+                                        <h3>Despacho {{ $dispatchs->count() - $key }}, Status: {{ $item->statusString }}</h3>
                                         <p><strong>Data:</strong>
                                             {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y \à\s H\hi') }}
                                         </p>
@@ -612,8 +612,8 @@
                                                 USUÁRIO:
                                             @endif {{ $item->user->name }}
                                         </p>
-                                        <p><strong>Função:</strong> Teste</p>
-                                        <p><strong>Unidade:</strong> UFITASRS</p>
+                                        <p><strong>Função:</strong> {{$item->user->getUnit()->name ?? 'Não vinculado'}}</p>
+                                        <p><strong>Unidade:</strong> {{$item->user->getFunction()->name ?? 'Não vinculado'}}</p>
                                     </div>
 
                                 </div>
@@ -642,8 +642,8 @@
                                             USUÁRIO:
                                         @endif {{ $item->user->name }}
                                     </p>
-                                    <p><strong>Função:</strong> Teste</p>
-                                    <p><strong>Unidade:</strong> UFITASRS</p>
+                                    <p><strong>Função:</strong> {{$item->user->getUnit()->name ?? 'Não vinculado'}}</p>
+                                    <p><strong>Unidade:</strong> {{$item->user->getFunction()->name ?? 'Não vinculado'}}</p>
                                 </div>
 
                             </div>

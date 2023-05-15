@@ -94,7 +94,7 @@ class ProcessMonitor extends Component
     public function render()
     {
 
-        $this->dispatchs = Dispatch::where(['process_id' => $this->process->id])->get();
+        $this->dispatchs = Dispatch::where(['process_id' => $this->process->id])->orderBy('id', 'DESC')->get();
         $this->currentStatus = $this->process->situation;
         $user = auth()->user();
 

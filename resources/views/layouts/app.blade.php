@@ -582,13 +582,6 @@
                                 'can' => 'director-signature.index',
                             ])
 
-                            @livewire('global.menu-item', [
-                                'title' => 'Cadastro de Cédulas',
-                                'classIcon' => 'ti ti-file',
-                                'href' => route('ballots.index'),
-                                'can' => 'ballots.index',
-                            ])
-
                             @if (Auth::user()->is_admin == true)
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#navbar-extra"
