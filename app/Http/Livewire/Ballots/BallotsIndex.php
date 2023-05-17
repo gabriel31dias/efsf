@@ -167,7 +167,6 @@ class BallotsIndex extends Component
         }
 
 
-
         if($this->typeBk == '1'   ||  $this->type == '1' ){
             $items->where('typeCreation', 1);
         }
@@ -175,7 +174,6 @@ class BallotsIndex extends Component
         if($this->typeBk == '2'   ||  $this->type == '2' ){
             $items->where('typeCreation', 2);
         }
-
 
 
         if($this->filterFaceA == true ){

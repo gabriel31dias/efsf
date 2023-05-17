@@ -24,19 +24,19 @@ class Citizen extends Model implements Auditable
         'id' => 'integer'
     ];
 
-    const STATE_ACTIVE = 1; 
-    const STATE_INACTIVE = 2; 
-    const STATE_DECEASED = 3; 
+    const STATE_ACTIVE = 1;
+    const STATE_INACTIVE = 2;
+    const STATE_DECEASED = 3;
 
-    const STATE_LABELS = [ 
-        self::STATE_ACTIVE => 'ATIVO', 
-        self::STATE_INACTIVE => 'INATIVO', 
+    const STATE_LABELS = [
+        self::STATE_ACTIVE => 'ATIVO',
+        self::STATE_INACTIVE => 'INATIVO',
         self::STATE_DECEASED => 'FALECIDO'
     ];
 
-    const STATE_BADGE = [ 
-        self::STATE_ACTIVE => 'bg-success', 
-        self::STATE_INACTIVE => 'bg-warning', 
+    const STATE_BADGE = [
+        self::STATE_ACTIVE => 'bg-success',
+        self::STATE_INACTIVE => 'bg-warning',
         self::STATE_DECEASED => 'bg-danger'
     ];
 
@@ -45,27 +45,32 @@ class Citizen extends Model implements Auditable
         return $this->hasMany(Filiation::class);
     }
 
-    public function uf(){ 
+    public function uf(){
         return $this->belongsTo(Uf::class);
     }
 
-    public function county(){ 
+    public function county(){
         return $this->belongsTo(County::class);
     }
 
-    public function getFiliationsTextAttribute(){ 
+    public function getFiliationsTextAttribute(){
         $text = '';
         foreach ($this->filiations as $key => $filiation) {
             $text.= $filiation->name;
         }
         return $text;
     }
-    public function getFiliationsTextPrintAttribute(){ 
+    public function getFiliationsTextPrintAttribute(){
         $text = '';
         foreach ($this->filiations as $key => $filiation) {
             $text.= $filiation->name . ' \n ';
         }
         return $text;
+    }
+
+    public function getTotalProcess(){
+        $countProcess = Process::where('citizen_id', $this->id)->count();
+        return $countProcess;
     }
 
 }

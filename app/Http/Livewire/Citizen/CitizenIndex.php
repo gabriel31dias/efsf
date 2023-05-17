@@ -12,6 +12,10 @@ use App\Models\TypeStreet;
 use Livewire\Component;
 use App\Http\Repositories\CitizenRepository;
 use App\Models\Citizen;
+use App\Models\BallotItem;
+
+
+
 use App\Models\Genre;
 use App\Models\Country;
 use App\Models\Uf;
@@ -46,9 +50,11 @@ class CitizenIndex extends Component
     public $filterBlockeds;
     public $searchCep;
     public $searchCelular;
+    public $totalProcess;
     public $searchEndereco;
     public $citizensItems;
     public $searchDistrict;
+    public $ballotItems;
     public $signFile;
     public $justificationSign;
     public $fileSign;
@@ -524,6 +530,7 @@ class CitizenIndex extends Component
     {
         $this->fields['service_station_id'] = $id;
         $this->currentServiceStation = ServiceStation::find($id)->service_station_name;
+        $this->getSelectBallots();
     }
 
 
@@ -682,6 +689,9 @@ class CitizenIndex extends Component
         $citizen = Citizen::find($id);
         $this->citizen = $citizen;
         $this->action = "update";
+
+        $this->totalProcess =  $this->citizen->getTotalProcess() ?? 0;
+
 
         $genre = Genre::find($citizen['genre_id']);
         $marital_status = MaritalStatus::find($citizen['marital_status_id']);
@@ -1255,9 +1265,55 @@ class CitizenIndex extends Component
         $this->fields["file_capture_image"] = $filename;
     }
 
+    public function getSelectBallots() {
+        $this->ballotItems = BallotItem::where('service_station_id',  $this->fields['service_station_id'] )->get();
+    }
+
+
+
+    public function initFinalization(){
+
+        if($this->inProcessing){
+            $this->createCitizen();
+            return ;
+        }
+
+
+        $this->dispatchBrowserEvent('openModalProcess');
+
+        $this->fields["zone"] = $this->zone;
+        $validation = $this->validation($this->fields);
+        if(count($validation) > 0){
+            $this->errors = $validation;
+
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> $validation[0]["message"]
+            ]);
+            return false;
+        }
+
+        $dou_certificate_date = $this->formateDateUSA($this->fields["dou_certificate_date"] );
+        $birth_date = $this->formateDateUSA($this->fields["birth_date"] );
+        $certificate_entry_date = $this->formateDateUSA($this->fields["certificate_entry_date"] );
+
+
+        $documents = $this->storeDocuments($this->fieldsDigitalizedDocuments);
+
+        if($this->file_capture_image_string){
+            $this->saveImageFacial();
+        } else {
+            $this->saveImageFacialString();
+
+        }
+
+        $this->dispatchBrowserEvent('openModalProcess');
+    }
+
 
 
     public function createCitizen(){
+
         $this->fields["zone"] = $this->zone;
         $validation = $this->validation($this->fields);
         if(count($validation) > 0){
@@ -1377,6 +1433,7 @@ class CitizenIndex extends Component
             "uf_professional_identity" => $this->currentUfIdent->id ?? null
          ]);
 
+
         if(is_array($user)){
             $this->dispatchBrowserEvent('alert',[
                 'type'=> 'error',
@@ -1407,6 +1464,8 @@ class CitizenIndex extends Component
         ]);
 
         $this->messageSuccess();
+
+
 
         $this->dispatchBrowserEvent('redirect',[
             'url'=> '/citizen',

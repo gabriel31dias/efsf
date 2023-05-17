@@ -180,6 +180,103 @@
 </style>
 
 
+<div data-keyboard="false" data-backdrop="static" wire:ignore.self class="modal modal-blur fade"
+id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
+<div data-backdrop="static" style="width:1250px;" class="modal-dialog modal-xl modal-dialog-centered"
+    role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Processo</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <h1></h1>
+            <img style="margin: 1%" wire:ignore id="image-sign" style="width: 100%; height: 100%">
+
+            <form>
+                $ballotItems
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <label for="recipient-name" class="col-form-label title-label">Nome cidadão:</label>
+                        <input wire:model="fields.name" maxlength="70" type="text"
+                        class="form-control ps-0" autocomplete="off"   readonly >
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label class="form-label">Via do RG<span class="error_tag">*</span></label>
+                        <input wire:model="fields.via_rg" maxlength="70" type="text"
+                        class="form-control ps-0" autocomplete="off"  value="{{$totalProcess + 1 ?? 0}}" readonly >
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+
+                        <label class="form-label">Isenção<span class="error_tag">*</span></label>
+                        <select wire:model="is_payment_free" class="form-control ps-0" name="select">
+                            <option value="0">NÃO ISENTO</option>
+                            <option value="1">ISENTO</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label class="form-label">Tipo de Isenção<span class="error_tag">*</span></label>
+                        <select wire:model="exemption_type" class="form-control ps-0" name="select">
+                            <option value="" disabled selected>Selecione</option>
+                            @foreach (App\Models\Process::PAYMENT_EXEMPTION_TYPES as $type)
+                                <option value="{{ $type }}">{{ $type }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <label for="recipient-name" class="col-form-label title-label">Número da cédula face
+                            A:</label>
+                        <input wire:model="fields.ballotA" maxlength="70" type="text"
+                            class="form-control ps-0" autocomplete="off" required>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+
+                        <label class="form-label">Posto de atendimento<span
+                            class="error_tag">*</span></label>
+                         <livewire:users.servicestation-select
+                            :station="$currentServiceStation"
+
+                            />
+                         @if (in_array("service_station_id", $errorsKeys))
+                         <div class="error_tag" role="alert">
+                            O campo Posto de atendimento é obrigatório
+                         </div>
+                         @endif
+
+                    </div>
+
+                </div>
+
+            </form>
+
+            <a wire:click="createCitizen()" style="margin-bottom:30px" wire:click="goSearch()" onclick="$('#modal-list').modal('hide');"
+                class="btn btn-primary inline-flex">
+                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus"
+                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Iniciar processo
+            </a>
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+
 
 <div data-keyboard="false" data-backdrop="static" wire:ignore.self
 class="modal modal-blur fade" id="modal-captura-assinatura" tabindex="-1"
@@ -429,7 +526,7 @@ role="dialog"  aria-hidden="true">
                       Captura Facial
                    </a>
                  @if((Auth::user()->can('permission', 'citizen.create') || Auth::user()->can('permission', 'citizen.edit')) && ($this->action == 'create' || $this->citizen->state == \App\Models\Citizen::STATE_ACTIVE))
-                   <a wire:click="createCitizen" class="btn btn-primary inline-flex">
+                   <a wire:click="initFinalization" class="btn btn-primary inline-flex">
                       <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -815,6 +912,7 @@ role="dialog"  aria-hidden="true">
                             </div>
                          </div>
                       </div>
+
                       <div class="col-lg-4">
                          <div class="mb-3">
                             <label class="form-label">Posto de atendimento<span
@@ -830,6 +928,7 @@ role="dialog"  aria-hidden="true">
                             @endif
                          </div>
                       </div>
+
                       <div class="col-lg-2">
                          <div class="mb-3">
                             <label class="form-label">Via do RG<span
@@ -2177,6 +2276,10 @@ role="dialog"  aria-hidden="true">
 
     window.addEventListener('closeModalSearch', ({detail: {user}}) => {
         $('#modal-search').modal('hide');
+    })
+
+    window.addEventListener('openModalProcess', ({detail: {user}}) => {
+        $('#modal-processo').modal('show');
     })
 
     window.addEventListener('openModalProntuarioPrint', ({detail: {id}}) => {
