@@ -4,6 +4,12 @@
     this.isOpen = value
     }
     }" class="card page-wrapper">
+    <style>
+        .select2-container--open {
+    z-index: 9999999
+}
+
+    </style>
  @include('livewire.citizen.dialogs.dialog-capture')
 
  @if($process || $inProcessing)
@@ -194,7 +200,6 @@ id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
             <img style="margin: 1%" wire:ignore id="image-sign" style="width: 100%; height: 100%">
 
             <form>
-                $ballotItems
                 <div class="row">
                     <div class="col-lg-6 mb-3">
                         <label for="recipient-name" class="col-form-label title-label">Nome cidadão:</label>
@@ -230,12 +235,6 @@ id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
 
                 <div class="row">
                     <div class="col-lg-6 mb-3">
-                        <label for="recipient-name" class="col-form-label title-label">Número da cédula face
-                            A:</label>
-                        <input wire:model="fields.ballotA" maxlength="70" type="text"
-                            class="form-control ps-0" autocomplete="off" required>
-                    </div>
-                    <div class="col-lg-6 mb-3">
 
                         <label class="form-label">Posto de atendimento<span
                             class="error_tag">*</span></label>
@@ -251,6 +250,18 @@ id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
 
                     </div>
 
+                    <div class="col-lg-6 mb-3">
+                        <label for="recipient-name" class="col-form-label title-label">Número da cédula face
+                            A:</label>
+                            <select  class="form-control select2"  id="select2">
+                                @if($ballotItems )
+                                    @foreach($ballotItems as $item)
+                                    <option  value="{{$item->id}}">{{$item->cod_ballot}}</option>
+                                    @endforeach
+                                @endif
+
+                             </select>
+                    </div>
                 </div>
 
             </form>
@@ -2069,7 +2080,16 @@ role="dialog"  aria-hidden="true">
             }
          }
       }
+
+
     }, 10);
+
+
+    $('#modal-processo').on('shown.bs.modal', function (e) {
+        $('.select2').select2({
+                tags: true
+              });
+    })
 
 
 

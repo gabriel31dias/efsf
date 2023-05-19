@@ -295,6 +295,7 @@ class CitizenIndex extends Component
 
     public $currentOccupation;
     public $currentServiceStation;
+    public $currentServiceStationId;
     public $currentTypeStreet;
 
 
@@ -530,6 +531,7 @@ class CitizenIndex extends Component
     {
         $this->fields['service_station_id'] = $id;
         $this->currentServiceStation = ServiceStation::find($id)->service_station_name;
+        $this->currentServiceStationId = $id;
         $this->getSelectBallots();
     }
 
@@ -1269,17 +1271,12 @@ class CitizenIndex extends Component
         $this->ballotItems = BallotItem::where('service_station_id',  $this->fields['service_station_id'] )->get();
     }
 
-
-
     public function initFinalization(){
 
         if($this->inProcessing){
             $this->createCitizen();
             return ;
         }
-
-
-        $this->dispatchBrowserEvent('openModalProcess');
 
         $this->fields["zone"] = $this->zone;
         $validation = $this->validation($this->fields);
