@@ -279,7 +279,7 @@ class CitizenIndex extends Component
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
         'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident',
-        'changeCitizenStatus', 'updateInfoIbge', 'setNameDocument', 'addedDocument'
+        'changeCitizenStatus', 'updateInfoIbge', 'setNameDocument', 'addedDocument', 'updated_number_ballot'
     ];
 
     public $citizen;
@@ -532,6 +532,7 @@ class CitizenIndex extends Component
         $this->fields['service_station_id'] = $id;
         $this->currentServiceStation = ServiceStation::find($id)->service_station_name;
         $this->currentServiceStationId = $id;
+        $this->dispatchBrowserEvent('selectedServiceStation');
         $this->getSelectBallots();
     }
 
@@ -1268,10 +1269,13 @@ class CitizenIndex extends Component
     }
 
     public function getSelectBallots() {
-        $this->ballotItems = BallotItem::where('service_station_id',  $this->fields['service_station_id'] )->get();
+        $this->ballotItems = BallotItem::where('service_station_id',  $this->fields['service_station_id'] )->where('situation','D')->get();
     }
 
     public function initFinalization(){
+
+
+
 
         if($this->inProcessing){
             $this->createCitizen();
@@ -1427,8 +1431,10 @@ class CitizenIndex extends Component
             "height" => $this->fields["height"] ?? null,
             "features" => \json_encode($this->fieldsFeatures) ?? null,
             "digitalized_documents" => \json_encode($documents) ?? null,
-            "uf_professional_identity" => $this->currentUfIdent->id ?? null
+            "uf_professional_identity" => $this->currentUfIdent->id ?? null,
+            "number_ballot_face" => $this->fields["number_ballot_face"]
          ]);
+
 
 
         if(is_array($user)){
@@ -1483,6 +1489,13 @@ class CitizenIndex extends Component
             ]);
         }
     }
+
+    public function updated_number_ballot($ballot_code){
+
+        $this->fields["number_ballot_face"] = $ballot_code;
+    }
+
+
 
     public function openFilters(){
         $this->dispatchBrowserEvent('openFilters', []);

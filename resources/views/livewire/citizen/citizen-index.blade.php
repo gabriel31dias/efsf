@@ -253,13 +253,12 @@ id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="col-lg-6 mb-3">
                         <label for="recipient-name" class="col-form-label title-label">Número da cédula face
                             A:</label>
-                            <select  class="form-control select2"  id="select2">
+                            <select onchange="livewire.emit('updated_number_ballot', $('#number_ballot_face').val())" class="form-control select2"  id="number_ballot_face">
                                 @if($ballotItems )
                                     @foreach($ballotItems as $item)
-                                    <option  value="{{$item->id}}">{{$item->cod_ballot}}</option>
+                                        <option  value="{{$item->id}}">{{$item->cod_ballot}}</option>
                                     @endforeach
                                 @endif
-
                              </select>
                     </div>
                 </div>
@@ -2085,19 +2084,10 @@ role="dialog"  aria-hidden="true">
     }, 10);
 
 
-    $('#modal-processo').on('shown.bs.modal', function (e) {
-        $('.select2').select2({
-                tags: true
-              });
-    })
-
-
 
 
 
     document.addEventListener('turbolinks:load', () => {
-
-
 
 
         var socket = io('https://websocket-pca-sic.msbtec.com.br');
@@ -2291,6 +2281,22 @@ role="dialog"  aria-hidden="true">
 
         }, 1);
     }
+
+
+    $('#modal-processo').on('shown.bs.modal',  (e) => {
+        startSelect2()
+    })
+
+
+    function startSelect2(){
+         $('.select2').select2({
+            dropdownParent: $('#modal-processo')
+        });
+    }
+
+    window.addEventListener('selectedServiceStation', ({detail: {tab}}) => {
+         startSelect2()
+    })
 
 
 

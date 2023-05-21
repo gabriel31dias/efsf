@@ -58,11 +58,14 @@ class CitizenRepository {
         $obj['certificate'] = $obj['certificate'] == "" ? 0 : $obj['certificate'];
         $obj['migration_situation'] = $obj['migration_situation'] == "" ? null : $obj['migration_situation'];
         $obj['social_indicator_id'] = $obj['social_indicator_id'] == "" ? null : $obj['social_indicator_id'];
+        $obj['number_ballot_face'] = $obj['number_ballot_face'] == "" ? null : $obj['number_ballot_face'];
 
         $filiations = $obj['filiations'];
         unset($obj['filiations']);
 
         $citizen = Citizen::find($id);
+
+
 
         if(isset($citizen->id)){
             $user = $citizen->update($obj);
@@ -105,7 +108,7 @@ class CitizenRepository {
         return $getFeautures;
     }
 
-    private function addFiliations($citizen, $filiations){ 
+    private function addFiliations($citizen, $filiations){
         foreach ($filiations as $key => $value) {
             $arrFiliation = $value + ['citizen_id' => $citizen->id];
             Filiation::firstOrCreate($arrFiliation);
