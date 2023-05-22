@@ -148,7 +148,8 @@ class CitizenIndex extends Component
         "cell",
         "email",
         "zip_code",
-        "zone"
+        "zone",
+        "occupation_id"
     ];
 
     public $fieldsDigitalizedDocuments = ["field1"=>null];
@@ -174,7 +175,9 @@ class CitizenIndex extends Component
         "telephone" => "telefone",
         "email" => "email",
         "zip_code" => "cep",
-        "height" => "altura"
+        "height" => "altura",
+        "occupation_id" => "Ocupação",
+        "zone" => "Zona"
     ];
 
 
@@ -1034,6 +1037,7 @@ class CitizenIndex extends Component
                     "message" => "O campo {$field_item} é obrigatorio",
                     "valid" => false,
                 ]);
+
                 $this->errorsKeys[] = $field;
             }
 
@@ -1491,7 +1495,6 @@ class CitizenIndex extends Component
     }
 
     public function updated_number_ballot($ballot_code){
-
         $this->fields["number_ballot_face"] = $ballot_code;
     }
 
