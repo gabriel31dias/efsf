@@ -144,7 +144,7 @@ class CitizenIndex extends Component
         "uf_id",
         "county_id",
 
-        "via_rg",
+
         "cell",
         "email",
         "zip_code",
@@ -1470,6 +1470,8 @@ class CitizenIndex extends Component
             'process' => $resultProcess['code']
         ]);
 
+        $this->updateBallotStatus();
+
         $this->messageSuccess();
 
 
@@ -1478,6 +1480,14 @@ class CitizenIndex extends Component
             'url'=> '/citizen',
             'delay' => 1000
         ]);
+    }
+
+
+    public function updateBallotStatus(){
+        if(isset($this->fields['number_ballot_face'])){
+            $ballotSelected = BallotItem::where('id',  $this->fields['number_ballot_face'] )->first();
+            $ballotSelected->update(['situation' => 'A']);
+        }
     }
 
     public function messageSuccess(){
