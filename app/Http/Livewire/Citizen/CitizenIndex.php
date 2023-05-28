@@ -104,7 +104,7 @@ class CitizenIndex extends Component
 
     public $exemption_type = "";
     public $tmpPreviousName = "";
-    public $tmpPreviousFiliation = "";
+    public $tmpPreviousFiliation =  ['name' => '', 'type' => Filiation::TYPE_MATERNAL];
     public $confirm_email = "";
 
     public $registrySelected;
@@ -1220,12 +1220,17 @@ class CitizenIndex extends Component
 
     public function addFiliationsPrevious()
     {
-        if(empty($this->fields['filitions_previous'])){
-            $this->fields['filitions_previous'] = $this->tmpPreviousFiliation;
-        } else {
-            $this->fields['filitions_previous'] .= ",$this->tmpPreviousFiliation";
+        if(empty($this->tmpPreviousFiliation['name'])){ 
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> "Informe o nome da filiação."
+            ]);
+            return;
         }
-        $this->tmpPreviousFiliation = '';
+        $filitions = json_decode($this->fields['filitions_previous'],1); 
+        $filitions[] = $this->tmpPreviousFiliation;
+        $this->fields['filitions_previous'] = json_encode($filitions);
+        $this->tmpPreviousFiliation =  ['name' => '', 'type' => Filiation::TYPE_MATERNAL];
     }
 
 

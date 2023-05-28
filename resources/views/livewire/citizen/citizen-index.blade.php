@@ -1479,39 +1479,11 @@ role="dialog"  aria-hidden="true">
                                        </div>
                                     </div>
 
-                                    <div class="col-lg-6">
-                                       <div class="mb-3">
-                                          <label class="form-label ">Filiações anteriores</label>
-                                          <div class="input-group mb-1">
-                                          <input wire:model="tmpPreviousFiliation"  maxlength="70" type="text"
-                                             class="form-control ps-0 "
-                                             autocomplete="off" required>
-                                           <div class="input-group-append">
-                                               <a style="text-align: center" wire:click="addFiliationsPrevious"
-                                                  class="btn btn-primary d-none d-sm-inline-block">
-                                                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                                                  <div class="flex">
-
-                                                  <svg style="text-align: center ml-2" xmlns="http://www.w3.org/2000/svg" class=""
-                                                     width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                     <line x1="12" y1="5" x2="12" y2="19" />
-                                                     <line x1="5" y1="12" x2="19" y2="12" />
-                                                  </svg>
-                                                  Adicionar
-                                               </div>
-
-                                               </a>
-                                            </div>
-
-                                         </div>
-                                       </div>
-                                    </div>
+                                    
 
                                     @php
                                         $names = !empty($fields['names_previous']) ? explode(",", $fields['names_previous']) : [];
-                                        $filiacoes = !empty($fields['filitions_previous']) ? explode(",", $fields['filitions_previous']) : [];
+                                        $filiacoes = !empty($fields['filitions_previous']) ? json_decode($fields['filitions_previous']) : [];
                                     @endphp
 
                                     @if (!empty($names))
@@ -1538,6 +1510,40 @@ role="dialog"  aria-hidden="true">
                                     </div>
                                     @endif
 
+                                    <div class="col-lg-12 mt-2 border-t border-gray-200 pt-2">
+                                       <div class="mb-3">
+                                          <label class="form-label ">Filiações anteriores</label>
+                                          <div class="input-group mb-1">
+                                          <input wire:model="tmpPreviousFiliation.name"  maxlength="70" type="text"
+                                             class="form-control ps-0 "
+                                             autocomplete="off" required>
+                                                <select wire:model="tmpPreviousFiliation.type" class="form-control">
+                                                  <option value="{{ \App\Models\Filiation::TYPE_MATERNAL }}">{{ \App\Models\Filiation::TYPE_LABEL[\App\Models\Filiation::TYPE_MATERNAL] }}</option>
+                                                  <option value="{{ \App\Models\Filiation::TYPE_PATERNAL }}">{{ \App\Models\Filiation::TYPE_LABEL[\App\Models\Filiation::TYPE_PATERNAL] }}</option>
+                                               </select>
+                                           <div class="input-group-append">
+                                               <a style="text-align: center" wire:click="addFiliationsPrevious"
+                                                  class="btn btn-primary d-none d-sm-inline-block">
+                                                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                  <div class="flex">
+
+                                                  <svg style="text-align: center ml-2" xmlns="http://www.w3.org/2000/svg" class=""
+                                                     width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                     <line x1="12" y1="5" x2="12" y2="19" />
+                                                     <line x1="5" y1="12" x2="19" y2="12" />
+                                                  </svg>
+                                                  Adicionar
+                                               </div>
+
+                                               </a>
+                                            </div>
+
+                                         </div>
+                                       </div>
+                                    </div>
+
                                     @if (!empty($filiacoes))
                                     <div class="p-2 rounded border-1 border-red-300">
                                       <h2 class="text-md font-bold">Filiações Anteriores</h2>
@@ -1547,12 +1553,15 @@ role="dialog"  aria-hidden="true">
                                                   <thead>
                                                      <tr>
                                                         <th>Nome</th>
+                                                        <th>Tipo</th>
                                                      </tr>
                                                   </thead>
                                                   <tbody class="table-tbody">
                                                      @foreach ($filiacoes as $filiacao)
                                                      <tr>
-                                                        <td class="sort-name">{{  $filiacao }}</td>
+                                                        <td class="sort-name">{{  $filiacao->name }}</td>
+                                                        <td class="sort-city">{{  \App\Models\Filiation::TYPE_LABEL[$filiacao->type] }}</td>
+
                                                      </tr>
                                                      @endforeach
                                                   </tbody>
