@@ -253,13 +253,12 @@ id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="col-lg-6 mb-3">
                         <label for="recipient-name" class="col-form-label title-label">Número da cédula face
                             A:</label>
-                            <select  class="form-control select2"  id="select2">
+                            <select onchange="livewire.emit('updated_number_ballot', $('#number_ballot_face').val())" class="form-control select2"  id="number_ballot_face">
                                 @if($ballotItems )
                                     @foreach($ballotItems as $item)
-                                    <option  value="{{$item->id}}">{{$item->cod_ballot}}</option>
+                                        <option  value="{{$item->id}}">{{$item->cod_ballot}}</option>
                                     @endforeach
                                 @endif
-
                              </select>
                     </div>
                 </div>
@@ -947,70 +946,6 @@ role="dialog"  aria-hidden="true">
                          </div>
                       </div>
 
-                      <div class="col-lg-4">
-                         <div class="mb-3">
-                            <label class="form-label">Posto de atendimento<span
-                               class="error_tag">*</span></label>
-                            <livewire:users.servicestation-select
-                               :station="$currentServiceStation"
-                               readonly="true"
-                               />
-                            @if (in_array("service_station_id", $errorsKeys))
-                            <div class="error_tag" role="alert">
-                               O campo Posto de atendimento é obrigatório
-                            </div>
-                            @endif
-                         </div>
-                      </div>
-
-                      <div class="col-lg-2">
-                         <div class="mb-3">
-                            <label class="form-label">Via do RG<span
-                               class="error_tag">*</span></label>
-                            <select wire:model="fields.via_rg" class="form-control ps-0"
-                               name="select">
-                               <option value="0">Selecione</option>
-                               <option value="1">1a</option>
-                               <option value="2">2a</option>
-                               <option value="3">3a</option>
-                               <option value="4">4a</option>
-                               <option value="5">5a</option>
-                               <option value="6">6a</option>
-                               <option value="7">7a</option>
-                               <option value="8">8a</option>
-                            </select>
-                         </div>
-                         @if (in_array("via_rg", $errorsKeys))
-                         <div class="error_tag" role="alert">
-                            O campo Via do rg é obrigatório
-                         </div>
-                         @endif
-                      </div>
-
-                      <div class="col-lg-2">
-                        <div class="mb-3">
-                           <label class="form-label">Isenção<span
-                              class="error_tag">*</span></label>
-                           <select wire:model="is_payment_free" class="form-control ps-0"
-                              name="select">
-                              <option value="0">NÃO ISENTO</option>
-                              <option value="1">ISENTO</option>
-                           </select>
-                        </div>
-                     </div>
-                     <div class="col-lg-2">
-                        <div class="mb-3">
-                           <label class="form-label">Tipo de Isenção<span
-                              class="error_tag">*</span></label>
-                           <select wire:model="exemption_type" class="form-control ps-0"
-                              name="select">
-                              <option value="" disabled selected>Selecione</option>
-                              @foreach (App\Models\Process::PAYMENT_EXEMPTION_TYPES as $type)
-                                 <option value="{{ $type }}">{{ $type }}</option>
-                              @endforeach
-                           </select>
-                        </div>
-                     </div>
 
                       @if(isset($citizen['updated_at']) && $citizen['updated_at'])
                       <div class="col-lg-4">
@@ -2108,19 +2043,10 @@ role="dialog"  aria-hidden="true">
     }, 10);
 
 
-    $('#modal-processo').on('shown.bs.modal', function (e) {
-        $('.select2').select2({
-                tags: true
-              });
-    })
-
-
 
 
 
     document.addEventListener('turbolinks:load', () => {
-
-
 
 
         var socket = io('https://websocket-pca-sic.msbtec.com.br');
@@ -2315,6 +2241,22 @@ role="dialog"  aria-hidden="true">
 
         }, 1);
     }
+
+
+    $('#modal-processo').on('shown.bs.modal',  (e) => {
+        startSelect2()
+    })
+
+
+    function startSelect2(){
+         $('.select2').select2({
+            dropdownParent: $('#modal-processo')
+        });
+    }
+
+    window.addEventListener('selectedServiceStation', ({detail: {tab}}) => {
+         startSelect2()
+    })
 
 
 
