@@ -307,8 +307,22 @@ role="dialog"  aria-hidden="true">
         <img style="margin: 1%" wire:ignore id="image-sign" style="width: 100%; height: 100%" >
 
         @if($justificationSign)
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger flex justify-between " role="alert">
                 {{$justificationSign}}
+
+                @if ($fileJustificationPath)
+                <a href="" target="_blank" >
+                  <a onclick="window.open('/{{ str_replace("public","storage", $fileJustificationPath) }}', '_blank')" class="btn btn-primary inline-flex">
+                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                     <circle cx="12" cy="12" r="2"></circle>
+                     <path d="M12 19c-4 0 -7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7c-.42 .736 -.858 1.414 -1.311 2.033"></path>
+                     <path d="M15 19l2 2l4 -4"></path>
+                  </svg>
+                  Abrir documento
+               </a>
+                @endif
             </div>
         @endif
 
@@ -383,10 +397,19 @@ role="dialog"  aria-hidden="true">
 
 
 
-        <div id="justificativa-text" style="margin: 1%;display:none" class="form-group">
-            <label for="exampleFormControlTextarea1">Descreva a justificativa</label>
-            <textarea id="justificativa-text-input" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
+        <div id="justificativa-text" style="margin: 1%;display:none" class="form-group mb-2">
+            <label for="exampleFormControlTextarea1">Justificativa</label>
+            <select class="form-control mb-2" name="justificativa-text-input" id="justificativa-text-input">
+               <option value="IMPOSSIBILITADO">IMPOSSIBILITADO</option>
+               <option value="NÃO AFABETIZADO">NÃO AFABETIZADO</option>
+            </select>
+
+            <label class="form-label">Arquivo Justificativa</label>
+            <input wire:model='fileJustificationSign' onchange="$('#justificar-assinatura').click()" class="block w-full text-sm file:text-white 
+            file:bg-gradient-to-r from-sky-700 to-sky-900
+            bg-gray-50 border-none shadow-md border file:border-none file:p-2 rounded-lg file:cursor-pointer cursor-pointer focus:outline-none" id="justificativa-text-file" type="file">
+         
+         </div>
 
 
 
@@ -2207,9 +2230,10 @@ role="dialog"  aria-hidden="true">
 
     let justificativa;
 
-    function saveJus(){
+      function saveJus(){
         justificativa = document.getElementById('justificativa-text-input').value
-       Livewire.emit('justificativaEvent', justificativa)
+         Livewire.emit('justificativaEvent', justificativa)
+         Livewire.emit('justificativaEventUpload');
     }
 
 
@@ -2320,6 +2344,10 @@ role="dialog"  aria-hidden="true">
     window.addEventListener('selectedTab', ({detail: {tab}}) => {
         $('.nav-tabs a[href="#' + tab + '"]').tab('show');
     })
+    window.addEventListener('updatedFileJustificationSign', () => {
+      $('#justificar-assinatura').click()
+    })
+    
 
     $('#modal-report').on('shown.bs.modal', function (e) {
         var elements = document.querySelector('#nsc');

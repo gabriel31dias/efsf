@@ -58,6 +58,8 @@ class CitizenIndex extends Component
     public $signFile;
     public $justificationSign;
     public $fileSign;
+    public $fileJustificationSign;
+    public $fileJustificationPath;
     public $searchCity;
     public $jaUtilizados = [];
     public $other_genre;
@@ -275,7 +277,7 @@ class CitizenIndex extends Component
 
     public $naturalized = false;
 
-    public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus','justificativaEvent',
+    public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus','justificativaEvent', 'justificativaEventUpload',
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
         'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident',
@@ -856,7 +858,8 @@ class CitizenIndex extends Component
         $this->currentServiceStation = $service_station->service_station_name ?? null;
         $this->currentTypeStreet = $type_street->name_type_street ?? null;
         $this->zone = $citizen->zone ?? null;
-
+        $this->justificationSign = $citizen->justification_sign;
+        $this->fileJustificationPath = $citizen->file_justification_sign;
         $this->dispatchBrowserEvent('closeModalList');
         $this->dispatchBrowserEvent('closeModalSearch');
     }
@@ -904,6 +907,23 @@ class CitizenIndex extends Component
     public function justificativaEvent($justificativa){
         $this->justificationSign = $justificativa;
 
+    }
+
+    public function justificativaEventUpload(){
+        if($this->fileJustificationSign){ 
+            $this->validate([
+                'fileJustificationSign' => 'max:1024', // 1MB Max
+            ]);
+            $result = $this->fileJustificationSign->store('public/assinaturas/justificativas');
+            $this->fileJustificationPath = $result;
+        }
+    }
+
+    public function updatedFileJustificationSign($value)
+    {
+        $this->dispatchBrowserEvent('updatedFileJustificationSign',[
+            'type'=> 'success'
+        ]);
     }
 
     public function createAttachmentSignature(){
@@ -1364,6 +1384,7 @@ class CitizenIndex extends Component
             "genre_biologic_id" => $this->fields["genre_biologic_id"],
             "professional_identitis" => \json_encode($this->professionalIdentitysValues),
             "file_sign" => $this->fileSign,
+            "file_justification_sign" => $this->fileJustificationPath,
             "justification_sign" => $this->justificationSign,
             "country_id" => $this->fields["country_id"],
             "service_station_id" => 1 ,
