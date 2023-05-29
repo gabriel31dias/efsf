@@ -631,6 +631,14 @@
                                                     'is_dropdown' => true,
                                                 ])
 
+                                                @livewire('global.menu-item', [
+                                                    'title' => 'Pesquisa',
+                                                    'classIcon' => 'ti ti-ban',
+                                                    'href' => route('ballots-search', ['typeCreation' => '8']),
+                                                    'can' => 'blocked.index',
+                                                    'is_dropdown' => true,
+                                                ])
+
                                             </div>
                                         </div>
                                     </div>

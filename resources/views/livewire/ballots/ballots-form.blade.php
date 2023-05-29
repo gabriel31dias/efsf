@@ -556,6 +556,10 @@
         disableInputs()
     })
 
+    window.addEventListener('removeRowStyles', ({detail: {rowId}}) => {
+        removeRowStyles(rowId)
+    })
+
     function selectRow(rowId) {
         var tableRows = document.getElementsByTagName('tr');
         for (var i = 0; i < tableRows.length; i++) {
@@ -569,7 +573,14 @@
 
     }
 
-
+    function removeRowStyles(rowId){
+        var tableRows = document.getElementsByTagName('tr');
+        for (var i = 0; i < tableRows.length; i++) {
+            if (tableRows[i].id === ''+rowId) {
+                tableRows[i].style.backgroundColor = '#ffff';
+            }
+        }
+    }
 
 
     function disableInputs(){

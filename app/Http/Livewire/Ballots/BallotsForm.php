@@ -54,7 +54,8 @@ class BallotsForm extends Component
     public $daysToActivityLock;
     public $obrigatory_filds = [
         "user_id",
-        "loose_banknotes"
+        "loose_banknotes",
+        "face"
     ];
     public $unit;
     public $action;
@@ -139,8 +140,25 @@ class BallotsForm extends Component
 
     public function setSelectedItemToRearrange($idItem)
     {
-        $this->selectedItemRearrange[] = $idItem;
+        if (!in_array($idItem, $this->selectedItemRearrange)){
+            $this->selectedItemRearrange[] = $idItem;
+        }else{
+            $this->removeSelectedItemToRearrange($idItem);
+        }
     }
+
+    public function removeSelectedItemToRearrange($idItem)
+    {
+        $chave = array_search($idItem, $this->selectedItemRearrange);
+
+        if ($chave !== false) {
+            unset($this->selectedItemRearrange[$chave]);
+            $this->dispatchBrowserEvent('removeRowStyles', ['rowId' => $idItem]);
+        }
+    }
+
+
+
 
     public function Rearrange()
     {
@@ -289,8 +307,6 @@ class BallotsForm extends Component
 
     public function mount()
     {
-
-
         if ($this->ballots) {
 
             $this->service_station = ServiceStation::where('id', $this->ballots->service_station_id)->first();
@@ -319,14 +335,12 @@ class BallotsForm extends Component
             $this->arrErros = $newArray;
 
             $this->fields['initial'] = $this->ballots->initial;
+            $this->fields['face'] = $this->ballots->face;
+
             $this->fields['final'] = $this->ballots->final;
         } else {
             $this->service_station = null;
         }
-
-
-
-
     }
 
     public function getCedulesSituation()
@@ -455,6 +469,9 @@ class BallotsForm extends Component
             'face' => $this->fields['face']
         ]);
 
+
+
+
         if ($result) {
             if (count($this->arrErros) <= 0) {
                 $this->dispatchBrowserEvent('alert', [
@@ -502,7 +519,8 @@ class BallotsForm extends Component
                     'ballot_process' => $this->currentProcessCode,
                     'situation' => 'D',
                     'service_station_id' => $this->fields['service_station_id'],
-                    'typeCreation' => Ballot::TYPE_BATCH_REGISTER
+                    'typeCreation' => Ballot::TYPE_BATCH_REGISTER,
+                    'face' =>  $this->fields['face']
                 ]);
             } else {
                 array_push($arrErros, ['type' => 'Cédula não registrada, pois já existe no sistema.', 'code' => $code]);
@@ -639,7 +657,7 @@ class BallotsForm extends Component
                     'ballot_process' => $this->currentProcessCode,
                     'service_station_id' => $this->fields['service_station_id'],
                     'typeCreation' => Ballot::TYPE_SINGLE_REGISTRATION,
-
+                    'face' =>  $this->fields['face']
                 ]);
             } else {
                 array_push($arrErros, ['type' => 'Cédula não registrada, pois já existe no sistema.', 'code' => $code]);
