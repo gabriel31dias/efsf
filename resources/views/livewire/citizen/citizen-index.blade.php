@@ -325,6 +325,18 @@ role="dialog"  aria-hidden="true">
             </div>
         @endif
 
+        <a id="normal-assinatura" class="btn btn-primary inline-flex">
+         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <circle cx="12" cy="12" r="9"></circle>
+          <line x1="9" y1="10" x2="9.01" y2="10"></line>
+          <line x1="15" y1="10" x2="15.01" y2="10"></line>
+          <path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path>
+       </svg>
+       NORMAL
+      </a>
+      
         <a id="cartorio-assinatura"   onclick="callColectorSignature()" class="btn btn-primary inline-flex">
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-certificate" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -339,17 +351,7 @@ role="dialog"  aria-hidden="true">
           CARTÓRIO
          </a>
 
-         <a id="normal-assinatura" class="btn btn-primary inline-flex">
-            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-             <circle cx="12" cy="12" r="9"></circle>
-             <line x1="9" y1="10" x2="9.01" y2="10"></line>
-             <line x1="15" y1="10" x2="15.01" y2="10"></line>
-             <path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path>
-          </svg>
-          NORMAL
-         </a>
+        
 
          <a  onclick="$('#justificativa-text').toggle();$('#salvar-jus').toggle();$('#justificar-assinatura').toggle();" id="justificar-assinatura"  class="btn btn-warning" class="btn btn-primary inline-flex">
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -898,6 +900,7 @@ role="dialog"  aria-hidden="true">
                                class="error_tag">*</span></label>
                             <livewire:county-select.county-select
                                :county="$currentCounty"
+                               :uf="$fields['uf_id']"
                                />
                          </div>
                       </div>
@@ -1026,6 +1029,12 @@ role="dialog"  aria-hidden="true">
                                   </div>
                                </div>
                                <div class="modal-footer">
+                                    @if(isset($citizens))
+                                    <a wire:click='createBySearch' class="btn btn-primary"
+                                       data-bs-dismiss="modal">
+                                    Cadastrar
+                                    </a>
+                                 @endif
                                   <a href="#" class="btn btn-link link-secondary"
                                      data-bs-dismiss="modal">
                                   Cancel
@@ -1426,7 +1435,7 @@ role="dialog"  aria-hidden="true">
                                      <label class="mb-3" >Gemeos</label>
                                      <div class="col-lg-3 mb-3">
                                         <label class="form-label ">Nº de RG de irmão gêmeo</label>
-                                        <input wire:model="fields.rg_gemeo"  maxlength="70" type="text"
+                                        <input wire:model="rg_gemeo"  maxlength="70" type="text"
                                            class="form-control ps-0 "
                                            autocomplete="off" required>
                                         @if (in_array("certificate", $errorsKeys))
@@ -1437,12 +1446,61 @@ role="dialog"  aria-hidden="true">
                                      </div>
                                      <div class="col-lg-6 mb-3">
                                         <label class="form-label ">Nome de irmão gêmeo</label>
-                                        <input wire:model="fields.name_gemeo"  maxlength="70" type="text"
+                                        <div class="input-group">
+                                        <input wire:model="name_gemeo"  maxlength="70" type="text"
                                            class="form-control ps-0 "
                                            autocomplete="off" required>
+
+                                           <div class="input-group-append">
+                                             <a style="text-align: center" wire:click="addGemeo"
+                                                class="btn btn-primary d-none d-sm-inline-block">
+                                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                <div class="flex">
+      
+                                                <svg style="text-align: center ml-2" xmlns="http://www.w3.org/2000/svg" class=""
+                                                   width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                   fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                   <line x1="12" y1="5" x2="12" y2="19" />
+                                                   <line x1="5" y1="12" x2="19" y2="12" />
+                                                </svg>
+                                                Adicionar
+                                             </div>
+      
+                                             </a>
+                                          </div>
+                                        </div>
+
                                      </div>
                                   </div>
                                </div>
+
+                               @if (!empty($gemeos))
+                               <div class="p-2 rounded border-1 border-red-300">
+                                 <h2 class="text-md font-bold">Gêmeos</h2>
+                                    <div class="card-body px-0 py-2">
+                                       <div id="table-default" class="table-responsive">
+                                          <table class="table">
+                                             <thead>
+                                                <tr>
+                                                   <th>Nome</th>
+                                                   <th>RG</th>
+                                                </tr>
+                                             </thead>
+                                             <tbody class="table-tbody">
+                                                @foreach ($gemeos as $gemeo)
+                                                <tr>
+                                                   <td class="">{{  $gemeo['name'] }}</td>
+                                                   <td class="">{{  $gemeo['rg'] }}</td>
+
+                                                </tr>
+                                                @endforeach
+                                             </tbody>
+                                          </table>
+                                       </div>
+                                    </div>
+                               </div>
+                               @endif
                             </div>
                          </div>
                          <div class="card mb-3">
@@ -1585,7 +1643,10 @@ role="dialog"  aria-hidden="true">
                                   @if($ca->type == "Cútis")
                                   <div class="col-lg-3 mb-3">
                                      <label   label class="form-label ">Altura<span class="error_tag">*</span></label>
-                                     <input  onchange="loadMultSelectCaracteristicas()" wire:model="fields.height" maxlength="70" type="text"
+                                     <input onclick="IMask(
+                                       this, {
+                                       mask: '0,00'
+                                       });" onchange="loadMultSelectCaracteristicas()" wire:model="fields.height" maxlength="70" type="text"
                                         class="form-control ps-0 "
                                         autocomplete="off" required>
                                   </div>

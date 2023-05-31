@@ -10,7 +10,6 @@ class CitizenRepository {
 
     public $mandatoryFilds = [
         "name",
-        "rg",
         "cpf",
         "celular"
     ];

@@ -85,6 +85,10 @@ class CitizenIndex extends Component
     public $searchNrCedula;
     public $searchName;
 
+    public $rg_gemeo = ""; 
+    public $name_gemeo = "";
+    public $gemeos = []; 
+
     public $process;
 
     public $currentUfIdent;
@@ -138,7 +142,6 @@ class CitizenIndex extends Component
     public $obrigatory_filds = [
         "cpf",
         "name",
-        "celular",
         "birth_date",
         "genre_id",
         "marital_status_id",
@@ -148,7 +151,6 @@ class CitizenIndex extends Component
 
 
         "cell",
-        "email",
         "zip_code",
         "zone",
         "occupation_id"
@@ -236,8 +238,6 @@ class CitizenIndex extends Component
         "marital_status_id" => "",
         "genre_id" => "",
         "genre_biologic_id" => "",
-        "rg_gemeo" => "",
-        "name_gemeo" => "",
         "name_social" => "",
         "social_name_visible" => "",
         "type_of_certificate_new" => "",
@@ -758,6 +758,8 @@ class CitizenIndex extends Component
 
         $this->fieldsDigitalizedDocuments = \json_decode($citizen->digitalized_documents, true);
 
+        $this->gemeos = json_decode($citizen->gemeos, true);
+
         //dd($this->fieldsDigitalizedDocuments);
 
         foreach ($this->fieldsDigitalizedDocuments  as $item) {
@@ -819,8 +821,6 @@ class CitizenIndex extends Component
                 "sheet_number" => $citizen->sheet_number,
                 "dou_certificate_date" => $dou_certificate_date ,
                 "genre_biologic_id" => $citizen->genre_biologic_id,
-                "rg_gemeo" => $citizen->rg_gemeo,
-                "name_gemeo" => $citizen->name_gemeo,
                 "name_social" =>  $citizen->name_social,
                 "social_name_visible" => $citizen->social_name_visible,
                 "type_of_certificate_new" => $citizen->type_of_certificate_new,
@@ -1026,6 +1026,10 @@ class CitizenIndex extends Component
        return $this->tranlaction_filds[$field] ?? "";
     }
 
+    public function createBySearch(){ 
+        $this->fields['name'] = $this->searchName;
+    }
+
     public function saveImageFacial(){
         $image = $this->file_capture_image_string;
 
@@ -1078,13 +1082,14 @@ class CitizenIndex extends Component
 
 
 
-        if ($this->fields['email'] !== $this->confirm_email) {
+        /* REMOVIDO NA TAREFA  8040
+         if ($this->fields['email'] !== $this->confirm_email) {
             array_push($errors, [
                 "message" => "Os emails não são iguais.",
                 "valid" => false,
             ]);
             $this->errorsKeys[] = $field;
-        }
+        } */
 
         if(trim($this->action != "update")){
             $check = Citizen::where('rg', $this->fields['rg'] )->first();
@@ -1233,6 +1238,20 @@ class CitizenIndex extends Component
         $this->tmpPreviousFiliation =  ['name' => '', 'type' => Filiation::TYPE_MATERNAL];
     }
 
+    public function addGemeo()
+    {
+        if(empty($this->name_gemeo)){ 
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> "Informe o campo nome."
+            ]);
+            return;
+        }
+        $this->gemeos[] = ['rg' => $this->rg_gemeo, 'name' => $this->name_gemeo];
+        $this->rg_gemeo = ""; 
+        $this->name_gemeo = "";
+    }
+
 
 
     public function checkDataIsValid($dateStr, $format = "Y-m-d")
@@ -1267,6 +1286,15 @@ class CitizenIndex extends Component
     }
 
     public function storeDocuments($documents){
+        $mandatory_documents = [17,18,19,20,21,22,25,26];
+        $arrDocuments = array_column($this->fieldsDigitalizedDocuments, 'type');
+        if(!in_array(4, $arrDocuments) || empty(array_intersect($mandatory_documents, $arrDocuments))){ 
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> "Insira o comprovante de endereco e documento de certidão."
+            ]);
+            return false;
+        }
         foreach ($documents as &$doc){
             if($doc['file'] != "" && ! is_string($doc['file'])){
                 $path = $doc['file']->store('public');
@@ -1362,6 +1390,7 @@ class CitizenIndex extends Component
 
 
         $documents = $this->storeDocuments($this->fieldsDigitalizedDocuments);
+        if($documents == false) return false;
 
         if($this->file_capture_image_string){
             $this->saveImageFacial();
@@ -1431,8 +1460,6 @@ class CitizenIndex extends Component
             "matriculation" => $this->fields["matriculation"] ?? null,
             "name_place" => $this->fields["name_place"] ?? null,
             "registry_id" => $this->fields["registry_id"] ?? $this->currentRegistryId,
-            "rg_gemeo" => $this->fields["rg_gemeo"] ?? null,
-            "name_gemeo" => $this->fields["name_gemeo"] ?? null,
             "name_social" => $this->fields["name_social"] ?? null,
             "social_name_visible" => $this->fields["social_name_visible"] ?? null,
             "type_of_certificate_new" => $this->fields["type_of_certificate_new"] ?? null,
@@ -1462,7 +1489,8 @@ class CitizenIndex extends Component
             "features" => \json_encode($this->fieldsFeatures) ?? null,
             "digitalized_documents" => \json_encode($documents) ?? null,
             "uf_professional_identity" => $this->currentUfIdent->id ?? null,
-            "number_ballot_face" => $this->fields["number_ballot_face"]
+            "number_ballot_face" => $this->fields["number_ballot_face"] ?? null,
+            "gemeos" => json_encode($this->gemeos) ?? null
          ]);
 
 

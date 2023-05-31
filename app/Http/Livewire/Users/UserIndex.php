@@ -56,7 +56,13 @@ class UserIndex extends Component
 
         if($this->searchTerm){
             $searchTerm = '%'. $this->searchTerm .'%';
-            $users = User::where('name','ilike', '%'. $searchTerm .'%' )->orWhere('cpf','ilike', '%'. $searchTerm .'%');
+            $users = User::where('name','ilike', '%'. $searchTerm .'%' )
+            ->orWhere('cpf','ilike', '%'. $searchTerm .'%')
+            ->orWhere('address','ilike', '%'. $searchTerm .'%')
+            ->orWhere('city','ilike', '%'. $searchTerm .'%')
+            ->orWhere('zip_code','ilike', '%'. $searchTerm .'%')
+            ->orWhere('number','ilike', '%'. $searchTerm .'%')
+            ->orWhere('district','ilike', '%'. $searchTerm .'%');
         }
 
         if(!$searchTerm){
