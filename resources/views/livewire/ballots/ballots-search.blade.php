@@ -75,8 +75,8 @@
 
                     <label class="form-label">Intervalo<span
                         class="error_tag">*</span></label>
-                        <input
-                        wire:model="filters.initInteval" type="text" value="" class="form-control" placeholder="Inicio..."
+
+                <input wire:model="filters.initInteval" type="text" value="" class="form-control" placeholder="Inicio..."
                 aria-label="Search in website">
 
 
@@ -127,16 +127,16 @@
 
                          @foreach ($items as $item)
                             <tr >
-                                <td wire:click="clickUpdate({{$item->id}})" >{{ $item->user->name }}</td>
-                                <td wire:click="clickUpdate({{$item->id}})">
+                                <td  >{{ $item->user->name }}</td>
+                                <td >
                                     {{ $item->cod_ballot }}
                                 </td>
-                                <td wire:click="clickUpdate({{$item->id}})">
+                                <td >
                                     {{ $item->face }}
                                 </td>
-                                <td wire:click="clickUpdate({{$item->id}})">{{ $item->serviceStation->service_station_name }}</td>
-                                <td wire:click="clickUpdate({{$item->id}})">{{ $item->situation }}</td>
-                                <td wire:click="clickUpdate({{$item->id}})">{{ $item->created_at }}</td>
+                                <td >{{ $item->serviceStation->service_station_name }}</td>
+                                <td >{{ $item->situation }}</td>
+                                <td >{{ $item->created_at }}</td>
 
                             </tr>
                          @endforeach

@@ -70,7 +70,7 @@ class BallotsSearch extends Component
 
         return view('livewire.ballots.ballots-search',
         [
-            'items' => $items->paginate(5)
+            'items' => $items->paginate(15)
         ]);
     }
 
@@ -198,6 +198,23 @@ class BallotsSearch extends Component
         if (isset($this->filters['status'])) {
             $items->where('situation', $this->filters['status']);
         }
+
+
+        if (isset($this->filters['initInteval']) && $this->filters['initInteval']) {
+            $items->where('cod_ballot', '>=', $this->filters['initInteval']);
+
+            if (isset($this->filters['endInterval']) && $this->filters['endInterval']) {
+               $items->where('cod_ballot', '<=', $this->filters['endInterval']);
+            }
+
+        } else {
+
+            if (isset($this->filters['endInterval']) && $this->filters['endInterval']) {
+               $items->where('cod_ballot', '<=', $this->filters['endInterval']);
+            }
+
+        }
+
 
         if (isset($this->filters['typeBallotCedule'])) {
             $items->where('face', $this->filters['typeBallotCedule']);

@@ -16,10 +16,11 @@ return new class extends Migration
     {
         Schema::create('ballot_items', function (Blueprint $table) {
             $table->id();
-            $table->string('cod_ballot', 100);
+            $table->integer('cod_ballot');
             $table->string('face')->nullable();
             $table->boolean('unused')->default(0);
             $table->integer('service_station_id')->nullable();
+            $table->integer('citizen_id')->nullable();
             $table->string('ballot_process')->nullable();
             $table->boolean('single')->default(0);
             $table->integer('user_id')->nullable();
