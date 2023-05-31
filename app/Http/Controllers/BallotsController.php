@@ -38,6 +38,10 @@ class BallotsController extends Controller
         return view('ballots.edit', compact('ballots'));
     }
 
+    public function search()
+    {
+        return view('ballots.search');
+    }
 
     public function destroy(Request $request, Ballot $ballots)
     {

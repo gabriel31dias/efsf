@@ -1524,7 +1524,7 @@ class CitizenIndex extends Component
             'process' => $resultProcess['code']
         ]);
 
-        $this->updateBallotStatus();
+        $this->updateBallotStatus($citizen_id);
 
         $this->messageSuccess();
 
@@ -1537,10 +1537,15 @@ class CitizenIndex extends Component
     }
 
 
-    public function updateBallotStatus(){
+    public function updateBallotStatus($citizen_id){
+        if($citizen_id){
+            $ballotSelected = BallotItem::where('citizen_id',  $citizen_id )->first();
+            $ballotSelected->update(['situation' => 'U', 'citizen_id' => $citizen_id]);
+        }
+
         if(isset($this->fields['number_ballot_face'])){
             $ballotSelected = BallotItem::where('id',  $this->fields['number_ballot_face'] )->first();
-            $ballotSelected->update(['situation' => 'A']);
+            $ballotSelected->update(['situation' => 'A', 'citizen_id' => $citizen_id]);
         }
     }
 

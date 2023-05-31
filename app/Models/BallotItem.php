@@ -20,4 +20,9 @@ class BallotItem extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function serviceStation()
+    {
+        return $this->belongsTo(ServiceStation::class);
+    }
 }
