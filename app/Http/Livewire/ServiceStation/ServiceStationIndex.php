@@ -18,9 +18,9 @@ class ServiceStationIndex extends Component
 
         if($this->searchTerm){
             $searchTerm = '%'. $this->searchTerm .'%';
-            $stations = ServiceStation::where('service_station_name','ilike', '%'. $searchTerm .'%' );
+            $stations = ServiceStation::where('service_station_name','ilike',  $searchTerm  )->orWhere('acronym_post','ilike',  $searchTerm)->orderBy('service_station_name','asc');
         }else{
-            $stations = ServiceStation::orderBy('id','desc');
+            $stations = ServiceStation::orderBy('service_station_name','asc');
         }
 
         if($this->filterActives || $this->filterInactives){

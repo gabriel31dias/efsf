@@ -108,6 +108,7 @@
                             @foreach($permissions as $group => $p)
                                 <div class="col-sm-3 py-2 divide-x divide-slate-400">
                                     <span class="font-bold">{{ $group }}</span>
+                                    <input type="checkbox" wire:model='selectAllValue.{{ $group }}' wire:change='selectAllGroup("{{ $group }}", $event.target.checked)' class="-ml-3"  id="">
                                     <ul class="mt-2">
                                         @foreach($p as $permission)
                                         <li>

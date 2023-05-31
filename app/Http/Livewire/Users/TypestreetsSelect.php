@@ -77,11 +77,11 @@ class TypestreetsSelect extends Component
     {
         $this->closed = false;
         if($this->type == "country_street"){
-            $this->type_streets = CountryTypeStreat::where('name_type_street', 'like', '%' . $this->query . '%')
+            $this->type_streets = CountryTypeStreat::where('name_type_street', 'ilike', '%' . $this->query . '%')
                 ->get()
                 ->toArray();
         }else{
-            $this->type_streets = TypeStreet::where('name_type_street', 'like', '%' . $this->query . '%')
+            $this->type_streets = TypeStreet::where('name_type_street', 'ilike', '%' . $this->query . '%')
                 ->get()
                 ->toArray();
         }

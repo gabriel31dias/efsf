@@ -123,8 +123,11 @@
                         <div class="mb-3">
                            <label class="form-label">CEP<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
-                              <input id="cep" onblur="pesquisacep(this.value);" wire:model="fields.cep" type="text"
-                                 class="form-control" autocomplete="off">
+                              <input id="cep" onclick="IMask(
+                                 this, {
+                                 mask: '00.000-000'
+                                 });" onblur="pesquisacep(this.value);" wire:model="fields.cep" type="text"
+                                 class="form-control cep" autocomplete="off">
                            </div>
                            @error('fields.cep') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>

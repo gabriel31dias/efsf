@@ -64,7 +64,7 @@ class UnityIndex extends Component
 
         if($this->searchTerm){
             $searchTerm = '%'. $this->searchTerm .'%';
-            $units = Unit::where('name','ilike', '%'. $searchTerm .'%' );
+            $units = Unit::where('name','ilike', '%'. $searchTerm .'%' )->orWhere('acronym','ilike', '%'. $searchTerm .'%' );
         }
 
         if(!$searchTerm){

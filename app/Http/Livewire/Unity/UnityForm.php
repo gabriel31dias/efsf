@@ -135,9 +135,7 @@ class UnityForm extends Component
         if($this->action == "create"){
             $unit = Unit::create(['name'=> $this->fields['name'], "acronym" => $this->fields['acronym'] ]);
         } else {
-            $unit = Unit::updateOrCreate(['id' => $this->unit->id ?? 0],[
-                'name' => $this->fields["name"]
-            ]);
+            $unit = Unit::updateOrCreate(['id' => $this->unit->id ?? 0],$this->fields);
         }
 
         if(isset($unit->id)){

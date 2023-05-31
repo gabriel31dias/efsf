@@ -14,6 +14,7 @@ class ProfileForm extends Component
     public $errors = [];
     public $permissions = [];
     public $profile_permissions = [];
+    public $selectAllValue = [];
 
     public $perfilName;
     public $daysToAccessInspiration;
@@ -46,6 +47,12 @@ class ProfileForm extends Component
                 "prazo_expiração_inatividade" => $this->profile->days_to_activity_lock
             ];
         }
+        foreach ($this->permissions as $key => $p) {
+            $ids = array_column($p, 'id');
+            $checked = empty(array_diff($ids, $this->profile_permissions));
+            $this->selectAllValue[$key] = $checked;
+        }
+        
     }
 
     public function saveProfile(){
@@ -90,6 +97,23 @@ class ProfileForm extends Component
                 'type'=> 'success',
                 'message'=> "Perfil foi atualizado com sucesso."
             ]);
+        }
+    }
+
+    public function selectAllGroup($group, $checked){ 
+        if($checked){ 
+            foreach ($this->permissions[$group] as $key => $permission) {
+                if (!in_array($permission['id'], $this->profile_permissions)) {
+                    array_push($this->profile_permissions, $permission['id']);
+                }
+            }
+        }else { 
+            foreach ($this->permissions[$group] as $key => $permission) {
+                $index = array_search($permission['id'], $this->profile_permissions);
+                if ($index !== false) {
+                    array_splice($this->profile_permissions, $index, 1); // Remove o valor do array
+                }
+            }
         }
     }
 
