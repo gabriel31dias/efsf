@@ -1470,7 +1470,7 @@ class CitizenIndex extends Component
             'process' => $resultProcess['code']
         ]);
 
-        $this->updateBallotStatus($citizen_id);
+        $this->updateBallotStatus($user->id);
 
         $this->messageSuccess();
 
