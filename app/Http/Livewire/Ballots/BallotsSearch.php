@@ -227,6 +227,19 @@ class BallotsSearch extends Component
         $this->filterActives = true;
     }
 
+    public function destroy_ballot($id){
+
+        $p = BallotItem::where(["id" => $id])->first();
+        if(isset($p->id)){
+            $p->delete();
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'success',
+                'message'=> "Item excluido com sucesso."
+            ]);
+        }
+        $this->filtersCall();
+    }
+
     public function openFilters(){
         $this->dispatchBrowserEvent('openFilters', []);
     }

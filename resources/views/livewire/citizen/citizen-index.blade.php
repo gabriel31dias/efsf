@@ -336,7 +336,7 @@ role="dialog"  aria-hidden="true">
        </svg>
        NORMAL
       </a>
-      
+
         <a id="cartorio-assinatura"   onclick="callColectorSignature()" class="btn btn-primary inline-flex">
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-certificate" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -351,7 +351,7 @@ role="dialog"  aria-hidden="true">
           CARTÓRIO
          </a>
 
-        
+
 
          <a  onclick="$('#justificativa-text').toggle();$('#salvar-jus').toggle();$('#justificar-assinatura').toggle();" id="justificar-assinatura"  class="btn btn-warning" class="btn btn-primary inline-flex">
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -406,10 +406,10 @@ role="dialog"  aria-hidden="true">
             </select>
 
             <label class="form-label">Arquivo Justificativa</label>
-            <input wire:model='fileJustificationSign' onchange="$('#justificar-assinatura').click()" class="block w-full text-sm file:text-white 
+            <input wire:model='fileJustificationSign' onchange="$('#justificar-assinatura').click()" class="block w-full text-sm file:text-white
             file:bg-gradient-to-r from-sky-700 to-sky-900
             bg-gray-50 border-none shadow-md border file:border-none file:p-2 rounded-lg file:cursor-pointer cursor-pointer focus:outline-none" id="justificativa-text-file" type="file">
-         
+
          </div>
 
 
@@ -1456,7 +1456,7 @@ role="dialog"  aria-hidden="true">
                                                 class="btn btn-primary d-none d-sm-inline-block">
                                                 <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                                 <div class="flex">
-      
+
                                                 <svg style="text-align: center ml-2" xmlns="http://www.w3.org/2000/svg" class=""
                                                    width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -1466,7 +1466,7 @@ role="dialog"  aria-hidden="true">
                                                 </svg>
                                                 Adicionar
                                              </div>
-      
+
                                              </a>
                                           </div>
                                         </div>
@@ -1537,7 +1537,7 @@ role="dialog"  aria-hidden="true">
                                        </div>
                                     </div>
 
-                                    
+
 
                                     @php
                                         $names = !empty($fields['names_previous']) ? explode(",", $fields['names_previous']) : [];
@@ -2359,7 +2359,7 @@ role="dialog"  aria-hidden="true">
     window.addEventListener('updatedFileJustificationSign', () => {
       $('#justificar-assinatura').click()
     })
-    
+
 
     $('#modal-report').on('shown.bs.modal', function (e) {
         var elements = document.querySelector('#nsc');

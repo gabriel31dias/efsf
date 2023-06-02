@@ -138,6 +138,16 @@
                                 <td >{{ $item->situation }}</td>
                                 <td >{{ $item->created_at }}</td>
 
+                                <td > <button wire:click="destroy_ballot('{{$item->id ?? null}}', '{{$fields["id"] ?? null }}' )" x-on:click="modal=true" class="text-decoration-none hover:cursor-pointer text-red-700 border-2 border-red-700 hover:bg-red-700
+                                    hover:text-white focus:ring-4 font-medium rounded-lg
+                                      text-sm p-2.5 text-center inline-flex items-center mr-2 ">
+                                <i class="ti ti-trash"></i>
+                                    </button></td>
+
+
+
+
+
                             </tr>
                          @endforeach
                       </tbody>
