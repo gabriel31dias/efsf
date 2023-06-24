@@ -1540,7 +1540,9 @@ class CitizenIndex extends Component
     public function updateBallotStatus($citizen_id){
         if($citizen_id){
             $ballotSelected = BallotItem::where('citizen_id',  $citizen_id )->first();
-            $ballotSelected->update(['situation' => 'U', 'citizen_id' => $citizen_id]);
+            if($ballotSelected){
+                 $ballotSelected->update(['situation' => 'U', 'citizen_id' => $citizen_id]);
+            }
         }
 
         if(isset($this->fields['number_ballot_face'])){
