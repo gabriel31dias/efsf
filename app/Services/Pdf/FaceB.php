@@ -35,55 +35,55 @@ class FaceB extends Fpdf {
       $this->Cell($column_width, self::CARD_HEIGHT, "", 1, 1); */
       $citizen = $processes[$i-1]->citizen;
       /* RG */
-      $this->setXY($x+25,$y+9);
+      $this->setXY($x+15,$y+9);
       $this->Cell($column_width, 2, $citizen->rg);
 
       /* VIA */
-      $this->setXY($x+50,$y+9);
+      $this->setXY($x+40,$y+9);
       $this->Cell($column_width, 2, "2ª Via");
 
       /* VIA */
-      $this->setXY($x+77,$y+9);
+      $this->setXY($x+67,$y+9);
       $this->Cell($column_width, 2, date('d/m/Y'));
 
 
       /* NOME SOCIAL */
-      $this->setXY($x+20,$y+14);
+      $this->setXY($x+10,$y+14);
       $this->Cell($column_width, 2, $citizen->name);
 
       /* NOME */
-      $this->setXY($x+15,$y+18);
+      $this->setXY($x+5,$y+18);
       $this->Cell($column_width, 2, $citizen->name_social);
 
       /* FILIACOES */
-      $this->setXY($x+15,$y+24);
+      $this->setXY($x+5,$y+24);
       $this->MultiCell($column_width, 4, $citizen->filiations_text_print);
 
       /* NATURALIDADE */
-      $this->setXY($x+15,$y+39);
+      $this->setXY($x+5,$y+35);
       $this->Cell($column_width, 2, $citizen->county->name . "-" . $citizen->uf->acronym);
 
 
       /* DATA DE NASCIMENTO */
-      $this->setXY($x+82,$y+39);
+      $this->setXY($x+72,$y+35);
       $this->Cell($column_width, 2, \Carbon\Carbon::createFromFormat('Y-d-m', $citizen->birth_date)->format('d/m/Y'));
 
       /* CERTIDAO DADOS */
-      $this->setXY($x+20,$y+44);
+      $this->setXY($x+10,$y+40);
       $this->MultiCell($column_width-30, 4, "CART. NAS. 00511601552010100558261026181130, CART.JUCA,MACAPÁ-AP,17/09/2014");
 
           
       /* DATA DE NASCIMENTO */
-      $this->setXY($x+18,$y+56);
+      $this->setXY($x+18,$y+50);
       $this->Cell($column_width, 2, $citizen->cpf);
 
       /* PIS/NIS/ETC */
-      $this->setXY($x+50,$y+55);
+      $this->setXY($x+50,$y+50);
       $this->Cell($column_width, 2, 'PIS/PASEP ' . $citizen->n_social);
 
 
       /* INFO QUE NAO SEI  */
-      $this->setXY($x+82,$y+59);
+      $this->setXY($x+72,$y+55);
       $this->Cell($column_width, 2,"1834841-2/443");
       
 

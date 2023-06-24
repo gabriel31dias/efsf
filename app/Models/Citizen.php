@@ -63,9 +63,10 @@ class Citizen extends Model implements Auditable
     public function getFiliationsTextPrintAttribute(){
         $text = '';
         foreach ($this->filiations as $key => $filiation) {
-            $text.= $filiation->name . ' \n ';
+           $text.= strtoupper($filiation->name) . ' E ';
         }
-        return $text;
+        
+        return rtrim($text, "E ");
     }
 
     public function getTotalProcess(){
