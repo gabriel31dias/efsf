@@ -29,7 +29,7 @@ class BallotsSearch extends Component
 
     public $filterFaceB = false;
 
-    public $listeners = ['setSelectedItemToRearrange', 'selectDestino', 'selectOrigem', 'selectedServiceStation', 'selectedUser'];
+    public $listeners = ['setSelectedItemToRearrange','destroyBallotConfirme' , 'selectDestino', 'selectOrigem', 'selectedServiceStation', 'selectedUser'];
 
     public $filters = [];
 
@@ -227,12 +227,23 @@ class BallotsSearch extends Component
         $this->filterActives = true;
     }
 
-    public function destroy_ballot($id){
 
+    public function emitQuestionDestroy($id){
+        $this->dispatchBrowserEvent('destroyBallot',[ 
+            'id'=> $id
+        ]);
+    }
+
+    public function destroyBallotConfirme($id){
+        $this->destroy_ballot($id);
+    }
+
+    public function destroy_ballot($id){
         $p = BallotItem::where(["id" => $id])->first();
+        
         if(isset($p->id)){
             $p->delete();
-            $this->dispatchBrowserEvent('alert',[
+            $this->dispatchBrowserEvent('alert',[ 
                 'type'=> 'success',
                 'message'=> "Item excluido com sucesso."
             ]);
