@@ -49,6 +49,19 @@ class Citizen extends Model implements Auditable
         return $this->belongsTo(Uf::class);
     }
 
+    public function country(){
+        return $this->belongsTo(Country::class);
+    }
+
+    public function genre(){
+        return $this->belongsTo(Genre::class);
+    }
+
+    public function registry(){ 
+        return $this->belongsTo(Registry::class);
+    }
+
+
     public function county(){
         return $this->belongsTo(County::class);
     }

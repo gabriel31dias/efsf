@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CitizenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,83 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-
-
-
-
-
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
-
-Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
-
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
-
-Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
-
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
-
-Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
-
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
-
-Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
-
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
-
-Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
-
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
-
-Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
-
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
-
-Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
-
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
-
-Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
-
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
-
-Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
-
-
-Route::apiResource('user', App\Http\Controllers\UserController::class);
-
-Route::apiResource('profile', App\Http\Controllers\ProfileController::class);
-
-Route::apiResource('service-station', App\Http\Controllers\ServiceStationController::class);
+Route::get('/obterDados', [CitizenController::class, 'obterDados']);
+Route::post('/receberBiometria', [CitizenController::class, 'receberBiometria']);
 
 
 
