@@ -161,11 +161,11 @@
 
             function confirmDelete(id) {
                 Swal.fire({
-                    title: 'Do you want to save the changes?',
+                    title: 'Tem certeza que seja excluir ?',
                     showDenyButton: true,
                     showCancelButton: true,
-                    confirmButtonText: 'Save',
-                    denyButtonText: `Don't save`,
+                    confirmButtonText: 'Sim',
+                    denyButtonText: `Não`,
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
