@@ -15,20 +15,22 @@
         <div class="btn-list">
 
             @can('permission', 'director-signature.create')
-                <a wire:click="create" class="btn btn-primary items-center inline-flex" data-bs-toggle="modal"
-                    data-bs-target="#modal-report">
+              
+                <a onclick="obterSelecionados()" class="text-decoration-none hover:cursor-pointer text-red-700 border-2 border-red-700 hover:bg-red-700
+                                    hover:text-white focus:ring-4 font-medium rounded-lg
+                                      text-sm p-2.5 text-center inline-flex items-center mr-2" 
+                >
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                    <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    Criar Cédula
+
+                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M18 6l-12 12"></path>
+   <path d="M6 6l12 12"></path>
+</svg>
+                   Inutilizar cédulas
                 </a>
             </div>
-        @endcan
+           @endcan
     </div>
     <div class="page-body">
         <div class="container_fluid">
@@ -79,11 +81,13 @@
                     </div>
 
                     <div style="margin-top: 40px;" class="col-lg-1 mb-3">
+                    
                         <label class="form-label">Até<span class="error_tag">*</span></label>
                     </div>
 
                     <div class="col-lg-3 mb-3">
-                        <label class="form-label"><span class="error_tag"></span></label>
+                        <label class="form-label">Fim<span class="error_tag"></span></label>
+                        
                         <input wire:model="filters.endInterval" type="text" value="" class="form-control"
                             placeholder="Fim..." aria-label="Search in website">
                     </div>
@@ -118,6 +122,7 @@
 
                                 @foreach ($items as $item)
                                     <tr>
+                                        <td><input type="checkbox" value="{{ $item->id }}"> </td>
                                         <td>{{ $item->user->name }}</td>
                                         <td>
                                             {{ $item->cod_ballot }}
@@ -137,12 +142,9 @@
                                     hover:text-white focus:ring-4 font-medium rounded-lg
                                       text-sm p-2.5 text-center inline-flex items-center mr-2 ">
                                                 <i class="ti ti-trash"></i>
-                                            </button></td>
+                                            </button>
 
-
-
-
-
+                                      </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -154,6 +156,42 @@
 
         </div>
         <script>
+
+          function obterSelecionados() {
+            var checkboxes = document.querySelectorAll('table input[type="checkbox"]');
+            var selecionados = [];
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    selecionados.push(checkbox.value);
+                    Livewire.emit('emitQuestionInutilizeBallot', checkbox.value)
+                }
+            });
+
+            return selecionados;
+          }
+
+
+          window.addEventListener('InutilizeBallot', ({detail: {id}}) => {
+              confirmInutilize(id)
+           })
+
+            function confirmInutilize(id) {
+                Swal.fire({
+                    title: 'Tem certeza que seja inutilizar ?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim',
+                    denyButtonText: `Não`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                       Livewire.emit('setUnitilized', id)
+                    } else if (result.isDenied) {
+                        
+                    }
+                })
+            }
+
 
           window.addEventListener('destroyBallot', ({detail: {id}}) => {
               confirmDelete(id)
