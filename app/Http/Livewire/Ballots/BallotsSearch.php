@@ -29,7 +29,7 @@ class BallotsSearch extends Component
 
     public $filterFaceB = false;
 
-    public $listeners = ['setSelectedItemToRearrange','destroyBallotConfirme' , 'selectDestino', 'selectOrigem', 'selectedServiceStation', 'selectedUser'];
+    public $listeners = ['setUnitilized', 'setSelectedItemToRearrange','emitQuestionInutilizeBallot','destroyBallotConfirme' , 'selectDestino', 'selectOrigem', 'selectedServiceStation', 'selectedUser'];
 
     public $filters = [];
 
@@ -39,6 +39,25 @@ class BallotsSearch extends Component
         $this->service_station = $id;
         $this->filters['service_station_id'] = ServiceStation::find($id)->id;
     }
+
+
+    public function setUnitilized($id)
+    {        
+        $batch = BallotItem::where('id', $id)->first();     
+        $batch->update(['situation' => 'I']);
+
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Cédula inutilizada com sucesso"
+        ]);
+
+    }
+
+    public function requestInutilization($id){
+
+    }
+
+    
 
     public function render(Request $request)
     {
@@ -230,6 +249,12 @@ class BallotsSearch extends Component
 
     public function emitQuestionDestroy($id){
         $this->dispatchBrowserEvent('destroyBallot',[ 
+            'id'=> $id
+        ]);
+    }
+
+    public function emitQuestionInutilizeBallot($id){
+        $this->dispatchBrowserEvent('InutilizeBallot',[ 
             'id'=> $id
         ]);
     }
