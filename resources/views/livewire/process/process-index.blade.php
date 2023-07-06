@@ -54,7 +54,7 @@
                                     $pr->serviceStation->service_station_name
                                  }}</td>
                                 <td>{{ $pr->created_at }}</td>
-                                <td>{{ $pr->getBiometriStatus() }}</td>
+                                <td>{{ $pr->getBiometriStatus() }}</td> 
                                 <td>{{ $pr->getSituation() }}</td>
                                 <td>{{ $pr->getPaymentStatus() }}</td>
                             </tr>
