@@ -54,7 +54,7 @@
                             @endif
 
                             @if ($selectedTab == 'inutilizacao')
-                                <a wire:click="saveUseless()" class="btn btn-primary items-center inline-flex">
+                                <a wire:click="emitQuestionSaveUseless()" class="btn btn-primary items-center inline-flex">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                     <svg class="hidden lg:block" xmlns="http://www.w3.org/2000/svg" input-group-append
                                         class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -562,6 +562,29 @@
         removeRowStyles(rowId)
     })
 
+    window.addEventListener('emitQuestionSaveUnless', ({detail: {id}}) => {
+        confirmInutilize(id)
+    })
+
+    function confirmInutilize(id) {
+                Swal.fire({
+                    title: 'Tem certeza que seja inutilizar ?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim',
+                    denyButtonText: `Não`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                       Livewire.emit('setUnitilized', id)
+                    } else if (result.isDenied) {
+                        
+                    }
+                })
+    }
+
+
+
     function selectRow(rowId) {
         var tableRows = document.getElementsByTagName('tr');
         for (var i = 0; i < tableRows.length; i++) {
@@ -571,9 +594,9 @@
                 Livewire.emit('setSelectedItemToRearrange', rowId);
             }
         }
-
-
     }
+
+    
 
     function removeRowStyles(rowId){
         var tableRows = document.getElementsByTagName('tr');

@@ -44,6 +44,15 @@ class BallotsSearch extends Component
     public function setUnitilized($id)
     {        
         $batch = BallotItem::where('id', $id)->first();     
+
+        if($batch == null){
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'warning',
+                'message' => "Cédula não econtrada."
+            ]);
+            return false;
+        }
+        
         $batch->update(['situation' => 'I']);
 
         $this->dispatchBrowserEvent('alert', [

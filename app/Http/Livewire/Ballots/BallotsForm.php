@@ -94,7 +94,7 @@ class BallotsForm extends Component
 
     public $currentProcessCode = '';
 
-    public $listeners = ['setSelectedItemToRearrange', 'selectDestino', 'selectOrigem', 'selectedServiceStation', 'selectedUser'];
+    public $listeners = ['setSelectedItemToRearrange', 'selectDestino', 'selectOrigem', 'selectedServiceStation', 'selectedUser', 'setUnitilized'];
 
     public function render(Request $request)
     {
@@ -630,8 +630,6 @@ class BallotsForm extends Component
 
         $this->inutilizationItems($batchCodes);
 
-
-
         $this->dispatchBrowserEvent('alert', [
             'type' => 'success',
             'message' => "Cédula inutilizada com sucesso"
@@ -640,6 +638,34 @@ class BallotsForm extends Component
         $this->dispatchBrowserEvent('redirect', [
             'url' => '/ballots?typeCreation=1',
             'delay' => 1000
+        ]);
+    }
+
+    public function emitQuestionSaveUseless(){
+        $this->dispatchBrowserEvent('emitQuestionSaveUnless', [
+            'url' => '/ballots?typeCreation=1',
+            'delay' => 1000
+        ]);
+    }
+
+
+    public function setUnitilized($id)
+    {        
+        $batch = BallotItem::where('id', $id)->first();     
+
+        if($batch == null){
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'warning',
+                'message' => "Cédula não econtrada."
+            ]);
+            return false;
+        }
+
+        $batch->update(['situation' => 'I']);
+
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Cédula inutilizada com sucesso"
         ]);
     }
 
