@@ -691,6 +691,7 @@ class CitizenIndex extends Component
 
     public function setCitizen($id){
         if(!$id){
+         
             return false;
         }
 
@@ -951,6 +952,10 @@ class CitizenIndex extends Component
 
     public function mount(){
         $this->getUfs();
+        $this->totalProcess =  1;
+       
+        $this->fields['via_rg'] =  $this->totalProcess;
+        
         if(isset($this->citizen->id)){
             $this->setCitizen($this->citizen->id);
         }else{

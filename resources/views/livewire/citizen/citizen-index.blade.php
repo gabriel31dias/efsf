@@ -207,7 +207,7 @@ id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
                         class="form-control ps-0" autocomplete="off"   readonly >
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label class="form-label">Via do RG<span class="error_tag">*</span></label>
+                        <label class="form-label">Via do RG {{$totalProcess}}<span class="error_tag">*</span></label>
                         <input wire:model="fields.via_rg" maxlength="70" type="text"
                         class="form-control ps-0" autocomplete="off"  value="{{$totalProcess + 1 ?? 0}}" readonly >
                     </div>
