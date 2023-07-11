@@ -139,6 +139,7 @@ class CitizenIndex extends Component
        "CARTEIRA DE AUTISTA",
     ];
 
+    
     public $obrigatory_filds = [
         "cpf",
         "name",
