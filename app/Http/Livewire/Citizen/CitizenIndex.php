@@ -139,6 +139,7 @@ class CitizenIndex extends Component
        "CARTEIRA DE AUTISTA",
     ];
 
+    
     public $obrigatory_filds = [
         "cpf",
         "name",
@@ -1469,7 +1470,8 @@ class CitizenIndex extends Component
             "social_name_visible" => $this->fields["social_name_visible"] ?? null,
             "type_of_certificate_new" => $this->fields["type_of_certificate_new"] ?? null,
             "names_previous" =>  $this->fields["names_previous"] ?? null,
-            "filitions_previous" =>  $this->fields["filitions_previous"] ?? null,
+            "filitions_previous" =>  \json_encode($this->fields["filitions_previous"]) ?? null,
+
 
             "cni" =>  $this->fields["cni"] ?? null,
             "national_card_sus" =>  $this->fields["national_card_sus"] ?? null,
