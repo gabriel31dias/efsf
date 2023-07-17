@@ -17,12 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+
 });
 
 
 
-
-Route::get('/obterDados', [CitizenController::class, 'obterDados']);
+Route::get('/obterDados/{cpf}', [CitizenController::class, 'obterDados']);
 Route::post('/receberBiometria', [CitizenController::class, 'receberBiometria']);
 
 
