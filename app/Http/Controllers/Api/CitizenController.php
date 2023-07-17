@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Citizen;
 use App\Models\Filiation;
+use App\Models\VeritatisBiometric;
 use Carbon\Carbon;
 use Exception;
 use finfo;
@@ -18,7 +19,7 @@ class CitizenController extends Controller
     {
 
         try {
-            
+
             if (!isset($cpf)) throw new Exception("cpf is required", 404);
 
             $citizen = Citizen::where('cpf', $cpf)->first();
@@ -51,84 +52,92 @@ class CitizenController extends Controller
 
     public function receberBiometria(Request $request)
     {
-        $params = json_decode($request->getContent(), 1);
 
-        $keysToConvert = [
-            "facePicture",
-            "rightThumb",
-            "rightIndexMiddle",
-            "rightRingLittle",
-            "leftThumb",
-            "leftIndexMiddle",
-            "leftRingLittle",
-            "rolledRightThumb",
-            "rolledRightIndex",
-            "rolledRightMiddle",
-            "rolledRightRing",
-            "rolledRightLittle",
-            "rolledLeftThumb",
-            "rolledLeftIndex",
-            "rolledLeftMiddle",
-            "rolledLeftRing",
-            "rolledLeftLittle",
-            "rightThumb_png",
-            "rightIndexMiddle_png",
-            "rightRingLittle_png",
-            "leftThumb_png",
-            "leftIndexMiddle_png",
-            "leftRingLittle_png",
-            "rolledRightThumb_png",
-            "rolledRightIndex_png",
-            "rolledRightMiddle_png",
-            "rolledRightRing_png",
-            "rolledRightLittle_png",
-            "rolledLeftThumb_png",
-            "rolledLeftIndex_png",
-            "rolledLeftMiddle_png",
-            "rolledLeftRing_png",
-            "rolledLeftLittle_png",
-        ];
+        try {
+            $params = json_decode($request->getContent(), 1);
 
-        $convertedData = [];
-        
-        foreach ($params as $key => $value) {
-            if (in_array($key, $keysToConvert)) {
-                $filePath = $this->saveByteImage($value, $key);
-                $convertedData[$key] = $filePath;
-            } else {
-                $convertedData[$key] = $value;
+            $keysToConvert = [
+                "facePicture",
+                "rightThumb",
+                "rightIndexMiddle",
+                "rightRingLittle",
+                "leftThumb",
+                "leftIndexMiddle",
+                "leftRingLittle",
+                "rolledRightThumb",
+                "rolledRightIndex",
+                "rolledRightMiddle",
+                "rolledRightRing",
+                "rolledRightLittle",
+                "rolledLeftThumb",
+                "rolledLeftIndex",
+                "rolledLeftMiddle",
+                "rolledLeftRing",
+                "rolledLeftLittle",
+                "rightThumb_png",
+                "rightIndexMiddle_png",
+                "rightRingLittle_png",
+                "leftThumb_png",
+                "leftIndexMiddle_png",
+                "leftRingLittle_png",
+                "rolledRightThumb_png",
+                "rolledRightIndex_png",
+                "rolledRightMiddle_png",
+                "rolledRightRing_png",
+                "rolledRightLittle_png",
+                "rolledLeftThumb_png",
+                "rolledLeftIndex_png",
+                "rolledLeftMiddle_png",
+                "rolledLeftRing_png",
+                "rolledLeftLittle_png",
+            ];
+
+            $imageData = [];
+
+            foreach ($params as $key => $value) {
+                if (in_array($key, $keysToConvert)) {
+                    $filePath = $this->saveByteImage($value, $key, $params['document']);
+                    $imageData[$key] = $filePath;
+                }
             }
+
+            VeritatisBiometric::updateOrCreate(['rg' => $params['document'],
+            'cpf' => $params['cpf']],[
+                'biometrics' => json_encode($imageData)
+            ]);
+
+            return response()->json(["message" => "finished", "success" => true]);
+            //code...
+        } catch (\Throwable $th) {
+            return response()->json(["success"=>false], 500);
         }
-        dd($convertedData);
-        return response()->json(["message" => "finished", "success" => true]);
     }
 
-    function saveByteImage($byteImage, $key)
+    function saveByteImage($byteImage, $key, $rg)
     {
-        $extension = $this->getExtension($key); 
-        $fileName = uniqid().'.'.$extension;
-    
-        $path = 'images/' . $fileName;
+        $extension = $this->getExtension($key);
+        $fileName = uniqid() . '.' . $extension;
+
+        $path = $rg . "/images/" . $fileName;
         $conteudoBlob = substr($byteImage, 2, -1);
 
         // Decodifica o objeto bytes literal para obter os dados binários
         $dadosBinarios = base64_decode($conteudoBlob);
-        
+
         // Salvar os bytes no arquivo
         Storage::disk('local')->put($path,  $dadosBinarios);
-        
+
 
         return $path;
     }
 
-    private function getExtension($key){ 
-        if($key == 'facePicture'){ 
+    private function getExtension($key)
+    {
+        if ($key == 'facePicture') {
             $extension = "jpg";
-
-        } elseif(str_contains($key, "png")) { 
+        } elseif (str_contains($key, "png")) {
             $extension = "png";
-
-        } else { 
+        } else {
             $extension = "wsq";
         }
         return $extension;

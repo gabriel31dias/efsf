@@ -441,6 +441,8 @@ role="dialog"  aria-hidden="true">
             aria-label="Close"></button>
       </div>
       <div class="modal-body">
+
+         @if (isset($fields['biometrics']))
          <table style="
             width: 100%;
             height: 100%;" border="1" cellpadding="100" cellspacing="10">
@@ -456,11 +458,11 @@ role="dialog"  aria-hidden="true">
             </thead>
             <tbody>
                 <tr>
-                  <td style="height:100px;"  class="select-biometri border context-menu-one" ></td>
-                  <td style="height:100px;"   class="select-biometri border context-menu-one"></td>
-                  <td style="height:100px;"  class="select-biometri border context-menu-one " ></td>
-                  <td style="height:100px;"   class="select-biometri border context-menu-one"  ></td>
-                  <td style="height:100px;"  class="select-biometri border context-menu-one"  ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one" ><img src="data:image/png;base64, {{ $biometrics_files['leftThumb_png'] }}" ></td>
+                  <td style="height:100px;"   class="select-biometri border context-menu-one"><img src="data:image/png;base64, {{ $biometrics_files['rolledLeftIndex_png'] }}" ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one " ><img src="data:image/png;base64, {{ $biometrics_files['rolledLeftMiddle_png'] }}" ></td>
+                  <td style="height:100px;"   class="select-biometri border context-menu-one"  ><img src="data:image/png;base64, {{ $biometrics_files['rolledLeftRing_png'] }}" ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one"  ><img src="data:image/png;base64, {{ $biometrics_files['rolledLeftLittle_png'] }}" ></td>
                 </tr>
                 <thead>
                     <tr>
@@ -473,16 +475,22 @@ role="dialog"  aria-hidden="true">
                 </thead>
                 <tr >
                   <td style="height:100px; " class="select-biometri border context-menu-one"  >
-
+                     <img src="data:image/png;base64, {{ $biometrics_files['rightThumb_png'] }}" >
                   </td>
-                  <td style="height:100px;"  class="select-biometri border context-menu-one"  ></td>
-                  <td style="height:100px;"  class="select-biometri border context-menu-one" ></td>
-                  <td style="height:100px;"  class="select-biometri border context-menu-one " ></td>
-                  <td style="height:100px;"  class="select-biometri border context-menu-one"  ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one"  ><img src="data:image/png;base64, {{ $biometrics_files['rolledRightIndex_png'] }}" ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one" ><img src="data:image/png;base64, {{ $biometrics_files['rolledRightMiddle_png'] }}" ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one " ><img src="data:image/png;base64, {{ $biometrics_files['rolledRightRing_png'] }}" ></td>
+                  <td style="height:100px;"  class="select-biometri border context-menu-one"  ><img src="data:image/png;base64, {{ $biometrics_files['rolledRightLittle_png'] }}" ></td>
                 </tr>
             </tbody>
         </table>
-
+        @else
+            <div class="text-center">
+               <a  wire:click='buscarDadosVeritatis' class="btn btn-primary inline-flex">
+                  Buscar dados veritatis
+               </a>
+            </div>
+         @endif
 
       </div>
    </div>

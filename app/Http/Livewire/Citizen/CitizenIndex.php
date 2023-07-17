@@ -27,6 +27,7 @@ use Livewire\WithFileUploads;
 use PHPUnit\Framework\Constraint\Count;
 use App\Models\BlockedCertificate;
 use App\Models\Filiation;
+use App\Models\VeritatisBiometric;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -70,7 +71,7 @@ class CitizenIndex extends Component
     public $searchCpf;
     public $searchRg;
     public $is_payment_free;
-
+    public $biometrics_files;
     public $file_capture_image_preview;
     public $file_capture_image;
 
@@ -268,7 +269,8 @@ class CitizenIndex extends Component
         "district" => "",
         "height" => "",
         "features" => "",
-        "digitalized_documents" => ""
+        "digitalized_documents" => "", 
+        "biometrics" => null,
     ];
 
     public $curretTypeStreet;
@@ -1591,6 +1593,19 @@ class CitizenIndex extends Component
     {
         $this->fields['address'] = $request['logradouro'];
         $this->fields['district'] = $request['bairro'];
+    }
+
+    public function buscarDadosVeritatis(){
+        $biometrics = VeritatisBiometric::where('cpf', $this->fields['cpf'])->orWhere('rg', $this->fields['rg'])->first();
+        if($biometrics){ 
+            $this->fields['biometrics'] = $biometrics->biometrics;
+            $this->biometrics_files =  $biometrics->biometrics_b64;
+        } else { 
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> "Biometria nao localizada."
+            ]);
+        }
     }
 
 }
