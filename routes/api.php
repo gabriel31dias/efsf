@@ -20,10 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 });
 
+Route::middleware(['veritatis.token'])->group(function () {
+    Route::get('/obterDados/{cpf}', [CitizenController::class, 'obterDados']);
+    Route::post('/receberBiometria', [CitizenController::class, 'receberBiometria']);
+});
 
-
-Route::get('/obterDados/{cpf}', [CitizenController::class, 'obterDados']);
-Route::post('/receberBiometria', [CitizenController::class, 'receberBiometria']);
 
 
 
