@@ -11,7 +11,7 @@
                       Cadastro
                    </div>
                    <h2 class="page-title">
-                    Servidores
+                    SERVIDORES
                    </h2>
                 </div>
                 <!-- Page title actions -->
@@ -250,7 +250,7 @@
                 </div>
                 <div class="col-lg-4">
                   <div class="mb-3">
-                     <label class="form-label">Perfil de Acesso</label>
+                     <label class="form-label">Perfil de acesso</label>
                      <livewire:users.profile-select :perfil_name="$perfil_namex"/>
                   </div>
                </div>
