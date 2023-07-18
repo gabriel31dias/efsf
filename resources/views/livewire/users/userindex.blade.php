@@ -5,7 +5,7 @@
       <div class="row g-2 align-items-center">
          <div class="col">
             <h2 class="page-title">
-               Servidores
+               SERVIDORES
             </h2>
          </div>
       </div>
@@ -15,10 +15,10 @@
    <div class="btn-list">
     <span class="d-none d-sm-inline">
      <div x-data="{ open: false }" class="dropdown">
-        <button @click="$('.dropdown-menu').toggleClass('show')" class="btn btn-secondary bg-gray-500 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button @click="$('#dp').toggleClass('show')" class="btn btn-secondary bg-gray-500 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              Filtrar status
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div id="dp" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" ><input style="margin:1%" wire:model="filterActives" type="checkbox" name="" id="">Ativos</a>
             <a class="dropdown-item" ><input style="margin:1%" wire:model="filterInactives" type="checkbox" name="" id="">Inativos</a>
             <a class="dropdown-item" ><input style="margin:1%" wire:model="filterUnlockeds" type="checkbox" name="" id="">Desbloqueados</a>

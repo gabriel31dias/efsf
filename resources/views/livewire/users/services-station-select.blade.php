@@ -4,7 +4,7 @@
           type="text"
           class="form-input "
           {{ $readonly ? 'readonly' : '' }}
-          placeholder="Pesquisar Posto de atendimento..."
+          placeholder="Pesquisar posto de atendimento..."
           wire:model="query"
           wire:keydown.escape="reset1"
           wire:keydown.arrow-up="decrementHighlight"
