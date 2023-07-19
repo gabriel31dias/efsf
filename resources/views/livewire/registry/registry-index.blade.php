@@ -5,7 +5,7 @@
           <div class="row g-2 align-items-center">
              <div class="col">
                 <h2 class="page-title">
-                   Cartórios
+                   CARTÓRIOS
                 </h2>
              </div>
           </div>
@@ -53,7 +53,7 @@
                             <th><button class="table-sort" >Código SIC</button></th>
                             <th><button class="table-sort" >CNS</button></th>
                             <th><button class="table-sort" >Nome</button></th>
-                            <th><button class="table-sort" >Nome Fantasia</button></th>
+                            <th><button class="table-sort" >Nome fantasia</button></th>
                             <th><button class="table-sort" >UF</button></th>
                             <th><button class="table-sort" >Município</button></th>
                             <th><button class="table-sort" >Atualização</button></th>

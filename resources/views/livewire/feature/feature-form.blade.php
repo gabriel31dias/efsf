@@ -9,7 +9,8 @@
                             Cadastro
                         </div>
                         <h2 class="page-title">
-                            Características
+                            
+                            CARACTERÍSTICAS
                         </h2>
                     </div>
                     <!-- Page title actions -->

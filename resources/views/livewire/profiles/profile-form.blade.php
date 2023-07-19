@@ -99,7 +99,7 @@
              </div>
           </div>
 
-          <div class="row m-4">
+         
             <div class="col-lg-12">
                 <div class="card shadow-md">
                     <div class="font-bold p-4 mb-0">Permissões</div>
@@ -123,7 +123,7 @@
                         </div>
                 </div>
             </div>
-        </div>
+        
         </div>
       </form>
     </div>

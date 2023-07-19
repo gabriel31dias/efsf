@@ -5,7 +5,7 @@
           <div class="row g-2 align-items-center">
              <div class="col">
                 <h2 class="page-title">
-                    Transferência de Cartórios
+                    TRANSFERÊNCIA DE CARTÓRIOS
                 </h2>
              </div>
           </div>

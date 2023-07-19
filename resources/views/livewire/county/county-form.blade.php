@@ -50,7 +50,7 @@
                      <div class="col-lg-6">
 
                      <div class="mb-3">
-                        <label class="form-label">Nome Município<span class="error_tag"> *</span></label>
+                        <label class="form-label">Nome município<span class="error_tag"> *</span></label>
                         <div class="input-group input-group-flat">
                             <input wire:model="fields.name" maxlength="70" type="text"
                                 class="form-control" autocomplete="off">

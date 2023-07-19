@@ -10,7 +10,7 @@
                      Cadastro
                   </div>
                   <h2 class="page-title">
-                     Posto de Atendimento
+                     POSTO DE ATENDIMENTO
                   </h2>
                </div>
                <!-- Page title actions -->
@@ -66,7 +66,7 @@
                      </div>
                      <div class="col-lg-2">
                         <div class="mb-3">
-                           <label class="form-label">Sigla do Posto<span class="error_tag"> *</span></label>
+                           <label class="form-label">Sigla do posto<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
                               <input wire:model="fields.acronym_post" maxlength="70" type="text"
                                  class="form-control" autocomplete="off" required>
@@ -76,7 +76,7 @@
                      </div>
                      <div class="col-lg-2">
                         <div class="mb-3">
-                           <label class="form-label">Tipo do Posto<span class="error_tag"> *</span></label>
+                           <label class="form-label">Tipo do posto<span class="error_tag"> *</span></label>
 
                            <div class="input-group input-group-flat">
                               <select wire:model="fields.type_of_post" class="form-select"
@@ -93,7 +93,7 @@
 
                      <div class="col-lg-2">
                         <div class="mb-3">
-                           <label class="form-label">Hora Início<span class="error_tag"> *</span></label>
+                           <label class="form-label">Hora início<span class="error_tag"> *</span></label>
 
                            <div class="input-group input-group-flat">
                               <input wire:model="fields.start_hour" maxlength="70" type="time" class="form-control"
@@ -105,7 +105,7 @@
 
                      <div class="col-lg-2">
                         <div class="mb-3">
-                           <label class="form-label">Hora Fim<span class="error_tag"> *</span></label>
+                           <label class="form-label">Hora fim<span class="error_tag"> *</span></label>
 
                            <div class="input-group input-group-flat">
                               <input wire:model="fields.end_hour" maxlength="70" type="time" class="form-control"
@@ -209,7 +209,7 @@
                            <div class="form-check">
                               <input class="form-check-input" wire:click="handleChangeExternal" wire:model="isExternalDelivery" type="checkbox" >
                               <label class="form-check-label">
-                                 Local de Entrega em outro posto
+                                 Local de entrega em outro posto
                               </label>
                            </div>
                         </div>
@@ -218,7 +218,7 @@
 
                         <div x-show="showPosto" class="col-lg-6">
 
-                           <label style="margin-top:1%" class="form-label">Posto de Entrega</label>
+                           <label style="margin-top:1%" class="form-label">Posto de entrega</label>
                            <div class="input-group mb-3">
                               <livewire:users.servicestation-select />
                               <div class="input-group-append">
@@ -243,7 +243,7 @@
 
                      <div>
                         <div class="card-header">
-                           Local de Entrega
+                           Local de entrega
                         </div>
                         <div class="card-body">
                            <div id="table-default" class="table-responsive">

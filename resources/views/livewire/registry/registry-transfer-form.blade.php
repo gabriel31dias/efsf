@@ -9,7 +9,7 @@
                    Cadastro
                 </div>
                 <h2 class="page-title">
-                    Transferência
+                    TRANSFERÊNCIA
                 </h2>
              </div>
              <!-- Page title actions -->
@@ -42,21 +42,21 @@
                     
                   <div class="col-lg-3">
                      <div class="mb-3">
-                        <label class="form-label">UF Origem</label>
+                        <label class="form-label">UF origem</label>
                         @livewire('uf-select.uf-select', ['defaultValue' => null])
                      </div>
                   </div>
 
                   <div class="col-lg-3">
                      <div class="mb-3">
-                        <label class="form-label">Município Origem</label>
+                        <label class="form-label">Município origem</label>
                         @livewire('county-select.county-select', ['defaultValue' => null])
                      </div>
                   </div>
 
                     <div class="col-lg-6">
                         <div class="mb-3">
-                           <label class="form-label">Cartório Origem<span class="error_tag">*</span></label>
+                           <label class="form-label">Cartório origem<span class="error_tag">*</span></label>
                             @livewire('registry-select.registry-select', ['defaultValue' => $registryTransfer])
                            @error('fields.registry_origin_id') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>
@@ -65,21 +65,21 @@
 
                      <div class="col-lg-3">
                         <div class="mb-3">
-                           <label class="form-label">UF Destino</label>
+                           <label class="form-label">UF destino</label>
                            @livewire('uf-select.uf-select', ['defaultValue' => null, 'customEvent' => 'filterUfTransfer'])
                         </div>
                      </div>
    
                      <div class="col-lg-3">
                         <div class="mb-3">
-                           <label class="form-label">Município Destino</label>
+                           <label class="form-label">Município destino</label>
                            @livewire('county-select.county-select', ['defaultValue' => null, 'customEvent' => 'filterCountyTransfer', 'is_transfer' => true])
                         </div>
                      </div>
 
                      <div class="col-lg-6">
                         <div class="mb-3">
-                           <label class="form-label">Cartório Destino<span class="error_tag">*</span></label>
+                           <label class="form-label">Cartório destino<span class="error_tag">*</span></label>
                             @livewire('registry-select.registry-select', ['defaultValue' => $registryTransfer, 'customEventSelect' => 'selectedDestination', 'is_transfer' => true])
                            @error('fields.registry_destination_id') <span class="text-danger"> {{ $message }}</span> @enderror
                         </div>

@@ -9,7 +9,7 @@
                       Cadastro
                    </div>
                    <h2 class="page-title">
-                    Cartório
+                    CARTÓRIO
                    </h2>
                 </div>
                 <!-- Page title actions -->
@@ -54,7 +54,7 @@
                      @endif
                      <div class="col-lg-4">
                         <div class="mb-3">
-                           <label class="form-label">Nome do Cartório<span class="error_tag"> *</span></label>
+                           <label class="form-label">Nome do cartório<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
                               <input wire:model="fields.name" type="text"
                                  class="form-control" autocomplete="off" required>
@@ -75,7 +75,7 @@
                      </div>
                      <div class="col-lg-4">
                         <div class="mb-3">
-                           <label class="form-label">Nome Fantasia</label>
+                           <label class="form-label">Nome fantasia</label>
                            <div class="input-group input-group-flat">
                               <input wire:model="fields.fantasy_name" type="text"
                                  class="form-control" autocomplete="off" required>
@@ -143,7 +143,7 @@
 
                       <div class="col-lg-5">
                         <div class="mb-3">
-                           <label class="form-label">A Matricula neste cartório permite o valor XX para o dígito verificador?<span class="error_tag"> *</span></label>
+                           <label class="form-label">A matricula neste cartório permite o valor XX para o dígito verificador?<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat w-1/5">
                               <select class="form-select" wire:model="fields.allow_digit">
                                     <option value="1">SIM</option>
@@ -156,7 +156,7 @@
                      <div class="row" x-data="{action: @entangle('action')}" x-show="action == 'create'" >
                         <div class="col-lg-3">
                            <div class="mb-3">
-                              <label class="form-label">Data da Criação</label>
+                              <label class="form-label">Data da criação</label>
                               <div class="input-group input-group-flat">
                                  <input wire:model="fieldsCreateDate.created_date" type="date"
                                     class="form-control" autocomplete="off" required>
@@ -167,7 +167,7 @@
 
                         <div class="col-lg-3">
                            <div class="mb-3">
-                              <label class="form-label">Data de Encerramento</label>
+                              <label class="form-label">Data de encerramento</label>
                               <div class="input-group input-group-flat">
                                  <input wire:model="fieldsCreateDate.closing_date" type="date"
                                     class="form-control" autocomplete="off" required>

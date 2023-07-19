@@ -9,7 +9,7 @@
                    Cadastro
                 </div>
                 <h2 class="page-title">
-                    Bloqueio de Certidão
+                    BLOQUEIO DE CERTIDÃO
                 </h2>
              </div>
              <!-- Page title actions -->
@@ -90,7 +90,7 @@
 
                      <div class="col-lg-2">
                         <div class="mb-3">
-                           <label class="form-label">Nº da Folha<span class="error_tag"> *</span></label>
+                           <label class="form-label">Nº da folha<span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
                               <input wire:model="fields.sheet_number" type="number" min="0" class="form-control" autocomplete="off">
                            </div>
