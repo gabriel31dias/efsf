@@ -5,7 +5,7 @@
           <div class="row g-2 align-items-center">
              <div class="col">
                 <h2 class="page-title">
-                    Interdição de Cartório
+                    INTERDIÇÃO DE CARTÓRIO
                 </h2>
              </div>
           </div>
@@ -54,7 +54,7 @@
                             <th><button class="table-sort" >UF</button></th>
                             <th><button class="table-sort" >Municipio</button></th>
                             <th><button class="table-sort" >Data Inicio</button></th>
-                            <th><button class="table-sort" >Data Fim</button></th>
+                            <th><button class="table-sort" >Data fim</button></th>
                          </tr>
                       </thead>
                       <tbody class="table-tbody">

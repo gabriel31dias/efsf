@@ -5,7 +5,7 @@
          <div class="row g-2 align-items-center">
             <div class="col">
                <h2 class="page-title">
-                  Suspensão de Certidão
+                  SUSPENÇÃO DE CERTIDÃO
                </h2>
             </div>
          </div>
@@ -23,7 +23,7 @@
                <line x1="12" y1="5" x2="12" y2="19"></line>
                <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            Cadastrar Suspensão
+            Cadastrar suspensão
 
          </a>
          @endcan
@@ -51,11 +51,11 @@
                   <table class="table">
                      <thead>
                         <tr>
-                           <th><button class="table-sort" >Nome do Cartorio</button></th>
+                           <th><button class="table-sort" >Nome do cartório</button></th>
                            <th><button class="table-sort" >UF</button></th>
-                           <th><button class="table-sort" >Municipio</button></th>
-                           <th><button class="table-sort" >Data Inicio</button></th>
-                           <th><button class="table-sort" >Data Fim</button></th>
+                           <th><button class="table-sort" >Município</button></th>
+                           <th><button class="table-sort" >Data início</button></th>
+                           <th><button class="table-sort" >Data fim</button></th>
                         </tr>
                      </thead>
                      <tbody class="table-tbody">

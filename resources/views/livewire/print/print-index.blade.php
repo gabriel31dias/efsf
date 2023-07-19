@@ -5,7 +5,7 @@
             <div class="row g-2 align-items-center">
                 <div class="col">
                     <h2 class="page-title">
-                        Imprimir RG
+                        IMPRIMIR RG
                     </h2>
                 </div>
             </div>
@@ -17,12 +17,12 @@
                 <a href="#" wire:click.prevent="print" target="_blank" class="btn btn-primary bg-blue-500 items-center inline-flex font-bold" >
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <i class="ti  ti-printer mr-2"></i>
-                    Imprimir Todos
+                    Imprimir todos
                 </a>
                 <a href="#" wire:click.prevent="print" target="_blank" class="btn btn-primary items-center inline-flex font-bold" >
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <i class="ti  ti-printer mr-2"></i>
-                    Imprimir Selecionados
+                    Imprimir selecionados
                 </a>
             </div>
         @endcan
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="mb-3">
-                            <label class="form-label">Posto de Atendimento</label>
+                            <label class="form-label">Posto de atendimento</label>
                             <livewire:users.servicestation-select />
 
                         </div>
