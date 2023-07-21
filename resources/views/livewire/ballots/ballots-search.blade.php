@@ -109,6 +109,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                  <th><button class="table-sort"></button></th>
                                     <th><button class="table-sort">Nome Servidor</button></th>
                                     <th><button class="table-sort">Cédula</button></th>
                                     <th><button class="table-sort">Face</button></th>

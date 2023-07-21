@@ -9,7 +9,28 @@
                         Cadastro
                     </div>
                     <h2 class="page-title">
-                        Cedulas
+                        
+
+                         @if ($selectedTab == 'cadastro-avulso')
+                              CÉDULAS EM LOTE
+                         @endif
+
+                         @if ($selectedTab == 'cadastro-avulso')
+                              CÉDULAS AVULSAS
+                         @endif
+
+                         @if ($selectedTab == 'inutilizacao')
+                              CÉDULAS INUTILIZAÇÃO
+                         @endif
+
+                         @if ($selectedTab == 'remanejamento')
+                              CÉDULAS INUTILIZAÇÃO
+                         @endif
+
+
+
+                         
+
                     </h2>
                 </div>
                 <style>
@@ -239,7 +260,7 @@
 
                                             <div class="col-lg-4">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Posto de Origem:<span class="error_tag">
+                                                    <label class="form-label">Posto de origem:<span class="error_tag">
                                                             *</span></label>
                                                     <div class="input-group input-group-flat">
                                                         <livewire:users.servicestation-select :customEvent="'selectOrigem'" />
@@ -308,7 +329,7 @@
                                             <div class="col-lg-4">
                                                 <div class="mb-3">
 
-                                                    <label class="form-label">Posto de Destino:<span
+                                                    <label class="form-label">Posto de destino:<span
                                                             class="error_tag"> *</span></label>
                                                     <div class="input-group input-group-flat">
                                                         <livewire:users.servicestation-select :customEvent="'selectDestino'" />
