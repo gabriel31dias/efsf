@@ -9,6 +9,19 @@
     z-index: 9999999
 }
 
+
+   .nav-tabs {
+    cursor: pointer;
+    --tblr-nav-tabs-border-width: 1px;
+    --tblr-nav-tabs-border-color: #cbd5e1;
+    --tblr-nav-tabs-border-radius: 4px;
+    --tblr-nav-tabs-link-hover-border-color: #e2e8f0 #e2e8f0 #cbd5e1;
+    --tblr-nav-tabs-link-active-color: #334155;
+    --tblr-nav-tabs-link-active-bg: #f5f7fb;
+    --tblr-nav-tabs-link-active-border-color: #cbd5e1 #cbd5e1 #f5f7fb;
+    border-bottom: var(--tblr-nav-tabs-border-width) solid var(--tblr-nav-tabs-border-color);
+   }
+
     </style>
  @include('livewire.citizen.dialogs.dialog-capture')
 

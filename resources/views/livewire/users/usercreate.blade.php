@@ -66,7 +66,7 @@
                    <div class="row">
                       <div class="col-lg-8">
                          <div class="mb-3">
-                            <label class="form-label">Nome Completo <span class="error_tag">*</span></label>
+                            <label class="form-label">Nome completo <span class="error_tag">*</span></label>
                             <div class="input-group input-group-flat">
                                <input wire:model="fields.nome" maxlength="70" type="text" class="form-control"  autocomplete="off" required>
                             </div>
@@ -79,7 +79,7 @@
                       </div>
                       <div class="col-lg-4">
                          <div class="mb-3">
-                            <label class="form-label">Cpf <span class="error_tag">*</span></label>
+                            <label class="form-label">CPF<span class="error_tag">*</span></label>
                             <div class="input-group input-group-flat">
                                @if($action == "update")
                                <input maxlength="15" disabled wire:model="fields.cpf" type="text" class="form-control cpf"  autocomplete="off">
