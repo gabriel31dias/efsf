@@ -513,7 +513,7 @@ role="dialog"  aria-hidden="true">
                    Cadastro
                 </div>
                 <h2 class="page-title">
-                   Cidadão
+                   CIDADÃO
                 </h2>
              </div>
              <!-- Page title actions -->
@@ -546,7 +546,7 @@ role="dialog"  aria-hidden="true">
                         <path d="M11 11.5v-2a1.5 1.5 0 1 1 3 0v2.5"></path>
                         <path d="M14 12v-6.5a1.5 1.5 0 0 1 3 0v6.5"></path>
                      </svg>
-                     Captura Biométrica
+                     Captura biométrica
                   </a>
 
                   <a onclick="$('#modal-captura-assinatura').modal('show');"  class="btn btn-primary inline-flex">
@@ -557,7 +557,7 @@ role="dialog"  aria-hidden="true">
                         <path d="M16 7h4"></path>
                         <path d="M18 19h-13a2 2 0 1 1 0 -4h4a2 2 0 1 0 0 -4h-3"></path>
                      </svg>
-                    Captura de Assinatura
+                    Captura de assinatura
                   </a>
                    <a onclick="$('#modal-captura-facial').modal('show');"  class="btn btn-primary inline-flex">
                       <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -571,7 +571,7 @@ role="dialog"  aria-hidden="true">
                          <line x1="15" y1="10" x2="15.01" y2="10"></line>
                          <path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path>
                       </svg>
-                      Captura Facial
+                      Captura facial
                    </a>
                  @if((Auth::user()->can('permission', 'citizen.create') || Auth::user()->can('permission', 'citizen.edit')) && ($this->action == 'create' || $this->citizen->state == \App\Models\Citizen::STATE_ACTIVE))
                    <a wire:click="initFinalization" class="btn btn-primary inline-flex">
@@ -668,7 +668,7 @@ role="dialog"  aria-hidden="true">
                       </div>
                       <div class="col-lg-7">
                          <div class="mb-3">
-                            <label class="form-label">Nome do Cidadão<span
+                            <label class="form-label">Nome do cidadão<span
                                class="error_tag">*</span></label>
                             <div class="input-group input-group-flat">
                                <input wire:model="fields.name"
@@ -794,7 +794,7 @@ role="dialog"  aria-hidden="true">
                          @endif
                       </div>
                       <div class="col-lg-2">
-                         <label class="form-label">Sexo Biológico<span
+                         <label class="form-label">Sexo biológico<span
                             class="error_tag">*</span></label>
                          <div class="input-group input-group-flat">
                             <select wire:model="fields.genre_biologic_id" class="form-control ps-0" name="select">
@@ -805,13 +805,13 @@ role="dialog"  aria-hidden="true">
                          </div>
                          @if (in_array("genre_biologic_id", $errorsKeys))
                          <div class="error_tag" role="alert">
-                            O campo Sexo Biológico é obrigatório
+                            O campo Sexo biológico é obrigatório
                          </div>
                          @endif
                       </div>
                       <div class="col-lg-2">
                          <div class="mb-3">
-                            <label class="form-label">Estado Civil<span
+                            <label class="form-label">Estado civil<span
                                class="error_tag">*</span></label>
                             <livewire:marital-status-select.marital-status-select
                                :marital_status="$currentMatiral"/>
@@ -909,7 +909,7 @@ role="dialog"  aria-hidden="true">
                       </div>
                       <div class="col-lg-3">
                          <div class="mb-3">
-                            <label class="form-label">Município de Naturalidade<span
+                            <label class="form-label">Município de naturalidade<span
                                class="error_tag">*</span></label>
                             <livewire:county-select.county-select
                                :county="$currentCounty"
@@ -928,7 +928,7 @@ role="dialog"  aria-hidden="true">
                       </div>
                       <div class="col-lg-4">
                          <div class="mb-3">
-                            <label class="form-label">Indicador Social</label>
+                            <label class="form-label">Indicador social</label>
                             <div class="input-group input-group-flat">
                                <select @change="select($event.target.options[$event.target.selectedIndex].value)
                                   " wire:model="fields.social_indicator_id" class="form-control ps-0"
@@ -1097,7 +1097,7 @@ role="dialog"  aria-hidden="true">
                 </div>
                 @if($zone == "1" || $zone == 1)
                 <div  class="col-lg-4 mb-3">
-                   <label class="form-label">Tipo de Logradouro<span class="error_tag">*</span></label>
+                   <label class="form-label">Tipo de logradouro<span class="error_tag">*</span></label>
                    <livewire:users.typestreets-select :typestreet="$curretTypeStreet"
                       :type="'country_street'"/>
                    @if (in_array("country_street", $errorsKeys))
@@ -1108,7 +1108,7 @@ role="dialog"  aria-hidden="true">
                 </div>
                 @else
                 <div class="col-lg-4 mb-3">
-                   <label class="form-label">Tipo de Logradouro<span class="error_tag">*</span></label>
+                   <label class="form-label">Tipo de logradouro<span class="error_tag">*</span></label>
                    <livewire:users.typestreets-select :typestreet="$curretTypeStreet"/>
                 </div>
                 @endif
@@ -1188,7 +1188,7 @@ role="dialog"  aria-hidden="true">
                 </div>
                 @endif
                 <div class="col-lg-4 mb-3">
-                   <label class="form-label">Tel. Celular<span
+                   <label class="form-label">Tel. celular<span
                       class="error_tag">*</span></label>
                    <input onclick="IMask(
                       this, {
@@ -1198,7 +1198,7 @@ role="dialog"  aria-hidden="true">
                       autocomplete="off" required/>
                    @if (in_array("cell", $errorsKeys))
                    <div class="error_tag" role="alert">
-                      O campo Tel. Celular é obrigatório
+                      O campo Tel. celular é obrigatório
                    </div>
                    @endif
                 </div>
@@ -1223,7 +1223,7 @@ role="dialog"  aria-hidden="true">
                       autocomplete="off" required>
                 </div>
                 <div class="col-lg-4 mb-3">
-                  <label class="form-label">Confirmar Email</label>
+                  <label class="form-label">Confirmar email</label>
                   <input  wire:model="confirm_email"
                      type="text" class="form-control ps-0"
                      autocomplete="off" required>
@@ -1971,7 +1971,7 @@ role="dialog"  aria-hidden="true">
                                </div>
                                <div class="col-lg-3">
                                   <div class="mb-3">
-                                     <label class="form-label">Município de Naturalidade<span
+                                     <label class="form-label">Município de naturalidade<span
                                         class="error_tag">*</span></label>
                                      <livewire:county-select.county-select
                                         :defaultValue="$currentCountyCert"
@@ -1979,7 +1979,7 @@ role="dialog"  aria-hidden="true">
                                         />
                                      @if (in_array("sheet_number", $errorsKeys))
                                      <div class="error_tag" role="alert">
-                                        O campo Município de Naturalidade é obrigatório
+                                        O campo Município de naturalidade é obrigatório
                                      </div>
                                      @endif
                                   </div>
@@ -2057,7 +2057,7 @@ role="dialog"  aria-hidden="true">
 
                                @endif
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Data da Certidão/DOU<span
+                                  <label class="form-label">Data da certidão/DOU<span
                                      class="error_tag">*</span></label>
                                   <input onclick="IMask(
                                      this, {
