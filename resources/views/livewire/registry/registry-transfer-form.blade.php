@@ -114,7 +114,7 @@
                            <th><button class="table-sort" >RG</button></th>
                            <th><button class="table-sort" >Nome</button></th>
                            <th><button class="table-sort" >CPF</button></th>
-                           <th><button class="table-sort" >Data de Nascimento</button></th>
+                           <th><button class="table-sort" >Data de nascimento</button></th>
                         </tr>
                      </thead>
                      <tbody class="table-tbody">
