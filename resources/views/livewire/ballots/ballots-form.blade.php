@@ -24,11 +24,8 @@
                          @endif
 
                          @if ($selectedTab == 'remanejamento')
-                              CÉDULAS INUTILIZAÇÃO
+                              REMANEJAR CÉDULAS
                          @endif
-
-
-
                          
 
                     </h2>
