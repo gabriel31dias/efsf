@@ -5,12 +5,12 @@
           <div class="row g-2 align-items-center">
              <div class="col">
                 <h2 class="page-title">
-                    Cédulas emitidas
+                    CÉDULAS EMITIDAS
                     @if($type == 1)
-                        em lote
+                        EM LOTE
                     @endif
                     @if($type == 2)
-                     de forma avulsa
+                     DE FORMA AVULSA
                     @endif
                 </h2>
              </div>
