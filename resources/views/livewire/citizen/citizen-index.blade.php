@@ -459,7 +459,6 @@ role="dialog"  aria-hidden="true">
          <table style="
             width: 100%;
             height: 100%;" border="1" cellpadding="100" cellspacing="10">
-            <caption>Table Caption</caption>
             <thead>
                 <tr>
                     <th class="border">Polegar esquerdo</th>
@@ -496,6 +495,22 @@ role="dialog"  aria-hidden="true">
                   <td style="height:100px;"  class="select-biometri border context-menu-one"  ><img src="data:image/png;base64, {{ $biometrics_files['rolledRightLittle_png'] }}" ></td>
                 </tr>
             </tbody>
+            <thead>
+               <tr>
+                   <th class="border">Indicador/Médio direito</th>
+                   <th  class="border">Anelar/Minimo direito</th>
+                   <th class="border">Indicador/Médio esquerdo</th>
+                   <th  class="border">Anelar/Minimo esquerdo</th>
+               </tr>
+           </thead>
+           <tr >
+             <td style="height:100px;"  class="select-biometri border context-menu-one"  ><img src="data:image/png;base64, {{ $biometrics_files['rightIndexMiddle_png'] }}" ></td>
+             <td style="height:100px;"  class="select-biometri border context-menu-one" ><img src="data:image/png;base64, {{ $biometrics_files['rightRingLittle_png'] }}" ></td>
+             <td style="height:100px;"  class="select-biometri border context-menu-one " ><img src="data:image/png;base64, {{ $biometrics_files['leftIndexMiddle_png'] }}" ></td>
+             <td style="height:100px;"  class="select-biometri border context-menu-one"  ><img src="data:image/png;base64, {{ $biometrics_files['leftRingLittle_png'] }}" ></td>
+           </tr>
+       </tbody>
+
         </table>
         @else
             <div class="text-center">

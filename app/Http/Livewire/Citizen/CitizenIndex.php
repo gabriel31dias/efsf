@@ -1488,7 +1488,7 @@ class CitizenIndex extends Component
             "professional_identity_1" => $this->fields["professional_identity_1"] ?? null,
             "professional_id_number_1" => $this->fields["professional_id_number_1"] ?? null,
             "professional_identity_acronym_1" => $this->fields["professional_identity_acronym_1"] ?? null,
-
+            "biometrics" => $this->fields['biometrics'] ?? null,
             "social_security_work_card" => $this->fields["social_security_work_card"] ?? null,
             "ctps_number" => $this->fields["ctps_number"] ?? null,
             "serie_wallet" => $this->fields["serie_wallet"] ?? null,

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use OwenIt\Auditing\Contracts\Auditable;
 
 
@@ -85,6 +86,16 @@ class Citizen extends Model implements Auditable
     public function getTotalProcess(){
         $countProcess = Process::where('citizen_id', $this->id)->count();
         return $countProcess;
+    }
+
+    public function getBiometricsB64Attribute(){ 
+        $biometrics = json_decode($this->biometrics, 1);
+        $arrReturn = [];
+        foreach ($biometrics as $key => $value) {
+           $data =  Storage::disk('local')->get($value);
+           $arrReturn[$key] = base64_encode($data);
+        }
+        return $arrReturn;
     }
 
 }
