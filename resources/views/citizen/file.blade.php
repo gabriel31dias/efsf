@@ -11,7 +11,6 @@
          overflow: hidden;
          position: relative;
          box-sizing: border-box;
-         page-break-after: always;
          }
          body { background: #e0e0e0 }
          @media screen {
@@ -136,6 +135,20 @@
          border: 1px solid #111;
          text-align: left;
          padding: 25px;
+         }
+
+         figure {
+            margin: auto;
+            text-align: center
+         }
+
+         figcaption {
+            margin-bottom: 2px;
+            font-weight: bold;
+            background-color: rgb(23, 28, 100);
+            color: white;
+            padding: 2px;
+            text-align: center;
          }
       </style>
    </head>
@@ -288,26 +301,98 @@
             <table >
                <tbody style="width: 100%">
                   <tr class="gn-seletable">
-                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Polegar esquerdo</td>
-                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;" >Indicador esquerdo</td>
-                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;" >Médio esquerdo</td>
-                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Anelar esquerdo</td>
-                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;" >Minimo esquerdo</td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding: 0; margin:0; color:red; height: 80px; width:150px;">
+                     <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['leftThumb_png'] }}" > 
+                        <figcaption> Polegar esquerdo</figcaption>
+                     </figure>
+                    </td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;" >
+                   <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rolledLeftIndex_png'] }}" > 
+                        <figcaption> Indicador esquerdo</figcaption>
+                     </figure>
+                  </td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;" >
+                   <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rolledLeftMiddle_png'] }}" > 
+                        <figcaption>Médio esquerdo</figcaption>
+                     </figure>
+                  </td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;">
+                   <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rolledLeftRing_png'] }}" > 
+                        <figcaption> Anelar esquerdo</figcaption>
+                     </figure>
+                  </td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;" >
+                   <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rolledLeftLittle_png'] }}" > 
+                        <figcaption>Minimo esquerdo</figcaption>
+                     </figure>
+                  </td>
                   </tr>
                   <tr  class="gn-seletable">
-                  <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;" >Polegar direito</td>
-                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Indicador direito</td>
-                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Médio direito</td>
-                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Anelar direito</td>
-                    <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;" >Minimo direito</td>
+                  <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;" >
+                   <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rightThumb_png'] }}" > 
+                        <figcaption> Polegar direito</figcaption>
+                     </figure>
+                  </td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;">
+                   <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rolledRightIndex_png'] }}" > 
+                        <figcaption> Indicador direito</figcaption>
+                     </figure>
+                  </td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;">
+                   <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rolledRightMiddle_png'] }}" > 
+                        <figcaption> Médio direito</figcaption>
+                     </figure>
+                  </td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;">
+                   <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rolledRightRing_png'] }}" > 
+                        <figcaption> Anelar direito</figcaption>
+                     </figure>
+                  </td>
+                    <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;" >
+                   <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rolledRightLittle_png'] }}" > 
+                        <figcaption> Minimo direito</figcaption>
+                     </figure>
+                  </td>
                   </tr>
 
                   <tr class="gn-seletable">
-                      <td style="border: none"></td>
-                      <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Polegar/Indicador direito</td>
-                      <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Duplo Polegar</td>
-                      <td style="font-size: 10px; vertical-align: bottom;padding-bottom: 0; color:red; height: 50px;">Anelar / Mínimo direito</td>
-                      <td style="border: none"></td>
+                
+                      <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;">
+                      <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rightIndexMiddle_png'] }}" > 
+                        <figcaption> Indicador/Médio direito</figcaption>
+                     </figure>
+                     </td>
+                      <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;">
+                      <figure>
+                        <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['rightRingLittle_png'] }}" > 
+                        <figcaption> Anelar / Mínimo direito</figcaption>
+                     </figure>
+                     </td>
+                     <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;">
+                        <figure>
+                          <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['leftIndexMiddle_png'] }}" > 
+                          <figcaption> Indicador/Médio esquerdo</figcaption>
+                       </figure>
+                       </td>
+                        <td style="font-size: 10px; vertical-align: bottom;padding: 0; color:red; height: 80px; width:150px;">
+                        <figure>
+                          <img style="max-height: 80px; margin-bottom:5px; text-align: center" src="data:image/png;base64, {{ $biometrics['leftRingLittle_png'] }}" > 
+                          <figcaption> Anelar / Mínimo esquerdo</figcaption>
+                       </figure>
+                       </td>
+                     <td style="border: none">
+                     </td>
                   </tr>
                </tbody>
             </table>
