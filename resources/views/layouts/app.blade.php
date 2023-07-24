@@ -402,7 +402,7 @@
                             </li>
 
                             @livewire('global.menu-item', [
-                                'title' => 'Cadastro de Servidores',
+                                'title' => 'Cadastro de servidores',
                                 'classIcon' => 'ti ti-user-circle',
                                 'href' => route('users.index'),
                                 'can' => 'users.index',
@@ -410,21 +410,21 @@
 
 
                             @livewire('global.menu-item', [
-                                'title' => 'Cadastro de Perfis',
+                                'title' => 'Cadastro de perfis',
                                 'classIcon' => 'ti ti-user',
                                 'href' => route('profile.index'),
                                 'can' => 'profile.index',
                             ])
 
                             @livewire('global.menu-item', [
-                                'title' => 'Consultar Cidadão',
+                                'title' => 'Consultar cidadão',
                                 'classIcon' => 'ti ti-accessible',
                                 'href' => route('citizen.index'),
                                 'can' => 'citizen.index',
                             ])
 
                             @livewire('global.menu-item', [
-                                'title' => 'Cadastro de Gêneros',
+                                'title' => 'Cadastro de gêneros',
                                 'classIcon' => 'ti ti-gender-transgender',
                                 'href' => route('genres.index'),
                                 'can' => 'genre.index',
@@ -440,7 +440,7 @@
                                             <i class="ti ti-location"></i>
                                         </span>
                                         <span class="nav-link-title">
-                                            Cadastro de Localidades
+                                            Cadastro de localidades
                                         </span>
                                     </a>
                                     <div class="dropdown-menu">
@@ -454,7 +454,7 @@
 
                                                     </span>
                                                     <span class="nav-link-title">
-                                                        Cadastro de Município
+                                                        Cadastro de município
                                                     </span>
                                                 </a>
                                                 <a class="dropdown-item" href='{{ route('uf.index') }}'>
@@ -465,7 +465,7 @@
 
                                                     </span>
                                                     <span class="nav-link-title">
-                                                        Cadastro de Estado
+                                                        Cadastro de estado
                                                     </span>
                                                 </a>
                                             </div>
@@ -475,7 +475,7 @@
                             @endcan
 
                             @livewire('global.menu-item', [
-                                'title' => 'Cadastro de Características',
+                                'title' => 'Cadastro de características',
                                 'classIcon' => 'ti ti-eyeglass',
                                 'href' => route('feature.index'),
                                 'can' => 'feature.index',
@@ -491,7 +491,7 @@
 
 
                             @livewire('global.menu-item', [
-                                'title' => 'Cadastro de Postos de Atendimento',
+                                'title' => 'Cadastro de postos de atendimento',
                                 'classIcon' => 'ti ti-building-arch',
                                 'href' => route('service-station.index'),
                                 'can' => 'station.index',
@@ -508,7 +508,7 @@
                                             <i class="ti ti-plus"></i>
                                         </span>
                                         <span class="nav-link-title">
-                                            Cadastro de Cartório
+                                            Cadastro de cartório
                                         </span>
                                     </a>
                                     <div class="dropdown-menu">
@@ -516,7 +516,7 @@
                                             <div class="dropdown-menu-column">
 
                                                 @livewire('global.menu-item', [
-                                                    'title' => 'Novo Cartório',
+                                                    'title' => 'Novo cartório',
                                                     'classIcon' => 'ti ti-certificate',
                                                     'href' => route('registry.index', ['typeCreation' => 1]),
                                                     'can' => 'registry.index',
@@ -524,7 +524,7 @@
                                                 ])
 
                                                 @livewire('global.menu-item', [
-                                                    'title' => 'Transferência de Cartório',
+                                                    'title' => 'Transferência de cartório',
                                                     'classIcon' => 'ti ti-arrows-left-right',
                                                     'href' => route('registry-transfer.index', ['typeCreation' => 1]),
                                                     'can' => 'transfer.index',
@@ -532,7 +532,7 @@
                                                 ])
 
                                                 @livewire('global.menu-item', [
-                                                    'title' => 'Interdição de Cartório',
+                                                    'title' => 'Interdição de cartório',
                                                     'classIcon' => 'ti ti-ban',
                                                     'href' => route('registry-interdiction.index'),
                                                     'can' => 'interdiction.index',
@@ -540,7 +540,7 @@
                                                 ])
 
                                                 @livewire('global.menu-item', [
-                                                    'title' => 'Suspensão de Certidão',
+                                                    'title' => 'Suspensão de certidão',
                                                     'classIcon' => 'ti ti-ban',
                                                     'href' => route('registry-suspension.index'),
                                                     'can' => 'suspension.index',
@@ -548,7 +548,7 @@
                                                 ])
 
                                                 @livewire('global.menu-item', [
-                                                    'title' => 'Bloqueio de Certidão',
+                                                    'title' => 'Bloqueio de certidão',
                                                     'classIcon' => 'ti ti-ban',
                                                     'href' => route('blocked-certificate.index'),
                                                     'can' => 'blocked.index',
@@ -576,7 +576,7 @@
                             ])
 
                             @livewire('global.menu-item', [
-                                'title' => 'Assinaturas Diretor',
+                                'title' => 'Assinaturas diretor',
                                 'classIcon' => 'ti ti-pencil-plus',
                                 'href' => route('director-signature.index'),
                                 'can' => 'director-signature.index',
@@ -592,7 +592,7 @@
                                             <i class="ti ti-plus"></i>
                                         </span>
                                         <span class="nav-link-title">
-                                            Cadastro de Cédulas
+                                            Cadastro de cédulas
                                         </span>
                                     </a>
                                     <div class="dropdown-menu">
