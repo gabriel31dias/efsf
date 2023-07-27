@@ -28,6 +28,7 @@ use PHPUnit\Framework\Constraint\Count;
 use App\Models\BlockedCertificate;
 use App\Models\Filiation;
 use App\Models\VeritatisBiometric;
+use App\Services\Acervo\Acervo;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -291,6 +292,7 @@ class CitizenIndex extends Component
     ];
 
     public $citizen;
+    public $citizens = null;
     public $currentGenre;
     public $currentMatiral;
     public $currentUfCarteira;
@@ -644,6 +646,22 @@ class CitizenIndex extends Component
         $this->dispatchBrowserEvent('closeModalSearch', []);
     }
 
+    public function searchCitizens(){ 
+        $acervoService = new Acervo(); 
+        $search =  $acervoService->searchCitizens($this->searchRg, $this->searchCpf);
+        $this->citizens = $search['citizens'];
+    }
+
+    public function createByAcervo($rg)  { 
+       $citizen = session()->get("CITIZEN_SIC_OLD_" . $rg);
+       $this->fields = array_replace($this->fields, $citizen->getCreateFields());
+       $this->citizens = null;
+       $this->currentCountyCert = $this->fields['county_certificate'];
+       $this->currentUfCert = $this->fields['uf_certificate'];
+       $this->registrySuspension = $this->fields['registry_certificate'];
+       $this->dispatchBrowserEvent('closeModalSearch', []);
+    }
+
     public function editCitizen($id){
         $this->dispatchBrowserEvent('redirect',[
             'url'=> '/citizen/'.$id.'/edit',
@@ -958,7 +976,7 @@ class CitizenIndex extends Component
         $this->totalProcess =  1;
        
         $this->fields['via_rg'] =  $this->totalProcess;
-        
+
         if(isset($this->citizen->id)){
             $this->setCitizen($this->citizen->id);
         }else{
@@ -976,38 +994,7 @@ class CitizenIndex extends Component
         $this->getCharacteristics();
         $this->genres = Genre::all();
 
-        $citizens = new Citizen();
-        if($this->searchName){
-            $citizens = $citizens->where('name','ilike', '%'. $this->searchName .'%' );
-        }
-
-        if($this->searchRg){
-            $citizens = $citizens->where('rg','ilike', '%'. $this->searchRg .'%' );
-        }
-
-        if($this->searchCpf){
-            $citizens = $citizens->where('cpf','ilike', '%'. $this->searchCpf .'%' );
-        }
-
-        if($this->searchCpf){
-            $citizens = $citizens->where('cpf','ilike', '%'. $this->searchCpf .'%' );
-        }
-
-        if($this->searchGenrer){
-            $genrer = Genre::where('id', $this->searchGenrer)->first();
-            if(isset($genrer->id)){
-                $citizens = $citizens->where('genre_id', $genrer->id);
-            }
-        }
-
-        if($this->searchNumber){
-           //$citizens = $citizens::where('cpf','ilike', '%'. $this->searchNumber .'%' );
-        }
-
-        return view('livewire.citizen.citizen-index',
-        [
-            'citizens' =>  $citizens->get()
-        ]);
+        return view('livewire.citizen.citizen-index');
     }
 
 
