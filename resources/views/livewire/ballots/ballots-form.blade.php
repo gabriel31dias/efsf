@@ -9,22 +9,21 @@
                         Cadastro
                     </div>
                     <h2 class="page-title">
-                        
-
-                         @if ($selectedTab == 'cadastro-avulso')
-                              CÉDULAS EM LOTE
+                    
+                         @if ($selectedTab == 'cadastro-lote')
+                             NUMERAÇÃO DE CÉDULAS EM LOTE
                          @endif
 
                          @if ($selectedTab == 'cadastro-avulso')
-                              CÉDULAS AVULSAS
+                             NUMERAÇÃO DE CÉDULAS AVULSAS
                          @endif
 
                          @if ($selectedTab == 'inutilizacao')
-                              CÉDULAS INUTILIZAÇÃO
+                             NUMERAÇÃO DE CÉDULAS INUTILIZAÇÃO
                          @endif
 
                          @if ($selectedTab == 'remanejamento')
-                              REMANEJAR CÉDULAS
+                             REMANEJAR NUMERAÇÃO DE CÉDULAS
                          @endif
                          
 

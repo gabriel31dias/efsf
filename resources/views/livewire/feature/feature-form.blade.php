@@ -56,7 +56,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label class="form-label">Nome da Característica <span class="error_tag"> *</span></label>
+                                    <label class="form-label">Nome da característica <span class="error_tag"> *</span></label>
                                     <div class="input-group input-group-flat">
                                         <input wire:model="fields.name" maxlength="70" type="text"
                                             class="form-control" autocomplete="off">
