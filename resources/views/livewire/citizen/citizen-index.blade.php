@@ -90,52 +90,6 @@
                      placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
                </div>
             </div>
-            <label>Outros dados para pesquisa</label>
-            <div class="row">
-               <div class="col-lg-6 mb-3">
-                  <label class="form-label">Nome</label>
-                  <input wire:model="searchName"
-                     placeholder="Nome cidadão"
-                     type="text" class="form-control"
-                     name="example-text-input"
-                     placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
-               </div>
-               <div class="col-lg-6 mb-3">
-                  <label class="form-label">Gênero</label>
-                  <div class="input-group input-group-flat">
-                     <select wire:model="searchGenrer"
-                        class="form-control ps-0"
-                        name="select">
-
-                        @foreach ($genres as $item)
-                        <option
-                           value="{{$item['id']}}">{{$item['name']}}</option>
-                        @endforeach
-                     </select>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-lg-6 mb-3">
-                  <label class="form-label">Data de
-                  nascimento</label>
-                  <input id="nsc" onclick="IMask(
-                     this, {
-                     mask: '00/00/0000'
-                     });" wire:model="searchBirth" placeholder="Data nascimento"
-                     type="text" class="form-control date"
-                     name="example-text-input"
-                     placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
-               </div>
-               <div class="col-lg-6 mb-3">
-                  <label class="form-label">Filiação</label>
-                  <input wire:model="searchFilitation"
-                     placeholder="Filiação" type="text"
-                     class="form-control"
-                     name="example-text-input"
-                     placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
-               </div>
-            </div>
          </div>
          <div class="modal-footer">
             @can('permission', 'citizen.create')
@@ -159,7 +113,7 @@
             </a>
             @endcan
             <a style="margin-bottom:30px"
-               wire:click="goSearch()"
+               wire:click="searchCitizens()"
                onclick="$('#modal-list').modal('show');"
                class="btn btn-primary inline-flex">
                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -1038,6 +992,8 @@ role="dialog"  aria-hidden="true">
                                      data-bs-dismiss="modal"
                                      aria-label="Close"></button>
                                </div>
+                               @if($citizens)
+
                                <div class="modal-body">
                                   <div class="row">
                                      <table class="table">
@@ -1050,14 +1006,24 @@ role="dialog"  aria-hidden="true">
                                            </tr>
                                         </thead>
                                         <tbody>
-                                           @if($citizens)
                                            @foreach($citizens as $item)
-                                           <tr wire:click="editCitizen({{$item['id']}})">
-                                              <td>{{$item->name}}</td>
-                                              <td>{{$item->rg}}</td>
-                                              <td>{{$item->cpf}}</td>
-                                              <td>{{$item->created_at}}</td>
-                                           </tr>
+                                           @if (is_a($item, "App\Services\Acervo\CitizenSicOld"))
+
+                                           <tr wire:click="createByAcervo({{$item->rg}})">
+                                             <td>{{$item->nomecid}}</td>
+                                             <td>{{$item->rg}}</td>
+                                             <td>{{$item->cpfcid}}</td>
+                                             <td>{{$item->data_expedicao}}</td>
+                                          </tr>
+                                           @else 
+                                           <tr wire:click="editCitizen({{$item['id']}})" data-bs-dismiss="modal">
+                                             <td>{{$item->name}}</td>
+                                             <td>{{$item->rg}}</td>
+                                             <td>{{$item->cpf}}</td>
+                                             <td>{{$item->created_at}}</td>
+                                          </tr>
+                                           @endif
+                                          
                                            @endforeach
                                         </tbody>
                                      </table>
@@ -1065,7 +1031,7 @@ role="dialog"  aria-hidden="true">
                                   </div>
                                </div>
                                <div class="modal-footer">
-                                    @if(isset($citizens))
+                                 @if(empty($citizens))
                                     <a wire:click='createBySearch' class="btn btn-primary"
                                        data-bs-dismiss="modal">
                                     Cadastrar
@@ -1073,7 +1039,7 @@ role="dialog"  aria-hidden="true">
                                  @endif
                                   <a href="#" class="btn btn-link link-secondary"
                                      data-bs-dismiss="modal">
-                                  Cancel
+                                  Cancelar
                                   </a>
                                </div>
                             </div>
@@ -2368,6 +2334,8 @@ role="dialog"  aria-hidden="true">
 
     window.addEventListener('closeModalSearch', ({detail: {user}}) => {
         $('#modal-search').modal('hide');
+        $('#modal-list').modal('hide');
+        
     })
 
     window.addEventListener('openModalProcess', ({detail: {user}}) => {
