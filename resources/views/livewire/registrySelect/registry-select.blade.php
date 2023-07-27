@@ -6,7 +6,7 @@
        class="form-control"
           type="text"
           class="form-input"
-          placeholder="Pesquisar cartorio..."
+          placeholder="Pesquisar cartório..."
           wire:model="query"
           wire:keydown.escape="  "
           wire:keydown.arrow-up="decrementHighlight"

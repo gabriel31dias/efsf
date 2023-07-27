@@ -10,7 +10,7 @@
                       Cadastro
                    </div>
                    <h2 class="page-title">
-                      Perfil de usuário
+                      PERFIL DE ÚSUARIO
                    </h2>
                 </div>
                 <!-- Page title actions -->

@@ -4,7 +4,7 @@
        class="form-control"
           type="text"
           class="form-input"
-          placeholder="Pesquisar uf..."
+          placeholder="Pesquisar UF..."
           wire:model="query"
           wire:keydown.escape="resetValue"
           wire:keydown.arrow-up="decrementHighlight"

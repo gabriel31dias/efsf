@@ -9,7 +9,7 @@
                    Cadastro
                 </div>
                 <h2 class="page-title">
-                    Município
+                    MUNICÍPIO
                 </h2>
              </div>
              <!-- Page title actions -->

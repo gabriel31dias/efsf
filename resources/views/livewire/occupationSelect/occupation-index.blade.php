@@ -4,7 +4,7 @@
        class="form-control"
           type="text"
           class="form-input"
-          placeholder="Pesquisar Profissão..."
+          placeholder="Pesquisar profissão..."
           wire:model="query"
           wire:keydown.escape="reset1"
           wire:keydown.arrow-up="decrementHighlight"

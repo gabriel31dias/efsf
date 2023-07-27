@@ -4,7 +4,7 @@
        class="form-control"
           type="text"
           class="form-input"
-          placeholder="Pesquisar Pais..."
+          placeholder="Pesquisar pais..."
           wire:model="query"
           wire:keydown.escape="reset1"
           wire:keydown.arrow-up="decrementHighlight"
