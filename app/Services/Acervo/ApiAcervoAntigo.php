@@ -20,15 +20,21 @@ class ApiAcervoAntigo
 
     public function getJwtToken()
     {
-        $response = Http::post($this->url . 'login', ['user' => $this->token]);
-        if ($response->successful()) {
-            $data = $response->json();
-            return $data['token'];
+        try {
+
+            $response = Http::post($this->url . 'login', ['user' => $this->token]);
+            if ($response->successful()) {
+                $data = $response->json();
+                return $data['token'];
+            }
+        } catch (\Throwable $th) {
+            return "";
         }
     }
 
     public function getAcervo($rg)
     {
+        if(empty($this->jwt)) return null;
         $response = Http::asJson()->withHeaders([
             'Authorization' => 'Bearer ' . $this->jwt,
         ])->withBody(json_encode(['rg' => $rg]), 'application/json')->get($this->url . 'get-acervo');
@@ -38,5 +44,4 @@ class ApiAcervoAntigo
         }
         return null;
     }
-
 }
