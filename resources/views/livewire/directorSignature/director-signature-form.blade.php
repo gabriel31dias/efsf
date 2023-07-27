@@ -9,7 +9,7 @@
                         Cadastro
                     </div>
                     <h2 class="page-title">
-                        Assinaturas/Diretor
+                        ASSINATURA/DIRETORES
                     </h2>
                 </div>
                 <!-- Page title actions -->
@@ -39,7 +39,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mb-3">
-                                <label class="form-label">Nome Servidor<span class="error_tag"> *</span></label>
+                                <label class="form-label">Nome servidor<span class="error_tag"> *</span></label>
                                 <div class="input-group input-group-flat">
                                     <livewire:users.users-select :defaultValue="$user" />
                                 </div>

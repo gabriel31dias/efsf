@@ -76,7 +76,7 @@
                   <input onclick="IMask(
                      this, {
                      mask: '000.000.000-00'
-                     });" wire:model="searchCpf" placeholder="Cpf do cidadão"
+                     });" wire:model="searchCpf" placeholder="CPF do cidadão"
                      type="text" class="form-control cpf"
                      name="example-text-input"
                      placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
@@ -621,7 +621,7 @@ role="dialog"  aria-hidden="true">
        <li class="nav-item" role="presentation">
           <a wire:click="setSelectedTab('dados-basicos')"
           class="nav-link @if($selectedTab == "" || $selectedTab == "dados-basicos") active @else   @endif"
-          data-bs-toggle="tab" aria-selected="true" role="tab">Dados Básicos</a>
+          data-bs-toggle="tab" aria-selected="true" role="tab">Dados básicos</a>
        </li>
        <li role="presentation">
           <a wire:click="setSelectedTab('endereco')"
