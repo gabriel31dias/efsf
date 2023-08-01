@@ -193,6 +193,7 @@ id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
                         <label class="form-label">Tipo de Isenção<span class="error_tag">*</span></label>
                         <select wire:model="exemption_type" class="form-control ps-0" name="select">
                             <option value="" disabled selected>Selecione</option>
+                            
                             @foreach (App\Models\Process::PAYMENT_EXEMPTION_TYPES as $type)
                                 <option value="{{ $type }}">{{ $type }}</option>
                             @endforeach
@@ -2032,7 +2033,7 @@ role="dialog"  aria-hidden="true">
                               </div>
 
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Tipo de Casamento<span
+                                  <label class="form-label">Tipo de casamento<span
                                      class="error_tag">*</span></label>
                                   <div  class="input-group input-group-flat">
                                      <select name="same_sex_marriage" wire:model="fields.same_sex_marriage" class="form-control ps-0" wire:ignore>
