@@ -76,7 +76,7 @@
                   <input onclick="IMask(
                      this, {
                      mask: '000.000.000-00'
-                     });" wire:model="searchCpf" placeholder="CPF do cidadão"
+                     });" wire:model="searchCpf" placeholder="CPF"
                      type="text" class="form-control cpf"
                      name="example-text-input"
                      placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
@@ -921,7 +921,7 @@ role="dialog"  aria-hidden="true">
                       </div>
                       <div class="col-lg-4">
                          <div class="mb-3">
-                            <label class="form-label">Nº Social</label>
+                            <label class="form-label">Nº social</label>
                             <div class="input-group input-group-flat">
                                <input x-show="isOpen == 1 || isOpen == 2" id='1'
                                   wire:model="fields.n_social" type="text"
@@ -955,7 +955,7 @@ role="dialog"  aria-hidden="true">
                       @endif
                       <div class="col-lg-4">
                          <div class="mb-3">
-                            <label class="form-label">Data Cadastro<span
+                            <label class="form-label">Data cadastro<span
                                class="error_tag">*</span></label>
                             <input id="date" maxlength="11" type="text"
                                class="form-control ps-0" autocomplete="off" disabled
@@ -1884,7 +1884,7 @@ role="dialog"  aria-hidden="true">
                                      autocomplete="off" required>
                                </div>
                                <div class="col-lg-2 mb-3">
-                                  <label class="form-label ">Nº Do Livro<span class="error_tag">*</span></label>
+                                  <label class="form-label ">Nº Do livro<span class="error_tag">*</span></label>
                                   <div class="input-group input-group-flat">
                                      <input wire:model="fields.book_number"  maxlength="70" type="text"
                                         class="form-control ps-0 "
@@ -1897,7 +1897,7 @@ role="dialog"  aria-hidden="true">
                                   @endif
                                </div>
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Letra Do Livro<span
+                                  <label class="form-label">Letra do livro<span
                                      class="error_tag">*</span></label>
                                   <div  class="input-group input-group-flat">
                                      <select wire:model="fields.book_letter" class="form-control ps-0" @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] ==  4) disabled  @endif>

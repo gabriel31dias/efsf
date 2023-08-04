@@ -51,7 +51,7 @@
                    <table class="table">
                       <thead>
                          <tr>
-                            <th><button class="table-sort" >Nome Servidor</button></th>
+                            <th><button class="table-sort" >Nome servidor</button></th>
                             <th><button class="table-sort" >Data cadastro</button></th>
                             <th><button class="table-sort" >Data ativação</button></th>
                             <th><button class="table-sort" >Data inativação</button></th>

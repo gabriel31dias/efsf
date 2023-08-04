@@ -62,7 +62,7 @@
 
                      <div class="col-lg-2">
                         <div class="mb-3">
-                           <label class="form-label">Nº do Livro<span class="error_tag">*</span></label>
+                           <label class="form-label">Nº do livro<span class="error_tag">*</span></label>
 
                             <div class="input-group input-group-flat">
                                 <input wire:model="fields.book_number" type="number" min="0" class="form-control" autocomplete="off">
