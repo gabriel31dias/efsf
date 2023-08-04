@@ -138,7 +138,7 @@
                                             </div>
 
                                             <div class="col-lg-3">
-                                                <label class="form-label">Código Inicial<span class="error_tag">
+                                                <label class="form-label">Código inicial<span class="error_tag">
                                                         *</span></label>
                                                 <div class="input-group input-group-flat">
                                                     <input wire:model="fields.initial" maxlength="70" type="text"
@@ -147,7 +147,7 @@
                                             </div>
 
                                             <div class="col-lg-3">
-                                                <label class="form-label">Código Final<span class="error_tag">
+                                                <label class="form-label">Código final<span class="error_tag">
                                                         *</span></label>
                                                 <div class="input-group input-group-flat">
                                                     <input wire:model="fields.final" maxlength="70" type="text"
@@ -156,7 +156,7 @@
                                             </div>
 
                                             <div class="col-lg-3">
-                                                <label class="form-label">Face Cédula:<span class="error_tag">
+                                                <label class="form-label">Face cédula:<span class="error_tag">
                                                         *</span></label>
                                                 <div class="input-group input-group-flat">
 
@@ -211,7 +211,7 @@
                                                     <div class="card-body">
                                                         <div id="table-default" class="table-responsive">
                                                             <label style="margin-bottom: 1%">Erros encontrados ao
-                                                                cadastrar cédulas</label>
+                                                                cédulas</label>
                                                             <table class="table">
                                                                 <thead>
                                                                     <tr>

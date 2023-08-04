@@ -15,7 +15,10 @@ class Occupation extends Seeder
      */
     public function run()
     {
-        DB::table('occupations')->insert(['name' => 'name']); 
+        DB::table('occupations')->insert(['name' => 'Estudante']); 
+        DB::table('occupations')->insert(['name' => 'Autônomo']); 
+        DB::table('occupations')->insert(['name' => 'Não alfabetizado']); 
+        DB::table('occupations')->insert(['name' => 'Não possui']);
         DB::table('occupations')->insert(['name' => 'Oficial general da aeronáutica']); 
         DB::table('occupations')->insert(['name' => 'Oficial general do exército']); 
         DB::table('occupations')->insert(['name' => 'Oficial general da marinha']); 
