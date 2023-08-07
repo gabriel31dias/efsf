@@ -2043,17 +2043,23 @@ role="dialog"  aria-hidden="true">
                                  </div>
                               </div>
 
+                             
+                              @if($fields['type_of_certificate_new'] == 2)
                                <div class="col-lg-3 mb-3">
+                                
                                   <label class="form-label">Tipo de casamento<span
                                      class="error_tag">*</span></label>
                                   <div  class="input-group input-group-flat">
+                                  
                                      <select name="same_sex_marriage" wire:model="fields.same_sex_marriage" class="form-control ps-0" wire:ignore>
                                         <option value="0">Selecione</option>
                                         <option value="1">Tradicional</option>
                                         <option value="2">Homoafetivo</option>
                                      </select>
+                                     
                                   </div>
                                </div>
+                               @endif
 
 
                                @endif
