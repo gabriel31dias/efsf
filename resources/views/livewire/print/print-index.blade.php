@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="mb-3">
-                            <label class="form-label">Data Inicial</label>
+                            <label class="form-label">Data inicial</label>
                             <div class="input-group input-group-flat">
                                 <input wire:model="filter.startDate" type="date" class="form-control"
                                     autocomplete="off">
