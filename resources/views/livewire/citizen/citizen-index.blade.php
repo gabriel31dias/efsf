@@ -64,7 +64,7 @@
       role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">Consultar</h5>
+            <h5 class="modal-title">CONSULTAR</h5>
             <button type="button" class="btn-close"
                data-bs-dismiss="modal"
                aria-label="Close"></button>
@@ -174,7 +174,7 @@ id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
                         class="form-control ps-0" autocomplete="off"   readonly >
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label class="form-label">Via do RG {{$totalProcess}}<span class="error_tag">*</span></label>
+                        <label class="form-label">Via do RG<span class="error_tag">*</span></label>
                         <input wire:model="fields.via_rg" maxlength="70" type="text"
                         class="form-control ps-0" autocomplete="off"  value="{{$totalProcess + 1 ?? 0}}" readonly >
                     </div>
@@ -1164,7 +1164,7 @@ role="dialog"  aria-hidden="true">
                    @endif
                 </div>
                 <div class="col-lg-4 mb-3">
-                   <label class="form-label">Ponto de Referência<span
+                   <label class="form-label">Ponto de referência<span
                       class="error_tag">*</span></label>
                    <input wire:model="fields.reference_point" maxlength="70"
                       type="text"
@@ -1884,7 +1884,7 @@ role="dialog"  aria-hidden="true">
                                      autocomplete="off" required>
                                </div>
                                <div class="col-lg-2 mb-3">
-                                  <label class="form-label ">Nº Do livro<span class="error_tag">*</span></label>
+                                  <label class="form-label ">Nº do livro<span class="error_tag">*</span></label>
                                   <div class="input-group input-group-flat">
                                      <input wire:model="fields.book_number"  maxlength="70" type="text"
                                         class="form-control ps-0 "

@@ -60,7 +60,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Tipo Anexo<span class="error_tag">
+                                        <label class="form-label">Tipo anexo<span class="error_tag">
                                                 {{ $attachmentType }} *</span></label>
                                         <select wire:model="attachmentType" class="form-control ps-0" wire:ignore="">
                                             <option value="0">Selecione</option>
@@ -103,7 +103,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Tipo Anexo<span class="error_tag">
+                                        <label class="form-label">Tipo anexo<span class="error_tag">
                                                *</span></label>
                                                {{$typeFiles[$item['type']] ?? $item['type']}}
                                         @error('fields.name')
