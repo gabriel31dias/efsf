@@ -32,7 +32,7 @@ class CountySelect extends Component
     }
 
     public function setCounty($value){
-        $this->query = $value;
+        if($value) $this->selectItem($value['id'], $value['name']);
     }
 
     public function currentCounty()

@@ -2,8 +2,12 @@
 
 namespace App\Services\Acervo;
 
+use App\Models\Citizen;
+use App\Models\Country;
 use App\Models\County;
 use App\Models\Filiation;
+use App\Models\Genre;
+use App\Models\MaritalStatus;
 use App\Models\Registry;
 use App\Models\Uf;
 
@@ -96,12 +100,21 @@ class CitizenSicOld
     $uf = ""; 
     $county = ""; 
     $registry = "";
+    $country = "";
+    $genre = ""; 
+    $maritalStatus = "";
     if(is_array($mother)) $filiations[] = $mother;
     if(is_array($father)) $filiations[] = $father;
 
     if(!empty($this->uf_naturalidade)) $uf = Uf::where('acronym', $this->uf_naturalidade)->first();
     if(!empty($this->uf_naturalidade) && !empty($this->naturalidade)) $county = County::where('uf_id', $uf->id)->where('name', 'ilike' ,  "%$this->naturalidade%")->first();
     if(!empty($this->cod_cartorio)) $registry = Registry::where('id', $this->cod_cartorio)->first();
+    if(!empty($this->pais)) $country = Country::where('name', 'ilike' ,  "%$this->pais%")->first();
+    if(!empty($this->estado_civil)) $maritalStatus = MaritalStatus::where('name', 'ilike' ,  "%$this->estado_civil%")->first();
+    if(!empty($this->genero)) $genre = Genre::where('name', 'ilike' ,  "%$this->genero%")->first();
+    $biologicalSex = $this->getBiologicalSex($this->sexobio);
+
+
 
     $fields = [
     "name" => $this->nomecid,
@@ -117,7 +130,7 @@ class CitizenSicOld
     "complement" => $this->complemento,
     "cell" => $this->fone,
     "telephone" => $this->fone,
-    "certificate" => !empty($this->certidao_matricula) ? 1 : 0,
+    "certificate" => !empty($this->certidao_matricula) ? 1 : 2,
     "book_number" => $this->livro,
     "term_number" => $this->termo,
     "book_letter" => $this->letra_livro,
@@ -132,8 +145,14 @@ class CitizenSicOld
     "county_certificate" => $county,
     "uf_certificate" => $uf, 
     "registry_certificate" => $registry,
-
+    "country" => $country,
+    "genre_biologic_id" => $biologicalSex,
+    "genre" => $genre, 
+    "maritalStatus" => $maritalStatus,
+    "type_of_certificate" => $this->getTypeOfCertificate($this->tipo_certidao),
+    "type_of_certificate_new" =>  $this->getTypeOfCertificate($this->tipo_certidao)
     ];
+
 
     return $fields;
    }
@@ -151,6 +170,34 @@ class CitizenSicOld
     $cpfFormatado = substr($cpf, 0, 3) . '.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-' . substr($cpf, 9, 2);
 
     return $cpfFormatado;
+}
+
+function getTypeOfCertificate($value) {
+    $lowercaseValue = $this->removeAccents(strtolower($value));
+    foreach (Citizen::CERTIFICATE_TYPE as $key => $type) {
+        $lowercaseType = $this->removeAccents(strtolower($type));
+        if ($lowercaseType === $lowercaseValue) {
+            return $key;
+        }
+    }
+    return 0;
+}
+
+function getBiologicalSex($value) { 
+        $value = strtolower($value);
+        return match ($value) {
+             'feminino' => "2" ,
+             'masculino' => "1",
+             default => "0"
+        };
+}
+
+function removeAccents($str) {
+    return str_replace(
+        array('á', 'à', 'â', 'ã', 'ä', 'é', 'è', 'ê', 'ë', 'í', 'ì', 'î', 'ï', 'ó', 'ò', 'ô', 'õ', 'ö', 'ú', 'ù', 'û', 'ü'),
+        array('a', 'a', 'a', 'a', 'a', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u'),
+        strtolower($str)
+    );
 }
 
 }
