@@ -41,6 +41,19 @@ class Citizen extends Model implements Auditable
         self::STATE_DECEASED => 'bg-danger'
     ];
 
+    
+
+    const CERTIFICATE_TYPE = [ 
+        "1" => "Casado",
+        "2" => "Nascimento",
+        "3" => "Igualdade",
+        "4" => "Naturalização",
+        "5" => "Casamento/Divorcio",
+        "6" => "Casamento/Separação",
+        "7" => "Casamento/Óbito",    
+        "8" => "Nascimento no Exterior"
+    ];
+    
     public function filiations()
     {
         return $this->hasMany(Filiation::class);

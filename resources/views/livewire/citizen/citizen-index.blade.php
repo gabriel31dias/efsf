@@ -2025,9 +2025,9 @@ role="dialog"  aria-hidden="true">
                                  <div  class="input-group input-group-flat">
                                     <select wire:model="fields.type_of_certificate_new" class="form-control ps-0">
                                        <option value="0">Selecione</option>
-                                       <option value="1">Nascimento</option>
-                                       <option value="7">Nascimento no Exterionr</option>
-                                       <option value="2">Casamento</option>
+                                       <option value="2">Nascimento</option>
+                                       <option value="8">Nascimento no Exterior</option>
+                                       <option value="1">Casamento</option>
                                     </select>
                                  </div>
                               </div>

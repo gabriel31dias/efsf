@@ -659,6 +659,13 @@ class CitizenIndex extends Component
        $this->currentCountyCert = $this->fields['county_certificate'];
        $this->currentUfCert = $this->fields['uf_certificate'];
        $this->registrySuspension = $this->fields['registry_certificate'];
+       
+       if(!empty($this->fields['maritalStatus'])) $this->emit('setMaritalStatus', $this->fields['maritalStatus']);
+       if(!empty($this->fields['genre'])) $this->emit('setGenre', $this->fields['genre']);
+       if(!empty($this->fields['uf_certificate'])) $this->emit('setUf', $this->fields['uf_certificate']);
+       if(!empty($this->fields['county_certificate'])) $this->emit('setCounty', $this->fields['county_certificate']);
+       if(!empty($this->fields['country'])) $this->emit('setCountry', $this->fields['country']);
+
        $this->dispatchBrowserEvent('closeModalSearch', []);
     }
 

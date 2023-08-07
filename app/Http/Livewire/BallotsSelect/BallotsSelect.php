@@ -29,7 +29,7 @@ class BallotsSelect extends Component
 
     public $customEvent;
 
-    protected $listeners = ['clearServiceStationField', 'setCounty'];
+    protected $listeners = ['clearServiceStationField'];
 
     public function mount()
     {
@@ -37,10 +37,6 @@ class BallotsSelect extends Component
         $this->resetValue();
         $this->currentCounty();
         if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->name);
-    }
-
-    public function setCounty($value){
-        $this->query = $value;
     }
 
     public function selectedUnit($unit){

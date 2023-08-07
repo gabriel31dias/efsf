@@ -37,7 +37,7 @@ class UfSelect extends Component
     }
 
     public function setUf($uf){
-        $this->query = $uf;
+        if($uf) $this->selectItem($uf['id'], $uf['name']);
     }
 
     public function resetValue()

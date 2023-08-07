@@ -20,7 +20,7 @@ class CountrySelect extends Component
     protected $listeners = ['clearServiceStationField', 'setCountry'];
 
     public function setCountry($country){
-        $this->query = $country;
+        if($country) $this->selectItem($country['id'], $country['name']);
     }
 
     public function currentCounty()

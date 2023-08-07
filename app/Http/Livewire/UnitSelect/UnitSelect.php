@@ -20,17 +20,13 @@ class UnitSelect extends Component
     public $defaultValue;
     public $customEvent;
 
-    protected $listeners = ['clearServiceStationField', 'setCounty'];
+    protected $listeners = ['clearServiceStationField'];
 
     public function mount()
     {
         $this->resetValue();
         $this->currentCounty();
         if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->name);
-    }
-
-    public function setCounty($value){
-        $this->query = $value;
     }
 
     public function currentCounty()

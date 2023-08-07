@@ -31,7 +31,7 @@ class MaritalStatusSelect extends Component
     }
 
     public function setMaritalStatus($maritalStatus){
-        $this->query = $maritalStatus;
+        if($maritalStatus) $this->selectItem($maritalStatus['id'], $maritalStatus['name']);
     }
 
     public function reset1()
