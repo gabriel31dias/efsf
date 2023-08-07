@@ -63,7 +63,7 @@
 
                     <div class="col-lg-3">
                         <div class="mb-3">
-                           <label class="form-label">Data Inicio <span class="error_tag"> *</span></label>
+                           <label class="form-label">Data inicio <span class="error_tag"> *</span></label>
                            <div class="input-group input-group-flat">
                               <input type="date" wire:model="fields.start_date"
                                  class="form-control" autocomplete="off" />

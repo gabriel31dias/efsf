@@ -64,7 +64,7 @@
       role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">Consultar</h5>
+            <h5 class="modal-title">CONSULTAR</h5>
             <button type="button" class="btn-close"
                data-bs-dismiss="modal"
                aria-label="Close"></button>
@@ -76,7 +76,7 @@
                   <input onclick="IMask(
                      this, {
                      mask: '000.000.000-00'
-                     });" wire:model="searchCpf" placeholder="CPF do cidadão"
+                     });" wire:model="searchCpf" placeholder="CPF"
                      type="text" class="form-control cpf"
                      name="example-text-input"
                      placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
@@ -174,7 +174,7 @@ id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
                         class="form-control ps-0" autocomplete="off"   readonly >
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label class="form-label">Via do RG {{$totalProcess}}<span class="error_tag">*</span></label>
+                        <label class="form-label">Via do RG<span class="error_tag">*</span></label>
                         <input wire:model="fields.via_rg" maxlength="70" type="text"
                         class="form-control ps-0" autocomplete="off"  value="{{$totalProcess + 1 ?? 0}}" readonly >
                     </div>
@@ -193,6 +193,7 @@ id="modal-processo" tabindex="-1" role="dialog" aria-hidden="true">
                         <label class="form-label">Tipo de Isenção<span class="error_tag">*</span></label>
                         <select wire:model="exemption_type" class="form-control ps-0" name="select">
                             <option value="" disabled selected>Selecione</option>
+                            
                             @foreach (App\Models\Process::PAYMENT_EXEMPTION_TYPES as $type)
                                 <option value="{{ $type }}">{{ $type }}</option>
                             @endforeach
@@ -920,7 +921,7 @@ role="dialog"  aria-hidden="true">
                       </div>
                       <div class="col-lg-4">
                          <div class="mb-3">
-                            <label class="form-label">Nº Social</label>
+                            <label class="form-label">Nº social</label>
                             <div class="input-group input-group-flat">
                                <input x-show="isOpen == 1 || isOpen == 2" id='1'
                                   wire:model="fields.n_social" type="text"
@@ -954,7 +955,7 @@ role="dialog"  aria-hidden="true">
                       @endif
                       <div class="col-lg-4">
                          <div class="mb-3">
-                            <label class="form-label">Data Cadastro<span
+                            <label class="form-label">Data cadastro<span
                                class="error_tag">*</span></label>
                             <input id="date" maxlength="11" type="text"
                                class="form-control ps-0" autocomplete="off" disabled
@@ -1163,7 +1164,7 @@ role="dialog"  aria-hidden="true">
                    @endif
                 </div>
                 <div class="col-lg-4 mb-3">
-                   <label class="form-label">Ponto de Referência<span
+                   <label class="form-label">Ponto de referência<span
                       class="error_tag">*</span></label>
                    <input wire:model="fields.reference_point" maxlength="70"
                       type="text"
@@ -1883,7 +1884,7 @@ role="dialog"  aria-hidden="true">
                                      autocomplete="off" required>
                                </div>
                                <div class="col-lg-2 mb-3">
-                                  <label class="form-label ">Nº Do Livro<span class="error_tag">*</span></label>
+                                  <label class="form-label ">Nº do livro<span class="error_tag">*</span></label>
                                   <div class="input-group input-group-flat">
                                      <input wire:model="fields.book_number"  maxlength="70" type="text"
                                         class="form-control ps-0 "
@@ -1896,7 +1897,7 @@ role="dialog"  aria-hidden="true">
                                   @endif
                                </div>
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Letra Do Livro<span
+                                  <label class="form-label">Letra do livro<span
                                      class="error_tag">*</span></label>
                                   <div  class="input-group input-group-flat">
                                      <select wire:model="fields.book_letter" class="form-control ps-0" @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] ==  4) disabled  @endif>
@@ -2031,17 +2032,23 @@ role="dialog"  aria-hidden="true">
                                  </div>
                               </div>
 
+                             
+                              @if($fields['type_of_certificate_new'] == 2)
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Tipo de Casamento<span
+                                
+                                  <label class="form-label">Tipo de casamento<span
                                      class="error_tag">*</span></label>
                                   <div  class="input-group input-group-flat">
+                                  
                                      <select name="same_sex_marriage" wire:model="fields.same_sex_marriage" class="form-control ps-0" wire:ignore>
                                         <option value="0">Selecione</option>
                                         <option value="1">Tradicional</option>
                                         <option value="2">Homoafetivo</option>
                                      </select>
+                                     
                                   </div>
                                </div>
+                               @endif
 
 
                                @endif

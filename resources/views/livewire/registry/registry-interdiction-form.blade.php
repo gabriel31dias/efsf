@@ -83,7 +83,7 @@
                      </div>
                   <div class="col-lg-12">
                      <div class="mb-3">
-                        <label class="form-label">OBSERVAÇÃO</label>
+                        <label class="form-label">Observação</label>
                         <div class="input-group input-group-flat">
                            <textarea wire:model="fields.note"
                               class="form-control" autocomplete="off" required maxlength="500"> </textarea>
