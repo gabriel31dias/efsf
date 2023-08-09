@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +23,7 @@ class Citizen extends Model implements Auditable
 
 
     protected $casts = [
-        'id' => 'integer'
+        'id' => 'integer',
     ];
 
     const STATE_ACTIVE = 1;
@@ -99,6 +100,10 @@ class Citizen extends Model implements Auditable
     public function getTotalProcess(){
         $countProcess = Process::where('citizen_id', $this->id)->count();
         return $countProcess;
+    }
+
+    public function getBirthDateBrAttribute(){ 
+        return Carbon::createFromFormat('Y-m-d', $this->birth_date)->format('d/m/Y');
     }
 
     public function getBiometricsB64Attribute(){ 
