@@ -89,6 +89,11 @@
                      name="example-text-input"
                      placeholder="Busque por Nome, Rg, Genero, Data de nascimento, Filiação">
                </div>
+               <div class="col-lg-12 mb-3">
+                  <label class="form-label">Nome</label>
+                  <input wire:model="searchName" placeholder="Nome"
+                     type="text" class="form-control">
+               </div>
             </div>
          </div>
          <div class="modal-footer">
@@ -113,7 +118,7 @@
             </a>
             @endcan
             <a style="margin-bottom:30px"
-               wire:click="searchCitizens()"
+               wire:click="searchCitizens"
                onclick="$('#modal-list').modal('show');"
                class="btn btn-primary inline-flex">
                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -984,16 +989,17 @@ role="dialog"  aria-hidden="true">
                       </div>
                       <div wire:ignore.self class="modal modal-blur fade" id="modal-list"
                          tabindex="-1" role="dialog" aria-hidden="true">
+                         @if($citizens && $searchComplete)
+
                          <div class="modal-dialog modal-lg modal-dialog-centered"
                             role="document">
                             <div class="modal-content">
                                <div class="modal-header">
-                                  <h5 class="modal-title">Resultados encontrados</h5>
+                                  <h5 class="modal-title">Resultados Encontrados</h5>
                                   <button type="button" class="btn-close"
                                      data-bs-dismiss="modal"
                                      aria-label="Close"></button>
                                </div>
-                               @if($citizens)
 
                                <div class="modal-body">
                                   <div class="row">
@@ -1003,7 +1009,8 @@ role="dialog"  aria-hidden="true">
                                               <th scope="col">Nome</th>
                                               <th scope="col">Rg</th>
                                               <th scope="col">Cpf</th>
-                                              <th scope="col">Data Dascimento</th>
+                                              <th scope="col">Data Nascimento</th>
+                                              <th>Filiações</th>
                                            </tr>
                                         </thead>
                                         <tbody>
@@ -1014,23 +1021,71 @@ role="dialog"  aria-hidden="true">
                                              <td>{{$item->nomecid}}</td>
                                              <td>{{$item->rg}}</td>
                                              <td>{{$item->cpfcid}}</td>
-                                             <td>{{$item->data_expedicao}}</td>
+                                             <td>{{$item->data_nascimento}}</td>
+                                             <td>
+                                                @if ($item->maecid)
+                                                   <li>{{ $item->maecid }}</li>                                                 
+                                                @endif
+                                                @if ($item->paicid)
+                                                   <li>{{ $item->paicid }}</li>                                                 
+                                                @endif
+                                             </td>
                                           </tr>
                                            @else 
                                            <tr wire:click="editCitizen({{$item['id']}})" data-bs-dismiss="modal">
                                              <td>{{$item->name}}</td>
                                              <td>{{$item->rg}}</td>
                                              <td>{{$item->cpf}}</td>
-                                             <td>{{$item->created_at}}</td>
+                                             <td>{{$item->birth_date_br}}</td>
+                                             <td>
+                                                @foreach ($item->filiations as $filiation)
+                                                   <li>{{ $filiation->name }}</li>                                                    
+                                                @endforeach
+                                             </td>
                                           </tr>
                                            @endif
                                           
                                            @endforeach
                                         </tbody>
                                      </table>
-                                     @endif
                                   </div>
                                </div>
+                               @elseif($searchComplete == false)
+
+                                    <div class="modal-dialog modal-lg modal-dialog-centered"
+                                    role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                       <h5 class="modal-title">Buscando</h5>
+                                       <button type="button" class="btn-close"
+                                          data-bs-dismiss="modal"
+                                          aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <div class="progress">
+                                       <div class="progress-bar progress-bar-indeterminate"></div>
+                                       </div>
+                                    </div>
+
+                              @else 
+
+                              <div class="modal-dialog modal-lg modal-dialog-centered"
+                              role="document">
+                              <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title">Nenhum Resultado Encontrado</h5>
+                                 <button type="button" class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                          
+                              </div>
+
+                              @endif
+
+
+
                                <div class="modal-footer">
                                  @if(empty($citizens))
                                     <a wire:click='createBySearch' class="btn btn-primary"
@@ -1038,7 +1093,7 @@ role="dialog"  aria-hidden="true">
                                     Cadastrar
                                     </a>
                                  @endif
-                                  <a href="#" class="btn btn-link link-secondary"
+                                  <a wire:click='cancelSearch' href="#" class="btn btn-link link-secondary"
                                      data-bs-dismiss="modal">
                                   Cancelar
                                   </a>
@@ -2097,8 +2152,8 @@ role="dialog"  aria-hidden="true">
 
  <script>
 
-    var socket = io('https://websocket-pca-sic.msbtec.com.br');
-
+/*     var socket = io('https://websocket-pca-sic.msbtec.com.br');
+ */
     let imgSelectedCapture = ''
 
 
@@ -2128,7 +2183,7 @@ role="dialog"  aria-hidden="true">
     document.addEventListener('turbolinks:load', () => {
 
 
-        var socket = io('https://websocket-pca-sic.msbtec.com.br');
+       /*  var socket = io('https://websocket-pca-sic.msbtec.com.br');
         criarRoom()
 
         socket.on('receiveMessage', function (data) {
@@ -2136,7 +2191,7 @@ role="dialog"  aria-hidden="true">
                alert("teste recebido")
                alert(JSON.stringify(data))
             }
-        });
+        }); */
 
         let path = window.location.pathname;
         if (!path.includes("edit")) {

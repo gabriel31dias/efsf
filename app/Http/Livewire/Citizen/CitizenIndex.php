@@ -293,6 +293,7 @@ class CitizenIndex extends Component
 
     public $citizen;
     public $citizens = null;
+    public $searchComplete = false;
     public $currentGenre;
     public $currentMatiral;
     public $currentUfCarteira;
@@ -646,10 +647,17 @@ class CitizenIndex extends Component
         $this->dispatchBrowserEvent('closeModalSearch', []);
     }
 
-    public function searchCitizens(){ 
+    public function searchCitizens(){
         $acervoService = new Acervo(); 
-        $search =  $acervoService->searchCitizens($this->searchRg, $this->searchCpf);
+        $search =  $acervoService->searchCitizens($this->searchRg, $this->searchCpf, $this->searchName);
         $this->citizens = $search['citizens'];
+        $this->searchComplete = true;
+    }
+
+    public function cancelSearch()
+    {
+        $this->citizens = null;
+        $this->searchComplete = false;
     }
 
     public function createByAcervo($rg)  { 

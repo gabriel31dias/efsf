@@ -13,9 +13,9 @@ class Acervo
         2. BUSCA ACERVO ANTIGO (FAZ A CONSULTA EM AMBOS OS ACERVOS ANTIGOS ATRAVES DA API )
         3. Busca INRC
     */
-    public function searchCitizens($rg, $cpf): array
+    public function searchCitizens($rg, $cpf,$name): array
     {
-        $responseSicWeb = $this->searchSicWeb($rg, $cpf);
+        $responseSicWeb = $this->searchSicWeb($rg, $cpf, $name);
         if ($responseSicWeb['success']) {
             return $responseSicWeb;
         }
@@ -27,7 +27,7 @@ class Acervo
         return ["success" => false, "citizens" => null];
     }
 
-    private function searchSicWeb($rg, $cpf)
+    private function searchSicWeb($rg, $cpf, $name)
     {
         $citizens = new Citizen();
 
@@ -35,8 +35,12 @@ class Acervo
             $citizens = $citizens->where('rg', 'ilike', '%' . $rg . '%');
         }
 
-        if ($cpf) {
-            $citizens = $citizens->where('cpf', 'ilike', '%' . $cpf . '%');
+        if ($rg) {
+            $citizens = $citizens->where('rg', 'ilike', '%' . $rg . '%');
+        }
+
+        if ($name) {
+            $citizens = $citizens->where('name', 'ilike', '%' . $name . '%');
         }
 
         $citizens = $citizens->limit(10)->get();
