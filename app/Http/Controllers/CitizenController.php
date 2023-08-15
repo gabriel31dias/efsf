@@ -94,6 +94,37 @@ class CitizenController extends Controller
         );
     }
 
+    public function getCitizen(Request $request){
+        $rg = $request->input('rg');
+        $cpf = $request->input('cpf');
+        $name = $request->input('name');
+        $gender = $request->input('gender');
+        $filiation = $request->input('filiation');
+        $birthdate = $request->input('birthdate');
+
+        $query = Citizen::query();
+
+
+        if ($rg) {
+            $query->where('rg', $rg);
+        }
+
+        if ($cpf) {
+            $query->where('cpf', $cpf);
+        }
+
+        if ($name) {
+            $query->where('name', 'like', "%$name%");
+        }
+
+        if ($birthdate) {
+            $query->whereDate('birth_date', $birthdate);
+        }
+    
+        $result = $query->get();
+        return response()->json($result);
+    }
+
     public function saveProntuario($uuiName, $id, $citizen){
         $digitalized_document = json_decode($citizen->digitalized_documents, true) ;
         $firstDocument = count($digitalized_document);

@@ -42,6 +42,7 @@ Route::post('/checkequalpassword', [App\Http\Controllers\Auth\LoginController::c
 Route::post('/savepassword', [App\Http\Controllers\Auth\LoginController::class, 'saveNewPassword'])->name('savepassword');
 
 Route::get('/citizen/{id}', [App\Http\Controllers\CitizenController::class, 'index'])->name('citizen');
+Route::get('/get-citizen', [App\Http\Controllers\CitizenController::class, 'getCitizen'])->name('getCitizen');
 
 
 Route::resource('citizen', App\Http\Controllers\CitizenController::class)->middleware('can:permission,"citizen.index"');
