@@ -69,6 +69,8 @@ class LoginController extends Controller
         }
     }
 
+   
+
     public function checkExpiration($user){
         $now = Carbon::now();
 

@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::get('/get-citizen', [App\Http\Controllers\CitizenController::class, 'getCitizen'])->name('getCitizen');
 
 
 

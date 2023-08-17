@@ -20,7 +20,7 @@ class CitizenController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('getCitizen'); 
     }
 
     public function index(Request $request)
@@ -95,6 +95,14 @@ class CitizenController extends Controller
     }
 
     public function getCitizen(Request $request){
+        $providedToken = $request->header('Authorization');
+        
+        $fixedToken = env('FIXED_TOKEN');
+
+        if ($providedToken !== $fixedToken) {
+            return response()->json(['message' => 'Bad request'], 400); 
+        }
+
         $rg = $request->input('rg');
         $cpf = $request->input('cpf');
         $name = $request->input('name');
@@ -122,6 +130,7 @@ class CitizenController extends Controller
         }
     
         $result = $query->get();
+
         return response()->json($result);
     }
 
