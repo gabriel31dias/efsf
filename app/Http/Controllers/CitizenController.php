@@ -94,6 +94,7 @@ class CitizenController extends Controller
         );
     }
 
+
     public function getCitizen(Request $request){
         $providedToken = $request->header('Authorization');
         
