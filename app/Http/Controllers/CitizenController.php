@@ -100,8 +100,6 @@ class CitizenController extends Controller
         
         $fixedToken = env('FIXED_TOKEN');
 
-        dd($providedToken, $fixedToken);
-
         if ($providedToken !== $fixedToken) {
             return response()->json(['message' => 'Bad request'], 400); 
         }
