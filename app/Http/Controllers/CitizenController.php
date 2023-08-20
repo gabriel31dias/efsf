@@ -113,7 +113,7 @@ class CitizenController extends Controller
 
         $query = Citizen::query();
 
-        
+
 
         if ($rg) {
             $query->where('rg', $rg);
@@ -125,6 +125,10 @@ class CitizenController extends Controller
 
         if ($name) {
             $query->where('name', 'like', "%$name%");
+        }
+
+        if ($filiation) {
+            $query->where('filiation', 'like', "%$filiation%");
         }
 
         if ($birthdate) {
