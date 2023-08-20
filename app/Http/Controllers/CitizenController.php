@@ -113,6 +113,7 @@ class CitizenController extends Controller
 
         $query = Citizen::query();
 
+        
 
         if ($rg) {
             $query->where('rg', $rg);
