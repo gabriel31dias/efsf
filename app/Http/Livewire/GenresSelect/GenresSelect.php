@@ -32,8 +32,8 @@ class GenresSelect extends Component
     }
 
 
-    public function setGenre($genre_name){
-        $this->query = $genre_name;
+    public function setGenre($genre){
+        if($genre) $this->selectItem($genre['id'], $genre['name']);
     }
 
     public function reset1()

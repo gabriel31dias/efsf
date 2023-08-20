@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use OwenIt\Auditing\Contracts\Auditable;
 
 
@@ -21,7 +23,7 @@ class Citizen extends Model implements Auditable
 
 
     protected $casts = [
-        'id' => 'integer'
+        'id' => 'integer',
     ];
 
     const STATE_ACTIVE = 1;
@@ -40,6 +42,19 @@ class Citizen extends Model implements Auditable
         self::STATE_DECEASED => 'bg-danger'
     ];
 
+    
+
+    const CERTIFICATE_TYPE = [ 
+        "1" => "Casado",
+        "2" => "Nascimento",
+        "3" => "Igualdade",
+        "4" => "Naturalização",
+        "5" => "Casamento/Divorcio",
+        "6" => "Casamento/Separação",
+        "7" => "Casamento/Óbito",    
+        "8" => "Nascimento no Exterior"
+    ];
+    
     public function filiations()
     {
         return $this->hasMany(Filiation::class);
@@ -48,6 +63,19 @@ class Citizen extends Model implements Auditable
     public function uf(){
         return $this->belongsTo(Uf::class);
     }
+
+    public function country(){
+        return $this->belongsTo(Country::class);
+    }
+
+    public function genre(){
+        return $this->belongsTo(Genre::class);
+    }
+
+    public function registry(){ 
+        return $this->belongsTo(Registry::class);
+    }
+
 
     public function county(){
         return $this->belongsTo(County::class);
@@ -72,6 +100,20 @@ class Citizen extends Model implements Auditable
     public function getTotalProcess(){
         $countProcess = Process::where('citizen_id', $this->id)->count();
         return $countProcess;
+    }
+
+    public function getBirthDateBrAttribute(){ 
+        return Carbon::createFromFormat('Y-m-d', $this->birth_date)->format('d/m/Y');
+    }
+
+    public function getBiometricsB64Attribute(){ 
+        $biometrics = json_decode($this->biometrics, 1);
+        $arrReturn = [];
+        foreach ($biometrics as $key => $value) {
+           $data =  Storage::disk('local')->get($value);
+           $arrReturn[$key] = base64_encode($data);
+        }
+        return $arrReturn;
     }
 
 }

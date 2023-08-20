@@ -23,7 +23,7 @@ class FunctionSelect extends Component
     public $defaultValue;
     public $customEvent;
 
-    protected $listeners = ['clearServiceStationField', 'setCounty', 'selectedUnit'];
+    protected $listeners = ['clearServiceStationField',  'selectedUnit'];
 
     public function mount()
     {
@@ -33,9 +33,6 @@ class FunctionSelect extends Component
         if(isset($this->defaultValue)) $this->selectItem($this->defaultValue->id, $this->defaultValue->name);
     }
 
-    public function setCounty($value){
-        $this->query = $value;
-    }
 
     public function selectedUnit($unit){
         $this->unit = $unit;

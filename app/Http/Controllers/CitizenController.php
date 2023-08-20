@@ -70,7 +70,7 @@ class CitizenController extends Controller
 
         $html = view('citizen.file', ['citizen' => $citizen,  'filiations' => $filiations,'photo' => $photo ?? '',
             'birthCity' => $birthCity, 'uf' => $uf, 'maritalStatus' =>  $maritalStatus, 'profession' => $profession,
-            'genre' => $genre, 'features' => $features, 'featuresx' => $featuresx
+            'genre' => $genre, 'features' => $features, 'featuresx' => $featuresx, 'biometrics' => $citizen->biometricsB64
         ]);
 
         $uuid = $this->generateUUID();

@@ -27,6 +27,8 @@ use Livewire\WithFileUploads;
 use PHPUnit\Framework\Constraint\Count;
 use App\Models\BlockedCertificate;
 use App\Models\Filiation;
+use App\Models\VeritatisBiometric;
+use App\Services\Acervo\Acervo;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -70,7 +72,7 @@ class CitizenIndex extends Component
     public $searchCpf;
     public $searchRg;
     public $is_payment_free;
-
+    public $biometrics_files;
     public $file_capture_image_preview;
     public $file_capture_image;
 
@@ -269,7 +271,8 @@ class CitizenIndex extends Component
         "district" => "",
         "height" => "",
         "features" => "",
-        "digitalized_documents" => ""
+        "digitalized_documents" => "", 
+        "biometrics" => null,
     ];
 
     public $curretTypeStreet;
@@ -289,6 +292,8 @@ class CitizenIndex extends Component
     ];
 
     public $citizen;
+    public $citizens = null;
+    public $searchComplete = false;
     public $currentGenre;
     public $currentMatiral;
     public $currentUfCarteira;
@@ -642,6 +647,36 @@ class CitizenIndex extends Component
         $this->dispatchBrowserEvent('closeModalSearch', []);
     }
 
+    public function searchCitizens(){
+        $acervoService = new Acervo(); 
+        $search =  $acervoService->searchCitizens($this->searchRg, $this->searchCpf, $this->searchName);
+        $this->citizens = $search['citizens'];
+        $this->searchComplete = true;
+    }
+
+    public function cancelSearch()
+    {
+        $this->citizens = null;
+        $this->searchComplete = false;
+    }
+
+    public function createByAcervo($rg)  { 
+       $citizen = session()->get("CITIZEN_SIC_OLD_" . $rg);
+       $this->fields = array_replace($this->fields, $citizen->getCreateFields());
+       $this->citizens = null;
+       $this->currentCountyCert = $this->fields['county_certificate'];
+       $this->currentUfCert = $this->fields['uf_certificate'];
+       $this->registrySuspension = $this->fields['registry_certificate'];
+       
+       if(!empty($this->fields['maritalStatus'])) $this->emit('setMaritalStatus', $this->fields['maritalStatus']);
+       if(!empty($this->fields['genre'])) $this->emit('setGenre', $this->fields['genre']);
+       if(!empty($this->fields['uf_certificate'])) $this->emit('setUf', $this->fields['uf_certificate']);
+       if(!empty($this->fields['county_certificate'])) $this->emit('setCounty', $this->fields['county_certificate']);
+       if(!empty($this->fields['country'])) $this->emit('setCountry', $this->fields['country']);
+
+       $this->dispatchBrowserEvent('closeModalSearch', []);
+    }
+
     public function editCitizen($id){
         $this->dispatchBrowserEvent('redirect',[
             'url'=> '/citizen/'.$id.'/edit',
@@ -956,7 +991,7 @@ class CitizenIndex extends Component
         $this->totalProcess =  1;
        
         $this->fields['via_rg'] =  $this->totalProcess;
-        
+
         if(isset($this->citizen->id)){
             $this->setCitizen($this->citizen->id);
         }else{
@@ -974,38 +1009,7 @@ class CitizenIndex extends Component
         $this->getCharacteristics();
         $this->genres = Genre::all();
 
-        $citizens = new Citizen();
-        if($this->searchName){
-            $citizens = $citizens->where('name','ilike', '%'. $this->searchName .'%' );
-        }
-
-        if($this->searchRg){
-            $citizens = $citizens->where('rg','ilike', '%'. $this->searchRg .'%' );
-        }
-
-        if($this->searchCpf){
-            $citizens = $citizens->where('cpf','ilike', '%'. $this->searchCpf .'%' );
-        }
-
-        if($this->searchCpf){
-            $citizens = $citizens->where('cpf','ilike', '%'. $this->searchCpf .'%' );
-        }
-
-        if($this->searchGenrer){
-            $genrer = Genre::where('id', $this->searchGenrer)->first();
-            if(isset($genrer->id)){
-                $citizens = $citizens->where('genre_id', $genrer->id);
-            }
-        }
-
-        if($this->searchNumber){
-           //$citizens = $citizens::where('cpf','ilike', '%'. $this->searchNumber .'%' );
-        }
-
-        return view('livewire.citizen.citizen-index',
-        [
-            'citizens' =>  $citizens->get()
-        ]);
+        return view('livewire.citizen.citizen-index');
     }
 
 
@@ -1486,7 +1490,7 @@ class CitizenIndex extends Component
             "professional_identity_1" => $this->fields["professional_identity_1"] ?? null,
             "professional_id_number_1" => $this->fields["professional_id_number_1"] ?? null,
             "professional_identity_acronym_1" => $this->fields["professional_identity_acronym_1"] ?? null,
-
+            "biometrics" => $this->fields['biometrics'] ?? null,
             "social_security_work_card" => $this->fields["social_security_work_card"] ?? null,
             "ctps_number" => $this->fields["ctps_number"] ?? null,
             "serie_wallet" => $this->fields["serie_wallet"] ?? null,
@@ -1598,6 +1602,19 @@ class CitizenIndex extends Component
     {
         $this->fields['address'] = $request['logradouro'];
         $this->fields['district'] = $request['bairro'];
+    }
+
+    public function buscarDadosVeritatis(){
+        $biometrics = VeritatisBiometric::where('cpf', $this->fields['cpf'])->orWhere('rg', $this->fields['rg'])->first();
+        if($biometrics){ 
+            $this->fields['biometrics'] = $biometrics->biometrics;
+            $this->biometrics_files =  $biometrics->biometrics_b64;
+        } else { 
+            $this->dispatchBrowserEvent('alert',[
+                'type'=> 'error',
+                'message'=> "Biometria nao localizada."
+            ]);
+        }
     }
 
 }
