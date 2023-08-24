@@ -2088,7 +2088,7 @@ role="dialog"  aria-hidden="true">
                               </div>
 
                              
-                              @if($fields['type_of_certificate_new'] == 2)
+                              @if($fields['type_of_certificate_new'] == 1)
                                <div class="col-lg-3 mb-3">
                                 
                                   <label class="form-label">Tipo de casamento<span
