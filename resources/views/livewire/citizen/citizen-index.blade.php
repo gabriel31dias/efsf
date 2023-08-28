@@ -1896,7 +1896,7 @@ role="dialog"  aria-hidden="true">
                          <div class="container-fluid">
                             <div class="row">
                                <div class="col-lg-2 mb-3">
-                                  <label class="form-label ">CERTIDÃO<span class="error_tag">*</span></label>
+                                  <label class="form-label ">Escolher certidão<span class="error_tag">*</span></label>
                                   <div class="input-group input-group-flat">
                                      <select wire:model="fields.certificate" class="form-control ps-0" wire:ignore>
                                         <option value="0">Selecione</option>
@@ -1912,7 +1912,7 @@ role="dialog"  aria-hidden="true">
                                </div>
                                @if($fields['certificate'] == 2 || $fields['certificate'] == "2")
                                <div class="col-lg-2 mb-3">
-                                  <label class="form-label ">Tipo De Certidão<span class="error_tag">*</span></label>
+                                  <label class="form-label ">Tipo de certidão<span class="error_tag">*</span></label>
                                   <div  class="input-group input-group-flat">
                                      <select wire:model="fields.type_of_certificate" class="form-control ps-0" wire:ignore>
                                         <option value="0">Selecione</option>
@@ -1932,7 +1932,7 @@ role="dialog"  aria-hidden="true">
                                   @endif
                                </div>
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Nº do Termo ou Ordem<span
+                                  <label class="form-label">Nº do termo ou ordem<span
                                      class="error_tag">*</span></label>
                                   <input wire:model="fields.term_number"  maxlength="70" type="text"
                                      class="form-control ps-0 "
@@ -2050,7 +2050,7 @@ role="dialog"  aria-hidden="true">
                                @endif
                                @if($fields['certificate'] == 1)
                                <div class="col-lg-3 mb-3">
-                                 <label class="form-label">Matricula<span
+                                 <label class="form-label">Matrícula<span
                                     class="error_tag">*</span></label>
                                  <input wire:change="changeRegistration" onclick="IMask(
                                     this, {
@@ -2066,7 +2066,7 @@ role="dialog"  aria-hidden="true">
                                  @endif
                               </div>
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Data de Assentamento da Certidão<span
+                                  <label class="form-label">Data de assentamento da certidão<span
                                      class="error_tag">*</span></label>
                                   <input onclick="IMask(
                                      this, {
@@ -2076,7 +2076,7 @@ role="dialog"  aria-hidden="true">
                                      autocomplete="off" required>
                                </div>
                                <div class="col-lg-3 mb-3">
-                                 <label class="form-label ">Tipo De Certidão<span class="error_tag">*</span></label>
+                                 <label class="form-label ">Tipo de certidão<span class="error_tag">*</span></label>
                                  <div  class="input-group input-group-flat">
                                     <select wire:model="fields.type_of_certificate_new" class="form-control ps-0">
                                        <option value="0">Selecione</option>
