@@ -1934,9 +1934,9 @@ role="dialog"  aria-hidden="true">
                                <div class="col-lg-3 mb-3">
                                   <label class="form-label">Nº do termo ou ordem<span
                                      class="error_tag">*</span></label>
-                                  <input wire:model="fields.term_number"  maxlength="70" type="text"
+                                  <input wire:model="fields.term_number" name="term_number" maxlength="70" type="text"
                                      class="form-control ps-0 "
-                                     autocomplete="off" required>
+                                     autocomplete="off" wire:ignore required>
                                </div>
                                <div class="col-lg-2 mb-3">
                                   <label class="form-label ">Nº do livro<span class="error_tag">*</span></label>
@@ -2068,7 +2068,7 @@ role="dialog"  aria-hidden="true">
                                <div class="col-lg-3 mb-3">
                                   <label class="form-label">Data de assentamento da certidão<span
                                      class="error_tag">*</span></label>
-                                  <input onclick="IMask(
+                                  <input name="certificate_entry_date" id="certificate_entry_date" onclick="IMask(
                                      this, {
                                      mask: '00/00/0000'
                                      });" wire:model="fields.certificate_entry_date"  wire:change="changeRegistration" maxlength="70" type="text"
@@ -2110,7 +2110,7 @@ role="dialog"  aria-hidden="true">
                                <div class="col-lg-3 mb-3">
                                   <label class="form-label">Data da certidão/DOU<span
                                      class="error_tag">*</span></label>
-                                  <input onclick="IMask(
+                                  <input name="dou_certificate_date" id="dou_certificate_date" onclick="IMask(
                                      this, {
                                      mask: '00/00/0000'
                                      });" wire:change="changeRegistration" wire:model="fields.dou_certificate_date" maxlength="70" type="text"
