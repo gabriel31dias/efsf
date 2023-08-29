@@ -1952,7 +1952,7 @@ role="dialog"  aria-hidden="true">
                                   @endif
                                </div>
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Letra do livro<span
+                                  <label class="form-label">Letra do livro-<span
                                      class="error_tag">*</span></label>
                                   <div  class="input-group input-group-flat">
                                      <select wire:model="fields.book_letter" class="form-control ps-0" @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] ==  4) disabled  @endif>
@@ -2088,14 +2088,14 @@ role="dialog"  aria-hidden="true">
                               </div>
 
                              
-                              @if($fields['type_of_certificate_new'] == 1)
+                              @if($fields['type_of_certificate_new'] == 1 && $fields['certificate'] == 1)
                                <div class="col-lg-3 mb-3">
                                 
                                   <label class="form-label">Tipo de casamento<span
                                      class="error_tag">*</span></label>
                                   <div  class="input-group input-group-flat">
                                   
-                                     <select name="same_sex_marriage" wire:model="fields.same_sex_marriage" class="form-control ps-0" wire:ignore>
+                                     <select  name="same_sex_marriage" wire:model="fields.same_sex_marriage" class="form-control ps-0" >
                                         <option value="0">Selecione</option>
                                         <option value="1">Tradicional</option>
                                         <option value="2">Homoafetivo</option>
