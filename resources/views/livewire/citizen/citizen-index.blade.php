@@ -1952,16 +1952,18 @@ role="dialog"  aria-hidden="true">
                                   @endif
                                </div>
                                <div class="col-lg-3 mb-3">
-                                  <label class="form-label">Letra do livro-<span
+                                  <label class="form-label">Letra do livro<span
                                      class="error_tag">*</span></label>
                                   <div  class="input-group input-group-flat">
                                      <select wire:model="fields.book_letter" class="form-control ps-0" @if($fields['type_of_certificate'] == 3 || $fields['type_of_certificate'] ==  4) disabled  @endif>
                                      <option value="0">Selecione</option>
-                                     @if($fields['type_of_certificate'] == 1 || $fields['type_of_certificate'] == 6 || $fields['type_of_certificate'] == 7 )
+                                     @if($fields['type_of_certificate'] == 1 || $fields['type_of_certificate'] ==  5  || $fields['type_of_certificate'] == 6 || $fields['type_of_certificate'] == 7 )
                                      <option value="B">B</option>
                                      <option value="B AUX">B Aux</option>
                                      <option value="E">E</option>
                                      @endif
+
+                                     
                                      @if($fields['type_of_certificate'] == 2 )
                                      <option value="A">A</option>
                                      <option value="E">E</option>
