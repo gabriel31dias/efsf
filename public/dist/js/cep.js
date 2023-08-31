@@ -10,6 +10,13 @@ if(document.getElementById('rua')){
 }
 
 function callback(conteudo) {
+if ("erro" in conteudo && conteudo.erro == true) {
+    Toast.fire({
+        icon: 'error',
+        title: 'Cep não encontrado.'
+    })
+}
+
 if (!("erro" in conteudo)) {
     //Atualiza os campos com os valores.
     Livewire.emit('updateInfoIbge',{
