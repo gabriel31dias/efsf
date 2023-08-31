@@ -13,7 +13,7 @@ class VeritatisBiometric extends Model
     protected $guarded = [];
 
     public function getBiometricsB64Attribute(){ 
-        $biometrics = json_decode($this->biometrics, 1);
+        $biometrics = json_decode($this->biometrics, 1) ?? [];
         $arrReturn = [];
         foreach ($biometrics as $key => $value) {
            $data =  Storage::disk('local')->get($value);
