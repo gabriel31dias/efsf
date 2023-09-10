@@ -88,7 +88,8 @@ class ProcessMonitor extends Component
         "27" => "DIÁRIO OFICIAL DA UNIÃO-DOU",
         "28" => "CERTIDÃO DE OPÇÃO DE NACIONALIDADE",
         "29" => "CARTEIRA DE IDENTIDADE DE ESTRAGEIRO",
-        "30" => "CARTEIRA DE AUTISTA"
+        "30" => "CARTEIRA DE AUTISTA",
+        "31" => "DECLARAÇÃO DE ENDEREÇO"
     ];
     public $process;
     public function render()

@@ -680,7 +680,8 @@
                                         </svg>
                                         {{ $item->name ?? $item->file }}
                                     </a>
-                                    <p>01/03/2023</p>
+                                    <p>{{ (new DateTime($item->date ?? ''))->setTimezone(new DateTimeZone('America/Sao_Paulo'))->format('d/m/Y H:i:s') ?? ''}}</p>
+
                                 </div>
                             </div>
                         @endforeach

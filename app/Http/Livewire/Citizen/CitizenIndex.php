@@ -409,6 +409,12 @@ class CitizenIndex extends Component
         ]);
     }
 
+    public function generateCertificadoEndereco(){
+        $this->dispatchBrowserEvent('generateCertificadoEndereco', [
+            'id' => $id
+        ]);
+    }
+
     public function setFaceCapture($imageBase64){
         $this->file_capture_image_string = $imageBase64;
     }
@@ -1514,6 +1520,7 @@ class CitizenIndex extends Component
             return false;
         }  else {
             $this->openModalProntuarioPrint($user->id);
+            $this->generateCertificadoEndereco($user->id);
         }
 
         $process = new GenerateProcess();

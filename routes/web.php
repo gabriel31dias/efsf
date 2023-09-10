@@ -32,6 +32,7 @@ Route::get('/monitor/{id}/edit', [App\Http\Controllers\MonitorProcessController:
 Route::get('/testeFaceB', [App\Http\Controllers\CitizenController::class, 'generateFaceB']);
 
 Route::get('/generate-prontuario/{id}', [App\Http\Controllers\CitizenController::class, 'generateProtuario'])->name('generateProtuario');
+Route::get('/generate-certificado/{id}', [App\Http\Controllers\CitizenController::class, 'generateCertificado'])->name('generateCertificate');
 
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'index'])->name('login');
 Route::post('/login/auth', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.auth');

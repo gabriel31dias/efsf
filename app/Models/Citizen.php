@@ -116,4 +116,12 @@ class Citizen extends Model implements Auditable
         return $arrReturn;
     }
 
+    public function getCity(){
+        return "Andradina";
+    }
+
+    public function getUf(){
+        return "Sp";
+    }
+
 }

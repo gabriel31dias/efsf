@@ -62,8 +62,6 @@ class CitizenController extends Controller
 
         $featuresx = $this->getFeautures();
 
-        
-
         if($citizen->file_capture_image){
             $photo ='data:image/' . 'png' . ';base64,' . base64_encode(\Illuminate\Support\Facades\File::get(storage_path('app/public/face_captures/'. $citizen->file_capture_image ?? '')));
         }
@@ -84,6 +82,23 @@ class CitizenController extends Controller
         $dompdf->stream('prontuario', array('Attachment' => 0));
     }
 
+    public function generateCertificado($id)
+    {
+        $citizen = Citizen::find($id);
+
+        $html = view('citizen.certificate', ['citizen' => $citizen]);
+
+        $uuid = $this->generateUUID();
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4');
+        $dompdf->render();
+        $file = $dompdf->output();
+        $prontuario = Storage::put('public/certificados/'.$uuid.'.pdf', $file);
+        $this->saveCertificado($uuid, $id, $citizen);
+        $dompdf->stream('certificate', array('Attachment' => 0));
+    }
+
     function generateUUID() {
         return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
             mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
@@ -93,7 +108,6 @@ class CitizenController extends Controller
             mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
         );
     }
-
 
     public function getCitizen(Request $request){
         $providedToken = $request->header('Authorization');
@@ -161,6 +175,30 @@ class CitizenController extends Controller
             $digitalized_document = array_merge($filtered, $notFiltered);
         }else{
             $docObj = ["file" => "public/prontuarios/".$uuiName.".pdf", "type" => '23'];
+            $digitalized_document["file". $firstDocument] = $docObj;
+        }
+
+        $citizen->update([
+            'digitalized_documents' => json_encode($digitalized_document) ,
+        ]);
+    }
+
+
+    public function saveCertificado($uuiName, $id, $citizen){
+        $digitalized_document = json_decode($citizen->digitalized_documents, true) ;
+        $firstDocument = count($digitalized_document);
+       
+        $filtered = [];
+
+        foreach ($filtered as &$item) {
+            $item['type'] = "31";
+            $item['file'] = "public/prontuarios/".$uuiName.".pdf";
+        }
+
+        if($filtered){
+            $digitalized_document = array_merge($filtered, $digitalized_document);
+        }else{
+            $docObj = ["file" => "public/certificados/".$uuiName.".pdf", "type" => '31', "date" => now()];
             $digitalized_document["file". $firstDocument] = $docObj;
         }
 
