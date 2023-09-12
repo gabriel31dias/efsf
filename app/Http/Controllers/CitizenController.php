@@ -232,8 +232,6 @@ class CitizenController extends Controller
     }
 
 
-
-
     public function show(Request $request, Citizen $profile)
     {
         return view('citizen.show', compact('profile'));
