@@ -152,6 +152,7 @@
                                     border-bottom: 1px solid;
                                 "
                             >
+                            {{  $citizen->getCity() / $citizen->getUf() }}
                             </span
                             >,
 
