@@ -1113,6 +1113,9 @@ role="dialog"  aria-hidden="true">
        <div class="page-body">
           <div class="container-fluid">
              <div class="row">
+             
+
+
                 <div class="col-lg-3 mb-3">
                    <label class="form-label ">Zona<span class="error_tag">*</span></label>
                    <div wire:ignore class="input-group input-group-flat">
@@ -1272,6 +1275,25 @@ role="dialog"  aria-hidden="true">
                   <input  wire:model="confirm_email"
                      type="text" class="form-control ps-0"
                      autocomplete="off" required>
+               </div>
+                 <div class="col-lg-4 mb-3">
+                  <label class="form-label ">Uf </label>
+                     <livewire:uf-select.uf-select
+                         :defaultValue="$currentUfAtual"
+                         :customEvent="'selectedCurrentUfAtual'"
+                         />
+               </div>
+
+
+               <div class="col-lg-3">
+                  <div class="mb-3">
+                     <label class="form-label">Município<span class="error_tag">*</span></label>
+                        <livewire:county-select.county-select
+                           :defaultValue="$currentCityAtual"
+                           :customEvent="'selectedCurrentCityAtual'"
+                        />
+                                    
+                  </div>
                </div>
              </div>
           </div>

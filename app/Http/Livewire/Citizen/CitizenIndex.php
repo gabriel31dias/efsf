@@ -284,7 +284,7 @@ class CitizenIndex extends Component
 
     public $naturalized = false;
 
-    public $listeners = ['selectedCountry', 'selectedCounty', 'selectedMaritalStatus','justificativaEvent', 'justificativaEventUpload',
+    public $listeners = ['selectedCurrentCityAtual', 'selectedCurrentUfAtual','selectedCountry', 'selectedCounty', 'selectedMaritalStatus','justificativaEvent', 'justificativaEventUpload',
         'selectedGenre', 'selectedUf', 'selectedCounty', 'selectedOccupation', 'selectedServiceStation',
         'selectedCountryTypeStreat', 'selectedTypeStreat', 'setCitizen', 'selectedUfCert', 'selectedCountyCert',
         'selectedRegistry', 'selectedUfIdent','selectedUfCarteira', 'setFaceCapture', 'setImagePreview', 'updated_feature', 'updated_uf_ident',
@@ -298,11 +298,17 @@ class CitizenIndex extends Component
     public $currentMatiral;
     public $currentUfCarteira;
 
+    public $currentUfAtual;
+
+
 
     public $currentUf;
     public $currentUfCert;
     public $currentCounty;
     public $currentCountyCert;
+
+    public $currentCityAtual;
+
 
     public $currentOccupation;
     public $currentServiceStation;
@@ -441,6 +447,16 @@ class CitizenIndex extends Component
     public function selectedCountyCert($id){
         $this->fields['county_certificate'] = $id;
         $this->currentCountyCert = County::find($id);
+    }
+
+    public function selectedCurrentCityAtual($id){
+        $this->fields['current_city'] = $id;
+        $this->currentCityAtual = County::find($id);
+    }
+
+    public function selectedCurrentUfAtual($id){
+        $this->fields['current_uf'] = $id;
+        $this->selectedCurrentUfAtual = Uf::find($id);
     }
 
     public function selectedTypeStreat($id)
@@ -1419,6 +1435,8 @@ class CitizenIndex extends Component
 
         $user = (new CitizenRepository())->createOrUpdateCitizen($this->citizen->id ?? 0, [
             "name" => $this->fields["name"],
+            "current_city" => $this->fields["current_city"],
+            "current_uf" => $this->fields["current_uf"],
             "file_capture_image" => $this->fields["file_capture_image"] ?? $this->citizen->file_capture_image,
             "filiations" => $this->fields["filiations"],
             "cpf" => $this->fields["cpf"],

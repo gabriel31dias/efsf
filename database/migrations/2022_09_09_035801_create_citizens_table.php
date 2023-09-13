@@ -112,6 +112,8 @@ return new class extends Migration
             $table->string('uf_wallet')->nullable();
             $table->integer('cid_wallet')->nullable();
 
+            $table->string('current_city')->nullable();
+            $table->string('current_uf')->nullable();
 
             $table->json('features')->nullable();
             $table->json('digitalized_documents')->nullable();
