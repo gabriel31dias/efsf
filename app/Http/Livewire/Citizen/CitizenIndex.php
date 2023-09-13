@@ -415,7 +415,7 @@ class CitizenIndex extends Component
         ]);
     }
 
-    public function generateCertificadoEndereco(){
+    public function generateCertificadoEndereco($id){
         $this->dispatchBrowserEvent('generateCertificadoEndereco', [
             'id' => $id
         ]);
