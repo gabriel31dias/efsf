@@ -117,11 +117,10 @@ class Citizen extends Model implements Auditable
     }
 
     public function getCity(){
-        return "Andradina";
+        return $this->current_city;
     }
-
     public function getUf(){
-        return "Sp";
+        return $this->current_uf;
     }
 
 }
