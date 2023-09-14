@@ -30,6 +30,13 @@ class CitizenController extends Controller
         return view('citizen.index', compact('citizen'));
     }
 
+    public function searchScreen(Request $request)
+    {
+        $citizen = Citizen::find($request->id);
+
+        return view('citizen.search-citizen', compact('citizen'));
+    }
+
     public function create(Request $request)
     {
         return view('citizen.create');
